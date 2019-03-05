@@ -6,17 +6,18 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/05 15:29:06 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/05 17:25:18 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENGINE_H
 # define ENGINE_H
 
-# include <math.h>
-# include <fcntl.h>
-# include "SDL2/SDL.h"
-# include "libft.h"
+//# include <math.h>
+//# include <fcntl.h>
+//# include "SDL2/SDL.h"
+# include "../libft/libft.h"
+# include <stdlib.h>
 
 # define WWIN 1024
 # define HWIN 768
@@ -52,6 +53,7 @@ typedef struct		s_sector
 	t_xy			*vertex;
 	int				*neighbors;
 	unsigned int	npoints;
+	unsigned int	light;
 }					t_sector;
 
 typedef struct		s_player
@@ -67,7 +69,12 @@ typedef struct		s_player
 typedef struct		s_env
 {
 	t_player		player;
-	t_sector		*sector;
+	t_sector		*sector;	
+	unsigned int	nsectors;
+	t_xy			*vertex;
+	unsigned int	nvertexes;
 }					t_env;
+
+t_env	*structure_init(void);
 
 #endif
