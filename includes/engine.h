@@ -26,21 +26,21 @@
 
 typedef struct		s_xy
 {
-	float			x;
-	float			y;
+	double			x;
+	double			y;
 }					t_xy;
 
 typedef struct		s_xyz
 {
-	float			x;
-	float			y;
-	float			z;
+	double			x;
+	double			y;
+	double			z;
 }					t_xyz;
 
 typedef struct		s_sector
 {
-    float			floor;
-	float			ceiling;
+    double			floor;
+	double			ceiling;
 	t_xy			*vertex;
 	int				*neighbors;
 	unsigned int	npoints;
@@ -50,9 +50,9 @@ typedef struct		s_player
 {
 	t_xyz			where;
 	t_xyz			velocity;
-	float			angle;
-	float			anglesin;
-	float			yaw;
+	double			angle;
+	double			anglesin;
+	double			yaw;
 	unsigned int	sector;
 }					t_player;
 
