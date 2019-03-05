@@ -6,14 +6,17 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/04 20:40:07 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/05 15:29:06 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENGINE_H
 # define ENGINE_H
 
-# include <SDL.h>
+# include <math.h>
+# include <fcntl.h>
+# include "SDL2/SDL.h"
+# include "libft.h"
 
 # define WWIN 1024
 # define HWIN 768
@@ -23,6 +26,11 @@
 # define KNEEHEIGHT 2.0
 # define HFOV 0.73 * HWIN
 # define VFOV 0.2 * HWIN
+
+# define MIN(a, b) (((a < b)) ? (a) : (b))
+# define MAX(a, b) (((a > b)) ? (a) : (b))
+# define CLAMP(a, min, max) MIN(MAX(a, min), max)
+# define VXS(x0, y0, x1, y1) ((x0) * (y1) - (x1) * (y0))
 
 typedef struct		s_xy
 {
@@ -39,7 +47,7 @@ typedef struct		s_xyz
 
 typedef struct		s_sector
 {
-    double			floor;
+	double			floor;
 	double			ceiling;
 	t_xy			*vertex;
 	int				*neighbors;
@@ -56,7 +64,10 @@ typedef struct		s_player
 	unsigned int	sector;
 }					t_player;
 
-
-
+typedef struct		s_env
+{
+	t_player		player;
+	t_sector		*sector;
+}					t_env;
 
 #endif
