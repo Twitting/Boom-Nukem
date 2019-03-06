@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/06 18:03:27 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/03/06 19:32:52 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,12 @@ typedef struct		s_env
 	unsigned int	nsectors;
 	t_xy			*vertex;
 	unsigned int	nvertexes;
+	SDL_Surface		*surface;
+	SDL_Window		*window;
 }					t_env;
 
+void	init(t_env *env);
+void	ft_error(int errnum);
 t_xy	intersect(t_xy a, t_xy b, double cx, double cy, double dx, double dy);
 double	point_side(double px, double py, t_xy a, t_xy b);
 int		intersect_box(t_xy a, t_xy b, t_xy c, t_xy d);
