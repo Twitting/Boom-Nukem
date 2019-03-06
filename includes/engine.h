@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/06 15:28:20 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/06 16:51:54 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <math.h>
 # include <fcntl.h>
-//# include "SDL2/SDL.h"
+# include "SDL2/SDL.h"
 # include "../libft/libft.h"
 # include <stdlib.h>
 
