@@ -3,17 +3,18 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: twitting <twitting@student.42.fr>          +#+  +:+       +#+         #
+#    By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/03/06 17:04:57 by twitting         ###   ########.fr        #
+#    Updated: 2019/03/06 17:36:27 by ebednar          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = doom-nukem
 SRC = ./src/main.c \
 		./src/map_test.c \
-		./src/vector_funcs.c
+		./src/vector_funcs.c \
+		./src/engine.c
 LIBFT = ./libft/libft.a
 OBJECTS = $(SRC:.c=.o)
 WWW = -Wall -Wextra -Werror

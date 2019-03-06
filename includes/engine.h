@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/06 16:51:54 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/06 18:03:27 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 # include <math.h>
 # include <fcntl.h>
-# include "SDL2/SDL.h"
-# include "../libft/libft.h"
+# include <SDL2/SDL.h>
+# include "libft.h"
 # include <stdlib.h>
 
 # include <stdio.h>/////////////////////////////////////////////
@@ -62,7 +62,6 @@ typedef struct		s_player
 	t_xyz			where;
 	t_xyz			velocity;
 	double			angle;
-	double			anglesin;
 	double			yaw;
 	unsigned int	sector;
 }					t_player;
@@ -76,11 +75,12 @@ typedef struct		s_env
 	unsigned int	nvertexes;
 }					t_env;
 
-t_xy	intersect(t_xy a, t_xy b, t_xy c, t_xy d);
+t_xy	intersect(t_xy a, t_xy b, double cx, double cy, double dx, double dy);
 double	point_side(double px, double py, t_xy a, t_xy b);
 int		intersect_box(t_xy a, t_xy b, t_xy c, t_xy d);
 int		overlap(double a0, double a1, double b0, double b1);
 double	vxs(double x0, double y0, double x1, double y1);
 t_env	*structure_init(void);
+int		start_engine(t_env *env);
 
 #endif
