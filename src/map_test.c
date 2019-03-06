@@ -6,16 +6,16 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:25:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/05 17:45:33 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/06 14:19:03 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/engine.h"
+#include "engine.h"
 
 t_env	*structure_init(void)
 {
-	t_env   *env;
-	int     i;
+	t_env			*env;
+	unsigned int	i;
 
     i = 0;
 	env = (t_env *)malloc(sizeof(t_env));

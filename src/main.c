@@ -6,11 +6,11 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:20:03 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/05 17:19:34 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/06 15:42:49 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/engine.h"
+#include "engine.h"
 #include <stdio.h>
 
 int main(void)

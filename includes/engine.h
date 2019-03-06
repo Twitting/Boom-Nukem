@@ -6,18 +6,20 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/05 17:25:18 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/06 15:28:20 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENGINE_H
 # define ENGINE_H
 
-//# include <math.h>
-//# include <fcntl.h>
+# include <math.h>
+# include <fcntl.h>
 //# include "SDL2/SDL.h"
 # include "../libft/libft.h"
 # include <stdlib.h>
+
+# include <stdio.h>/////////////////////////////////////////////
 
 # define WWIN 1024
 # define HWIN 768
@@ -31,7 +33,6 @@
 # define MIN(a, b) (((a < b)) ? (a) : (b))
 # define MAX(a, b) (((a > b)) ? (a) : (b))
 # define CLAMP(a, min, max) MIN(MAX(a, min), max)
-# define VXS(x0, y0, x1, y1) ((x0) * (y1) - (x1) * (y0))
 
 typedef struct		s_xy
 {
@@ -75,6 +76,11 @@ typedef struct		s_env
 	unsigned int	nvertexes;
 }					t_env;
 
+t_xy	intersect(t_xy a, t_xy b, t_xy c, t_xy d);
+double	point_side(double px, double py, t_xy a, t_xy b);
+int		intersect_box(t_xy a, t_xy b, t_xy c, t_xy d);
+int		overlap(double a0, double a1, double b0, double b1);
+double	vxs(double x0, double y0, double x1, double y1);
 t_env	*structure_init(void);
 
 #endif
