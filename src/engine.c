@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/03/07 15:49:05 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/03/07 22:15:04 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,9 +125,10 @@ static void	render_wall(t_env *env)
 	}
 }
 
-int		start_engine(t_env *env)
+int		start_engine(t_env *env, SDL_Event *e)
 {
 	render_wall(env);
 	SDL_UpdateWindowSurface(env->window);
+	handle_events(env, e);
 	return (0);
 }

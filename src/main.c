@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:20:03 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/07 14:48:02 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/03/07 22:17:08 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,12 @@ void	ft_error(int errnum)
 int main(void)
 {
     t_env	*env;
-	int		running;
+	SDL_Event	e;
 
-	running = 1;
 	env = structure_init();
 	init(env);
-	while (running)
-		start_engine(env);
+	while (!(env->quit))
+		start_engine(env, &e);
 	printf("%lf", env->player.where.x);
 	SDL_DestroyWindow(env->window);
 	SDL_Quit();

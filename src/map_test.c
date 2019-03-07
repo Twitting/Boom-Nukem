@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_test.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:25:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/07 15:40:29 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/03/07 21:36:00 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ t_env	*structure_init(void)
 	env->player.velocity.x = 21.0;
 	env->player.velocity.y = 20.0;
 	env->player.velocity.z = 0.0;
-	env->player.angle = 0,0;
+	env->player.angle = 0.0;
 	env->player.sector = 0;
 	env->player.yaw = 0.0;
 

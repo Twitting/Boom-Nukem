@@ -6,7 +6,7 @@
 #    By: twitting <twitting@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/03/06 19:28:27 by twitting         ###   ########.fr        #
+#    Updated: 2019/03/07 22:01:49 by twitting         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,13 +15,14 @@ SRC = ./src/main.c \
 		./src/map_test.c \
 		./src/vector_funcs.c \
 		./src/engine.c \
-		./src/init.c
+		./src/init.c \
+		./src/events.c
 LIBFT = ./libft/libft.a
 OBJECTS = $(SRC:.c=.o)
 WWW = -Wall -Wextra -Werror
 INCLUDES = -I libft -I includes/ -I ~/Library/Frameworks/SDL2.framework/Versions/A/Headers
 SDL =  -framework SDL2 -F ~/Library/Frameworks/
-FLAGS_LINUX = -I ./includes/  -lXext -lX11 -lm -lpthread -lft
+FLAGS_LINUX = -I ./includes/ -lm -lpthread -lSDL2main -lSDL2 -I libft
 
 all: $(NAME)
 
