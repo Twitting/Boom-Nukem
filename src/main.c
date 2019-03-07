@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:20:03 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/06 19:38:27 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/07 14:48:02 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,16 @@ void	ft_error(int errnum)
 
 int main(void)
 {
-    t_env *env;
+    t_env	*env;
+	int		running;
 
+	running = 1;
 	env = structure_init();
 	init(env);
-    start_engine(env);
+	while (running)
+		start_engine(env);
 	printf("%lf", env->player.where.x);
+	SDL_DestroyWindow(env->window);
+	SDL_Quit();
+	return (0);
 }

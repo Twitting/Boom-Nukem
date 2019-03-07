@@ -6,17 +6,29 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/03/06 18:08:54 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/03/07 15:49:05 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
 #include "render.h"
 
-/*static void	vline(t_rend *rend, int top, int middle, int bottom)
+static void	vline(t_env *env, int x, int y1, int y2, int top, int middle, int bottom)
 {
+	int *pix;
 
-}*/
+	pix = env->surface->pixels;
+	y1 = CLAMP(y1, 0, HWIN - 1);
+	y2 = CLAMP(y2, 0, HWIN - 1);
+	if (y2 == y1)
+		pix[y1 * WWIN + x] = middle;
+	else if (y2 > y1)
+	{
+		pix[y1*WWIN+x] = top;
+        for(int y=y1+1; y<y2; ++y) pix[y*WWIN+x] = middle;
+        pix[y2*WWIN+x] = bottom;
+	}
+}
 
 static void	wallintersect(t_rend *rend)
 {
@@ -59,12 +71,14 @@ static void	wallintersect(t_rend *rend)
 
 static void	render_wall(t_env *env)
 {
-	int 	s;
-	t_rend			rend;
+	int			s;
+	t_rend		rend;
+	t_sector	nowsect;
 
 	// struct {int sectorno, sx1, sx2;} now = {player.sectorno, 0 , WWIN - 1};
 	s = -1;
-	while (++s < (int)env->sector->npoints)
+	nowsect = env->sector[env->player.sector];
+	while (++s < (int)nowsect.npoints)
 	{
 		rend.vx1 = env->sector->vertex[s + 0].x - env->player.where.x;
 		rend.vy1 = env->sector->vertex[s + 0].y - env->player.where.y;
@@ -100,9 +114,12 @@ static void	render_wall(t_env *env)
 			rend.cya = CLAMP(rend.ya, 0, HWIN - 1);
 			rend.yb = (rend.x - rend.x1) * (rend.y2b - rend.y1b) / (rend.x2 - rend.x1) + rend.y1b;
 			rend.cyb = CLAMP(rend.yb, 0, HWIN - 1);
-			//if (neighbor >= 0)
-			//else
-		//	vline(rend.x, rend.cya, rend.cyb, 0, rend.x == rend.x1 || rend.x == rend.x2 ? 0 : 0xAAAAAA, 0);
+			vline(env, rend.x, 0, rend.cya - 1, 0x111111, 0x222222, 0x111111);
+			vline(env, rend.x, rend.cyb - 1, HWIN, 0x0000FF, 0x0000AA, 0x0000FF);
+			if (env->sector->neighbors[s] >= 0)
+				vline(env, rend.x, rend.cya, rend.cyb, 0x00AA00, 0xAA0000, 0x00AA00);
+			else
+				vline(env, rend.x, rend.cya, rend.cyb, 0, rend.x == rend.x1 || rend.x == rend.x2 ? 0 : 0xAAAAAA, 0);
 			rend.x++;
 		}
 	}
@@ -111,5 +128,6 @@ static void	render_wall(t_env *env)
 int		start_engine(t_env *env)
 {
 	render_wall(env);
+	SDL_UpdateWindowSurface(env->window);
 	return (0);
 }
