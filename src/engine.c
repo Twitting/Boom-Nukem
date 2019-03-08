@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/03/08 14:36:55 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/08 18:19:44 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,17 @@ static void	render_wall(t_env *env)
 {
 	int			s;
 	t_rend		rend;
-	t_sector	nowsect;
+	t_sector	*nowsect;
 
 	// struct {int sectorno, sx1, sx2;} now = {player.sectorno, 0 , WWIN - 1};
 	s = -1;
-	nowsect = env->sector[env->player.sector];
-	while (++s < (int)nowsect.npoints)
+	nowsect = &(env->sector[env->player.sector]);
+	while (++s < (int)nowsect->npoints)
 	{
-		rend.vx1 = env->sector->vertex[s % nowsect.npoints].x - env->player.where.x;
-		rend.vy1 = env->sector->vertex[s % nowsect.npoints].y - env->player.where.y;
-		rend.vx2 = env->sector->vertex[(s + 1) % nowsect.npoints].x - env->player.where.x;
-		rend.vy2 = env->sector->vertex[(s + 1) % nowsect.npoints].y - env->player.where.y;
+		rend.vx1 = nowsect->vertex[s % nowsect->npoints].x - env->player.where.x;
+		rend.vy1 = nowsect->vertex[s % nowsect->npoints].y - env->player.where.y;
+		rend.vx2 = nowsect->vertex[(s + 1) % nowsect->npoints].x - env->player.where.x;
+		rend.vy2 = nowsect->vertex[(s + 1) % nowsect->npoints].y - env->player.where.y;
 		rend.t1.x = rend.vx1 * sin(env->player.angle) - rend.vy1 * cos(env->player.angle);
 		rend.t1.y = rend.vx1 * cos(env->player.angle) + rend.vy1 * sin(env->player.angle);
 		rend.t2.x = rend.vx2 * sin(env->player.angle) - rend.vy2 * cos(env->player.angle);
@@ -98,8 +98,8 @@ static void	render_wall(t_env *env)
 		rend.yscale2 = VFOV / rend.t2.y;
 		rend.x2 = WWIN / 2 - (int)(rend.t2.x * rend.xscale2);
 		// if (x1 >= x2 || x2 < now.sx1 || x1 > now.sx2) continue;
-		rend.yceil = env->sector->ceiling - env->player.where.z;
-		rend.yfloor = env->sector->floor - env->player.where.z;
+		rend.yceil = nowsect->ceiling - env->player.where.z;
+		rend.yfloor = nowsect->floor - env->player.where.z;
 		//neighbor = env->sector->neighbors[s];
 		#define Yaw(y, z) (y + z * env->player.yaw)
 		rend.y1a = HWIN / 2 - (int)(Yaw(rend.yceil, rend.t1.y) * rend.yscale1);
@@ -117,7 +117,7 @@ static void	render_wall(t_env *env)
 			rend.cyb = CLAMP(rend.yb, 0, HWIN - 1);
 			vline(env, rend.x, 0, rend.cya - 1, 0x111111, 0x222222, 0x111111);
 			vline(env, rend.x, rend.cyb - 1, HWIN, 0x0000FF, 0x0000AA, 0x0000FF);
-			if (env->sector->neighbors[s] >= 0)
+			if (nowsect->neighbors[s] >= 0)
 				vline(env, rend.x, rend.cya, rend.cyb, 0x00AA00, 0xAA0000, 0x00AA00);
 			else
 				vline(env, rend.x, rend.cya, rend.cyb, 0, rend.x == rend.x1 || rend.x == rend.x2 ? 0 : 0xAAAAAA, 0);
@@ -128,7 +128,9 @@ static void	render_wall(t_env *env)
 
 int		start_engine(t_env *env, SDL_Event *e)
 {
+	SDL_LockSurface(env->surface);
 	render_wall(env);
+	SDL_UnlockSurface(env->surface);
 	SDL_UpdateWindowSurface(env->window);
 	handle_events(env, e);
 	return (0);

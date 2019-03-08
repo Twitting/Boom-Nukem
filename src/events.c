@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 21:52:25 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/08 15:49:09 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/08 17:46:45 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,12 @@ void	handle_events(t_env *env, SDL_Event *e)
 			if (e->key.keysym.sym == SDLK_d)
 				movement(env, 0, 1);
 		}
+	}
+	int x,y;
+	SDL_GetRelativeMouseState(&x,&y);
+	env->player.angle += x * 0.03;
+		
 		//if (e->type == SDL_MOUSEMOTION)
 		//{
 		//}
-	}
 }
