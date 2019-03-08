@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:20:03 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/08 17:20:10 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/03/08 22:52:22 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int main(void)
 	SDL_ShowCursor(SDL_DISABLE);
 	while (!(env->quit))
 		start_engine(env, &e);
-	printf("%lf", env->player.where.x);
+	printf("%lf\n", env->player.angle);
 	SDL_DestroyWindow(env->window);
 	SDL_Quit();
 	return (0);

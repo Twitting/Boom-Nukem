@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:38:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/07 21:57:13 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/08 22:38:13 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	init(t_env *env)
 {
+    env->yaw = 0;
     env->quit = 0;
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
         ft_error(4);

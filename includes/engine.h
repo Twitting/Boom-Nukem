@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/08 15:44:40 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/08 23:46:45 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,12 @@ typedef struct		s_env
 	int				quit;
 	SDL_Surface		*surface;
 	SDL_Window		*window;
+	int				wsad[4];
+	int				moving;
+	float			yaw;
 }					t_env;
 
+void	movement_calcs(t_env *env);
 void	movement(t_env *env, float dx, float dy);
 void	handle_events(t_env *env, SDL_Event *e);
 void	init(t_env *env);
