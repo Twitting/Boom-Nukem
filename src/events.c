@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 21:52:25 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/08 17:46:45 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/03/08 18:58:28 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	handle_events(t_env *env, SDL_Event *e)
 	{
 		if (e->type == SDL_QUIT)
 			env->quit = 1;
-		if (e->type == SDL_KEYUP && e->key.keysym.sym == SDLK_ESCAPE)
+		if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_ESCAPE)
 			env->quit = 1;
-		if (e->type == SDL_KEYUP)
+		if (e->type == SDL_KEYDOWN)
 		{
 			if (e->key.keysym.sym == SDLK_w)
 				movement(env, 1, 0);
