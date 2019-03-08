@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:25:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/08 14:40:12 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/08 15:22:59 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,10 @@ t_env	*structure_init(void)
 	env->sector[0].neighbors[2] = -1;
 	env->sector[0].neighbors[3] = -1;
 	env->sector[1].neighbors = (int *)malloc(sizeof(int) * 4);
-	env->sector[1].neighbors[0] = 0;
+	env->sector[1].neighbors[0] = -1;
 	env->sector[1].neighbors[1] = -1;
+	env->sector[1].neighbors[2] = -1;
+	env->sector[1].neighbors[3] = 0;
 	i = 0;
 	env->vertex = (t_xy *)malloc(sizeof(t_xy) * env->nvertexes);
 	

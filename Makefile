@@ -6,7 +6,7 @@
 #    By: twitting <twitting@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/03/07 22:01:49 by twitting         ###   ########.fr        #
+#    Updated: 2019/03/08 15:45:13 by twitting         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ SRC = ./src/main.c \
 		./src/vector_funcs.c \
 		./src/engine.c \
 		./src/init.c \
-		./src/events.c
+		./src/events.c \
+		./src/movement.c
 LIBFT = ./libft/libft.a
 OBJECTS = $(SRC:.c=.o)
 WWW = -Wall -Wextra -Werror

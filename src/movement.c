@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:10:46 by ebednar           #+#    #+#             */
-/*   Updated: 2019/03/08 15:42:32 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/03/08 15:48:26 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ void	movement(t_env *env, float dx, float dy)
 	sect = env->sector[env->player.sector];
 	s = -1;
 	while (++s < (int)sect.npoints)
-		if (sect->neighbors[s] >= 0 && intersect_box(p, dp, sect->vertex[s % nowsect.npoints], sect->vertex[(s + 1) % nowsect.npoints]))
+		if (sect.neighbors[s] >= 0 && intersect_box(p, dp, sect.vertex[s % sect.npoints], sect.vertex[(s + 1) % sect.npoints]))
 		{
-			env->player.sector = sect->neighbors[s];
+			env->player.sector = sect.neighbors[s];
 			break;
 		}
-	env->player.where.x += dp.x;
-	env->player.where.y += dp.y;
+	env->player.where.x += dx;
+	env->player.where.y += dy;
 }
