@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/03/07 22:15:04 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/08 14:36:55 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,10 @@ static void	render_wall(t_env *env)
 	nowsect = env->sector[env->player.sector];
 	while (++s < (int)nowsect.npoints)
 	{
-		rend.vx1 = env->sector->vertex[s + 0].x - env->player.where.x;
-		rend.vy1 = env->sector->vertex[s + 0].y - env->player.where.y;
-		rend.vx2 = env->sector->vertex[s + 1].x - env->player.where.x;
-		rend.vy2 = env->sector->vertex[s + 1].y - env->player.where.y;
+		rend.vx1 = env->sector->vertex[s % nowsect.npoints].x - env->player.where.x;
+		rend.vy1 = env->sector->vertex[s % nowsect.npoints].y - env->player.where.y;
+		rend.vx2 = env->sector->vertex[(s + 1) % nowsect.npoints].x - env->player.where.x;
+		rend.vy2 = env->sector->vertex[(s + 1) % nowsect.npoints].y - env->player.where.y;
 		rend.t1.x = rend.vx1 * sin(env->player.angle) - rend.vy1 * cos(env->player.angle);
 		rend.t1.y = rend.vx1 * cos(env->player.angle) + rend.vy1 * sin(env->player.angle);
 		rend.t2.x = rend.vx2 * sin(env->player.angle) - rend.vy2 * cos(env->player.angle);
@@ -101,10 +101,11 @@ static void	render_wall(t_env *env)
 		rend.yceil = env->sector->ceiling - env->player.where.z;
 		rend.yfloor = env->sector->floor - env->player.where.z;
 		//neighbor = env->sector->neighbors[s];
-		rend.y1a = HWIN / 2 - (int)(rend.yceil * rend.yscale1);
-		rend.y1b = HWIN / 2 - (int)(rend.yfloor * rend.yscale1);
-		rend.y2a = HWIN / 2 - (int)(rend.yceil * rend.yscale2);
-		rend.y2b = HWIN / 2 - (int)(rend.yfloor * rend.yscale2);
+		#define Yaw(y, z) (y + z * env->player.yaw)
+		rend.y1a = HWIN / 2 - (int)(Yaw(rend.yceil, rend.t1.y) * rend.yscale1);
+		rend.y1b = HWIN / 2 - (int)(Yaw(rend.yfloor, rend.t1.y) * rend.yscale1);
+		rend.y2a = HWIN / 2 - (int)(Yaw(rend.yceil, rend.t2.y) * rend.yscale2);
+		rend.y2b = HWIN / 2 - (int)(Yaw(rend.yfloor, rend.t2.y) * rend.yscale2);
 		rend.beginx = MAX(rend.x1, 0);
 		rend.endx = MIN(rend.x2, WWIN - 1);
 		rend.x = rend.beginx;

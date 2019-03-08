@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:25:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/07 21:36:00 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/08 14:40:12 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_env	*structure_init(void)
 	env->sector[1].vertex[3] = env->vertex[4];
 	env->player.where.x = 20.0;
 	env->player.where.y = 20.0;
-	env->player.where.z = 0.0;
+	env->player.where.z = 4.0;
 	env->player.velocity.x = 21.0;
 	env->player.velocity.y = 20.0;
 	env->player.velocity.z = 0.0;
