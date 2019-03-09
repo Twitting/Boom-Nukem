@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:10:46 by ebednar           #+#    #+#             */
-/*   Updated: 2019/03/09 00:06:17 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/09 12:26:21 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,35 @@
 
 void	collision(t_env *env)
 {
-	//int			s;
-	//t_xy		p;
-	t_xy		dp;
-	//t_sector	sect;
-	//t_xy		bump;
+	int			s;
+	t_xy		p;
+	t_xy		d;
+	t_sector	sect;
+	t_xy		bump;
+	t_xy		pd;
 
-	//sect = env->sector[env->player.sector];
-	//p.x = env->player.where.x;
-	//p.y = env->player.where.y;
-	dp.x = env->player.velocity.x;
-	dp.y = env->player.velocity.y;
-	//s = -1;
-	/*while (++s < (int)sect.npoints)
-		if (sect.neighbors[s] < 0 && intersect_box(p, dp, sect.vertex[s % sect.npoints], 
+	sect = env->sector[env->player.sector];
+	p.x = env->player.where.x;
+	p.y = env->player.where.y;
+	d.x = env->player.velocity.x;
+	d.y = env->player.velocity.y;
+	pd.x = p.x + d.x;
+	pd.y = p.y + d.y;
+	s = -1;
+	while (++s < (int)sect.npoints)
+		if (sect.neighbors[s] < 0 && intersect_box(p, pd, sect.vertex[s % sect.npoints], 
 		sect.vertex[(s + 1) % sect.npoints]) &&
-		point_side(dp.x, dp.y, sect.vertex[s % sect.npoints], sect.vertex\
+		point_side(pd.x, pd.y, sect.vertex[s % sect.npoints], sect.vertex\
 		[(s + 1) % sect.npoints]) < 0)
 		{
+			ft_putstr("collision\n");
 			bump.x = sect.vertex[(s + 1) % sect.npoints].x - sect.vertex[s % sect.npoints].x;
 			bump.y = sect.vertex[(s + 1) % sect.npoints].y - sect.vertex[s % sect.npoints].y;
-			dp.x = bump.x * (dp.x * bump.x + bump.y * dp.y) / (bump.x * bump.x + bump.y * bump.y);
-			dp.y = bump.y * (dp.x * bump.x + bump.y * dp.y) / (bump.x * bump.x + bump.y * bump.y);
+			d.x = bump.x * (d.x * bump.x + bump.y * d.y) / (bump.x * bump.x + bump.y * bump.y);
+			d.y = bump.y * (d.x * bump.x + bump.y * d.y) / (bump.x * bump.x + bump.y * bump.y);
 			env->moving = 0;
-		}*/
-	movement(env, dp.x, dp.y);
+		}
+	movement(env, d.x, d.y);
 }
 
 void	movement(t_env *env, float dx, float dy)
@@ -103,7 +107,6 @@ void	movement_calcs(t_env *env)
 	wsad_read(env);
 	if (env->moving)
 	{
-		wsad_read(env);
 		collision(env);
 	}
 	else

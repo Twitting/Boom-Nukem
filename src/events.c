@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 21:52:25 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/08 23:44:16 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/09 12:15:09 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	handle_events(t_env *env, SDL_Event *e)
 			keyboard_events(env, e);
 	}
 	SDL_GetRelativeMouseState(&x,&y);
-	env->player.angle += x * 3.14159 / 100;
+	env->player.angle += x * 3.14159 / 200;
 	env->yaw = CLAMP(env->yaw + y * 0.01, -2, 2);
 	env->player.yaw = env->yaw;
 	movement_calcs(env);
