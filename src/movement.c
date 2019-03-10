@@ -6,17 +6,46 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:10:46 by ebednar           #+#    #+#             */
-/*   Updated: 2019/03/10 15:26:21 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/10 19:08:55 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
 
-int		collision(t_env *env, t_xy *p, t_xy *d)
+void	v_collision(t_env *env)
+{
+	double	nz;
+	env->ground = !env->falling;
+	env->player.eye = env->ducking ? DUCKHEIGHT : EYEHEIGHT;
+	if(env->falling)
+	{
+		env->player.velocity.z -= 0.05;
+		nz = env->player.where.z + env->player.velocity.z;
+		if (env->player.velocity.z < 0 && nz < env->sector[env->player.sector].floor + env->player.eye)
+		{
+			env->player.where.z = env->sector[env->player.sector].floor + env->player.eye;
+			env->player.velocity.z = 0;
+			env->falling = 0;
+			env->ground = 1;
+		}
+		else if (env->player.velocity.z > 0 && nz > env->sector[env->player.sector].ceiling)
+		{
+			env->player.velocity.z = 0;
+			env->falling = 1;
+		}
+		if (env->falling)
+		{
+			env->player.where.z += env->player.velocity.z;
+			env->moving = 1;
+		}
+	}
+}
+
+void	h_collision(t_env *env, t_xy *p, t_xy *d)
 {
 	int			s;
 	t_sector	sect;
-	t_xy		bump;
+	t_xy		b;
 	t_xy		pd;
 
 	sect = env->sector[env->player.sector];
@@ -24,19 +53,24 @@ int		collision(t_env *env, t_xy *p, t_xy *d)
 	pd.y = p->y + d->y;
 	s = -1;
 	while (++s < (int)sect.npoints)
-		if (sect.neighbors[s] < 0 && intersect_box(*p, pd, sect.vertex[s % sect.npoints], 
+		if (intersect_box(*p, pd, sect.vertex[s % sect.npoints], 
 		sect.vertex[(s + 1) % sect.npoints]) &&
 		point_side(pd.x, pd.y, sect.vertex[s % sect.npoints], sect.vertex\
 		[(s + 1) % sect.npoints]) < 0)
 		{
-			ft_putstr("collision\n");
-			bump.x = sect.vertex[(s + 1) % sect.npoints].x - sect.vertex[s % sect.npoints].x;
-			bump.y = sect.vertex[(s + 1) % sect.npoints].y - sect.vertex[s % sect.npoints].y;
-			d->x = bump.x * (d->x * bump.x + bump.y * d->y) / (bump.x * bump.x + bump.y * bump.y);
-			d->y = bump.y * (d->x * bump.x + bump.y * d->y) / (bump.x * bump.x + bump.y * bump.y);
-			env->moving = 0;
+			double hole_low = sect.neighbors[s] < 0 ? 9e9 : MAX(sect.floor, env->sector[sect.neighbors[s]].floor);
+			double hole_high = sect.neighbors[s] < 0 ? 9e9 : MIN(sect.ceiling, env->sector[sect.neighbors[s]].ceiling);
+			if (hole_high < env->player.where.z + HEADMARGIN || hole_low > env->player.where.z - EYEHEIGHT + KNEEHEIGHT)
+			{
+				ft_putstr("collision\n");
+				b.x = sect.vertex[(s + 1) % sect.npoints].x - sect.vertex[s % sect.npoints].x;
+				b.y = sect.vertex[(s + 1) % sect.npoints].y - sect.vertex[s % sect.npoints].y;
+				d->x = b.x * (d->x * b.x + b.y * d->y) / (b.x * b.x + b.y * b.y);
+				d->y = b.y * (d->x * b.x + b.y * d->y) / (b.x * b.x + b.y * b.y);
+				env->moving = 0;
+			}
 		}
-	return (env->moving == 0? 1 : 0);
+	env->falling = 1;
 }
 
 void	movement(t_env *env, float dx, float dy)
@@ -91,9 +125,9 @@ void	wsad_read(t_env *env)
 		mv.x -= sin(env->player.angle) * 0.2;
 		mv.y += cos(env->player.angle) * 0.2;
 	}
-	env->player.velocity.x = env->player.velocity.x * 0.6 + mv.x * 0.4;
-	env->player.velocity.y = env->player.velocity.y * 0.6 + mv.y * 0.4;
-	env->moving = (mv.x != 0 || mv.y != 0) ? 1 : 0;
+	env->player.velocity.x = env->player.velocity.x * 0.8 + mv.x * 0.2;
+	env->player.velocity.y = env->player.velocity.y * 0.8 + mv.y * 0.2;
+	env->moving = (mv.x != 0 || mv.y != 0 || env->falling) ? 1 : 0;
 }
 
 void	movement_calcs(t_env *env)
@@ -104,21 +138,14 @@ void	movement_calcs(t_env *env)
 	wsad_read(env);
 	if (env->moving)
 	{
-		p.x = env->player.where.x + 1;
-		p.y = env->player.where.y + 1;
+		p.x = env->player.where.x;
+		p.y = env->player.where.y;
 		d.x = env->player.velocity.x;
 		d.y = env->player.velocity.y;
-		if (collision(env, &p, &d) == 0)
-		{
-			p.x = env->player.where.x - 1;
-			p.y = env->player.where.y - 1;
-			d.x = env->player.velocity.x;
-			d.y = env->player.velocity.y;
-			collision(env, &p, &d);
-		}
+		v_collision(env);
+		h_collision(env, &p, &d);
 		movement(env, d.x, d.y);
 	}
-	else
-		movement(env, 0, 0);
+	movement(env, 0, 0);
 	
 }

@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/08 23:46:45 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/10 17:22:31 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,13 @@ typedef struct		s_player
 	double			angle;
 	double			yaw;
 	unsigned int	sector;
+	double			eye;
 }					t_player;
 
 typedef struct		s_env
 {
 	t_player		player;
-	t_sector		*sector;	
+	t_sector		*sector;
 	unsigned int	nsectors;
 	t_xy			*vertex;
 	unsigned int	nvertexes;
@@ -78,6 +79,9 @@ typedef struct		s_env
 	SDL_Window		*window;
 	int				wsad[4];
 	int				moving;
+	int				ground;
+	int				falling;
+	int				ducking;
 	float			yaw;
 }					t_env;
 

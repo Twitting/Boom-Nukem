@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:25:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/09 15:47:04 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/10 17:07:09 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ t_env	*structure_init(void)
 		env->sector[i].light = 1;
 		i++;
 	}
+	env->sector[1].floor = 2.0;
 
 	env->sector[0].neighbors = (int *)malloc(sizeof(int) * 4);
 	env->sector[0].neighbors[0] = -1;
@@ -67,13 +68,13 @@ t_env	*structure_init(void)
 	env->sector[1].vertex[2] = env->vertex[5];
 	env->sector[1].vertex[3] = env->vertex[2];
 	env->player.where.x = 20.0;
-	env->player.where.y = 60.0;
+	env->player.where.y = 20.0;
 	env->player.where.z = env->sector[env->player.sector].floor + EYEHEIGHT;
-	env->player.velocity.x = 1.0;
-	env->player.velocity.y = 1.0;
+	env->player.velocity.x = 0.0;
+	env->player.velocity.y = 0.0;
 	env->player.velocity.z = 0.0;
 	env->player.angle = 0.0;
-	env->player.sector = 1;
+	env->player.sector = 0;
 	env->player.yaw = 0.0;
 
 

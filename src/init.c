@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:38:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/08 22:38:13 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/10 17:51:16 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@ void	init(t_env *env)
 {
     env->yaw = 0;
     env->quit = 0;
+    env->ground = 0;
+    env->falling = 1;
+    env->ducking = 0;
+    env->player.eye = EYEHEIGHT;
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
         ft_error(4);
     else

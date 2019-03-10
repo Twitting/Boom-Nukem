@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 21:52:25 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/09 12:15:09 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/10 19:03:35 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,17 @@ void	keyboard_events(t_env *env, SDL_Event *e)
 		env->wsad[2] = on;
 	if (e->key.keysym.sym == SDLK_d)
 		env->wsad[3] = on;
+	if (e->key.keysym.sym == SDLK_LCTRL || e->key.keysym.sym == SDLK_RCTRL)
+	{
+		env->ducking = on;
+		env->falling = 1;
+	}
+	if (e->key.keysym.sym == SDLK_SPACE && on == 1)
+		if (env->ground)
+		{
+			env->player.velocity.z += 1.5;
+			env->falling = 1;
+		}
 }
 
 void	handle_events(t_env *env, SDL_Event *e)
@@ -45,7 +56,7 @@ void	handle_events(t_env *env, SDL_Event *e)
 	}
 	SDL_GetRelativeMouseState(&x,&y);
 	env->player.angle += x * 3.14159 / 200;
-	env->yaw = CLAMP(env->yaw + y * 0.01, -2, 2);
+	env->yaw = CLAMP(env->yaw + y * 0.01, -3, 3);
 	env->player.yaw = env->yaw;
 	movement_calcs(env);
 }
