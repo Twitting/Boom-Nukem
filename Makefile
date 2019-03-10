@@ -6,7 +6,7 @@
 #    By: twitting <twitting@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/03/08 15:45:13 by twitting         ###   ########.fr        #
+#    Updated: 2019/03/10 14:26:05 by twitting         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,9 @@ SRC = ./src/main.c \
 		./src/movement.c
 LIBFT = ./libft/libft.a
 OBJECTS = $(SRC:.c=.o)
-WWW = -Wall -Wextra -Werror
-INCLUDES = -I libft -I includes/ -I ~/Library/Frameworks/SDL2.framework/Versions/A/Headers
-SDL =  -framework SDL2 -F ~/Library/Frameworks/
+WWW = -Wall -Wextra -Werror -Ofast
+INCLUDES = -I libft -I includes/ -I includes/frameworks/SDL2.framework/Versions/A/Headers
+SDL =  -framework SDL2 -F includes/frameworks/
 FLAGS_LINUX = -I ./includes/ -lm -lpthread -lSDL2main -lSDL2 -I libft
 
 all: $(NAME)
