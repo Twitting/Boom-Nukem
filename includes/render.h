@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:42:12 by ebednar           #+#    #+#             */
-/*   Updated: 2019/03/06 17:49:45 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/03/11 18:26:44 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@ typedef struct	s_now
 	int			sx2;
 }				t_now;
 
+enum
+{
+				maxqueue = 8
+};
 
 typedef struct	s_rend
 {
@@ -54,6 +58,18 @@ typedef struct	s_rend
 				int		cya;
 				int		yb;
 				int		cyb;
+				float	nyceil;
+				float	nyfloor;
+				int		ny1a;
+				int		ny1b;
+				int		ny2a;
+				int		ny2b;
+				int		nya;
+				int		ncya;
+				int		nyb;
+				int		ncyb;
+				t_now	*head;
+				t_now	*tail;
 }				t_rend;
 
 #endif

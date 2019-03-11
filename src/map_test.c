@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_test.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:25:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/10 17:07:09 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/11 16:27:21 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ t_env	*structure_init(void)
 		env->sector[i].light = 1;
 		i++;
 	}
+	env->sector[1].ceiling = 12.0;
 	env->sector[1].floor = 2.0;
 
 	env->sector[0].neighbors = (int *)malloc(sizeof(int) * 4);
