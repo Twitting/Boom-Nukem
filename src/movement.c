@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:10:46 by ebednar           #+#    #+#             */
-/*   Updated: 2019/03/12 16:10:08 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/12 18:54:45 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	v_collision(t_env *env)
 	}
 }
 
-void	h_collision(t_env *env, t_xy *p, t_xy *d)
+void	h_collision(t_env *env, t_xy *p, t_xy *d, t_xy *dd)
 {
 	int			s;
 	t_sector	sect;
@@ -49,8 +49,8 @@ void	h_collision(t_env *env, t_xy *p, t_xy *d)
 	t_xy		pd;
 
 	sect = env->sector[env->player.sector];
-	pd.x = p->x + d->x;
-	pd.y = p->y + d->y;
+	pd.x = p->x + dd->x;
+	pd.y = p->y + dd->y;
 	s = -1;
 	while (++s < (int)sect.npoints)
 		if (intersect_box(*p, pd, sect.vertex[s % sect.npoints], 
@@ -102,6 +102,7 @@ void	movement(t_env *env, float dx, float dy)
 void	wsad_read(t_env *env)
 {
 	t_xy	mv;
+	t_xy	dmv;
 
 	mv.x = 0;
 	mv.y = 0;
@@ -125,8 +126,32 @@ void	wsad_read(t_env *env)
 		mv.x -= sin(env->player.angle) * 0.2;
 		mv.y += cos(env->player.angle) * 0.2;
 	}
-	env->player.velocity.x = env->player.velocity.x * 0.8 + mv.x * 0.2;
-	env->player.velocity.y = env->player.velocity.y * 0.8 + mv.y * 0.2;
+	dmv.x = 0;
+	dmv.y = 0;
+	if (env->wsad[0])
+	{
+		dmv.x += cos(env->player.angle) * 1;
+		dmv.y += sin(env->player.angle) * 1;
+	}
+	if (env->wsad[1])
+	{
+		dmv.x -= cos(env->player.angle) * 1;
+		dmv.y -= sin(env->player.angle) * 1;
+	}
+	if (env->wsad[2])
+	{
+		dmv.x += sin(env->player.angle) * 1;
+		dmv.y -= cos(env->player.angle) * 1;
+	}
+	if (env->wsad[3])
+	{
+		dmv.x -= sin(env->player.angle) * 1;
+		dmv.y += cos(env->player.angle) * 1;
+	}
+	env->player.velocity.x = /*env->player.velocity.x * 1*/ + mv.x ;
+	env->player.velocity.y = /*env->player.velocity.y * 1*/ + mv.y ;
+	env->player.dvelocity.x = /*env->player.velocity.x * 1*/ + dmv.x ;
+	env->player.dvelocity.y = /*env->player.velocity.y * 1*/ + dmv.y ;
 	env->moving = (mv.x != 0 || mv.y != 0 || env->falling) ? 1 : 0;
 }
 
@@ -134,6 +159,7 @@ void	movement_calcs(t_env *env)
 {
 	t_xy		p;
 	t_xy		d;
+	t_xy		dd;
 	
 	wsad_read(env);
 	if (env->moving)
@@ -142,8 +168,10 @@ void	movement_calcs(t_env *env)
 		p.y = env->player.where.y;
 		d.x = env->player.velocity.x;
 		d.y = env->player.velocity.y;
+		dd.x = env->player.dvelocity.x;
+		dd.y = env->player.dvelocity.y;
 		v_collision(env);
-		h_collision(env, &p, &d);
+		h_collision(env, &p, &d, &dd);
 		movement(env, d.x, d.y);
 	}
 	movement(env, 0, 0);

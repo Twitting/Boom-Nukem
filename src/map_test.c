@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_test.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:25:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/12 16:12:58 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/12 17:37:09 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,13 @@ t_env	*structure_init(void)
 	i = 0;
 	env->vertex = (t_xy *)malloc(sizeof(t_xy) * env->nvertexes);
 	
-	env->vertex[0].x = 0.0;
-	env->vertex[0].y = 0.0;
+	env->vertex[0].x = 5.0;
+	env->vertex[0].y = 5.0;
 	env->vertex[1].x = 50.0;
-	env->vertex[1].y = 0.0;
-	env->vertex[2].x = 0.0;
+	env->vertex[1].y = 5.0;
+	env->vertex[2].x = 5.0;
 	env->vertex[2].y = 90.0;
-	env->vertex[3].x = 0.0;
+	env->vertex[3].x = 5.0;
 	env->vertex[3].y = 50.0;
 	env->vertex[4].x = 50.0;
 	env->vertex[4].y = 50.0;
