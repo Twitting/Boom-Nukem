@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_test.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:25:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/11 16:27:21 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/03/12 16:12:58 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ t_env	*structure_init(void)
 	{
 		env->sector[i].vertex = (t_xy *)malloc(sizeof(t_xy) * 4);
 		env->sector[i].floor = 0.0;
-		env->sector[i].ceiling = 10.0;
+		env->sector[i].ceiling = 15.0;
 		env->sector[i].npoints = 4;
 		env->sector[i].light = 1;
 		i++;
 	}
-	env->sector[1].ceiling = 12.0;
+	env->sector[1].ceiling = 1000.0;
 	env->sector[1].floor = 2.0;
 
 	env->sector[0].neighbors = (int *)malloc(sizeof(int) * 4);
