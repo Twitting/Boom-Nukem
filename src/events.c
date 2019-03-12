@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 21:52:25 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/12 16:54:55 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/12 19:35:42 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	handle_events(t_env *env, SDL_Event *e)
 		if (e->type == SDL_KEYDOWN || e->type == SDL_KEYUP)
 			keyboard_events(env, e);
 	}
+	SDL_SetRelativeMouseMode(SDL_TRUE);
 	SDL_GetRelativeMouseState(&x,&y);
 	env->player.angle += x * 3.14159 / 200;
 	env->yaw = CLAMP(env->yaw + y * 0.01, -3, 3);
