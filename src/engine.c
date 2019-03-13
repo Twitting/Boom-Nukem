@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/03/12 16:55:40 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/12 23:32:32 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ static void	render_wall(t_env *env)
 
 	rend.head = queue;
 	rend.tail = queue;
+	rend.nyceil = 0;
+	rend.nyfloor = 0;
 	s = -1;
 	while (++s < WWIN)
 		ybottom[s] = HWIN - 1;
