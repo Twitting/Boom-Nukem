@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/03/12 23:32:32 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/14 10:47:48 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static void	render_wall(t_env *env)
 	t_now		now;
 	int			ytop[WWIN] = {0};
 	int			ybottom[WWIN];
-	int			renderedsect[2];
+	int			renderedsect[env->nsectors];
 
 	rend.head = queue;
 	rend.tail = queue;
@@ -93,8 +93,9 @@ static void	render_wall(t_env *env)
 	s = -1;
 	while (++s < WWIN)
 		ybottom[s] = HWIN - 1;
-	renderedsect[0] = 0;
-	renderedsect[1] = 0;
+	s = -1;
+	while (++s < (int)env->nsectors)
+		renderedsect[s] = 0;
 	*(rend.head) = (t_now){env->player.sector, 0, WWIN - 1};
 	if (++rend.head == queue + maxqueue)
 		rend.head = queue;
