@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:10:46 by ebednar           #+#    #+#             */
-/*   Updated: 2019/03/12 18:54:45 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/03/14 23:19:52 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	h_collision(t_env *env, t_xy *p, t_xy *d, t_xy *dd)
 		{
 			double hole_low = sect.neighbors[s] < 0 ? 9e9 : MAX(sect.floor, env->sector[sect.neighbors[s]].floor);
 			double hole_high = sect.neighbors[s] < 0 ? 9e9 : MIN(sect.ceiling, env->sector[sect.neighbors[s]].ceiling);
-			if (hole_high < env->player.where.z + HEADMARGIN || hole_low > env->player.where.z - EYEHEIGHT + KNEEHEIGHT)
+			if (hole_high < env->player.where.z + HEADMARGIN || hole_low > env->player.where.z - (env->ducking ? DUCKHEIGHT : EYEHEIGHT) + KNEEHEIGHT)
 			{
 				ft_putstr("collision\n");
 				b.x = sect.vertex[(s + 1) % sect.npoints].x - sect.vertex[s % sect.npoints].x;
