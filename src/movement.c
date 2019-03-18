@@ -73,12 +73,17 @@ void	h_collision(t_env *env, t_xy *p, t_xy *d, t_xy *dd)
 	env->falling = 1;
 }
 
+// int can_i_go(t_env *env, double x, double y, t_xy *points)
+// {
+
+// }
 void	movement(t_env *env, float dx, float dy)
 {
 	t_xy		p;
 	t_xy		dp;
 	t_sector	sect;
 	int			s;
+
 
 	p.x = env->player.where.x;
 	p.y = env->player.where.y;
@@ -95,6 +100,56 @@ void	movement(t_env *env, float dx, float dy)
 			env->player.sector = sect.neighbors[s];
 			break;
 		}
+	unsigned int i = 0;
+	// while (env->sector[env->player.sector].vertex[i].x)
+	// {
+	// 	float oldX = env->sector[env->player.sector].vertex[i].x;
+	// 	float oldY = env->sector[env->player.sector].vertex[i].y;
+	// 	float newX = env->sector[env->player.sector].vertex[i + 1].x;
+	// 	float newY = env->sector[env->player.sector].vertex[i + 1].y;
+	// 	if ((oldX - newX == 0 && oldY - newY != 0) || (oldX - newX != 0 && oldY - newY == 0))
+	// 		printf("wall\n");
+	// 	printf("%f  %f \n", env->sector[env->player.sector].vertex[i].x, env->sector[env->player.sector].vertex[i].y);
+	// 	i++;
+	// }
+	t_xy points[sect.npoints];
+	unsigned int counter = 0;
+	while (i < env->sector[env->player.sector].npoints)
+	{
+		points[i].x = sect.vertex[i].x;
+		points[i].y = sect.vertex[i].y;
+		//printf("%f   %f\n", points[i].x, points[i].y);
+		i++;
+	}
+	i = 0;
+	while (i < sect.npoints)
+	{
+		if (points[i + 1].x && (points[i + 1].x - points[i].x == 0 || points[i + 1].y - points[i].y == 0))
+		{
+			printf("i+1\n");
+			counter++;
+		}
+		else if (!points[i + 1].x && (points[0].x - points[i].x == 0 || points[0].y - points[i].y == 0))
+		{
+			printf("i 0\n");
+			counter++;
+		}
+		else
+		{
+			//printf("X: %f %f \n", points[i].x, points[i - 1].x);
+		}
+		
+		i++;
+	}
+	printf("%d %d \n", counter, sect.npoints);
+	if (counter == env->sector[env->player.sector].npoints)
+	{
+		//printf("okkk\n");
+		// env->player.where.x += dx;
+		// env->player.where.y += dy;
+	}
+	//else
+		//printf("no\n");
 	env->player.where.x += dx;
 	env->player.where.y += dy;
 }
@@ -160,7 +215,7 @@ void	movement_calcs(t_env *env)
 	t_xy		p;
 	t_xy		d;
 	t_xy		dd;
-	
+
 	wsad_read(env);
 	if (env->moving)
 	{
@@ -175,5 +230,4 @@ void	movement_calcs(t_env *env)
 		movement(env, d.x, d.y);
 	}
 	movement(env, 0, 0);
-	
 }
