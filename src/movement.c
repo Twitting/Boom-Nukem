@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:10:46 by ebednar           #+#    #+#             */
-/*   Updated: 2019/03/12 18:54:45 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/03/19 14:50:15 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,17 +126,17 @@ void	movement(t_env *env, float dx, float dy)
 	{
 		if (points[i + 1].x && (points[i + 1].x - points[i].x == 0 || points[i + 1].y - points[i].y == 0))
 		{
-			printf("i+1\n");
+			//printf("i+1\n");
 			counter++;
 		}
 		else if (!points[i + 1].x && (points[0].x - points[i].x == 0 || points[0].y - points[i].y == 0))
 		{
-			printf("i 0\n");
+			//printf("i 0\n");
 			counter++;
 		}
 		else
 		{
-			//printf("X: %f %f \n", points[i].x, points[i - 1].x);
+			printf("X: %f %f    X2: %f %f\n", points[i].x, points[(i + 1) % sect.npoints].x, sect.vertex[i].x, sect.vertex[(i + 1) % sect.npoints].x);
 		}
 		
 		i++;
@@ -144,7 +144,7 @@ void	movement(t_env *env, float dx, float dy)
 	printf("%d %d \n", counter, sect.npoints);
 	if (counter == env->sector[env->player.sector].npoints)
 	{
-		//printf("okkk\n");
+		printf("okkk\n");
 		// env->player.where.x += dx;
 		// env->player.where.y += dy;
 	}
