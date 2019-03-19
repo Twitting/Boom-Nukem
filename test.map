@@ -1,5 +1,5 @@
 vertex	10	20
-vertex	10	100
+vertex	25	100
 vertex	10	120
 vertex	30	10
 vertex	30	30
@@ -21,4 +21,4 @@ sector	2 30	10 11 12 15 14		-1 3 -1 -1 1
 sector	4 30	1 2 12 11 5		-1 -1 2 -1 4
 sector	6 30	0 1 5 4 3		-1 3 -1 0 -1
 
-player	20 40	23 0
+player	30 20	23 4
