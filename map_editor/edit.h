@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:16:36 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/19 19:23:41 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/21 00:04:51 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,26 @@
 
 # include <stdio.h>/////////////////////////////////////////////
 
+# define SECT edit->sectors[edit->sectnum]
 # define WWIN 1024
 # define HWIN 768
+
+typedef struct		s_xy
+{
+	int				x;
+	int				y;
+}					t_xy;
+
+typedef struct		s_sector
+{
+	int				floor;
+	int				ceiling;
+	t_xy			vertex[64];
+	int				neighbors[64];
+	unsigned int	npoints;
+	unsigned int	light;
+	int				finished;
+}					t_sector;
 
 typedef struct		s_line
 {
@@ -39,9 +57,15 @@ typedef struct		s_edit
 	SDL_Window		*window;
 	int				quit;
 	t_line			nowln;
-	int				click;
+	t_sector		sectors[256];
+	int				sectnum;
+	int				vertnum;
+	int				put;
+	int				cmp_port[16]; //x0,y0,x1,y1,s1,v1,s2,v2 and the same for second point
+	int				check1;
 }					t_edit;
 
+t_edit	*init();
 int		putline(t_edit *edit, t_line *l);
 
 #endif

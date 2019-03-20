@@ -6,24 +6,25 @@
 #    By: twitting <twitting@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/03/19 19:24:51 by twitting         ###   ########.fr        #
+#    Updated: 2019/03/20 18:27:12 by twitting         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = map_editor
 SRC = ./main.c \
-	./putline.c
+	./putline.c \
+	./initedit.c
 LIBFT = ../libft/libft.a
 OBJECTS = $(SRC:.c=.o)
 WWW = -Wall -Wextra -Werror -Ofast
 INCLUDES = -I ../libft -I ../includes/ -I ../includes/frameworks/SDL2.framework/Versions/A/Headers
 SDL =  -framework SDL2 -F ../includes/frameworks/
-FLAGS_LINUX = -I ../includes/ -lm -lpthread -lSDL2main -lSDL2 -I libft
+FLAGS_LINUX = -I ../includes/ -lm -lpthread -lSDL2main -lSDL2 -I ../libft
 
 all: $(NAME)
 
 linux:
-	make re -C libft/
+	make re -C ../libft/
 	sudo gcc $(WWW) $(SRC) $(LIBFT) $(FLAGS_LINUX) -o $(NAME)
 
 $(NAME): $(OBJECTS)
