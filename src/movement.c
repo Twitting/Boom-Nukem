@@ -6,7 +6,7 @@
 /*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:10:46 by ebednar           #+#    #+#             */
-/*   Updated: 2019/03/19 17:56:55 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/03/20 15:01:09 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,26 +80,27 @@ int can_i_go(t_env *doom, t_xy *points, double x, double y)
 	double oldposy = y;
 	double a, b, c;
 	double hh[doom->sector[doom->player.sector].npoints];
-
 	unsigned int i = 0;
+	unsigned int ii = i % doom->sector[doom->player.sector].npoints;
+	unsigned int ii1 = (i + 1) % doom->sector[doom->player.sector].npoints;
 	while (i < doom->sector[doom->player.sector].npoints)
 	{
 		
 		a = sqrt(pow(points[i].x - oldposx, 2) + pow(points[i].y - oldposy, 2));
-		b = sqrt(pow(points[(i + 1) % doom->sector[doom->player.sector].npoints].x - oldposx, 2) + pow(points[(i + 1) % doom->sector[doom->player.sector].npoints].y - oldposy, 2));
-		c = sqrt(pow(points[i].x - points[(i + 1) % doom->sector[doom->player.sector].npoints].x, 2) + pow(points[i].y - points[i + 1].y, 2));
+		b = sqrt(pow(points[ii1].x - oldposx, 2) + pow(points[ii1].y - oldposy, 2));
+		c = sqrt(pow(points[i].x - points[ii1].x, 2) + pow(points[i].y - points[ii1].y, 2));
 		double s = 0.25 * sqrt(pow(pow(a, 2) + pow(b, 2) + pow(c, 2), 2) - 2 * (pow(a, 4) + pow(b, 4) + pow(c, 4)));
 		hh[i] = (2 * s) / c;
 		//printf("B: %f\n", b);
 		if (i == 4)
 		{
-			printf("PX: %f   PY:  %f  S: %f  ABC: %f  %f   %f\n\n", points[i].x, points[i].y, s, a, b, c);
+			printf("PX: %f   PY:  %f  S: %f  ABC: %f  %f   %f  H: %f\n\n", points[i].x, points[i].y, s, a, b, c, hh[i]);
 		}
-		printf("%f   %d   %d B: %f\n", hh[i], doom->sector[doom->player.sector].neighbors[i], i,b);
-		if (hh[i] < 1.0 /*|| (doom->sector[doom->player.sector].neighbors[i] != -1)*/)
+		printf("H: %f   NEIB:%d   i:%d B: %f\n", hh[ii], doom->sector[doom->player.sector].neighbors[i], i,b);
+		if (hh[ii] < 0.1 && (doom->sector[doom->player.sector].neighbors[ii] == -1))
 		{
-			printf("\nhhI = %f\n", hh[i]);
-			printf("neb %f   %d  \n", hh[i], doom->sector[doom->player.sector].neighbors[i]);
+			printf("\nhhI = %f\n", hh[ii]);
+			printf("neb %f   %d  \n", hh[ii], doom->sector[doom->player.sector].neighbors[i]);
 
 			return (0);
 		}
@@ -156,28 +157,30 @@ void	movement(t_env *env, float dx, float dy)
 	i = 0;
 	while (i < sect.npoints)
 	{
-		if (points[(i + 1) % sect.npoints].x && (points[(i + 1) % sect.npoints].x - points[i].x == 0 || points[i + 1].y - points[i].y == 0))
+		if (points[(i + 1) % sect.npoints].x && (points[(i + 1) % sect.npoints].x - points[(i + 1) % env->sector[env->player.sector].npoints].x == 0 || points[i + 1].y - points[(i + 1) % env->sector[env->player.sector].npoints].y == 0))
 		{
 			//printf("i+1 %f\n", points[i +1].x);
 			counter++;
 		}
-		else if (!points[(i + 1) % sect.npoints].x && (points[0].x - points[i].x == 0 || points[0].y - points[i].y == 0))
+		else if (!points[i].x && (points[0].x - points[(i + 1) % env->sector[env->player.sector].npoints].x == 0 || points[0].y - points[(i + 1) % env->sector[env->player.sector].npoints].y == 0))
 		{
 			//printf("i 0\n");
 			counter++;
 		}
 		i++;
+		
 	}
 	
-	//printf("%d %d \n", counter, sect.npoints);
+	printf("%d %d \n", counter, env->sector[env->player.sector].npoints);
 	//printf("go %d\n",can_i_go(env, points));
-	if (counter == env->sector[env->player.sector].npoints)
-	{
-		//printf("okkk\n");
-		env->player.where.x += dx;
-		env->player.where.y += dy;
-	}
-	else if (can_i_go(env, points, env->player.where.x + dx, env->player.where.y + dy))
+	// if (counter == env->sector[env->player.sector].npoints)
+	// {
+	// 	printf("okkk\n");
+	// 	env->player.where.x += dx;
+	// 	env->player.where.y += dy;
+	// }
+	// else
+	 if (can_i_go(env, points, env->player.where.x + dx, env->player.where.y + dy))
 	{
 		printf("gogo\n");
 		env->player.where.x += dx;
