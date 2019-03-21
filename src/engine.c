@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/03/14 10:47:48 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/03/21 15:09:03 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static void	render_wall(t_env *env)
 	s = -1;
 	while (++s < (int)env->nsectors)
 		renderedsect[s] = 0;
-	*(rend.head) = (t_now){env->player.sector, 0, WWIN - 1};
+	*(rend.head) = (t_now){PSECT, 0, WWIN - 1};
 	if (++rend.head == queue + maxqueue)
 		rend.head = queue;
 	do 
@@ -111,14 +111,14 @@ static void	render_wall(t_env *env)
 		nowsect = &(env->sector[now.sectorno]);
 		while (++s < (int)nowsect->npoints)
 		{
-			rend.vx1 = nowsect->vertex[s % nowsect->npoints].x - env->player.where.x;
-			rend.vy1 = nowsect->vertex[s % nowsect->npoints].y - env->player.where.y;
-			rend.vx2 = nowsect->vertex[(s + 1) % nowsect->npoints].x - env->player.where.x;
-			rend.vy2 = nowsect->vertex[(s + 1) % nowsect->npoints].y - env->player.where.y;
-			rend.t1.x = rend.vx1 * sin(env->player.angle) - rend.vy1 * cos(env->player.angle);
-			rend.t1.y = rend.vx1 * cos(env->player.angle) + rend.vy1 * sin(env->player.angle);
-			rend.t2.x = rend.vx2 * sin(env->player.angle) - rend.vy2 * cos(env->player.angle);
-			rend.t2.y = rend.vx2 * cos(env->player.angle) + rend.vy2 * sin(env->player.angle);
+			rend.vx1 = nowsect->vertex[s % nowsect->npoints].x - PWHERE.x;
+			rend.vy1 = nowsect->vertex[s % nowsect->npoints].y - PWHERE.y;
+			rend.vx2 = nowsect->vertex[(s + 1) % nowsect->npoints].x - PWHERE.x;
+			rend.vy2 = nowsect->vertex[(s + 1) % nowsect->npoints].y - PWHERE.y;
+			rend.t1.x = rend.vx1 * sin(PANGLE) - rend.vy1 * cos(PANGLE);
+			rend.t1.y = rend.vx1 * cos(PANGLE) + rend.vy1 * sin(PANGLE);
+			rend.t2.x = rend.vx2 * sin(PANGLE) - rend.vy2 * cos(PANGLE);
+			rend.t2.y = rend.vx2 * cos(PANGLE) + rend.vy2 * sin(PANGLE);
 			if (rend.t1.y <= 0 && rend.t2.y <= 0)
 				continue ;
 			wallintersect(&rend);
@@ -130,12 +130,12 @@ static void	render_wall(t_env *env)
 			rend.x2 = WWIN / 2 - (int)(rend.t2.x * rend.xscale2);
 			if (rend.x1 >= rend.x2 || rend.x2 < now.sx1 || rend.x1 > now.sx2)
 				continue;
-			rend.yceil = nowsect->ceiling - env->player.where.z;
-			rend.yfloor = nowsect->floor - env->player.where.z;
+			rend.yceil = nowsect->ceiling - PWHERE.z;
+			rend.yfloor = nowsect->floor - PWHERE.z;
 			if (nowsect->neighbors[s] >= 0)
 			{
-				rend.nyceil = env->sector[nowsect->neighbors[s]].ceiling - env->player.where.z;
-				rend.nyfloor = env->sector[nowsect->neighbors[s]].floor - env->player.where.z;
+				rend.nyceil = env->sector[nowsect->neighbors[s]].ceiling - PWHERE.z;
+				rend.nyfloor = env->sector[nowsect->neighbors[s]].floor - PWHERE.z;
 			}
 			rend.y1a = HWIN / 2 - (int)(YAW(rend.yceil, rend.t1.y) * rend.yscale1);
 			rend.y1b = HWIN / 2 - (int)(YAW(rend.yfloor, rend.t1.y) * rend.yscale1);

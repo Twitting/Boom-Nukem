@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/12 17:58:16 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/03/21 15:36:21 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,17 @@
 # define KNEEHEIGHT 2.0
 # define HFOV 0.73 * HWIN
 # define VFOV 0.2 * HWIN
+
+/* daharwoo*/
+# define PSECT env->player.sector
+# define PEYE env->player.eye
+# define PVELOSITY env->player.velocity
+# define PWHERE env->player.where
+# define PANGLE env->player.angle
+
+# define ESECTOR env->sector
+/* daharwoo*/
+
 
 # define MIN(a, b) (((a < b)) ? (a) : (b))
 # define MAX(a, b) (((a > b)) ? (a) : (b))

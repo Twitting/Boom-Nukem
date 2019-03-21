@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:20:03 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/08 22:52:22 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/21 15:09:03 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int main(void)
 	SDL_ShowCursor(SDL_DISABLE);
 	while (!(env->quit))
 		start_engine(env, &e);
-	printf("%lf\n", env->player.angle);
+	printf("%lf\n", PANGLE);
 	SDL_DestroyWindow(env->window);
 	SDL_Quit();
 	return (0);

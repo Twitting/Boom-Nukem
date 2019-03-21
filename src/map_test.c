@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_test.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:25:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/13 18:38:21 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/21 15:09:03 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,22 +65,22 @@ void	parseplayer(t_env *env, char *line)
 	i = 0;
 	while (line[i] != '\t')
 		i++;
-	env->player.where.x = ft_atoi(&line[i]);
+	PWHERE.x = ft_atoi(&line[i]);
 	while (line[i] != ' ')
 		i++;
-	env->player.where.y = ft_atoi(&line[i]);
+	PWHERE.y = ft_atoi(&line[i]);
 	while (line[i] != '\t')
 		i++;
-	env->player.angle = (ft_atoi(&line[i]) % 360) * M_PI / 180;
+	PANGLE = (ft_atoi(&line[i]) % 360) * M_PI / 180;
 	while (line[i] != ' ')
 		i++;
-	env->player.sector = ft_atoi(&line[i]);
-	ft_putnbr(env->player.sector);
-	env->player.velocity.x = 0.0;
-	env->player.velocity.y = 0.0;
-	env->player.velocity.z = 0.0;
+	PSECT = ft_atoi(&line[i]);
+	ft_putnbr(PSECT);
+	PVELOSITY.x = 0.0;
+	PVELOSITY.y = 0.0;
+	PVELOSITY.z = 0.0;
 	env->player.yaw = 0.0;
-	env->player.where.z = env->sector[env->player.sector].floor + EYEHEIGHT;
+	PWHERE.z = env->sector[PSECT].floor + EYEHEIGHT;
 }
 
 void	parsesectors(t_env *env, int fd)
@@ -222,15 +222,15 @@ t_env	*structure_init(void)
 	env->sector[1].vertex[1] = env->vertex[4];
 	env->sector[1].vertex[2] = env->vertex[5];
 	env->sector[1].vertex[3] = env->vertex[2];
-	env->player.where.x = 20.0;
-	env->player.where.y = 50.0;
-	env->player.velocity.x = 0.0;
-	env->player.velocity.y = 0.0;
-	env->player.velocity.z = 0.0;
-	env->player.angle = 0.0;
-	env->player.sector = 0;
+	PWHERE.x = 20.0;
+	PWHERE.y = 50.0;
+	PVELOSITY.x = 0.0;
+	PVELOSITY.y = 0.0;
+	PVELOSITY.z = 0.0;
+	PANGLE = 0.0;
+	PSECT = 0;
 	env->player.yaw = 0.0;
-	env->player.where.z = env->sector[env->player.sector].floor + EYEHEIGHT;
+	PWHERE.z = env->sector[PSECT].floor + EYEHEIGHT;
 */
 
 	return (env);

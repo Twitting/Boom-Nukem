@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 21:52:25 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/12 19:35:42 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/03/21 15:09:03 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	keyboard_events(t_env *env, SDL_Event *e)
 	if (e->key.keysym.sym == SDLK_SPACE && on == 1)
 		if (env->ground)
 		{
-			env->player.velocity.z += 0.5;
+			PVELOSITY.z += 0.5;
 			env->falling = 1;
 		}
 }
@@ -56,7 +56,7 @@ void	handle_events(t_env *env, SDL_Event *e)
 	}
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	SDL_GetRelativeMouseState(&x,&y);
-	env->player.angle += x * 3.14159 / 200;
+	PANGLE += x * 3.14159 / 200;
 	env->yaw = CLAMP(env->yaw + y * 0.01, -3, 3);
 	env->player.yaw = env->yaw;
 	movement_calcs(env);
