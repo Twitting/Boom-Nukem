@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:16:36 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/21 12:51:23 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/21 19:25:01 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ typedef struct		s_edit
 	int				vertnum;
 	int				glvertnum;
 	int				put;
-	int				cmp_port[16]; //x0,y0,x1,y1,s1,v1,s2,v2 and the same for second point
-	int				check1;
+	int				portvert1;
+	int				portvert2;
 }					t_edit;
 
 t_edit	*init();

@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 18:26:05 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/21 12:51:24 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/21 19:25:03 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ t_edit	*init()
 	edit->nowln.color = 0xffffff;
 	edit->sectnum = 0;
 	edit->vertnum = 0;
-	edit->check1 = 0;
 	sectvertinit(edit);
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 		ft_putchar('!');//ft_error(4);

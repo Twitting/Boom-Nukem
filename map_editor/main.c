@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:16:17 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/21 12:57:59 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/21 22:13:04 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,153 +66,94 @@ int		addvertex(t_edit *edit, int x, int y)
 			}
 		i++;
 	}
-	SECT.vertex[edit->vertnum] = edit->glvertnum;
-	edit->verts[edit->glvertnum].x = x;
-	edit->verts[edit->glvertnum].y = y;
-	edit->glvertnum++;
+	i = 0;
+	while ((int)i < edit->glvertnum)
+	{
+		if (edit->verts[i].x == x && edit->verts[i].y == y)
+		{
+			SECT.vertex[edit->vertnum] = i;
+			i = 1000000;
+			break;
+		}
+		i++;
+	}
+	if (i != 1000000)
+	{
+		SECT.vertex[edit->vertnum] = edit->glvertnum;
+		edit->verts[edit->glvertnum].x = x;
+		edit->verts[edit->glvertnum].y = y;
+		edit->glvertnum++;
+	}
 	showvertex(edit, SECT);
 	edit->put = 1;
 	SECT.npoints++;
 	edit->vertnum++;
 	return (1);
 }
-/*
-void	cmp_nulling(t_edit *edit)
-{
-	int	i;
 
-	i = 0;
-	while (i < 16)
-	{
-		CMP[i] = 0;
-		i++;
-	}
-}
-*/
 /*RB click on vertex, which belongs to two sectors, then 
 RB click on another vertex, which belongs two previous sectors
 and is next to first vertex in both sectors*/
-/*
-int		checkfirst(t_edit *edit, int x, int y)
+
+int		getfirstvert(t_edit *edit, int x, int y)
 {
 	int		i;
-	unsigned int		j;
-	int		f;
 
-	f = 0;
 	i = 0;
+	while (i < edit->glvertnum)
+	{
+		if (edit->verts[i].x == x && edit->verts[i].y == y)
+		{
+			edit->portvert1 = i;
+			break ;//can be deleted if no vertexes with same x y 
+		}
+		i++;
+	}
+	if (edit->portvert1 >= 0)
+		return (1);
+	return (0);
+}
+
+int		getsecondvert(t_edit *edit, int x, int y)
+{
+	int		i;
+
+	i = 0;
+	while (i < edit->glvertnum)
+	{
+		if (edit->verts[i].x == x && edit->verts[i].y == y)
+		{
+			edit->portvert2 = i;
+			break ;//can be deleted if no vertexes with same x y 
+		}
+		i++;
+	}
+	if (edit->portvert2 >= 0)
+		return (1);
+	return (0);
+}
+
+void	portalcheck(t_edit *edit)
+{
+	int i;
+	unsigned int j;
+
+	i = 0;
+	if (edit->portvert1 == edit->portvert2)
+	{
+		ft_putstr("Portal can be set by two vertexes\n");
+		return;
+	}
 	while (i < edit->sectnum)
 	{
 		j = 0;
 		while (j < edit->sectors[i].npoints)
 		{
-			if (edit->sectors[i].vertex[j].x == x && edit->sectors[i].vertex[j].y == y && f == 0)
-			{
-				CMP[0] = x;
-				CMP[1] = y;
-				CMP[4] = i;
-				CMP[5] = j;
-				f = 1;
-			}
-			else if (edit->sectors[i].vertex[j].x == x && edit->sectors[i].vertex[j].y == y && f == 1)
-			{
-				CMP[2] = x;
-				CMP[3] = y;
-				CMP[6] = i;
-				CMP[7] = j;
-			}
+			//STOP POINT!!!!!!!!
 			j++;
 		}
 		i++;
 	}
-	
-	ft_putnbr(CMP[0]);
-	ft_putchar(' ');
-	ft_putnbr(CMP[1]);
-	ft_putchar(' ');
-	ft_putnbr(CMP[2]);
-	ft_putchar(' ');
-	ft_putnbr(CMP[3]);
-	ft_putchar('	');
-	ft_putnbr(CMP[4]);
-	ft_putchar(' ');
-	ft_putnbr(CMP[5]);
-	ft_putchar(' ');
-	ft_putnbr(CMP[6]);
-	ft_putchar(' ');
-	ft_putnbr(CMP[7]);
-	ft_putchar(' ');
-	ft_putchar('\n');
-	if (CMP[0] == CMP[2] && CMP[1] == CMP[3])
-		return (1);
-	return (0);
-}
-
-int		checksecond(t_edit *edit, int x, int y)
-{
-	int		i;
-	unsigned int		j;
-	int		f;
-
-	f = 0;
-	i = 0;
-	while (i < edit->sectnum)
-	{
-		j = 0;
-		while (j < edit->sectors[i].npoints)
-		{
-			if (edit->sectors[i].vertex[j].x == x && edit->sectors[i].vertex[j].y == y && f == 0)
-			{
-				CMP[8] = x;
-				CMP[9] = y;
-				CMP[12] = i;
-				CMP[13] = j;
-				f = 1;
-			}
-			else if (edit->sectors[i].vertex[j].x == x && edit->sectors[i].vertex[j].y == y && f == 1)
-			{
-				CMP[10] = x;
-				CMP[11] = y;
-				CMP[14] = i;
-				CMP[15] = j;
-			}
-			j++;
-		}
-		i++;
-	}
-	
-	ft_putnbr(CMP[8]);
-	ft_putchar('.');
-	ft_putnbr(CMP[9]);
-	ft_putchar('.');
-	ft_putnbr(CMP[10]);
-	ft_putchar('.');
-	ft_putnbr(CMP[11]);
-	ft_putchar('	');
-	ft_putnbr(CMP[12]);
-	ft_putchar('.');
-	ft_putnbr(CMP[13]);
-	ft_putchar('.');
-	ft_putnbr(CMP[14]);
-	ft_putchar('.');
-	ft_putnbr(CMP[15]);
-	ft_putchar('.');
-	ft_putchar('\n');
-	if (CMP[8] == CMP[10] && CMP[9] == CMP[11])
-		return (1);
-	return (0);
-}
-
-int		checkthird(t_edit *edit)
-{
-	edit->check1 = 0;
-	if (!(CMP[0] == CMP[8] && CMP[1] == CMP[9]) &&
-		(CMP[4] == CMP[12] || CMP[4] == CMP[14]) &&
-		(CMP[6] == CMP[12] || CMP[6] == CMP[14]) &&
-		(abs(CMP[5] - CMP[13]) < 2 || (CMP[5] == 0 && CMP[13] == (int)edit->sectors[CMP[12]].npoints - 1) || (CMP[13] == 0 && CMP[5] == (int)edit->sectors[CMP[12]].npoints - 1)) &&
-		(abs(CMP[7] - CMP[15]) < 2 || (CMP[7] == 0 && CMP[15] == (int)edit->sectors[CMP[14]].npoints - 1) || (CMP[15] == 0 && CMP[7] == (int)edit->sectors[CMP[14]].npoints - 1)))
-	ft_putstr("all good!\n");
-	return (1);
 }
 
 void	makeportals2(t_edit *edit)
@@ -223,13 +164,12 @@ void	makeportals2(t_edit *edit)
 	SDL_GetMouseState(&x,&y);
 	x = (x + 12) / 25 * 25;
 	y = (y + 12) / 25 * 25;
-	if (checksecond(edit, x / 25 * 10, y / 25 * 10))
+	if (getsecondvert(edit, x / 25 * 10, y / 25 * 10))
 	{
-		if (checkthird(edit))
-			ft_putchar('+');
+		ft_putnbr(edit->portvert2);
+		ft_putstr(" portvert2\n");
+		portalcheck(edit);
 	}
-	else
-		edit->check1 = 0;
 }
 
 void	makeportals1(t_edit *edit)
@@ -237,16 +177,17 @@ void	makeportals1(t_edit *edit)
 	int x;
 	int y;
 
-	cmp_nulling(edit);
+	edit->portvert1 = -1;
+	edit->portvert2 = -1;
 	SDL_GetMouseState(&x,&y);
 	x = (x + 12) / 25 * 25;
 	y = (y + 12) / 25 * 25;
-	if (checkfirst(edit, x / 25 * 10, y / 25 * 10))
+	if (getfirstvert(edit, x / 25 * 10, y / 25 * 10))
 	{
-		ft_putstr("check1\n");
-		edit->check1 = 1;
+		ft_putnbr(edit->portvert1);
+		ft_putstr(" portvert1\n");
 	}
-}*/
+}
 
 void	putsectors(t_edit *edit)
 {
@@ -286,11 +227,10 @@ void	handle_events(t_edit *edit, SDL_Event *e)
 			ft_putnbr(atoi(e->text.text));
 		if (e->type == SDL_MOUSEBUTTONDOWN && e->button.button == SDL_BUTTON_LEFT)
 			putsectors(edit);
-	/*	if (e->type == SDL_MOUSEBUTTONUP && e->button.button == SDL_BUTTON_RIGHT && edit->check1 == 1)
+		if (e->type == SDL_MOUSEBUTTONUP && e->button.button == SDL_BUTTON_RIGHT)
 			makeportals2(edit);
-		if (e->type == SDL_MOUSEBUTTONDOWN && e->button.button == SDL_BUTTON_RIGHT && edit->check1 == 0)
+		if (e->type == SDL_MOUSEBUTTONDOWN && e->button.button == SDL_BUTTON_RIGHT)
 			makeportals1(edit);
-		*/
 		
 		
 		//if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_RETURN)
@@ -301,8 +241,6 @@ void	handle_events(t_edit *edit, SDL_Event *e)
 	
 	//ft_putstr(e->text.text);
 }
-
-
 
 int		main(void)
 {
