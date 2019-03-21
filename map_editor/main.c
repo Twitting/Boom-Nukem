@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:16:17 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/21 00:29:51 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/21 11:17:34 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	cmp_nulling(t_edit *edit)
 	i = 0;
 	while (i < 16)
 	{
-		edit->cmp_port[i] = 0;
+		CMP[i] = 0;
 		i++;
 	}
 }
@@ -105,42 +105,42 @@ int		checkfirst(t_edit *edit, int x, int y)
 		{
 			if (edit->sectors[i].vertex[j].x == x && edit->sectors[i].vertex[j].y == y && f == 0)
 			{
-				edit->cmp_port[0] = x;
-				edit->cmp_port[1] = y;
-				edit->cmp_port[4] = i;
-				edit->cmp_port[5] = j;
+				CMP[0] = x;
+				CMP[1] = y;
+				CMP[4] = i;
+				CMP[5] = j;
 				f = 1;
 			}
 			else if (edit->sectors[i].vertex[j].x == x && edit->sectors[i].vertex[j].y == y && f == 1)
 			{
-				edit->cmp_port[2] = x;
-				edit->cmp_port[3] = y;
-				edit->cmp_port[6] = i;
-				edit->cmp_port[7] = j;
+				CMP[2] = x;
+				CMP[3] = y;
+				CMP[6] = i;
+				CMP[7] = j;
 			}
 			j++;
 		}
 		i++;
 	}
 	
-	ft_putnbr(edit->cmp_port[0]);
+	ft_putnbr(CMP[0]);
 	ft_putchar(' ');
-	ft_putnbr(edit->cmp_port[1]);
+	ft_putnbr(CMP[1]);
 	ft_putchar(' ');
-	ft_putnbr(edit->cmp_port[2]);
+	ft_putnbr(CMP[2]);
 	ft_putchar(' ');
-	ft_putnbr(edit->cmp_port[3]);
+	ft_putnbr(CMP[3]);
 	ft_putchar('	');
-	ft_putnbr(edit->cmp_port[4]);
+	ft_putnbr(CMP[4]);
 	ft_putchar(' ');
-	ft_putnbr(edit->cmp_port[5]);
+	ft_putnbr(CMP[5]);
 	ft_putchar(' ');
-	ft_putnbr(edit->cmp_port[6]);
+	ft_putnbr(CMP[6]);
 	ft_putchar(' ');
-	ft_putnbr(edit->cmp_port[7]);
+	ft_putnbr(CMP[7]);
 	ft_putchar(' ');
 	ft_putchar('\n');
-	if (edit->cmp_port[0] == edit->cmp_port[2] && edit->cmp_port[1] == edit->cmp_port[3])
+	if (CMP[0] == CMP[2] && CMP[1] == CMP[3])
 		return (1);
 	return (0);
 }
@@ -160,49 +160,55 @@ int		checksecond(t_edit *edit, int x, int y)
 		{
 			if (edit->sectors[i].vertex[j].x == x && edit->sectors[i].vertex[j].y == y && f == 0)
 			{
-				edit->cmp_port[8] = x;
-				edit->cmp_port[9] = y;
-				edit->cmp_port[12] = i;
-				edit->cmp_port[13] = j;
+				CMP[8] = x;
+				CMP[9] = y;
+				CMP[12] = i;
+				CMP[13] = j;
 				f = 1;
 			}
 			else if (edit->sectors[i].vertex[j].x == x && edit->sectors[i].vertex[j].y == y && f == 1)
 			{
-				edit->cmp_port[10] = x;
-				edit->cmp_port[11] = y;
-				edit->cmp_port[14] = i;
-				edit->cmp_port[15] = j;
+				CMP[10] = x;
+				CMP[11] = y;
+				CMP[14] = i;
+				CMP[15] = j;
 			}
 			j++;
 		}
 		i++;
 	}
 	
-	ft_putnbr(edit->cmp_port[8]);
+	ft_putnbr(CMP[8]);
 	ft_putchar('.');
-	ft_putnbr(edit->cmp_port[9]);
+	ft_putnbr(CMP[9]);
 	ft_putchar('.');
-	ft_putnbr(edit->cmp_port[10]);
+	ft_putnbr(CMP[10]);
 	ft_putchar('.');
-	ft_putnbr(edit->cmp_port[11]);
+	ft_putnbr(CMP[11]);
 	ft_putchar('	');
-	ft_putnbr(edit->cmp_port[12]);
+	ft_putnbr(CMP[12]);
 	ft_putchar('.');
-	ft_putnbr(edit->cmp_port[13]);
+	ft_putnbr(CMP[13]);
 	ft_putchar('.');
-	ft_putnbr(edit->cmp_port[14]);
+	ft_putnbr(CMP[14]);
 	ft_putchar('.');
-	ft_putnbr(edit->cmp_port[15]);
+	ft_putnbr(CMP[15]);
 	ft_putchar('.');
 	ft_putchar('\n');
-	if (edit->cmp_port[8] == edit->cmp_port[10] && edit->cmp_port[9] == edit->cmp_port[11])
+	if (CMP[8] == CMP[10] && CMP[9] == CMP[11])
 		return (1);
 	return (0);
 }
 
 int		checkthird(t_edit *edit)
 {
-	ft_putstr("all good!");
+	edit->check1 = 0;
+	if (!(CMP[0] == CMP[8] && CMP[1] == CMP[9]) &&
+		(CMP[4] == CMP[12] || CMP[4] == CMP[14]) &&
+		(CMP[6] == CMP[12] || CMP[6] == CMP[14]) &&
+		(abs(CMP[5] - CMP[13]) < 2 || (CMP[5] == 0 && CMP[13] == (int)edit->sectors[CMP[12]].npoints - 1) || (CMP[13] == 0 && CMP[5] == (int)edit->sectors[CMP[12]].npoints - 1)) &&
+		(abs(CMP[7] - CMP[15]) < 2 || (CMP[7] == 0 && CMP[15] == (int)edit->sectors[CMP[14]].npoints - 1) || (CMP[15] == 0 && CMP[7] == (int)edit->sectors[CMP[14]].npoints - 1)))
+	ft_putstr("all good!\n");
 	return (1);
 }
 
@@ -277,9 +283,9 @@ void	handle_events(t_edit *edit, SDL_Event *e)
 			ft_putnbr(atoi(e->text.text));
 		if (e->type == SDL_MOUSEBUTTONDOWN && e->button.button == SDL_BUTTON_LEFT)
 			putsectors(edit);
-		if (e->type == SDL_MOUSEBUTTONDOWN && e->button.button == SDL_BUTTON_RIGHT && edit->check1 == 1)
+		if (e->type == SDL_MOUSEBUTTONUP && e->button.button == SDL_BUTTON_RIGHT && edit->check1 == 1)
 			makeportals2(edit);
-		if (e->type == SDL_MOUSEBUTTONUP && e->button.button == SDL_BUTTON_RIGHT && edit->check1 == 0)
+		if (e->type == SDL_MOUSEBUTTONDOWN && e->button.button == SDL_BUTTON_RIGHT && edit->check1 == 0)
 			makeportals1(edit);
 		
 		

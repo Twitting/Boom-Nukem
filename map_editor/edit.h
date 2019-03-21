@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:16:36 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/21 00:04:51 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/21 11:06:56 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 # include <stdio.h>/////////////////////////////////////////////
 
+# define CMP edit->cmp_port
 # define SECT edit->sectors[edit->sectnum]
 # define WWIN 1024
 # define HWIN 768
