@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:16:17 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/21 11:17:34 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/21 12:57:59 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	showvertex(t_edit *edit, t_sector sect)
 			j = -5;
 			while (j < 5)
 			{
-				pix[((sect.vertex[k].y * 25 / 10) + j) * WWIN +
-					(sect.vertex[k].x * 25 / 10) + i] = 0xffffff;
+				pix[((edit->verts[sect.vertex[k]].y * 25 / 10) + j) * WWIN +
+					(edit->verts[sect.vertex[k]].x * 25 / 10) + i] = 0xffffff;
 				j++;
 			}
 			i++;
@@ -43,7 +43,7 @@ int		addvertex(t_edit *edit, int x, int y)
 {
 	unsigned int	i;
 
-	if (SECT.npoints > 2 && SECT.vertex[0].x == x && SECT.vertex[0].y == y)
+	if (SECT.npoints > 2 && edit->verts[SECT.vertex[0]].x == x && edit->verts[SECT.vertex[0]].y == y)
 		{
 			ft_putnbr(edit->sectnum);
 			ft_putstr(" sector created\n");
@@ -56,7 +56,7 @@ int		addvertex(t_edit *edit, int x, int y)
 	i = 0;
 	while (i < SECT.npoints)
 	{
-		if (x == SECT.vertex[i].x && y == SECT.vertex[i].y)
+		if (x == edit->verts[SECT.vertex[i]].x && y == edit->verts[SECT.vertex[i]].y)
 			{
 				ft_putstr("wrong vertex\n");
 
@@ -66,15 +66,17 @@ int		addvertex(t_edit *edit, int x, int y)
 			}
 		i++;
 	}
-	SECT.vertex[edit->vertnum].x = x;
-	SECT.vertex[edit->vertnum].y = y;
+	SECT.vertex[edit->vertnum] = edit->glvertnum;
+	edit->verts[edit->glvertnum].x = x;
+	edit->verts[edit->glvertnum].y = y;
+	edit->glvertnum++;
 	showvertex(edit, SECT);
 	edit->put = 1;
 	SECT.npoints++;
 	edit->vertnum++;
 	return (1);
 }
-
+/*
 void	cmp_nulling(t_edit *edit)
 {
 	int	i;
@@ -86,10 +88,11 @@ void	cmp_nulling(t_edit *edit)
 		i++;
 	}
 }
-
+*/
 /*RB click on vertex, which belongs to two sectors, then 
 RB click on another vertex, which belongs two previous sectors
 and is next to first vertex in both sectors*/
+/*
 int		checkfirst(t_edit *edit, int x, int y)
 {
 	int		i;
@@ -243,7 +246,7 @@ void	makeportals1(t_edit *edit)
 		ft_putstr("check1\n");
 		edit->check1 = 1;
 	}
-}
+}*/
 
 void	putsectors(t_edit *edit)
 {
@@ -283,11 +286,11 @@ void	handle_events(t_edit *edit, SDL_Event *e)
 			ft_putnbr(atoi(e->text.text));
 		if (e->type == SDL_MOUSEBUTTONDOWN && e->button.button == SDL_BUTTON_LEFT)
 			putsectors(edit);
-		if (e->type == SDL_MOUSEBUTTONUP && e->button.button == SDL_BUTTON_RIGHT && edit->check1 == 1)
+	/*	if (e->type == SDL_MOUSEBUTTONUP && e->button.button == SDL_BUTTON_RIGHT && edit->check1 == 1)
 			makeportals2(edit);
 		if (e->type == SDL_MOUSEBUTTONDOWN && e->button.button == SDL_BUTTON_RIGHT && edit->check1 == 0)
 			makeportals1(edit);
-		
+		*/
 		
 		
 		//if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_RETURN)
@@ -324,7 +327,7 @@ int		main(void)
 		printf("Sector %d: npoints: %d\n", i, edit->sectors[i].npoints);
 		for (unsigned int j = 0; j < edit->sectors[i].npoints; j++)
 		{
-			printf("v %d: x = %d, y = %d,	neighbor: %d\n", j, edit->sectors[i].vertex[j].x, edit->sectors[i].vertex[j].y, edit->sectors[i].neighbors[j]);
+			printf("v %d: x = %d, y = %d,	neighbor: %d\n", edit->sectors[i].vertex[j], edit->verts[edit->sectors[i].vertex[j]].x, edit->verts[edit->sectors[i].vertex[j]].y, edit->sectors[i].neighbors[j]);
 		}
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:16:36 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/21 11:06:56 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/21 12:51:23 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct		s_sector
 {
 	int				floor;
 	int				ceiling;
-	t_xy			vertex[64];
+	int				vertex[64];
 	int				neighbors[64];
 	unsigned int	npoints;
 	unsigned int	light;
@@ -56,11 +56,13 @@ typedef struct		s_edit
 {
 	SDL_Surface		*surface;
 	SDL_Window		*window;
+	t_xy			verts[16384];
 	int				quit;
 	t_line			nowln;
 	t_sector		sectors[256];
 	int				sectnum;
 	int				vertnum;
+	int				glvertnum;
 	int				put;
 	int				cmp_port[16]; //x0,y0,x1,y1,s1,v1,s2,v2 and the same for second point
 	int				check1;

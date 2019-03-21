@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 18:26:05 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/21 00:10:02 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/21 12:51:24 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,9 @@ void	sectvertinit(t_edit *edit) //if segfault on macos see there
 		i = 0;
 		while (i < 64)
 		{
-			edit->sectors[j].vertex[i].x = -1;
-			edit->sectors[j].vertex[i].y = -1;
+			edit->sectors[j].vertex[i] = -1;
+			edit->verts[j * 64 + i].x = -1;
+			edit->verts[j * 64 + i].y = -1;
 			edit->sectors[j].neighbors[i] = -1;
 			edit->sectors[j].light = 1;
 			edit->sectors[j].npoints = 0;
@@ -65,6 +66,7 @@ t_edit	*init()
 	edit = (t_edit *)malloc(sizeof(t_edit));
 	edit->quit = 0;
 	edit->put = 0;
+	edit->glvertnum = 0;
 	edit->nowln.color = 0xffffff;
 	edit->sectnum = 0;
 	edit->vertnum = 0;
