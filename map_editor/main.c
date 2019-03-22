@@ -6,11 +6,20 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:16:17 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/21 22:13:04 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/22 17:49:37 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "edit.h"
+
+void	portalinit(t_edit *edit)
+{
+	int	i;
+
+	i = -1;
+	while (++i < 64)
+		edit->portsects[i] = -1;
+}
 
 void	showvertex(t_edit *edit, t_sector sect)
 {
@@ -104,12 +113,12 @@ int		getfirstvert(t_edit *edit, int x, int y)
 	{
 		if (edit->verts[i].x == x && edit->verts[i].y == y)
 		{
-			edit->portvert1 = i;
-			break ;//can be deleted if no vertexes with same x y 
+			PVERT1 = i;
+			break ;
 		}
 		i++;
 	}
-	if (edit->portvert1 >= 0)
+	if (PVERT1 >= 0)
 		return (1);
 	return (0);
 }
@@ -123,37 +132,116 @@ int		getsecondvert(t_edit *edit, int x, int y)
 	{
 		if (edit->verts[i].x == x && edit->verts[i].y == y)
 		{
-			edit->portvert2 = i;
-			break ;//can be deleted if no vertexes with same x y 
+			PVERT2 = i;
+			break ;
 		}
 		i++;
 	}
-	if (edit->portvert2 >= 0)
+	if (PVERT2 >= 0)
 		return (1);
+	return (0);
+}
+
+int		checknearverts2(t_edit *edit, int first)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < 64 && edit->portsects[i] != -1)
+	{
+		j = 0;
+		while (i != first && j < (int)PSECT.npoints)
+		{
+			if (PSECT.vertex[j] == PVERT1 &&
+				((PSECT.vertex[(j + 1) % PSECT.npoints] == PVERT2) ||
+				(j > 0 && PSECT.vertex[j - 1] == PVERT2) ||
+				(j == 0 && PSECT.vertex[PSECT.npoints - 1] == PVERT2)))
+					return (i);
+			j++;
+		}
+		i++;
+	}
+	return (-1);
+}
+
+void	makeneighbors(t_edit *edit, int sect1, int sect2)
+{
+	int	i;
+
+	i = -1;
+	while (++i < (int)PSECT1.npoints)
+	{
+		if ((PSECT1.vertex[i] == PVERT1 || PSECT1.vertex[i] == PVERT2) &&
+			(PSECT1.vertex[(i + 1) % PSECT1.npoints] == PVERT1 ||
+			PSECT1.vertex[(i + 1) % PSECT1.npoints] == PVERT2))
+			{
+				PSECT1.neighbors[i] = sect2;
+			}
+	}
+	i = -1;
+	while (++i < (int)PSECT2.npoints)
+	{
+		if ((PSECT2.vertex[i] == PVERT1 || PSECT2.vertex[i] == PVERT2) &&
+			(PSECT2.vertex[(i + 1) % PSECT2.npoints] == PVERT1 ||
+			PSECT2.vertex[(i + 1) % PSECT2.npoints] == PVERT2))
+			{
+				PSECT2.neighbors[i] = sect1;
+			}
+	}
+	printf("PORTAL: Sect1:%d, Sect2:%d, vert1:%d, vert2:%d\n", sect1, sect2, PVERT1, PVERT2);
+}
+
+int		checknearverts(t_edit *edit)
+{
+	int	i;
+	int	j;
+	int	check2;
+
+	i = -1;
+	while (++i < 64 && edit->portsects[i] != -1)
+	{
+		j = -1;
+		while (++j < (int)PSECT.npoints)
+		{
+			if (PSECT.vertex[j] == PVERT1 && ((PSECT.vertex[(j + 1) %
+			PSECT.npoints] == PVERT2) || (j > 0 && PSECT.vertex[j - 1] ==
+			PVERT2) || (j == 0 && PSECT.vertex[PSECT.npoints - 1] == PVERT2)))
+				{
+					if ((check2 = checknearverts2(edit, i)) != -1)
+					{
+						makeneighbors(edit, edit->portsects[i],
+							edit->portsects[check2]);
+						return (1);
+					}
+				}
+		}
+	}
 	return (0);
 }
 
 void	portalcheck(t_edit *edit)
 {
-	int i;
-	unsigned int j;
+	int	i;
+	int	j;
+	int	counter;
+	int	sectcounter;
 
-	i = 0;
-	if (edit->portvert1 == edit->portvert2)
+	i = -1;
+	sectcounter = 0;
+	while (++i < edit->sectnum)
 	{
-		ft_putstr("Portal can be set by two vertexes\n");
-		return;
+		j = -1;
+		counter = 0;
+		while (++j < (int)edit->sectors[i].npoints)
+			if (edit->sectors[i].vertex[j] == PVERT1 ||
+				edit->sectors[i].vertex[j] == PVERT2)
+				counter++;
+		if (counter == 2)
+			edit->portsects[sectcounter++] = i;
 	}
-	while (i < edit->sectnum)
-	{
-		j = 0;
-		while (j < edit->sectors[i].npoints)
-		{
-			//STOP POINT!!!!!!!!
-			j++;
-		}
-		i++;
-	}
+	if (checknearverts(edit) == 0)
+		ft_putstr("Incorrect vertexes\n");
 }
 
 void	makeportals2(t_edit *edit)
@@ -166,10 +254,13 @@ void	makeportals2(t_edit *edit)
 	y = (y + 12) / 25 * 25;
 	if (getsecondvert(edit, x / 25 * 10, y / 25 * 10))
 	{
-		ft_putnbr(edit->portvert2);
-		ft_putstr(" portvert2\n");
-		portalcheck(edit);
+		if (PVERT1 == PVERT2)
+			ft_putstr("Portal cannot be set by one vertex\n");
+		else
+			portalcheck(edit);
 	}
+	else
+		ft_putstr("Not a vertex\n");
 }
 
 void	makeportals1(t_edit *edit)
@@ -177,16 +268,14 @@ void	makeportals1(t_edit *edit)
 	int x;
 	int y;
 
-	edit->portvert1 = -1;
-	edit->portvert2 = -1;
+	portalinit(edit);
+	PVERT1 = -1;
+	PVERT2 = -1;
 	SDL_GetMouseState(&x,&y);
 	x = (x + 12) / 25 * 25;
 	y = (y + 12) / 25 * 25;
-	if (getfirstvert(edit, x / 25 * 10, y / 25 * 10))
-	{
-		ft_putnbr(edit->portvert1);
-		ft_putstr(" portvert1\n");
-	}
+	if (!(getfirstvert(edit, x / 25 * 10, y / 25 * 10)))
+		ft_putstr("Not a vertex\n");
 }
 
 void	putsectors(t_edit *edit)
