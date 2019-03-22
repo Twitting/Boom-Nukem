@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:16:17 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/22 22:33:21 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/22 23:13:28 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	putplayer(t_edit *edit)
 	edit->player.x = x;
 	edit->player.y = y;
 	edit->playerangle = 0;
-	edit->playersect = edit->sectnum - 1;
+	edit->playersect = 0;
 	printf("click x - %d	y - %d\n", x, y);
 }
 
