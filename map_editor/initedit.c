@@ -6,11 +6,20 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 18:26:05 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/22 17:18:32 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/22 21:35:20 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "edit.h"
+
+void	portalinit(t_edit *edit)
+{
+	int	i;
+
+	i = -1;
+	while (++i < 64)
+		edit->portsects[i] = -1;
+}
 
 void	makegrid(t_edit *edit)
 {

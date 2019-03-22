@@ -6,14 +6,18 @@
 #    By: twitting <twitting@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/03/20 18:27:12 by twitting         ###   ########.fr        #
+#    Updated: 2019/03/22 21:44:18 by twitting         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = map_editor
 SRC = ./main.c \
 	./putline.c \
-	./initedit.c
+	./initedit.c \
+	./portals.c \
+	./portals_calcs.c \
+	./save.c \
+	./vertexes.c
 LIBFT = ../libft/libft.a
 OBJECTS = $(SRC:.c=.o)
 WWW = -Wall -Wextra -Werror -Ofast

@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:16:36 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/22 17:27:22 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/22 22:24:54 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,18 @@ typedef struct		s_edit
 	int				portvert1;
 	int				portvert2;
 	int				portsects[64];
+	char			inputstr[16];
+	t_xy			player;
+	int				playersect;
+	int				playerangle;
 }					t_edit;
 
+void	portalcheck(t_edit *edit);
+void	makeportals1(t_edit *edit);
+void	makeportals2(t_edit *edit);
+void	savemap(t_edit *edit);
+void	putsectors(t_edit *edit);
+void	portalinit(t_edit *edit);
 t_edit	*init();
 int		putline(t_edit *edit, t_line *l);
 
