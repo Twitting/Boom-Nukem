@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/12 17:58:16 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/03/21 13:11:39 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ typedef struct		s_env
 	unsigned int	nvertexes;
 	int				quit;
 	SDL_Surface		*surface;
+	SDL_Surface		text[1];
 	SDL_Window		*window;
 	int				wsad[4];
 	int				moving;
@@ -98,5 +99,6 @@ int		overlap(double a0, double a1, double b0, double b1);
 double	vxs(double x0, double y0, double x1, double y1);
 t_env	*structure_init(void);
 int		start_engine(t_env *env, SDL_Event *e);
+void	inittext(t_env *env);
 
 #endif

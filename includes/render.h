@@ -3,15 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   render.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:42:12 by ebednar           #+#    #+#             */
-/*   Updated: 2019/03/13 18:45:20 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/23 13:02:40 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RENDER_H
 # define RENDER_H
+# define SCALER_INIT(a, b, c, d, f) {d + (b - 1 - a) * (f - d), \
+					((f < d) ^ (c < a)) ? -1 : 1, abs(f - d), \
+					abs(c - a), (int)((b - 1 - a) * abs(f - d)) % abs(c - a)}
+
 
 # include "engine.h"
 
@@ -26,6 +30,16 @@ enum
 {
 				maxqueue = 8
 };
+
+typedef struct s_scaler
+{
+	int			result;
+	int			bop;
+	int			fd;
+	int			ca;
+	int			cache;
+}				t_scaler;
+
 
 typedef struct	s_rend
 {
@@ -54,6 +68,7 @@ typedef struct	s_rend
 				int		beginx;
 				int		endx;
 				int		x;
+				int		y;
 				int		ya;
 				int		cya;
 				int		yb;
@@ -70,6 +85,18 @@ typedef struct	s_rend
 				int		ncyb;
 				t_now	*head;
 				t_now	*tail;
+				int		u0;
+				int		u1;
+				t_xy	org1;
+				t_xy	org2;
+				int		txtx;
+				int		txtz;
+				float	hei;
+				float	mapx;
+				float	mapz;
+				int		pel;
 }				t_rend;
+
+int		scaler_next(t_scaler *sc);
 
 #endif

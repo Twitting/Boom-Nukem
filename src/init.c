@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:38:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/12 16:23:18 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/19 19:29:53 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	init(t_env *env)
     env->falling = 1;
     env->ducking = 0;
     env->player.eye = EYEHEIGHT;
+	inittext(env);
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
         ft_error(4);
     else
