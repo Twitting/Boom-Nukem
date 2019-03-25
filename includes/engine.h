@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/21 13:11:39 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/03/25 16:34:56 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <math.h>
 # include <fcntl.h>
 # include <SDL2/SDL.h>
+# include <SDL_image.h>
 # include "libft.h"
 # include <stdlib.h>
 
@@ -77,7 +78,7 @@ typedef struct		s_env
 	unsigned int	nvertexes;
 	int				quit;
 	SDL_Surface		*surface;
-	SDL_Surface		text[1];
+	SDL_Surface		*text;
 	SDL_Window		*window;
 	int				wsad[4];
 	int				moving;
