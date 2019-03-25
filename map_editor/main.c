@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:16:17 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/22 23:13:28 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/25 14:55:53 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	handle_events(t_edit *edit, SDL_Event *e)
 			makeportals2(edit);
 		if (e->type == SDL_MOUSEBUTTONDOWN && e->button.button == SDL_BUTTON_RIGHT)
 			makeportals1(edit);
-		if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_F1)
+		if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_p)
 			putplayer(edit);
 	}
 	//ft_putstr(e->text.text);

@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:10:46 by ebednar           #+#    #+#             */
-/*   Updated: 2019/03/23 17:52:09 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/25 14:59:19 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	h_collision(t_env *env, t_xy *p, t_xy *d, t_xy *dd)
 			double hole_high = sect.neighbors[s] < 0 ? 9e9 : MIN(sect.ceiling, env->sector[sect.neighbors[s]].ceiling);
 			if (hole_high < env->player.where.z + HEADMARGIN || hole_low > env->player.where.z - (env->ducking ? DUCKHEIGHT : EYEHEIGHT) + KNEEHEIGHT)
 			{
-				ft_putstr("collision");
+				//ft_putstr("collision");
 				b.x = sect.vertex[(s + 1) % sect.npoints].x - sect.vertex[s].x;
 				b.y = sect.vertex[(s + 1) % sect.npoints].y - sect.vertex[s].y;		
 				temp = d->x;
