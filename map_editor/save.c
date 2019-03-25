@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 21:38:17 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/22 23:13:09 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/23 14:22:21 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	savemap(t_edit *edit)
 {
 	int	fd;
 
-	if ((fd = open("test1.map", O_WRONLY | O_CREAT | O_TRUNC,
+	if ((fd = open("test.map", O_WRONLY | O_CREAT | O_TRUNC,
 		S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) < 0)
 		perror("open failed\n");
 	putvertstofile(edit, fd);
