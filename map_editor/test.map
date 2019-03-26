@@ -1,0 +1,9 @@
+vertex	180	150
+vertex	150	220
+vertex	80	180
+vertex	90	90
+vertex	140	90
+
+sector	60 4	0 1 2 3 4		-1 -1 -1 -1 -1
+
+player	0 0	0 0
