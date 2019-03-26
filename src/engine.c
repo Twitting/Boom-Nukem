@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/03/26 14:56:11 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/26 21:37:25 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static void	vline(t_env *env, int x, int y1, int y2, int top, int middle, int bo
 	int y;
 	int txty;
 
-	txtx++; ////////////////////
+	//txtx++; ////////////////////
 	pix = (int*)env->surface->pixels;
 	y1 = CLAMP(y1, 0, HWIN - 1);
 	y2 = CLAMP(y2, 0, HWIN - 1);
@@ -79,7 +79,7 @@ static void	vline(t_env *env, int x, int y1, int y2, int top, int middle, int bo
 	while (++y <= y2)
 	{
 		txty = scaler_next(&ty);
-		*pix = ((int *)(env->text->pixels))[y % env->text->h *  env->text->h + x %  env->text->w]; // что то не так с текстурой??
+		*pix = ((int *)(env->text->pixels))[txty % 64 *  64 + txtx %  64];
 		pix += WWIN;
 	}
 }
@@ -184,7 +184,7 @@ static void	render_wall(t_env *env)
 			rend.u0 = 0;
 			rend.u1 = 63;
 			wallintersect(&rend);
-			rend.xscale1 = HFOV / rend.t1.y;
+			rend.xscale1 = HFOV / rend.t1.y; //WWIN!!!
 			rend.yscale1 = VFOV / rend.t1.y;
 			rend.x1 = WWIN / 2 + (int)(- rend.t1.x * rend.xscale1);
 			rend.xscale2 = HFOV / rend.t2.y;
@@ -210,17 +210,17 @@ static void	render_wall(t_env *env)
 			rend.beginx = MAX(rend.x1, now.sx1);
 			rend.endx = MIN(rend.x2, now.sx2);
 			rend.x = rend.beginx;
-			//t_scaler ya_int = (t_scaler)SCALER_INIT(rend.x1, rend.beginx, rend.x2, rend.y1a, rend.y2a);//1111111111111
-			//t_scaler yb_int = (t_scaler)SCALER_INIT(rend.x1, rend.beginx, rend.x2, rend.y1b, rend.y2b);//1111111111111
+			t_scaler ya_int = (t_scaler)SCALER_INIT(rend.x1, rend.beginx, rend.x2, rend.y1a, rend.y2a);//1111111111111
+			t_scaler yb_int = (t_scaler)SCALER_INIT(rend.x1, rend.beginx, rend.x2, rend.y1b, rend.y2b);//1111111111111
 			while (rend.x <= rend.endx)
 			{
 				rend.txtx = (rend.u0 * ((rend.x2 - rend.x) * rend.t2.y) + rend.u1 * ((rend.x - rend.x1) * rend.t1.y))\
 				/ ((rend.x2 - rend.x) * rend.t2.y + (rend.x - rend.x1) * rend.t1.y);
-				rend.ya = (rend.x - rend.x1) * (rend.y2a - rend.y1a) / (rend.x2 - rend.x1) + rend.y1a;
-				//rend.ya = scaler_next(&ya_int); //- не работает нормально?//1111111111111
+				//rend.ya = (rend.x - rend.x1) * (rend.y2a - rend.y1a) / (rend.x2 - rend.x1) + rend.y1a;
+				rend.ya = scaler_next(&ya_int); //- не работает нормально?//1111111111111
 				rend.cya = CLAMP(rend.ya, ytop[rend.x], ybottom[rend.x]);
-				rend.yb = (rend.x - rend.x1) * (rend.y2b - rend.y1b) / (rend.x2 - rend.x1) + rend.y1b;
-				//rend.yb = scaler_next(&yb_int); //- не работает нормально??//1111111111111
+				//rend.yb = (rend.x - rend.x1) * (rend.y2b - rend.y1b) / (rend.x2 - rend.x1) + rend.y1b;
+				rend.yb = scaler_next(&yb_int); //- не работает нормально??//1111111111111
 				rend.cyb = CLAMP(rend.yb, ytop[rend.x], ybottom[rend.x]);
 				# define TOMAPCCORD(mapy, screenx, screeny, x, z) \
 					do {z = (mapy) * HWIN * VFOV / ((HWIN / 2 - (screeny)) - env->player.yaw * HWIN * VFOV); \
@@ -241,13 +241,13 @@ static void	render_wall(t_env *env)
 					}
 					rend.hei = rend.y < rend.cya ? rend.yceil : rend.yfloor;
 					TOMAPCCORD(rend.hei, rend.x, rend.y, rend.mapx, rend.mapz);
-					rend.txtx = rend.mapx * 256; // почему 256??
-					rend.txtz = rend.mapz * 256;
+					rend.txtx = rend.mapx * 16; // почему 256??
+					rend.txtz = rend.mapz * 16;
 					//textset здесь применить нужную текстуру пола или потолка
-					//rend.pel = ((int*)env->text->pixels)[rend.txtz % 48 * 48 + rend.txtx % 48]; //здесь скорее всего что то не так
-					//((int*)env->surface->pixels)[rend.y * WWIN + rend.x] = rend.pel;
+					rend.pel = ((int*)env->text->pixels)[rend.txtz % 64 * 64 + rend.txtx % 64]; //здесь скорее всего что то не так
+					((int*)env->surface->pixels)[rend.y * WWIN + rend.x] = rend.pel;
 				}
-				vline(env, rend.x, ytop[rend.x], rend.cya - 1, 0x111111, 0x222222, 0x111111); //старые заглушки пола и потолка
+				//vline(env, rend.x, ytop[rend.x], rend.cya - 1, 0x111111, 0x222222, 0x111111); //старые заглушки пола и потолка
 				vline(env, rend.x, rend.cyb - 1, ybottom[rend.x], 0x0000FF, 0x0000AA, 0x0000FF);
 				if (nowsect->neighbors[s] >= 0)
 				{
@@ -255,7 +255,7 @@ static void	render_wall(t_env *env)
 					rend.ncya = CLAMP(rend.nya, ytop[rend.x], ybottom[rend.x]);
 					rend.nyb = (rend.x - rend.x1) * (rend.ny2b - rend.ny1b) / (rend.x2 - rend.x1) + rend.ny1b;
 					rend.ncyb = CLAMP(rend.nyb, ytop[rend.x], ybottom[rend.x]);
-					vline2(env, rend.x, rend.cya, rend.ncya - 1, (t_scaler)SCALER_INIT(rend.ya, rend.cya, rend.yb, 0 , 63), rend.txtx);
+					vline2(env, rend.x, rend.cya, rend.ncya - 1, (t_scaler)SCALER_INIT(rend.ya, rend.cya, rend.yb, 0, 63), rend.txtx);
 				//	vline(env, rend.x, rend.cya, rend.ncya - 1, 0, rend.x == rend.x1 || rend.x == rend.x2 ? 0 : 0xAAAAAA, 0);
 					ytop[rend.x] = CLAMP(MAX(rend.cya, rend.ncya), ytop[rend.x], HWIN - 1);
 					vline(env, rend.x, rend.ncyb + 1, rend.cyb, 0, rend.x == rend.x1 || rend.x == rend.x2 ? 0 : 0x7C00D9 , 0);

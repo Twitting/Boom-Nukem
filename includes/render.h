@@ -6,13 +6,14 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:42:12 by ebednar           #+#    #+#             */
-/*   Updated: 2019/03/23 13:02:40 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/03/26 20:42:01 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RENDER_H
 # define RENDER_H
-# define SCALER_INIT(a, b, c, d, f) {d + (b - 1 - a) * (f - d), \
+# define SCALER_INIT(a, b, c, d, f)\
+					{d + (b - 1 - a) * (f - d) / (c - a), \
 					((f < d) ^ (c < a)) ? -1 : 1, abs(f - d), \
 					abs(c - a), (int)((b - 1 - a) * abs(f - d)) % abs(c - a)}
 
