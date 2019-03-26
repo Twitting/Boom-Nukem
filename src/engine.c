@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/03/14 10:47:48 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/03/25 15:53:12 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,7 @@ static void	render_wall(t_env *env)
 					rend.head = queue;
 			}
 		}
-		//++renderedsect[now.sectorno];
+		++renderedsect[now.sectorno];
 	} while(rend.head != rend.tail);
 }
 
