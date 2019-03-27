@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/03/27 15:23:58 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/27 16:13:59 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,7 +228,7 @@ static void	render_wall(t_env *env)
 					TOABSCOORD(x,z); } while (0)
 				# define TOABSCOORD(X, Z) \
 					do {float rtx = (Z) * cos(env->player.angle) + (X) * sin(env->player.angle); \
-					float rtz = (Z) * sin(env->player.angle) + (X) * cos(env->player.angle); \
+					float rtz = (Z) * sin(env->player.angle) - (X) * cos(env->player.angle); \
 					X = rtx + env->player.where.x; Z = rtz + env->player.where.y; \
 					} while(0)
 				rend.y  = ytop[rend.x];
@@ -244,11 +244,11 @@ static void	render_wall(t_env *env)
 					rend.txtx = rend.mapx * 16; // почему 256??
 					rend.txtz = rend.mapz * 16;
 					//textset здесь применить нужную текстуру пола или потолка
-					rend.pel = ((int*)env->text->pixels)[rend.txtz % 64 * 64 + rend.txtx % 64]; //здесь скорее всего что то не так
+					rend.pel = ((int*)env->text->pixels)[abs(rend.txtz) % 64 * 64 + abs(rend.txtx) % 64]; //здесь скорее всего что то не так
 					((int*)env->surface->pixels)[rend.y * WWIN + rend.x] = rend.pel;
 				}
 				//vline(env, rend.x, ytop[rend.x], rend.cya - 1, 0x111111, 0x222222, 0x111111); //старые заглушки пола и потолка
-				vline(env, rend.x, rend.cyb - 1, ybottom[rend.x], 0x0000FF, 0x0000AA, 0x0000FF);
+				//vline(env, rend.x, rend.cyb - 1, ybottom[rend.x], 0x0000FF, 0x0000AA, 0x0000FF);
 				if (nowsect->neighbors[s] >= 0)
 				{
 					rend.nya = (rend.x - rend.x1) * (rend.ny2a - rend.ny1a) / (rend.x2 - rend.x1) + rend.ny1a;
