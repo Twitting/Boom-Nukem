@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:10:46 by ebednar           #+#    #+#             */
-/*   Updated: 2019/03/14 23:19:52 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/27 15:05:40 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ void	h_collision(t_env *env, t_xy *p, t_xy *d, t_xy *dd)
 	t_xy		b;
 	t_xy		pd;
 
+	double		temp;
+
 	sect = env->sector[env->player.sector];
 	pd.x = p->x + dd->x;
 	pd.y = p->y + dd->y;
@@ -65,8 +67,9 @@ void	h_collision(t_env *env, t_xy *p, t_xy *d, t_xy *dd)
 				ft_putstr("collision\n");
 				b.x = sect.vertex[(s + 1) % sect.npoints].x - sect.vertex[s % sect.npoints].x;
 				b.y = sect.vertex[(s + 1) % sect.npoints].y - sect.vertex[s % sect.npoints].y;
+				temp = d->x;
 				d->x = b.x * (d->x * b.x + b.y * d->y) / (b.x * b.x + b.y * b.y);
-				d->y = b.y * (d->x * b.x + b.y * d->y) / (b.x * b.x + b.y * b.y);
+				d->y = b.y * (temp * b.x + b.y * d->y) / (b.x * b.x + b.y * b.y);
 				env->moving = 0;
 			}
 		}

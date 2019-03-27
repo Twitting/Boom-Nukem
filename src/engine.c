@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/03/26 21:37:25 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/03/27 15:23:58 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,11 +184,11 @@ static void	render_wall(t_env *env)
 			rend.u0 = 0;
 			rend.u1 = 63;
 			wallintersect(&rend);
-			rend.xscale1 = HFOV / rend.t1.y; //WWIN!!!
-			rend.yscale1 = VFOV / rend.t1.y;
+			rend.xscale1 = WWIN * HFOV / rend.t1.y; //WWIN!!!
+			rend.yscale1 = HWIN * VFOV / rend.t1.y;
 			rend.x1 = WWIN / 2 + (int)(- rend.t1.x * rend.xscale1);
-			rend.xscale2 = HFOV / rend.t2.y;
-			rend.yscale2 = VFOV / rend.t2.y;
+			rend.xscale2 = WWIN * HFOV / rend.t2.y;
+			rend.yscale2 = HWIN * VFOV / rend.t2.y;
 			rend.x2 = WWIN / 2 + (int)(- rend.t2.x * rend.xscale2);
 			if (rend.x1 >= rend.x2 || rend.x2 < now.sx1 || rend.x1 > now.sx2)
 				continue;

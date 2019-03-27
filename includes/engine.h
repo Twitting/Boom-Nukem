@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/25 16:34:56 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/03/27 15:20:17 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,11 @@
 # define DUCKHEIGHT 2.5
 # define HEADMARGIN 1.0
 # define KNEEHEIGHT 2.0
-# define HFOV 0.73 * HWIN
-# define VFOV 0.2 * HWIN
+# define HFOV 1.0 * 0.73 * HWIN / WWIN
+# define VFOV 1.0 * 0.2 
+
+// # define HFOV 0.73 * HWIN
+// # define VFOV 0.2 * HWIN
 
 # define MIN(a, b) (((a < b)) ? (a) : (b))
 # define MAX(a, b) (((a > b)) ? (a) : (b))
