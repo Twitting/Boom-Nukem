@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   engine.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
 /*   Updated: 2019/03/28 14:34:02 by ebednar          ###   ########.fr       */
@@ -274,6 +274,7 @@ static void	render_wall(t_env *env)
 		}
 		++renderedsect[now.sectorno];
 	}
+
 }
 
 int		start_engine(t_env *env, SDL_Event *e)

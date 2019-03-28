@@ -47,6 +47,7 @@ void	h_collision(t_env *env, t_xy *p, t_xy *d, t_xy *dd)
 	t_sector	sect;
 	t_xy		b;
 	t_xy		pd;
+	double		temp;
 
 	double		temp;
 
