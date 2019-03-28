@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: twitting <twitting@student.42.fr>          +#+  +:+       +#+         #
+#    By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/03/10 14:26:05 by twitting         ###   ########.fr        #
+#    Updated: 2019/03/25 16:35:55 by ebednar          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,12 +17,14 @@ SRC = ./src/main.c \
 		./src/engine.c \
 		./src/init.c \
 		./src/events.c \
-		./src/movement.c
+		./src/movement.c \
+		./src/textures.c \
+		./src/scaler.c
 LIBFT = ./libft/libft.a
 OBJECTS = $(SRC:.c=.o)
 WWW = -Wall -Wextra -Werror -Ofast
-INCLUDES = -I libft -I includes/ -I includes/frameworks/SDL2.framework/Versions/A/Headers
-SDL =  -framework SDL2 -F includes/frameworks/
+INCLUDES = -I libft -I includes/ -I includes/frameworks/SDL2.framework/Versions/A/Headers -I includes/frameworks/SDL2_image.framework/Versions/A/Headers
+SDL =  -framework SDL2 -F includes/frameworks/ -framework SDL2_image -F includes/frameworks/ 
 FLAGS_LINUX = -I ./includes/ -lm -lpthread -lSDL2main -lSDL2 -I libft
 
 all: $(NAME)

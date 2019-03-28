@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/20 11:06:10 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/28 13:48:18 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@
 # include <math.h>
 # include <fcntl.h>
 # include <SDL2/SDL.h>
+# include <SDL_image.h>
 # include "libft.h"
 # include <stdlib.h>
+# include <time.h>
 
 # include <stdio.h>/////////////////////////////////////////////
 
@@ -27,8 +29,11 @@
 # define DUCKHEIGHT 2.5
 # define HEADMARGIN 1.0
 # define KNEEHEIGHT 2.0
-# define HFOV 0.73 * HWIN
-# define VFOV 0.2 * HWIN
+# define HFOV 1.0 * 0.73 * HWIN / WWIN
+# define VFOV 1.0 * 0.2 
+
+// # define HFOV 0.73 * HWIN
+// # define VFOV 0.2 * HWIN
 
 # define MIN(a, b) (((a < b)) ? (a) : (b))
 # define MAX(a, b) (((a > b)) ? (a) : (b))
@@ -64,6 +69,8 @@ typedef struct		s_player
 	t_xyz			velocity;
 	t_xyz			dvelocity;
 	double			angle;
+	double			sinang;
+	double			cosang;
 	double			yaw;
 	unsigned int	sector;
 	double			eye;
@@ -78,6 +85,7 @@ typedef struct		s_env
 	unsigned int	nvertexes;
 	int				quit;
 	SDL_Surface		*surface;
+	SDL_Surface		*text;
 	SDL_Window		*window;
 	int				wsad[4];
 	int				moving;
@@ -85,6 +93,9 @@ typedef struct		s_env
 	int				falling;
 	int				ducking;
 	float			yaw;
+	double			frame;
+	double			timer;
+	int				fps;
 }					t_env;
 
 void	movement_calcs(t_env *env);
@@ -99,5 +110,6 @@ int		overlap(double a0, double a1, double b0, double b1);
 double	vxs(double x0, double y0, double x1, double y1);
 t_env	*structure_init(void);
 int		start_engine(t_env *env, SDL_Event *e);
+void	inittext(t_env *env);
 
 #endif

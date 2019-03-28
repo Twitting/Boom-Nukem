@@ -1,7 +1,7 @@
 {
     "files.associations": {
-        "engine.h": "c"
-    },
-    "editor.insertSpaces": false,
-    "C_Cpp.errorSquiggles": "Disabled"
+		"engine.h": "c",
+		"render.h": "c"
+	},
+    "editor.insertSpaces": false
 }

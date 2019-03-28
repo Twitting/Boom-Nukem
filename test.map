@@ -1,3 +1,20 @@
 
+vertex	10	10
+vertex	10	100
+vertex	10	120
+vertex	30	10
+vertex	30	30
+vertex	30	100
+vertex	40	30
+vertex	40	90
+vertex	60	10
+vertex	60	30
+vertex	70	90
+vertex	70	100
+vertex	70	120
+vertex	100	30
+vertex	100	90
+vertex	100	220
+
 
 player	0 0	0 0
