@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/27 15:20:17 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/28 13:48:18 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <SDL_image.h>
 # include "libft.h"
 # include <stdlib.h>
+# include <time.h>
 
 # include <stdio.h>/////////////////////////////////////////////
 
@@ -67,6 +68,8 @@ typedef struct		s_player
 	t_xyz			velocity;
 	t_xyz			dvelocity;
 	double			angle;
+	double			sinang;
+	double			cosang;
 	double			yaw;
 	unsigned int	sector;
 	double			eye;
@@ -89,6 +92,9 @@ typedef struct		s_env
 	int				falling;
 	int				ducking;
 	float			yaw;
+	double			frame;
+	double			timer;
+	int				fps;
 }					t_env;
 
 void	movement_calcs(t_env *env);

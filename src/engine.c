@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/03/27 16:13:59 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/28 14:34:02 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "render.h"
 
 
-static void	vline(t_env *env, int x, int y1, int y2, int top, int middle, int bottom)
+/*static void	vline(t_env *env, int x, int y1, int y2, int top, int middle, int bottom)
 {
 	int *pix;
 	int y;
@@ -35,7 +35,7 @@ static void	vline(t_env *env, int x, int y1, int y2, int top, int middle, int bo
 		}
         pix[y2 * WWIN + x] = bottom;
 	}
-}
+}*/
 
 /* static void	vline2(t_env *env, int x, int y1, int y2, t_scaler ty, int txtx) //текстурирование стен
 {
@@ -63,14 +63,12 @@ static void	vline(t_env *env, int x, int y1, int y2, int top, int middle, int bo
 	}
 } */
 
-
- static void	vline2(t_env *env, int x, int y1, int y2, t_scaler ty, int txtx) //текстурирование стен
+static void	vline2(t_env *env, int x, int y1, int y2, t_scaler ty, int txtx) //текстурирование стен
 {
 	int *pix;
 	int y;
 	int txty;
 
-	//txtx++; ////////////////////
 	pix = (int*)env->surface->pixels;
 	y1 = CLAMP(y1, 0, HWIN - 1);
 	y2 = CLAMP(y2, 0, HWIN - 1);
@@ -78,7 +76,7 @@ static void	vline(t_env *env, int x, int y1, int y2, int top, int middle, int bo
 	y = y1;
 	while (++y <= y2)
 	{
-		txty = scaler_next(&ty);
+		txty = scaler_next(&ty) * (env->sector[env->player.sector].ceiling - env->sector[env->player.sector].floor) / 64;
 		*pix = ((int *)(env->text->pixels))[txty % 64 *  64 + txtx %  64];
 		pix += WWIN;
 	}
@@ -175,10 +173,10 @@ static void	render_wall(t_env *env)
 			rend.vy1 = nowsect->vertex[s % nowsect->npoints].y - env->player.where.y;
 			rend.vx2 = nowsect->vertex[(s + 1) % nowsect->npoints].x - env->player.where.x;
 			rend.vy2 = nowsect->vertex[(s + 1) % nowsect->npoints].y - env->player.where.y;
-			rend.t1.x = rend.vx1 * sin(env->player.angle) - rend.vy1 * cos(env->player.angle);
-			rend.t1.y = rend.vx1 * cos(env->player.angle) + rend.vy1 * sin(env->player.angle);
-			rend.t2.x = rend.vx2 * sin(env->player.angle) - rend.vy2 * cos(env->player.angle);
-			rend.t2.y = rend.vx2 * cos(env->player.angle) + rend.vy2 * sin(env->player.angle);
+			rend.t1.x = rend.vx1 * env->player.sinang - rend.vy1 * env->player.cosang;
+			rend.t1.y = rend.vx1 * env->player.cosang + rend.vy1 * env->player.sinang;
+			rend.t2.x = rend.vx2 * env->player.sinang - rend.vy2 * env->player.cosang;
+			rend.t2.y = rend.vx2 * env->player.cosang + rend.vy2 * env->player.sinang;
 			if (rend.t1.y <= 0 && rend.t2.y <= 0)
 				continue ;
 			rend.u0 = 0;
@@ -214,8 +212,6 @@ static void	render_wall(t_env *env)
 			t_scaler yb_int = (t_scaler)SCALER_INIT(rend.x1, rend.beginx, rend.x2, rend.y1b, rend.y2b);//1111111111111
 			while (rend.x <= rend.endx)
 			{
-				rend.txtx = (rend.u0 * ((rend.x2 - rend.x) * rend.t2.y) + rend.u1 * ((rend.x - rend.x1) * rend.t1.y))\
-				/ ((rend.x2 - rend.x) * rend.t2.y + (rend.x - rend.x1) * rend.t1.y);
 				//rend.ya = (rend.x - rend.x1) * (rend.y2a - rend.y1a) / (rend.x2 - rend.x1) + rend.y1a;
 				rend.ya = scaler_next(&ya_int); //- не работает нормально?//1111111111111
 				rend.cya = CLAMP(rend.ya, ytop[rend.x], ybottom[rend.x]);
@@ -227,8 +223,8 @@ static void	render_wall(t_env *env)
 					x = (z) * (WWIN / 2 - (screenx)) / (WWIN * HFOV); \
 					TOABSCOORD(x,z); } while (0)
 				# define TOABSCOORD(X, Z) \
-					do {float rtx = (Z) * cos(env->player.angle) + (X) * sin(env->player.angle); \
-					float rtz = (Z) * sin(env->player.angle) - (X) * cos(env->player.angle); \
+					do {float rtx = (Z) * env->player.cosang + (X) * env->player.sinang; \
+					float rtz = (Z) * env->player.sinang - (X) * env->player.cosang; \
 					X = rtx + env->player.where.x; Z = rtz + env->player.where.y; \
 					} while(0)
 				rend.y  = ytop[rend.x];
@@ -241,12 +237,14 @@ static void	render_wall(t_env *env)
 					}
 					rend.hei = rend.y < rend.cya ? rend.yceil : rend.yfloor;
 					TOMAPCCORD(rend.hei, rend.x, rend.y, rend.mapx, rend.mapz);
-					rend.txtx = rend.mapx * 16; // почему 256??
-					rend.txtz = rend.mapz * 16;
+					rend.txtx = rend.mapx * 8; // почему 256??
+					rend.txtz = rend.mapz * 8;
 					//textset здесь применить нужную текстуру пола или потолка
 					rend.pel = ((int*)env->text->pixels)[abs(rend.txtz) % 64 * 64 + abs(rend.txtx) % 64]; //здесь скорее всего что то не так
 					((int*)env->surface->pixels)[rend.y * WWIN + rend.x] = rend.pel;
 				}
+				rend.txtx = ((rend.u0 * ((rend.x2 - rend.x) * rend.t2.y) + rend.u1 * ((rend.x - rend.x1) * rend.t1.y))\
+				/ ((rend.x2 - rend.x) * rend.t2.y + (rend.x - rend.x1) * rend.t1.y)) * fabs((rend.vx2 - rend.vx1) + (rend.vy2 - rend.vy1)) * 0.05;
 				//vline(env, rend.x, ytop[rend.x], rend.cya - 1, 0x111111, 0x222222, 0x111111); //старые заглушки пола и потолка
 				//vline(env, rend.x, rend.cyb - 1, ybottom[rend.x], 0x0000FF, 0x0000AA, 0x0000FF);
 				if (nowsect->neighbors[s] >= 0)
@@ -258,11 +256,13 @@ static void	render_wall(t_env *env)
 					vline2(env, rend.x, rend.cya, rend.ncya - 1, (t_scaler)SCALER_INIT(rend.ya, rend.cya, rend.yb, 0, 63), rend.txtx);
 				//	vline(env, rend.x, rend.cya, rend.ncya - 1, 0, rend.x == rend.x1 || rend.x == rend.x2 ? 0 : 0xAAAAAA, 0);
 					ytop[rend.x] = CLAMP(MAX(rend.cya, rend.ncya), ytop[rend.x], HWIN - 1);
-					vline(env, rend.x, rend.ncyb + 1, rend.cyb, 0, rend.x == rend.x1 || rend.x == rend.x2 ? 0 : 0x7C00D9 , 0);
+					vline2(env, rend.x, rend.ncyb + 1, rend.cyb, (t_scaler)SCALER_INIT(rend.ya, rend.ncyb + 1, rend.yb, 0, 63), rend.txtx);
+				//	vline(env, rend.x, rend.ncyb + 1, rend.cyb, 0, rend.x == rend.x1 || rend.x == rend.x2 ? 0 : 0x7C00D9 , 0);
 					ybottom[rend.x] = CLAMP(MIN(rend.cyb, rend.ncyb), 0, ybottom[rend.x]);
 				}
 				else
-					vline(env, rend.x, rend.cya, rend.cyb, 0, rend.x == rend.x1 || rend.x == rend.x2 ? 0 : 0xAAAAAA, 0);
+					vline2(env, rend.x, rend.cya, rend.cyb, (t_scaler)SCALER_INIT(rend.ya, rend.cya, rend.yb, 0, 63), rend.txtx);
+				//	vline(env, rend.x, rend.cya, rend.cyb, 0, rend.x == rend.x1 || rend.x == rend.x2 ? 0 : 0xAAAAAA, 0);
 				rend.x++;
 			}
 			if (nowsect->neighbors[s] >= 0 && rend.endx >= rend.beginx && (rend.head + maxqueue + 1 - rend.tail) % maxqueue)
@@ -278,9 +278,9 @@ static void	render_wall(t_env *env)
 
 int		start_engine(t_env *env, SDL_Event *e)
 {
-//	SDL_LockSurface(env->surface);
+	SDL_LockSurface(env->surface);
 	render_wall(env);
-//	SDL_UnlockSurface(env->surface);
+	SDL_UnlockSurface(env->surface);
 	SDL_BlitSurface(env->text, NULL, env->surface, NULL);
 	SDL_UpdateWindowSurface(env->window);
 	handle_events(env, e);

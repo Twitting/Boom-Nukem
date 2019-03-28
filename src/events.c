@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 21:52:25 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/19 19:29:19 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/03/28 12:53:54 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void	handle_events(t_env *env, SDL_Event *e)
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	SDL_GetRelativeMouseState(&x,&y);
 	env->player.angle += x * 3.14159 / 200;
+	env->player.sinang = sin(env->player.angle);
+	env->player.cosang = cos(env->player.angle);
 	env->yaw = CLAMP(env->yaw + y * 0.01, -3, 3);
 	env->player.yaw = env->yaw;
 	movement_calcs(env);

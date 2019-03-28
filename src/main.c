@@ -6,11 +6,25 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:20:03 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/25 14:52:07 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/03/28 13:53:06 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
+
+void	fps(t_env *env)
+{
+	env->fps++;
+	env->timer += (clock() - env->frame) / CLOCKS_PER_SEC;
+	if (env->timer >= 1.0)
+	{
+		ft_putstr("fps = ");
+		ft_putnbr(env->fps);
+		ft_putchar('\n');
+		env->fps = 0;
+		env->timer -= 1;
+	}
+}
 
 void	ft_error(int errnum)
 {
@@ -25,7 +39,7 @@ void	ft_error(int errnum)
 	exit(errnum);
 }
 
-int main(void)
+int		main(void)
 {
     t_env	*env;
 	SDL_Event	e;
@@ -35,7 +49,11 @@ int main(void)
 	inittext(env);
 	SDL_ShowCursor(SDL_DISABLE);
 	while (!(env->quit))
+	{
+		env->frame = clock();
 		start_engine(env, &e);
+		fps(env);
+	}
 	printf("%lf\n", env->player.angle);
 	SDL_DestroyWindow(env->window);
 	SDL_Quit();
