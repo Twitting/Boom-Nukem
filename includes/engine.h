@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/29 15:08:02 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/03/29 18:58:09 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,14 @@ typedef struct		s_xyz
 	double			z;
 }					t_xyz;
 
+typedef	struct		s_sprite
+{
+	double			x;
+	double			y;
+	int				texture;
+	double			spritedist;
+}					t_sprite;
+
 typedef struct		s_sector
 {
 	double			floor;
@@ -96,6 +104,7 @@ typedef struct		s_env
 	double			frame;
 	double			timer;
 	int				fps;
+	int				oldfps;
 }					t_env;
 
 void	movement_calcs(t_env *env);

@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/03/29 15:15:45 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/03/29 16:43:01 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,8 @@ static void	render_wall(t_env *env)
 	int			ytop[WWIN] = {0};
 	int			ybottom[WWIN];
 	int			renderedsect[env->nsectors];
+	t_scaler	ya_int;
+	t_scaler	yb_int;
 
 	rend.head = queue;
 	rend.tail = queue;
@@ -181,8 +183,8 @@ static void	render_wall(t_env *env)
 			rend.beginx = MAX(rend.x1, now.sx1);
 			rend.endx = MIN(rend.x2, now.sx2);
 			rend.x = rend.beginx;
-			t_scaler ya_int = (t_scaler)SCALER_INIT(rend.x1, rend.beginx, rend.x2, rend.y1a, rend.y2a);//1111111111111
-			t_scaler yb_int = (t_scaler)SCALER_INIT(rend.x1, rend.beginx, rend.x2, rend.y1b, rend.y2b);//1111111111111
+			ya_int = (t_scaler)SCALER_INIT(rend.x1, rend.beginx, rend.x2, rend.y1a, rend.y2a);//1111111111111
+			yb_int = (t_scaler)SCALER_INIT(rend.x1, rend.beginx, rend.x2, rend.y1b, rend.y2b);//1111111111111
 			while (rend.x <= rend.endx)
 			{
 				//rend.ya = (rend.x - rend.x1) * (rend.y2a - rend.y1a) / (rend.x2 - rend.x1) + rend.y1a;
@@ -208,7 +210,7 @@ static void	render_wall(t_env *env)
 					((int*)env->surface->pixels)[rend.y * WWIN + rend.x] = rend.pel;
 				}
 				rend.txtx = ((rend.u0 * ((rend.x2 - rend.x) * rend.t2.y) + rend.u1 * ((rend.x - rend.x1) * rend.t1.y))\
-				/ ((rend.x2 - rend.x) * rend.t2.y + (rend.x - rend.x1) * rend.t1.y)) * fabs((rend.vx2 - rend.vx1) + (rend.vy2 - rend.vy1)) * 0.04;
+				/ ((rend.x2 - rend.x) * rend.t2.y + (rend.x - rend.x1) * rend.t1.y)) * (fabs(rend.vx2 - rend.vx1) + fabs(rend.vy2 - rend.vy1)) * 0.04;
 				//vline(env, rend.x, ytop[rend.x], rend.cya - 1, 0x111111, 0x222222, 0x111111); //старые заглушки пола и потолка
 				//vline(env, rend.x, rend.cyb - 1, ybottom[rend.x], 0x0000FF, 0x0000AA, 0x0000FF);
 				if (rend.nowsect->neighbors[s] >= 0)

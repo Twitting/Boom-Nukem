@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:10:46 by ebednar           #+#    #+#             */
-/*   Updated: 2019/03/28 19:01:21 by drestles         ###   ########.fr       */
+/*   Updated: 2019/03/29 19:05:50 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,10 +150,10 @@ void	wsad_read(t_env *env)
 		dmv.x -= sin(env->player.angle) * 1;
 		dmv.y += cos(env->player.angle) * 1;
 	}
-	env->player.velocity.x = /*env->player.velocity.x * 1*/ + mv.x ;
-	env->player.velocity.y = /*env->player.velocity.y * 1*/ + mv.y ;
-	env->player.dvelocity.x = /*env->player.velocity.x * 1*/ + dmv.x ;
-	env->player.dvelocity.y = /*env->player.velocity.y * 1*/ + dmv.y ;
+	env->player.velocity.x = mv.x * 60.0 / (double)env->oldfps;
+	env->player.velocity.y = mv.y * 60.0 / (double)env->oldfps;
+	env->player.dvelocity.x = dmv.x * 60.0 / (double)env->oldfps;
+	env->player.dvelocity.y = dmv.y * 60.0 / (double)env->oldfps;
 	env->moving = (mv.x != 0 || mv.y != 0 || env->falling) ? 1 : 0;
 }
 

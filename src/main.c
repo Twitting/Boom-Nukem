@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:20:03 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/28 13:53:06 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/03/29 18:58:37 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	fps(t_env *env)
 		ft_putstr("fps = ");
 		ft_putnbr(env->fps);
 		ft_putchar('\n');
+		env->oldfps = env->fps;
 		env->fps = 0;
 		env->timer -= 1;
 	}

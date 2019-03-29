@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:38:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/28 13:53:06 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/03/29 19:05:04 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	init(t_env *env)
     env->ducking = 0;
     env->player.eye = EYEHEIGHT;
 	env->fps = 0;
+	env->oldfps = 60;
 	env->timer = 0;
 	
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
