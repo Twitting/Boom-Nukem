@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:16:17 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/25 14:55:53 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/26 18:57:58 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,12 @@ int		main(void)
 			i++;
 			continue;
 		}
-		printf("Sector %d: 	npoints:%d 	floor:%d 	ceiling:%d\n", i, edit->sectors[i].npoints, edit->sectors[i].floor, edit->sectors[i].ceiling);
+		printf("Sector %d: 	npoints:%d 	floor:%d 	ceiling:%d    light:%u\n", i, edit->sectors[i].npoints, edit->sectors[i].floor,
+		edit->sectors[i].ceiling, edit->sectors[i].light);
 		for (unsigned int j = 0; j < edit->sectors[i].npoints; j++)
 		{
-			printf("v %d: x = %d, y = %d,	neighbor: %d\n", edit->sectors[i].vertex[j], edit->verts[edit->sectors[i].vertex[j]].x, edit->verts[edit->sectors[i].vertex[j]].y, edit->sectors[i].neighbors[j]);
+			printf("v %d: x = %d, y = %d,	neighbor: %d\n", edit->sectors[i].vertex[j], edit->verts[edit->sectors[i].vertex[j]].x, 
+			edit->verts[edit->sectors[i].vertex[j]].y, edit->sectors[i].neighbors[j]);
 		}
 		i++;
 	}

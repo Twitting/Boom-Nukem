@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: twitting <twitting@student.42.fr>          +#+  +:+       +#+         #
+#    By: drestles <drestles@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/03/22 21:44:18 by twitting         ###   ########.fr        #
+#    Updated: 2019/03/26 18:18:41 by drestles         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,12 +18,15 @@ SRC = ./main.c \
 	./portals_calcs.c \
 	./save.c \
 	./vertexes.c
+
 LIBFT = ../libft/libft.a
 OBJECTS = $(SRC:.c=.o)
-WWW = -Wall -Wextra -Werror -Ofast
-INCLUDES = -I ../libft -I ../includes/ -I ../includes/frameworks/SDL2.framework/Versions/A/Headers
-SDL =  -framework SDL2 -F ../includes/frameworks/
-FLAGS_LINUX = -I ../includes/ -lm -lpthread -lSDL2main -lSDL2 -I ../libft
+#WWW = -Wall -Wextra -Werror -Ofast
+INCLUDES = -I ../libft -I ../includes/ -I ../includes/frameworks/SDL2.framework/Versions/A/Headers \
+	-I ~/Library/Frameworks/SDL2_image.framework/Versions/A/Headers \
+	-I ~/Library/Frameworks/SDL2_ttf.framework/Versions/A/Headers -I ../kiss_sdl
+SDL =  -F ../includes/frameworks/ -framework SDL2 -framework SDL2_image -framework SDL2_ttf
+FLAGS_LINUX = -I ../includes/ -lm -lpthread -lSDL2main -lSDL2 -I ../libft 
 
 all: $(NAME)
 
@@ -33,7 +36,7 @@ linux:
 
 $(NAME): $(OBJECTS)
 	make -C ../libft/
-	gcc -o $(NAME) $(OBJECTS) $(INCLUDES) $(SDL) $(LIBFT) 
+	gcc -o $(NAME) $(OBJECTS) $(INCLUDES) $(SDL) $(LIBFT) -L ../kiss_sdl -l kisssdl
 
 %.o: %.c
 	gcc $(WWW) $(INCLUDES) -F ~/Library/Frameworks/ -c $< -o $@ 
