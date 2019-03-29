@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vertexes.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 21:36:46 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/26 20:08:19 by drestles         ###   ########.fr       */
+/*   Updated: 2019/03/29 19:30:29 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,7 @@ int	num_to_program(t_edit *edit)
 	SECT.light = ft_atoi(entry01.text);
 	//printf("%s\n", entry.text);
 	kiss_clean(&objects);
+	return (0);
 }
 
 
