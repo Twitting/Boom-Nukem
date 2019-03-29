@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+         #
+#    By: twitting <twitting@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/03/25 16:35:55 by ebednar          ###   ########.fr        #
+#    Updated: 2019/03/29 19:33:37 by twitting         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,10 +31,12 @@ all: $(NAME)
 
 linux:
 	make re -C libft/
+	make re -C map_editor/
 	sudo gcc $(WWW) $(SRC) $(LIBFT) $(FLAGS_LINUX) -o $(NAME)
 
 $(NAME): $(OBJECTS)
 	make -C libft/
+	make -C map_editor/
 	gcc -o $(NAME) $(OBJECTS) $(INCLUDES) $(SDL) $(LIBFT) 
 
 %.o: %.c
@@ -42,10 +44,12 @@ $(NAME): $(OBJECTS)
 
 clean:
 	make clean -C libft/
+	make clean -C map_editor/
 	/bin/rm -f $(OBJECTS)
 
 fclean: clean
 	make fclean -C libft/
+	make fclean -C map_editor/
 	/bin/rm -f $(NAME)
 
 re: fclean all
