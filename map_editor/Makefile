@@ -6,7 +6,7 @@
 #    By: twitting <twitting@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/03/29 19:32:47 by twitting         ###   ########.fr        #
+#    Updated: 2019/03/30 17:53:05 by twitting         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,9 @@ INCLUDES = -I ../libft -I ../includes/ -I ../includes/frameworks/SDL2.framework/
 	-I ~/Library/Frameworks/SDL2_image.framework/Versions/A/Headers \
 	-I ~/Library/Frameworks/SDL2_ttf.framework/Versions/A/Headers -I ../kiss_sdl
 SDL =  -F ../includes/frameworks/ -framework SDL2 -framework SDL2_image -framework SDL2_ttf
-FLAGS_LINUX = -I ../includes/ -lm -lpthread -lSDL2main -lSDL2 -I ../libft 
+FLAGS_LINUX =  -I ../includes/ ../kiss_sdl/libkisssdl.a -I ../includes/frameworks/SDL2_ttf.framework/Versions/A/Headers \
+ 	-I ../includes/frameworks/SDL2_image.framework/Versions/A/Headers \
+	 -I ../kiss_sdl  -lm -lpthread -lSDL2main -lSDL2 -I ../libft -lSDL2_ttf -lSDL2_image
 
 all: $(NAME)
 

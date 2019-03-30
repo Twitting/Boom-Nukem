@@ -6,7 +6,7 @@
 #    By: twitting <twitting@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/03/29 19:33:37 by twitting         ###   ########.fr        #
+#    Updated: 2019/03/30 17:54:40 by twitting         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,8 @@ OBJECTS = $(SRC:.c=.o)
 WWW = -Wall -Wextra -Werror -Ofast
 INCLUDES = -I libft -I includes/ -I includes/frameworks/SDL2.framework/Versions/A/Headers -I includes/frameworks/SDL2_image.framework/Versions/A/Headers
 SDL =  -framework SDL2 -F includes/frameworks/ -framework SDL2_image -F includes/frameworks/ 
-FLAGS_LINUX = -I ./includes/ -lm -lpthread -lSDL2main -lSDL2 -I libft
+FLAGS_LINUX = -I ./includes/ -I includes/frameworks/SDL2.framework/Versions/A/Headers -I \
+	includes/frameworks/SDL2_image.framework/Versions/A/Headers -lm -lpthread -lSDL2main -lSDL2 -I libft -lSDL2_image
 
 all: $(NAME)
 

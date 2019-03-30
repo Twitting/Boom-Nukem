@@ -9,8 +9,8 @@ CFILES = kiss_draw.c \
 
 OFILES	= $(CFILES:%.c=%.o)
 
-INCLUDE = -I ./ -I ~/Library/Frameworks/SDL2.framework/Versions/A/Headers -I ~/Library/Frameworks/SDL2_image.framework/Versions/A/Headers  \
--F ~/Library/Frameworks/ -I ~/Library/Frameworks/SDL2_ttf.framework/Versions/A/Headers
+INCLUDE = -I ./ -I ../includes/frameworks/SDL2.framework/Versions/A/Headers -I ../includes/frameworks/SDL2_image.framework/Versions/A/Headers  \
+-F ~/Library/Frameworks/ -I ../includes/frameworks/SDL2_ttf.framework/Versions/A/Headers
 
 all: $(NAME)
 

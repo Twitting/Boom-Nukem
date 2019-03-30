@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/03/29 16:43:01 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/03/30 17:39:13 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ static void	vline2(t_env *env, t_rend *rend, int y1, int y2, t_scaler ty) //те
 	while (++y <= y2)
 	{
 		txty = scaler_next(&ty) * (rend->nowsect->ceiling - rend->nowsect->floor) / 64;
-		*pix = ((int *)(env->text[0]->pixels))[txty % 1280 * 1920 + rend->txtx % 1920];
+		*pix = ((int *)(env->text[0]->pixels))[txty % env->text[0]->h * env->text[0]->w + rend->txtx % env->text[0]->w];
 		pix += WWIN;
 	}
 }
 
-static void	wallintersect(t_rend *rend)
+static void	wallintersect(t_rend *rend, t_env *env)
 {
 	if (rend->t1.y <= 0 || rend->t2.y <= 0)
 		{
@@ -96,13 +96,13 @@ static void	wallintersect(t_rend *rend)
 			}
 			if (fabs(rend->t2.x - rend->t1.x) > fabs(rend->t2.y - rend->t1.y))
 			{
-				rend->u0 = (rend->t1.x - rend->org1.x) * 1919 / (rend->org2.x - rend->org1.x);
-				rend->u1 = (rend->t2.x - rend->org1.x) * 1919 / (rend->org2.x - rend->org1.x);
+				rend->u0 = (rend->t1.x - rend->org1.x) * (env->text[0]->w - 1) / (rend->org2.x - rend->org1.x);
+				rend->u1 = (rend->t2.x - rend->org1.x) * (env->text[0]->w - 1) / (rend->org2.x - rend->org1.x);
 			}
 			else
 			{
-				rend->u0 = (rend->t1.y - rend->org1.y) * 1919 / (rend->org2.y - rend->org1.y);
-				rend->u1 = (rend->t2.y - rend->org1.y) * 1919 / (rend->org2.y - rend->org1.y);
+				rend->u0 = (rend->t1.y - rend->org1.y) * (env->text[0]->w - 1) / (rend->org2.y - rend->org1.y);
+				rend->u1 = (rend->t2.y - rend->org1.y) * (env->text[0]->w - 1) / (rend->org2.y - rend->org1.y);
 			}
 		}
 }
@@ -155,8 +155,8 @@ static void	render_wall(t_env *env)
 			if (rend.t1.y <= 0 && rend.t2.y <= 0)
 				continue ;
 			rend.u0 = 0;
-			rend.u1 = 1919;
-			wallintersect(&rend);
+			rend.u1 = (env->text[0]->w - 1);
+			wallintersect(&rend, env);
 			rend.xscale1 = WWIN * HFOV / rend.t1.y; //WWIN!!!
 			rend.yscale1 = HWIN * VFOV / rend.t1.y;
 			rend.x1 = WWIN / 2 + (int)(- rend.t1.x * rend.xscale1);
@@ -203,10 +203,10 @@ static void	render_wall(t_env *env)
 					}
 					rend.hei = rend.y < rend.cya ? rend.yceil : rend.yfloor;
 					TOMAPCCORD(rend.hei, rend.x, rend.y, rend.mapx, rend.mapz);
-					rend.txtx = rend.mapx * 256; // почему 256??
-					rend.txtz = rend.mapz * 256;
+					rend.txtx = rend.mapx * env->text[0]->w / 4; // почему 256??
+					rend.txtz = rend.mapz * env->text[0]->w / 4;
 					//textset здесь применить нужную текстуру пола или потолка
-					rend.pel = ((int*)env->text[0]->pixels)[abs(rend.txtz) % 1280 * 1920 + abs(rend.txtx) % 1920]; //здесь скорее всего что то не так
+					rend.pel = ((int*)env->text[0]->pixels)[abs(rend.txtz) % env->text[0]->h * env->text[0]->w + abs(rend.txtx) % env->text[0]->w]; //здесь скорее всего что то не так
 					((int*)env->surface->pixels)[rend.y * WWIN + rend.x] = rend.pel;
 				}
 				rend.txtx = ((rend.u0 * ((rend.x2 - rend.x) * rend.t2.y) + rend.u1 * ((rend.x - rend.x1) * rend.t1.y))\
@@ -246,8 +246,11 @@ int		start_engine(t_env *env, SDL_Event *e)
 {
 	SDL_LockSurface(env->surface);
 	render_wall(env);
+	
 	SDL_UnlockSurface(env->surface);
+	//SDL_BlitSurface(env->text[0], NULL, env->surface, NULL);
 	SDL_UpdateWindowSurface(env->window);
+	
 	handle_events(env, e);
 	return (0);
 }
