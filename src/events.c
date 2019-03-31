@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 21:52:25 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/31 16:38:10 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/31 18:19:30 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,15 @@ void	keyboard_events(t_env *env, SDL_Event *e)
 	if (e->key.keysym.sym == SDLK_SPACE && on == 1)
 		if (env->ground)
 		{
-			env->player.velocity.z += 2.5;
+			env->player.velocity.z += 1.5;
 			env->falling = 1;
 		}
 
 
 	if (e->key.keysym.sym == SDLK_f) //debug
 	{
-		printf("%d		%lf\n %lf 		%lf 		%lf 		%d %d\n", env->debugtempint, env->debugtempdouble, env->debugtempint1, env->debugtempint2, env->debugtempint3, env->debugtempint4, env->debugtempint5);
+		printf("%d		%lf\n %lf 		%lf 		%lf 		%d %d\n", env->debugtempint,
+		env->debugtempdouble, env->debugtempint1, env->debugtempint2, env->debugtempint3, env->debugtempint4, env->debugtempint5);
 		env->debugtempint = 0;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:10:46 by ebednar           #+#    #+#             */
-/*   Updated: 2019/03/31 17:01:43 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/31 18:17:56 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	v_collision(t_env *env)
 	env->player.eye = env->ducking ? DUCKHEIGHT : EYEHEIGHT;
 	if(env->falling)
 	{
-		env->player.velocity.z -= 0.01;
+		env->player.velocity.z -= 0.05 * 60.0 / (double)env->oldfps;;
 		nz = env->player.where.z + env->player.velocity.z;
 		if (env->player.velocity.z < 0 && nz < env->sector[env->player.sector].floor + env->player.eye)
 		{

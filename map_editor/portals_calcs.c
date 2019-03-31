@@ -6,11 +6,33 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 21:41:55 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/22 21:42:31 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/31 18:35:30 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "edit.h"
+
+void	putportalline(t_edit *edit)
+{
+	int i;
+	int j;
+
+	edit->nowln.color = 0xff3333;
+	i = -2;
+	while (++i < 2)
+	{
+		j = -2;
+		while (++j < 2)
+		{
+			edit->nowln.x1 = edit->verts[PVERT1].x * 5 / 2 + i;
+			edit->nowln.y1 = edit->verts[PVERT1].y * 5 / 2 + j;
+			edit->nowln.x0 = edit->verts[PVERT2].x * 5 / 2 + i;
+			edit->nowln.y0 = edit->verts[PVERT2].y * 5 / 2 + j;
+			putline(edit, &edit->nowln);
+		}
+	}
+	edit->nowln.color = 0xffffff;
+}
 
 int		checknearverts2(t_edit *edit, int first)
 {
@@ -58,6 +80,7 @@ int		makeneighbors(t_edit *edit, int sect1, int sect2)
 				PSECT2.neighbors[i] = sect1;
 	}
 	printf("PORTAL: Sect1:%d, Sect2:%d, vert1:%d, vert2:%d\n", sect1, sect2, PVERT1, PVERT2);
+	putportalline(edit);
 	return (1);
 }
 

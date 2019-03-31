@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/03/31 16:59:08 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/31 18:24:09 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,15 +210,15 @@ static void	render_wall(t_env *env)
 			rend.beginx = MAX(rend.x1, now.sx1);
 			rend.endx = MIN(rend.x2, now.sx2);
 			rend.x = rend.beginx;
-			ya_int = (t_scaler)SCALER_INIT(rend.x1, rend.beginx, rend.x2, rend.y1a, rend.y2a);//1111111111111
-			yb_int = (t_scaler)SCALER_INIT(rend.x1, rend.beginx, rend.x2, rend.y1b, rend.y2b);//1111111111111
+			ya_int = (t_scaler)SCALER_INIT(rend.x1, rend.beginx, rend.x2, rend.y1a, rend.y2a);
+			yb_int = (t_scaler)SCALER_INIT(rend.x1, rend.beginx, rend.x2, rend.y1b, rend.y2b);
 			while (rend.x <= rend.endx)
 			{
 				//rend.ya = (rend.x - rend.x1) * (rend.y2a - rend.y1a) / (rend.x2 - rend.x1) + rend.y1a;
-				rend.ya = scaler_next(&ya_int); //- не работает нормально?//1111111111111
+				rend.ya = scaler_next(&ya_int); //- не работает нормально?
 				rend.cya = CLAMP(rend.ya, ytop[rend.x], ybottom[rend.x]);
 				//rend.yb = (rend.x - rend.x1) * (rend.y2b - rend.y1b) / (rend.x2 - rend.x1) + rend.y1b;
-				rend.yb = scaler_next(&yb_int); //- не работает нормально??//1111111111111
+				rend.yb = scaler_next(&yb_int); //- не работает нормально??
 				rend.cyb = CLAMP(rend.yb, ytop[rend.x], ybottom[rend.x]);
 				rend.y  = ytop[rend.x];
 				while (++rend.y <= ybottom[rend.x])
@@ -257,12 +257,12 @@ static void	render_wall(t_env *env)
 					vline2(env, &rend, rend.cya, rend.cyb, (t_scaler)SCALER_INIT(rend.ya, rend.cya, rend.yb, 0, (env->text[0]->w - 1)));
 				//	vline(env, rend.x, rend.cya, rend.cyb, 0, rend.x == rend.x1 || rend.x == rend.x2 ? 0 : 0xAAAAAA, 0);
 				
-				if (rend.x == 100 && rend.nowsect == &env->sector[env->player.sector])
+				if (rend.x == 100 && rend.nowsect == &env->sector[env->player.sector])//////////////////////////////////DEBUG SHIT
 				{
-						env->debugtempint = rend.cya;//////////////////////////////////DEBUG SHIT
+						env->debugtempint = rend.cya;
 						env->debugtempdouble = rend.ya;
-						env->debugtempint1 = rend.y1a;
-						env->debugtempint2 = rend.y2a;
+						env->debugtempint1 = rend.t1.x;
+						env->debugtempint2 = rend.t1.y;
 						env->debugtempint3 = 0;
 						env->debugtempint4 = 0;
 						env->debugtempint5 = 0;

@@ -1,14 +1,24 @@
-vertex	190	100
-vertex	100	100
-vertex	100	210
-vertex	130	180
-vertex	130	140
-vertex	160	140
-vertex	190	210
-vertex	160	180
+vertex	10	10
+vertex	10	100
+vertex	10	120
+vertex	30	10
+vertex	30	30
+vertex	30	100
+vertex	40	30
+vertex	40	90
+vertex	60	10
+vertex	60	30
+vertex	70	90
+vertex	70	100
+vertex	70	120
+vertex	100	30
+vertex	100	90
+vertex	100	120
 
-sector	-200 400	0 1 2 3 4 5		-1 -1 1 2 2 -1
-sector	0 400	2 6 0 5 7 3		-1 -1 -1 2 2 0
-sector	0 400	5 4 3 7		0 0 1 1
+sector	0 30	3 4 6 9 8		4 -1 1 -1 -1
+sector	0 100	6 7 10 14 13 9		-1 -1 2 -1 -1 0
+sector	2 30	10 11 12 15 14		-1 3 -1 -1 1
+sector	4 30	1 2 12 11 5		-1 -1 2 -1 4
+sector	6 30	0 1 5 4 3		-1 3 -1 0 -1
 
-player	118 124	0 0
+player	20 40	23 0

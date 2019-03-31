@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/31 16:16:07 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/31 18:13:31 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@
 # define HFOV 1.0 * 0.73 * HWIN / WWIN
 # define VFOV 1.0 * 0.2 
 
-// # define HFOV 0.73 * HWIN
-// # define VFOV 0.2 * HWIN
 
 # define MIN(a, b) (((a < b)) ? (a) : (b))
 # define MAX(a, b) (((a > b)) ? (a) : (b))
@@ -105,6 +103,9 @@ typedef struct		s_env
 	double			timer;
 	int				fps;
 	int				oldfps;
+
+
+	
 	double			debugtempdouble;
 	int				debugtempint;
 	double			debugtempint1;
