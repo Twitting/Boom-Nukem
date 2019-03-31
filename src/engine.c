@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/03/31 16:14:58 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/31 16:59:08 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,14 @@
 	}
 }*/
 
+static int	flag222 = 0;
+
 static void	vline2(t_env *env, t_rend *rend, int y1, int y2, t_scaler ty) //текстурирование стен
 {
 	int *pix;
 	int y;
 	int txty;
+	char *print;
 
 	pix = (int*)env->surface->pixels;
 	y1 = CLAMP(y1, 0, HWIN - 1);
@@ -52,6 +55,19 @@ static void	vline2(t_env *env, t_rend *rend, int y1, int y2, t_scaler ty) //те
 	{
 		txty = scaler_next(&ty) * (rend->nowsect->ceiling - rend->nowsect->floor) / 64;
 		*pix = ((int *)(env->text[0]->pixels))[txty % env->text[0]->h * env->text[0]->w + rend->txtx % env->text[0]->w];
+		print = (char *)pix;
+		if (env->ducking == 1 && flag222 == 0)
+		{
+			flag222 = 1;
+			for (int j = 0; j < 3; j++)
+			{
+				
+				ft_putnbr(*print);
+				ft_putchar(' ');
+				print++;
+			}
+			ft_putnbr(*pix);
+		}
 		pix += WWIN;
 	}
 }
@@ -163,6 +179,11 @@ static void	render_wall(t_env *env)
 			rend.u0 = 0;
 			rend.u1 = (env->text[0]->w - 1);
 			wallintersect(&rend, env);
+			if (rend.t1.y <= 0.5)
+			{
+				rend.t1.x = (0.5 - rend.t1.y) * (rend.t2.x - rend.t1.x) / (rend.t2.y - rend.t1.y) + rend.t1.x;
+				rend.t1.y = 0.5;
+			}
 			rend.xscale1 = WWIN * HFOV / rend.t1.y; //WWIN!!!
 			rend.yscale1 = HWIN * VFOV / rend.t1.y;
 			rend.x1 = WWIN / 2 + (int)(- rend.t1.x * rend.xscale1);
@@ -209,8 +230,8 @@ static void	render_wall(t_env *env)
 					}
 					rend.hei = rend.y < rend.cya ? rend.yceil : rend.yfloor;
 					TOMAPCCORD(rend.hei, rend.x, rend.y, rend.mapx, rend.mapz);
-					rend.txtx = rend.mapx * env->text[0]->w / 4; // почему 256??
-					rend.txtz = rend.mapz * env->text[0]->w / 4;
+					rend.txtx = rend.mapx * env->text[0]->w / 12; // почему 256??
+					rend.txtz = rend.mapz * env->text[0]->w / 12;
 					//textset здесь применить нужную текстуру пола или потолка
 					rend.pel = ((int*)env->text[0]->pixels)[abs(rend.txtz) % env->text[0]->h * env->text[0]->w + abs(rend.txtx) % env->text[0]->w]; //здесь скорее всего что то не так
 					((int*)env->surface->pixels)[rend.y * WWIN + rend.x] = rend.pel;

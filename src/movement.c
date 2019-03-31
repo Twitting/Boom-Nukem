@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:10:46 by ebednar           #+#    #+#             */
-/*   Updated: 2019/03/29 19:05:50 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/03/31 17:01:43 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,23 +110,23 @@ void	wsad_read(t_env *env)
 	mv.y = 0;
 	if (env->wsad[0])
 	{
-		mv.x += cos(env->player.angle) * 0.2;
-		mv.y += sin(env->player.angle) * 0.2;
+		mv.x += cos(env->player.angle) * 0.4;
+		mv.y += sin(env->player.angle) * 0.4;
 	}
 	if (env->wsad[1])
 	{
-		mv.x -= cos(env->player.angle) * 0.2;
-		mv.y -= sin(env->player.angle) * 0.2;
+		mv.x -= cos(env->player.angle) * 0.4;
+		mv.y -= sin(env->player.angle) * 0.4;
 	}
 	if (env->wsad[2])
 	{
-		mv.x += sin(env->player.angle) * 0.2;
-		mv.y -= cos(env->player.angle) * 0.2;
+		mv.x += sin(env->player.angle) * 0.4;
+		mv.y -= cos(env->player.angle) * 0.4;
 	}
 	if (env->wsad[3])
 	{
-		mv.x -= sin(env->player.angle) * 0.2;
-		mv.y += cos(env->player.angle) * 0.2;
+		mv.x -= sin(env->player.angle) * 0.4;
+		mv.y += cos(env->player.angle) * 0.4;
 	}
 	dmv.x = 0;
 	dmv.y = 0;

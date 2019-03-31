@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 21:52:25 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/31 15:44:38 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/31 16:38:10 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	keyboard_events(t_env *env, SDL_Event *e)
 	if (e->key.keysym.sym == SDLK_SPACE && on == 1)
 		if (env->ground)
 		{
-			env->player.velocity.z += 0.5;
+			env->player.velocity.z += 2.5;
 			env->falling = 1;
 		}
 
