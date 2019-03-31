@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:42:12 by ebednar           #+#    #+#             */
-/*   Updated: 2019/03/29 16:34:25 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/03/31 16:12:06 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ typedef struct	s_rend
 			float		mapx;
 			float		mapz;
 			int			pel;
+			t_xy		wintsect1;
+			t_xy		wintsect2;
 }				t_rend;
 
 int		scaler_next(t_scaler *sc);

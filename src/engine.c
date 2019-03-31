@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/03/31 15:30:26 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/31 16:14:58 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,20 @@ static void	vline2(t_env *env, t_rend *rend, int y1, int y2, t_scaler ty) //те
 
 static void	wallintersect(t_rend *rend, t_env *env)
 {
-	if (rend->t1.y <= 0.1 || rend->t2.y <= 0.1)
+	if (rend->t1.y <= 0 || rend->t2.y <= 0)
 		{
 			rend->nfz.x = 1e-4;
 			rend->nfz.y = 5;
 			rend->nfside.x = 1e-5;
 			rend->nfside.y = 20;
-			rend->i1 = intersect(rend->t1, rend->t2, - rend->nfside.x, rend->nfz.x, - rend->nfside.y, rend->nfz.y);
-			rend->i2 = intersect(rend->t1, rend->t2, rend->nfside.x, rend->nfz.x, rend->nfside.y, rend->nfz.y);
+			rend->wintsect1.x = -rend->nfside.x;
+			rend->wintsect1.y = rend->nfz.x;
+			rend->wintsect2.x = -rend->nfside.y;
+			rend->wintsect2.y = rend->nfz.y;
+			rend->i1 = intersect(rend->t1, rend->t2, rend->wintsect1, rend->wintsect2);
+			rend->wintsect1.x = rend->nfside.x;
+			rend->wintsect2.x = rend->nfside.y;
+			rend->i2 = intersect(rend->t1, rend->t2, rend->wintsect1, rend->wintsect2);
 			rend->org1 = (t_xy){rend->t1.x, rend->t1.y};
 			rend->org2 = (t_xy){rend->t2.x, rend->t2.y};
 			if (rend->t1.y < rend->nfz.x)
@@ -154,10 +160,6 @@ static void	render_wall(t_env *env)
 			rend.t2.y = rend.vx2 * env->player.cosang + rend.vy2 * env->player.sinang;
 			if (rend.t1.y <= 0 && rend.t2.y <= 0)
 				continue ;
-			/*if (rend.t1.y <= 0.2)
-				rend.t1.y = 0.2;
-			if (rend.t2.y <= 0.2)
-				rend.t2.y = 0.2;*/
 			rend.u0 = 0;
 			rend.u1 = (env->text[0]->w - 1);
 			wallintersect(&rend, env);
@@ -238,9 +240,9 @@ static void	render_wall(t_env *env)
 				{
 						env->debugtempint = rend.cya;//////////////////////////////////DEBUG SHIT
 						env->debugtempdouble = rend.ya;
-						env->debugtempint1 = rend.t1.y;
-						env->debugtempint2 = rend.t2.y;
-						env->debugtempint3 = rend.vy1;
+						env->debugtempint1 = rend.y1a;
+						env->debugtempint2 = rend.y2a;
+						env->debugtempint3 = 0;
 						env->debugtempint4 = 0;
 						env->debugtempint5 = 0;
 				}

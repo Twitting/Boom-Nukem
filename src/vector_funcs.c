@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector_funcs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:10:24 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/06 17:57:47 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/03/31 16:11:21 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ double	point_side(double px, double py, t_xy a, t_xy b)
 	return (ret);
 }
 
-t_xy	intersect(t_xy a, t_xy b, double cx, double cy, double dx, double dy)
+t_xy	intersect(t_xy a, t_xy b, t_xy c, t_xy d)
 {
 	t_xy	ret;
 
-	ret.x = vxs(vxs(a.x, a.y, b.x, b.y), a.x - b.x, vxs(cx, cy, dx, dy),
-	cx - dx) / vxs(a.x - b.x, a.y - b.y, cx - dx, cy - dy);
-	ret.y = vxs(vxs(a.x, a.y, b.x, b.y), a.y - b.y, vxs(cx, cy, dx, dy),
-	cy - dy) / vxs(a.x - b.x, a.y - b.y, cx - dx, cy - dy);
+	ret.x = vxs(vxs(a.x, a.y, b.x, b.y), a.x - b.x, vxs(c.x, c.y, d.x, d.y),
+	c.x - d.x) / vxs(a.x - b.x, a.y - b.y, c.x - d.x, c.y - d.y);
+	ret.y = vxs(vxs(a.x, a.y, b.x, b.y), a.y - b.y, vxs(c.x, c.y, d.x, d.y),
+	c.y - d.y) / vxs(a.x - b.x, a.y - b.y, c.x - d.x, c.y - d.y);
 	return (ret);
 }

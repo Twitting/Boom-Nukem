@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/31 15:08:46 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/31 16:16:07 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void	movement(t_env *env, float dx, float dy);
 void	handle_events(t_env *env, SDL_Event *e);
 void	init(t_env *env);
 void	ft_error(int errnum);
-t_xy	intersect(t_xy a, t_xy b, double cx, double cy, double dx, double dy);
+t_xy	intersect(t_xy a, t_xy b, t_xy c, t_xy d);
 double	point_side(double px, double py, t_xy a, t_xy b);
 int		intersect_box(t_xy a, t_xy b, t_xy c, t_xy d);
 int		overlap(double a0, double a1, double b0, double b1);
