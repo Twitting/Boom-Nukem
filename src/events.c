@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 21:52:25 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/29 19:00:55 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/03/31 15:09:08 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,13 @@ void	keyboard_events(t_env *env, SDL_Event *e)
 			env->player.velocity.z += 0.5;
 			env->falling = 1;
 		}
+
+
+	if (e->key.keysym.sym == SDLK_f) //debug
+	{
+		printf("%d		%lf\n %lf 		%lf 		%lf 		%d %d\n", env->debugtempint, env->debugtempdouble, env->debugtempint1, env->debugtempint2, env->debugtempint3, env->debugtempint4, env->debugtempint5);
+		env->debugtempint = 0;
+	}
 }
 
 void	handle_events(t_env *env, SDL_Event *e)

@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/03/30 17:39:13 by twitting         ###   ########.fr       */
+/*   Updated: 2019/03/31 15:30:26 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static void	vline2(t_env *env, t_rend *rend, int y1, int y2, t_scaler ty) //те
 
 static void	wallintersect(t_rend *rend, t_env *env)
 {
-	if (rend->t1.y <= 0 || rend->t2.y <= 0)
+	if (rend->t1.y <= 0.1 || rend->t2.y <= 0.1)
 		{
 			rend->nfz.x = 1e-4;
 			rend->nfz.y = 5;
@@ -154,6 +154,10 @@ static void	render_wall(t_env *env)
 			rend.t2.y = rend.vx2 * env->player.cosang + rend.vy2 * env->player.sinang;
 			if (rend.t1.y <= 0 && rend.t2.y <= 0)
 				continue ;
+			/*if (rend.t1.y <= 0.2)
+				rend.t1.y = 0.2;
+			if (rend.t2.y <= 0.2)
+				rend.t2.y = 0.2;*/
 			rend.u0 = 0;
 			rend.u1 = (env->text[0]->w - 1);
 			wallintersect(&rend, env);
@@ -219,16 +223,30 @@ static void	render_wall(t_env *env)
 					rend.ncya = CLAMP(rend.nya, ytop[rend.x], ybottom[rend.x]);
 					rend.nyb = (rend.x - rend.x1) * (rend.ny2b - rend.ny1b) / (rend.x2 - rend.x1) + rend.ny1b;
 					rend.ncyb = CLAMP(rend.nyb, ytop[rend.x], ybottom[rend.x]);
-					vline2(env, &rend, rend.cya, rend.ncya - 1, (t_scaler)SCALER_INIT(rend.ya, rend.cya, rend.yb, 0, 1919));
+					vline2(env, &rend, rend.cya, rend.ncya - 1, (t_scaler)SCALER_INIT(rend.ya, rend.cya, rend.yb, 0, (env->text[0]->w - 1)));
 				//	vline(env, rend.x, rend.cya, rend.ncya - 1, 0, rend.x == rend.x1 || rend.x == rend.x2 ? 0 : 0xAAAAAA, 0);
 					ytop[rend.x] = CLAMP(MAX(rend.cya, rend.ncya), ytop[rend.x], HWIN - 1);
-					vline2(env, &rend, rend.ncyb + 1, rend.cyb, (t_scaler)SCALER_INIT(rend.ya, rend.ncyb + 1, rend.yb, 0, 1919));
+					vline2(env, &rend, rend.ncyb + 1, rend.cyb, (t_scaler)SCALER_INIT(rend.ya, rend.ncyb + 1, rend.yb, 0, (env->text[0]->w - 1)));
 				//	vline(env, rend.x, rend.ncyb + 1, rend.cyb, 0, rend.x == rend.x1 || rend.x == rend.x2 ? 0 : 0x7C00D9 , 0);
 					ybottom[rend.x] = CLAMP(MIN(rend.cyb, rend.ncyb), 0, ybottom[rend.x]);
 				}
 				else
-					vline2(env, &rend, rend.cya, rend.cyb, (t_scaler)SCALER_INIT(rend.ya, rend.cya, rend.yb, 0, 1919));
+					vline2(env, &rend, rend.cya, rend.cyb, (t_scaler)SCALER_INIT(rend.ya, rend.cya, rend.yb, 0, (env->text[0]->w - 1)));
 				//	vline(env, rend.x, rend.cya, rend.cyb, 0, rend.x == rend.x1 || rend.x == rend.x2 ? 0 : 0xAAAAAA, 0);
+				
+				if (rend.x == 100 && rend.nowsect == &env->sector[env->player.sector])
+				{
+						env->debugtempint = rend.cya;//////////////////////////////////DEBUG SHIT
+						env->debugtempdouble = rend.ya;
+						env->debugtempint1 = rend.t1.y;
+						env->debugtempint2 = rend.t2.y;
+						env->debugtempint3 = rend.vy1;
+						env->debugtempint4 = 0;
+						env->debugtempint5 = 0;
+				}
+
+
+				
 				rend.x++;
 			}
 			if (rend.nowsect->neighbors[s] >= 0 && rend.endx >= rend.beginx && (rend.head + maxqueue + 1 - rend.tail) % maxqueue)

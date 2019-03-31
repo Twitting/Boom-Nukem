@@ -6,7 +6,7 @@
 #    By: twitting <twitting@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/03/30 17:54:40 by twitting         ###   ########.fr        #
+#    Updated: 2019/03/31 15:31:26 by twitting         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ linux:
 $(NAME): $(OBJECTS)
 	make -C libft/
 	make -C map_editor/
+	make -C kiss_sdl/
 	gcc -o $(NAME) $(OBJECTS) $(INCLUDES) $(SDL) $(LIBFT) 
 
 %.o: %.c

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/29 18:58:09 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/03/31 15:08:46 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,13 @@ typedef struct		s_env
 	double			timer;
 	int				fps;
 	int				oldfps;
+	double			debugtempdouble;
+	int				debugtempint;
+	double			debugtempint1;
+	double			debugtempint2;
+	double			debugtempint3;
+	int				debugtempint4;
+	int				debugtempint5;
 }					t_env;
 
 void	movement_calcs(t_env *env);
