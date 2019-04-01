@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 21:36:46 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/29 19:30:29 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/01 14:49:34 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ void	createornot(t_edit *edit, int x, int y)//creates new vertex or makes a link
 MAKING VERTEXES
 */
 
-void button_event(kiss_button *button, SDL_Event *e, int *draw,
-int *quit)
+void	button_event(kiss_button *button, SDL_Event *e, int *draw,
+		int *quit)
 {
 if (kiss_button_event(button, e, draw)) *quit = 1;
 }
@@ -161,6 +161,31 @@ int	num_to_program(t_edit *edit)
 	return (0);
 }
 
+void	boldlinesector(t_edit *edit)
+{
+	int	i;
+	int j;
+	int k;
+
+	i = -1;
+	while (++i < (int)SECT.npoints)
+	{
+		j = -2;
+		while (++j < 2)
+		{
+
+			k = -2;
+			while (++k < 2)
+			{
+				edit->nowln.x0 = edit->verts[SECT.vertex[i]].x * 5 / 2 + j;
+				edit->nowln.y0 = edit->verts[SECT.vertex[i]].y * 5 / 2 + k;
+				edit->nowln.x1 = edit->verts[SECT.vertex[(i + 1) % SECT.npoints]].x * 5 / 2 + j;
+				edit->nowln.y1 = edit->verts[SECT.vertex[(i + 1) % SECT.npoints]].y * 5 / 2 + k;
+				putline(edit, &edit->nowln);
+			}
+		}
+	}
+}
 
 int		addvertex(t_edit *edit, int x, int y)//eats mouse position and makes main creating magic
 {	
@@ -169,10 +194,8 @@ int		addvertex(t_edit *edit, int x, int y)//eats mouse position and makes main c
 		{
 			ft_putnbr(edit->sectnum);
 			ft_putstr(" sector created\n");
+			boldlinesector(edit);
 			num_to_program(edit);
-			//edit->sectors[j].ceiling = 20; 
-			//SECT.floor = a;
-			//getfloorceilingheights(edit);
 			SECT.finished = 1;
 			edit->vertnum = 0;
 			edit->sectnum++;

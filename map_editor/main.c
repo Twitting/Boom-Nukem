@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:16:17 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/26 18:57:58 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/01 14:35:08 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	putplayer(t_edit *edit)
 	edit->player.y = y;
 	edit->playerangle = 0;
 	edit->playersect = 0;
-	printf("click x - %d	y - %d\n", x, y);
+	printf("player set on x - %d	y - %d\n", x, y);
 }
 
 void	handle_events(t_edit *edit, SDL_Event *e)
