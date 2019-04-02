@@ -6,7 +6,7 @@
 /*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:10:46 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/02 13:36:44 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/02 15:15:45 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 void	v_collision(t_env *env)
 {
 	double	nz;
+
 	env->ground = !env->falling;
 	env->player.eye = env->ducking ? DUCKHEIGHT : EYEHEIGHT;
-	if(env->falling)
+	if (env->falling)
 	{
 		env->player.velocity.z -= 0.05 * 60.0 / (double)env->oldfps;;
 		nz = env->player.where.z + env->player.velocity.z;
@@ -63,17 +64,18 @@ void	h_collision(t_env *env, t_xy *p, t_xy *d, t_xy *dd)
 			double hole_high = sect.neighbors[s] < 0 ? 9e9 : MIN(sect.ceiling, env->sector[sect.neighbors[s]].ceiling);
 			if (hole_high < env->player.where.z + HEADMARGIN || hole_low > env->player.where.z - (env->ducking ? DUCKHEIGHT : EYEHEIGHT) + KNEEHEIGHT)
 			{
-				//ft_putstr("collision\n");
+				ft_putstr("collision\n");
 				b.x = sect.vertex[(s + 1) % sect.npoints].x - sect.vertex[s % sect.npoints].x;
 				b.y = sect.vertex[(s + 1) % sect.npoints].y - sect.vertex[s % sect.npoints].y;
 				temp = d->x;
 				d->x = b.x * (d->x * b.x + b.y * d->y) / (b.x * b.x + b.y * b.y);
 				d->y = b.y * (temp * b.x + b.y * d->y) / (b.x * b.x + b.y * b.y);
-				env->moving = 0;
+				env->moving = -1;
 			}
 		}
 	env->falling = 1;
 }
+
 int can_i_go(t_env *env, t_xy *p, double x, double y)
 {
 	double			oldx = x;
@@ -92,8 +94,9 @@ int can_i_go(t_env *env, t_xy *p, double x, double y)
 		s = 0.25 * sqrt(pow(pow(a, 2) + pow(b, 2) + pow(c, 2), 2) \
 			- 2 * (pow(a, 4) + pow(b, 4) + pow(c, 4)));
 		hh[i] = (2 * s) / c;
-		if (hh[ii] < 0.4 && (env->sector[env->player.sector].neighbors[ii] == -1))
+		if ( a < 0.7 || b < 0.7) // нет зависимости от высоты
 			return (0);
+
 		i++;
 	}
 	return (1);
