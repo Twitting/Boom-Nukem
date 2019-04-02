@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:10:46 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/02 15:15:45 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/02 18:55:03 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int can_i_go(t_env *env, t_xy *p, double x, double y)
 	double			a, b, c, s;
 	double			hh[env->sector[env->player.sector].npoints];
 	unsigned int	i = 0;
-	unsigned int	ii = i % env->sector[env->player.sector].npoints;
+	//unsigned int	ii = i % env->sector[env->player.sector].npoints;
 	unsigned int	ii1 = (i + 1) % env->sector[env->player.sector].npoints;
 
 	while (i < env->sector[env->player.sector].npoints)
