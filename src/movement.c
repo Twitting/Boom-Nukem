@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:10:46 by ebednar           #+#    #+#             */
-/*   Updated: 2019/03/31 18:17:56 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/02 13:36:44 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	h_collision(t_env *env, t_xy *p, t_xy *d, t_xy *dd)
 			double hole_high = sect.neighbors[s] < 0 ? 9e9 : MIN(sect.ceiling, env->sector[sect.neighbors[s]].ceiling);
 			if (hole_high < env->player.where.z + HEADMARGIN || hole_low > env->player.where.z - (env->ducking ? DUCKHEIGHT : EYEHEIGHT) + KNEEHEIGHT)
 			{
-				ft_putstr("collision\n");
+				//ft_putstr("collision\n");
 				b.x = sect.vertex[(s + 1) % sect.npoints].x - sect.vertex[s % sect.npoints].x;
 				b.y = sect.vertex[(s + 1) % sect.npoints].y - sect.vertex[s % sect.npoints].y;
 				temp = d->x;
@@ -74,19 +74,47 @@ void	h_collision(t_env *env, t_xy *p, t_xy *d, t_xy *dd)
 		}
 	env->falling = 1;
 }
+int can_i_go(t_env *env, t_xy *p, double x, double y)
+{
+	double			oldx = x;
+	double			oldy = y;
+	double			a, b, c, s;
+	double			hh[env->sector[env->player.sector].npoints];
+	unsigned int	i = 0;
+	unsigned int	ii = i % env->sector[env->player.sector].npoints;
+	unsigned int	ii1 = (i + 1) % env->sector[env->player.sector].npoints;
+
+	while (i < env->sector[env->player.sector].npoints)
+	{
+		a = sqrt(pow(p[i].x - oldx, 2) + pow(p[i].y - oldy, 2));
+		b = sqrt(pow(p[ii1].x - oldx, 2) + pow(p[ii1].y - oldy, 2));
+		c = sqrt(pow(p[i].x - p[ii1].x, 2) + pow(p[i].y - p[ii1].y, 2));
+		s = 0.25 * sqrt(pow(pow(a, 2) + pow(b, 2) + pow(c, 2), 2) \
+			- 2 * (pow(a, 4) + pow(b, 4) + pow(c, 4)));
+		hh[i] = (2 * s) / c;
+		if (hh[ii] < 0.4 && (env->sector[env->player.sector].neighbors[ii] == -1))
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 void	movement(t_env *env, float dx, float dy)
 {
-	t_xy		p;
-	t_xy		dp;
-	t_sector	sect;
-	int			s;
+	t_xy			p;
+	t_xy			dp;
+	t_sector		sect;
+	int				s;
+	unsigned int 	i = 0;
+	t_xy 			points[env->sector[env->player.sector].npoints];
+	unsigned int 	counter = 0;
 
 	p.x = env->player.where.x;
 	p.y = env->player.where.y;
 	dp.x = p.x + dx;
 	dp.y = p.y + dy;
 	sect = env->sector[env->player.sector];
+
 	s = -1;
 	while (++s < (int)sect.npoints)
 		if (sect.neighbors[s] >= 0 && intersect_box(p, dp, sect.vertex[s % \
@@ -95,10 +123,34 @@ void	movement(t_env *env, float dx, float dy)
 		[(s + 1) % sect.npoints]) < 0)
 		{
 			env->player.sector = sect.neighbors[s];
-			break;
+			break ;
 		}
-	env->player.where.x += dx;
-	env->player.where.y += dy;
+	while (i < env->sector[env->player.sector].npoints)
+	{
+		points[i].x = sect.vertex[i].x;
+		points[i].y = sect.vertex[i].y;
+		i++;
+	}
+
+	i = 0;
+	while (i < sect.npoints)
+	{
+		if (points[(i + 1) % sect.npoints].x && (points[(i + 1) % sect.npoints].x - points[(i + 1) % env->sector[env->player.sector].npoints].x == 0 || points[i + 1].y - points[(i + 1) % env->sector[env->player.sector].npoints].y == 0))
+			counter++;
+		else if (!points[i].x && (points[0].x - points[(i + 1) % env->sector[env->player.sector].npoints].x == 0 || points[0].y - points[(i + 1) % env->sector[env->player.sector].npoints].y == 0))
+			counter++;
+		i++;
+	}
+	if (can_i_go(env, points, env->player.where.x + dx, env->player.where.y + dy))
+	{
+		env->player.where.x += dx;
+		env->player.where.y += dy;
+	}
+	else
+	{
+		printf("no\n");
+	}
+	
 }
 
 void	wsad_read(t_env *env)
