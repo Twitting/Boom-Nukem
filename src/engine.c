@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/03 19:49:52 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/03 20:31:52 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	vline2(t_env *env, t_rend *rend, int y1, int y2, t_scaler ty) //те
 	int *pix;
 	int y;
 	int txty;
-	unsigned char *print;
+	//unsigned char *print;
 
 	pix = (int*)env->surface->pixels;
 	y1 = CLAMP(y1, 0, HWIN - 1);
@@ -52,11 +52,12 @@ static void	vline2(t_env *env, t_rend *rend, int y1, int y2, t_scaler ty) //те
 	while (++y <= y2)
 	{
 		txty = scaler_next(&ty) * (rend->nowsect->ceiling - rend->nowsect->floor) / 64;
-		*pix = ((int *)(env->text[0]->pixels))[txty % env->text[0]->h * env->text[0]->w + rend->txtx % env->text[0]->w];
-		print = (unsigned char *)pix;
-		print[0] = (int)((double)print[0] / 100 * rend->nowsect->light);
-		print[1] = (int)((double)print[1] / 100 * rend->nowsect->light);
-		print[2] = (int)((double)print[2] / 100 * rend->nowsect->light);
+		*pix = ((int *)(rend->nowsect->text->pixels))[txty % rend->nowsect->text->h * rend->nowsect->text->w + rend->txtx % rend->nowsect->text->w];
+		//*pix = ((int *)(env->text[0]->pixels))[txty % env->text[0]->h * env->text[0]->w + rend->txtx % env->text[0]->w];
+		// print = (unsigned char *)pix;
+		// print[0] = (int)((double)print[0] / 100 * rend->nowsect->light);
+		// print[1] = (int)((double)print[1] / 100 * rend->nowsect->light);
+		// print[2] = (int)((double)print[2] / 100 * rend->nowsect->light);
 		pix += WWIN;
 	}
 }
@@ -128,7 +129,7 @@ static void	render_wall(t_env *env, t_rend *rend)
 	int			renderedsect[env->nsectors];
 	t_scaler	ya_int;
 	t_scaler	yb_int;
-	unsigned char *print;
+	//unsigned char *print;
 
 	rend->head = queue;
 	rend->tail = queue;
@@ -222,11 +223,12 @@ static void	render_wall(t_env *env, t_rend *rend)
 					rend->txtx = rend->mapx * env->text[0]->w / 12; // почему 256??
 					rend->txtz = rend->mapz * env->text[0]->w / 12;
 					//textset здесь применить нужную текстуру пола или потолка
-					rend->pel = ((int*)env->text[0]->pixels)[abs(rend->txtz) % env->text[0]->h * env->text[0]->w + abs(rend->txtx) % env->text[0]->w]; //здесь скорее всего что то не так
-					print = (unsigned char *)&rend->pel;
-					print[0] = (int)((double)print[0] / 100 * rend->nowsect->light);
-					print[1] = (int)((double)print[1] / 100 * rend->nowsect->light);
-					print[2] = (int)((double)print[2] / 100 * rend->nowsect->light);
+					//rend->pel = ((int*)env->text[0]->pixels)[abs(rend->txtz) % env->text[0]->h * env->text[0]->w + abs(rend->txtx) % env->text[0]->w]; //здесь скорее всего что то не так
+					rend->pel = ((int*)rend->nowsect->text->pixels)[abs(rend->txtz) % rend->nowsect->text->h * rend->nowsect->text->w + abs(rend->txtx) % rend->nowsect->text->w]; //здесь скорее всего что то не так
+					// print = (unsigned char *)&rend->pel;
+					// print[0] = (int)((double)print[0] / 100 * rend->nowsect->light);
+					// print[1] = (int)((double)print[1] / 100 * rend->nowsect->light);
+					// print[2] = (int)((double)print[2] / 100 * rend->nowsect->light);
 					((int*)env->surface->pixels)[rend->y * WWIN + rend->x] = rend->pel;
 				}
 				rend->txtx = ((rend->u0 * ((rend->x2 - rend->x) * rend->t2.y) + rend->u1 * ((rend->x - rend->x1) * rend->t1.y))\

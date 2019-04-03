@@ -3,14 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:38:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/03 19:49:06 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/03 20:33:01 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
+
+void	sectorlightapply(t_env *env)
+{
+	int	i;
+	int j;
+	int k;
+	unsigned char *pix;
+	
+	i = -1;
+	while (++i < (int)env->nsectors)
+	{
+		env->sector[i].text = IMG_Load("textures/brick.tga");
+		pix = (unsigned char *)env->sector[i].text->pixels;
+		j = -1;
+		while (++j < env->sector[i].text->h)
+		{
+			k = -1;
+			while (++k < env->sector[i].text->w)
+			{
+				pix[(j * env->sector[i].text->h + k) * 4] = (unsigned char)((double)pix[(j * env->sector[i].text->h + k) * 4] / 100 * env->sector[i].light);
+				pix[(j * env->sector[i].text->h + k) * 4 + 1] = (unsigned char)((double)pix[(j * env->sector[i].text->h + k) * 4 + 1] / 100 * env->sector[i].light);
+				pix[(j * env->sector[i].text->h + k) * 4 + 2] = (unsigned char)((double)pix[(j * env->sector[i].text->h + k) * 4 + 2] / 100 * env->sector[i].light);
+			}
+		}
+
+	}
+}
 
 void	init(t_env *env)
 {
@@ -24,7 +51,7 @@ void	init(t_env *env)
 	env->oldfps = 60;
 	env->timer = 0;
 	env->sprcount = 3;
-	
+	sectorlightapply(env);
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 		ft_error(4);
 	else
@@ -38,7 +65,7 @@ void	init(t_env *env)
 		ft_error(2);
 	env->sprite[0].x = 24;
 	env->sprite[0].y = 40;
-	env->sprite[0].height = 8;
+	env->sprite[0].height = 12;
 	env->sprite[0].width = 4;
 	}
 }
