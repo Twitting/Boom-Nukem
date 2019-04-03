@@ -13,7 +13,7 @@ vertex	70	100
 vertex	70	120
 vertex	100	30
 vertex	100	90
-vertex	100	120
+vertex	100	220
 
 sector	0 30	3 4 6 9 8		4 -1 1 -1 -1
 sector	0 100	6 7 10 14 13 9		-1 -1 2 -1 -1 0

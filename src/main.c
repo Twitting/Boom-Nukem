@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:20:03 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/30 17:38:39 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/03 14:13:08 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	ft_error(int errnum)
 
 int		main(void)
 {
-    t_env	*env;
+	t_env		*env;
 	SDL_Event	e;
 
 	env = structure_init();
@@ -55,7 +55,6 @@ int		main(void)
 		start_engine(env, &e);
 		fps(env);
 	}
-	printf("%lf\n", env->player.angle);
 	SDL_DestroyWindow(env->window);
 	SDL_Quit();
 	return (0);

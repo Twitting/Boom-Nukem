@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 21:52:25 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/31 18:19:30 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/03 14:09:07 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	keyboard_events(t_env *env, SDL_Event *e)
 {
 	int		on;
+
 	if (e->type == SDL_KEYDOWN)
 		on = 1;
 	else
@@ -38,14 +39,6 @@ void	keyboard_events(t_env *env, SDL_Event *e)
 			env->player.velocity.z += 1.5;
 			env->falling = 1;
 		}
-
-
-	if (e->key.keysym.sym == SDLK_f) //debug
-	{
-		printf("%d		%lf\n %lf 		%lf 		%lf 		%d %d\n", env->debugtempint,
-		env->debugtempdouble, env->debugtempint1, env->debugtempint2, env->debugtempint3, env->debugtempint4, env->debugtempint5);
-		env->debugtempint = 0;
-	}
 }
 
 void	handle_events(t_env *env, SDL_Event *e)
@@ -63,7 +56,7 @@ void	handle_events(t_env *env, SDL_Event *e)
 			keyboard_events(env, e);
 	}
 	SDL_SetRelativeMouseMode(SDL_TRUE);
-	SDL_GetRelativeMouseState(&x,&y);
+	SDL_GetRelativeMouseState(&x, &y);
 	env->player.angle += x * 3.14159 / 200;
 	env->player.sinang = sin(env->player.angle);
 	env->player.cosang = cos(env->player.angle);

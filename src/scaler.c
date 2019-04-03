@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scaler.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/21 12:58:04 by ebednar           #+#    #+#             */
-/*   Updated: 2019/03/28 13:07:57 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/03 14:14:46 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,5 @@ int	scaler_next(t_scaler *sc)
 		sc->result += sc->bop;
 		sc->cache -= sc->ca;
 	}
-	return(sc->result);
+	return (sc->result);
 }

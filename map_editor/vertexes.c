@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vertexes.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 21:36:46 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/01 14:49:34 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/03 17:31:26 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ int		checknewvertex(t_edit *edit, int x, int y)//checks if clicked vertex is pre
 	i = 0;
 	while (i < SECT.npoints)
 	{
-		if (x == edit->verts[SECT.vertex[i]].x && y == edit->verts[SECT.vertex[i]].y)
+		if (x == edit->verts[SECT.vertex[i]].x && y ==
+				edit->verts[SECT.vertex[i]].y)
 			{
 				ft_putstr("wrong vertex\n");
 				edit->nowln.x0 = edit->nowln.x1; // strange things because of putline x0-x1 inversions

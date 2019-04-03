@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initedit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 18:26:05 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/22 21:35:20 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/03 17:14:52 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	sectvertinit(t_edit *edit) //if segfault on macos see there
 	}
 }
 
-t_edit	*init()
+t_edit	*init(void)
 {
 	t_edit	*edit;
 
@@ -81,11 +81,13 @@ t_edit	*init()
 	edit->vertnum = 0;
 	sectvertinit(edit);
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
-		ft_putchar('!');//ft_error(4);
+		ft_putchar('!');
 	else
 	{
-		if (!(edit->window = SDL_CreateWindow("Super Map Editor 2020", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WWIN, HWIN, SDL_WINDOW_OPENGL + SDL_WINDOW_ALLOW_HIGHDPI)))
-			ft_putchar('!');//ft_error(4);
+		if (!(edit->window = SDL_CreateWindow("Super Map Editor 2020",
+				SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+				WWIN, HWIN, SDL_WINDOW_OPENGL + SDL_WINDOW_ALLOW_HIGHDPI)))
+			ft_putchar('!');
 		edit->surface = SDL_GetWindowSurface(edit->window);
 	}
 	makegrid(edit);

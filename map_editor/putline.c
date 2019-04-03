@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   putline.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 17:57:26 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/19 19:29:57 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/03 17:24:31 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,63 +14,57 @@
 
 void	putlinelow(t_edit *edit, t_line *l)
 {
-	int		x;
-	int		yi;
-	int		dy;
-	int		f;
 	int		*pix;
+	int 	arr[4];//y xi dx f 
 
 	pix = edit->surface->pixels;
-	dy = l->y1 - l->y0;
-	yi = 1;
-	if (dy < 0)
+	arr[2] = l->y1 - l->y0;
+	arr[1] = 1;
+	if (arr[2] < 0)
 	{
-		yi = -1;
-		dy = -dy;
+		arr[1] = -1;
+		arr[2] = -arr[2];
 	}
-	f = 2 * dy - (l->x1 - l->x0);
-	x = l->x0 - 1;
-	while (++x <= l->x1)
+	arr[3] = 2 * arr[2] - (l->x1 - l->x0);
+	arr[0] = l->x0 - 1;
+	while (++arr[0] <= l->x1)
 	{
-		if (x >= 0 && x < WWIN && l->y0 >= 0 && l->y0 < HWIN)
-			pix[l->y0 * WWIN + x] = l->color;
-		if (f > 0)
+		if (arr[0] >= 0 && arr[0] < WWIN && l->y0 >= 0 && l->y0 < HWIN)
+			pix[l->y0 * WWIN + arr[0]] = l->color;
+		if (arr[3] > 0)
 		{
-			l->y0 = l->y0 + yi;
-			f = f - 2 * (l->x1 - l->x0);
+			l->y0 = l->y0 + arr[1];
+			arr[3] = arr[3] - 2 * (l->x1 - l->x0);
 		}
-		f = f + 2 * dy;
+		arr[3] = arr[3] + 2 * arr[2];
 	}
 }
 
 void	putlinehigh(t_edit *edit, t_line *l)
 {
-	int		y;
-	int		xi;
-	int		dx;
-	int		f;
 	int		*pix;
+	int 	arr[4];//y xi dx f 
 
 	pix = edit->surface->pixels;
-	dx = l->x1 - l->x0;
-	xi = 1;
-	if (dx < 0)
+	arr[2] = l->x1 - l->x0;
+	arr[1] = 1;
+	if (arr[2] < 0)
 	{
-		xi = -1;
-		dx = -dx;
+		arr[1] = -1;
+		arr[2] = -arr[2];
 	}
-	f = 2 * dx - (l->y1 - l->y0);
-	y = l->y0 - 1;
-	while (++y <= l->y1)
+	arr[3] = 2 * arr[2] - (l->y1 - l->y0);
+	arr[0] = l->y0 - 1;
+	while (++arr[0] <= l->y1)
 	{
-		if (l->x0 >= 0 && l->x0 < WWIN && y >= 0 && y < HWIN)
-			pix[y * WWIN + l->x0] = l->color;
-		if (f > 0)
+		if (l->x0 >= 0 && l->x0 < WWIN && arr[0] >= 0 && arr[0] < HWIN)
+			pix[arr[0] * WWIN + l->x0] = l->color;
+		if (arr[3] > 0)
 		{
-			l->x0 = l->x0 + xi;
-			f = f - 2 * (l->y1 - l->y0);
+			l->x0 = l->x0 + arr[1];
+			arr[3] = arr[3] - 2 * (l->y1 - l->y0);
 		}
-		f = f + 2 * dx;
+		arr[3] = arr[3] + 2 * arr[2];
 	}
 }
 

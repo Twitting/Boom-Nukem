@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   portals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 21:33:33 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/22 21:43:25 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/03 17:18:14 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	makeportals2(t_edit *edit)
 	int x;
 	int y;
 
-	SDL_GetMouseState(&x,&y);
+	SDL_GetMouseState(&x, &y);
 	x = (x + 12) / 25 * 25;
 	y = (y + 12) / 25 * 25;
 	if (getsecondvert(edit, x / 25 * 10, y / 25 * 10))
@@ -77,7 +77,7 @@ void	makeportals1(t_edit *edit)
 	portalinit(edit);
 	PVERT1 = -1;
 	PVERT2 = -1;
-	SDL_GetMouseState(&x,&y);
+	SDL_GetMouseState(&x, &y);
 	x = (x + 12) / 25 * 25;
 	y = (y + 12) / 25 * 25;
 	if (!(getfirstvert(edit, x / 25 * 10, y / 25 * 10)))

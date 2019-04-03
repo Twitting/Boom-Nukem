@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:33:20 by ebednar           #+#    #+#             */
-/*   Updated: 2019/03/30 17:38:49 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/03 14:15:02 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,14 @@
 
 void	inittext(t_env *env)
 {
-	env->text[0] = IMG_Load("textures/brick.tga");//111.bmp");
+	env->text[0] = IMG_Load("textures/brick.tga");
+	env->text[1] = IMG_Load("textures/2.tga");
+	env->text[2] = IMG_Load("textures/3.tga");
+	env->text[3] = IMG_Load("textures/4.tga");
+	env->text[4] = IMG_Load("textures/5.tga");
+	env->text[5] = IMG_Load("textures/6.tga");
+	env->text[6] = IMG_Load("textures/7.tga");
+	env->text[7] = IMG_Load("textures/8.tga");
+	env->text[8] = IMG_Load("textures/9.tga");
+	env->text[9] = IMG_Load("textures/10.tga");
 }

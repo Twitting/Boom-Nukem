@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/31 18:13:31 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/03 14:17:50 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ typedef struct		s_env
 	unsigned int	nvertexes;
 	int				quit;
 	SDL_Surface		*surface;
-	SDL_Surface		*text[5];
+	SDL_Surface		*text[10];
 	SDL_Window		*window;
 	int				wsad[4];
 	int				moving;
@@ -128,5 +128,7 @@ double	vxs(double x0, double y0, double x1, double y1);
 t_env	*structure_init(void);
 int		start_engine(t_env *env, SDL_Event *e);
 void	inittext(t_env *env);
+void	verttosect(t_env *env, t_sector *sect, char *line, int i);
+void	neighborstosect(t_sector *sect, char *line, int i);
 
 #endif

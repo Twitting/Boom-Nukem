@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   portals_calcs.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 21:41:55 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/31 18:37:27 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/03 17:18:00 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int		checknearverts2(t_edit *edit, int first)
 				((PSECT.vertex[(j + 1) % PSECT.npoints] == PVERT2) ||
 				(j > 0 && PSECT.vertex[j - 1] == PVERT2) ||
 				(j == 0 && PSECT.vertex[PSECT.npoints - 1] == PVERT2)))
-					return (i);
+				return (i);
 			j++;
 		}
 		i++;
@@ -69,7 +69,7 @@ int		makeneighbors(t_edit *edit, int sect1, int sect2)
 		if ((PSECT1.vertex[i] == PVERT1 || PSECT1.vertex[i] == PVERT2) &&
 			(PSECT1.vertex[(i + 1) % PSECT1.npoints] == PVERT1 ||
 			PSECT1.vertex[(i + 1) % PSECT1.npoints] == PVERT2))
-				PSECT1.neighbors[i] = sect2;
+			PSECT1.neighbors[i] = sect2;
 	}
 	i = -1;
 	while (++i < (int)PSECT2.npoints)
@@ -77,9 +77,10 @@ int		makeneighbors(t_edit *edit, int sect1, int sect2)
 		if ((PSECT2.vertex[i] == PVERT1 || PSECT2.vertex[i] == PVERT2) &&
 			(PSECT2.vertex[(i + 1) % PSECT2.npoints] == PVERT1 ||
 			PSECT2.vertex[(i + 1) % PSECT2.npoints] == PVERT2))
-				PSECT2.neighbors[i] = sect1;
+			PSECT2.neighbors[i] = sect1;
 	}
-	printf("PORTAL: Sect1:%d, Sect2:%d, vert1:%d, vert2:%d\n", sect1, sect2, PVERT1, PVERT2);
+	printf("PORTAL: Sect1:%d, Sect2:%d, vert1:%d, vert2:%d\n",
+		sect1, sect2, PVERT1, PVERT2);
 	putportalline(edit);
 	return (1);
 }
@@ -99,14 +100,14 @@ int		checknearverts(t_edit *edit)
 			if (PSECT.vertex[j] == PVERT1 && ((PSECT.vertex[(j + 1) %
 			PSECT.npoints] == PVERT2) || (j > 0 && PSECT.vertex[j - 1] ==
 			PVERT2) || (j == 0 && PSECT.vertex[PSECT.npoints - 1] == PVERT2)))
+			{
+				if ((check2 = checknearverts2(edit, i)) != -1)
 				{
-					if ((check2 = checknearverts2(edit, i)) != -1)
-					{
-						if (makeneighbors(edit, edit->portsects[i],
-							edit->portsects[check2]))
-							return (1);
-					}
+					if (makeneighbors(edit, edit->portsects[i],
+						edit->portsects[check2]))
+						return (1);
 				}
+			}
 		}
 	}
 	return (0);
