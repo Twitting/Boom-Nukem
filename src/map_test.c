@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_test.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:25:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/03 14:19:11 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/03 19:26:53 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	verttosect(t_env *env, t_sector *sect, char *line, int i)
 	count = 0;
 	i++;
 	j = i;
-	sect->light = 1;
 	sect->npoints = 1;
 	while (line[j] != '\t')
 	{
@@ -101,6 +100,9 @@ void	parsesectors(t_env *env, int fd)
 				i++;
 			env->sector[count].ceiling = ft_atoi(&line[i]);
 			while (line[i] != '\t')
+				i++;
+			env->sector[count].light = ft_atoi(&line[i]);
+			while (line[i] != ' ')
 				i++;
 			verttosect(env, &env->sector[count], line, i);
 		}
