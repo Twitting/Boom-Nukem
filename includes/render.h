@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:42:12 by ebednar           #+#    #+#             */
-/*   Updated: 2019/03/31 16:12:06 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/03 19:43:29 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,34 @@ typedef struct	s_rend
 			int			pel;
 			t_xy		wintsect1;
 			t_xy		wintsect2;
+			t_xy		vspr;
+			double		transformx;
+			double		transformy;
+			int			sprx;
+			int			spriteheight;
+			int			drawstarty;
+			int			drawendy;
+			int			spritewidth;
+			int			drawstartx;
+			int			drawendx;
+			t_xy		tspr;
+			double		sprxscale;
+			double		spryscale;
+			int			sprx1;
+			int			sprx2;
+			double		sprceil;
+			double		sprfloor;
+			int			sprya;
+			int			spryb;
+			int			csprya;
+			int			cspryb;
+			int			sprbegx;
+			int			sprendx;
+			double		tspr1;
+			double		tspr2;
 }				t_rend;
 
 int		scaler_next(t_scaler *sc);
+void	rendersprite(t_env *env, t_rend *rend);
 
 #endif

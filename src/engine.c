@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/03 19:29:24 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/03 19:49:52 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,10 +118,9 @@ static void	wallintersect(t_rend *rend, t_env *env)
 		}
 }
 
-static void	render_wall(t_env *env)
+static void	render_wall(t_env *env, t_rend *rend)
 {
 	int			s;
-	t_rend		rend;
 	t_now		queue[maxqueue];
 	t_now		now;
 	int			ytop[WWIN] = {0};
@@ -131,132 +130,132 @@ static void	render_wall(t_env *env)
 	t_scaler	yb_int;
 	unsigned char *print;
 
-	rend.head = queue;
-	rend.tail = queue;
-	rend.nyceil = 0;
-	rend.nyfloor = 0;
+	rend->head = queue;
+	rend->tail = queue;
+	rend->nyceil = 0;
+	rend->nyfloor = 0;
 	s = -1;
 	while (++s < WWIN)
 		ybottom[s] = HWIN - 1;
 	s = -1;
 	while (++s < (int)env->nsectors)
 		renderedsect[s] = 0;
-	*(rend.head) = (t_now){env->player.sector, 0, WWIN - 1};
-	if (++rend.head == queue + maxqueue)
-		rend.head = queue;
-	while (rend.head != rend.tail)
+	*(rend->head) = (t_now){env->player.sector, 0, WWIN - 1};
+	if (++rend->head == queue + maxqueue)
+		rend->head = queue;
+	while (rend->head != rend->tail)
 	{
-		now = *(rend.tail);
-		if (++rend.tail == queue + maxqueue)
-			rend.tail = queue;
+		now = *(rend->tail);
+		if (++rend->tail == queue + maxqueue)
+			rend->tail = queue;
 		if (renderedsect[now.sectorno] & 0x21)
 			continue ;
 		++renderedsect[now.sectorno];
 		s = -1;
-		rend.nowsect = &(env->sector[now.sectorno]);
-		while (++s < (int)rend.nowsect->npoints)
+		rend->nowsect = &(env->sector[now.sectorno]);
+		while (++s < (int)rend->nowsect->npoints)
 		{
-			rend.vx1 = rend.nowsect->vertex[s % rend.nowsect->npoints].x - env->player.where.x;
-			rend.vy1 = rend.nowsect->vertex[s % rend.nowsect->npoints].y - env->player.where.y;
-			rend.vx2 = rend.nowsect->vertex[(s + 1) % rend.nowsect->npoints].x - env->player.where.x;
-			rend.vy2 = rend.nowsect->vertex[(s + 1) % rend.nowsect->npoints].y - env->player.where.y;
-			rend.t1.x = rend.vx1 * env->player.sinang - rend.vy1 * env->player.cosang;
-			rend.t1.y = rend.vx1 * env->player.cosang + rend.vy1 * env->player.sinang;
-			rend.t2.x = rend.vx2 * env->player.sinang - rend.vy2 * env->player.cosang;
-			rend.t2.y = rend.vx2 * env->player.cosang + rend.vy2 * env->player.sinang;
-			if (rend.t1.y <= 0 && rend.t2.y <= 0)
+			rend->vx1 = rend->nowsect->vertex[s % rend->nowsect->npoints].x - env->player.where.x;
+			rend->vy1 = rend->nowsect->vertex[s % rend->nowsect->npoints].y - env->player.where.y;
+			rend->vx2 = rend->nowsect->vertex[(s + 1) % rend->nowsect->npoints].x - env->player.where.x;
+			rend->vy2 = rend->nowsect->vertex[(s + 1) % rend->nowsect->npoints].y - env->player.where.y;
+			rend->t1.x = rend->vx1 * env->player.sinang - rend->vy1 * env->player.cosang;
+			rend->t1.y = rend->vx1 * env->player.cosang + rend->vy1 * env->player.sinang;
+			rend->t2.x = rend->vx2 * env->player.sinang - rend->vy2 * env->player.cosang;
+			rend->t2.y = rend->vx2 * env->player.cosang + rend->vy2 * env->player.sinang;
+			if (rend->t1.y <= 0 && rend->t2.y <= 0)
 				continue ;
-			rend.u0 = 0;
-			rend.u1 = (env->text[0]->w - 1);
-			wallintersect(&rend, env);
-			if (rend.t1.y <= 0.5)
+			rend->u0 = 0;
+			rend->u1 = (env->text[0]->w - 1);
+			wallintersect(rend, env);
+			if (rend->t1.y <= 0.5)
 			{
-				rend.t1.x = (0.5 - rend.t1.y) * (rend.t2.x - rend.t1.x) / (rend.t2.y - rend.t1.y) + rend.t1.x;
-				rend.t1.y = 0.5;
+				rend->t1.x = (0.5 - rend->t1.y) * (rend->t2.x - rend->t1.x) / (rend->t2.y - rend->t1.y) + rend->t1.x;
+				rend->t1.y = 0.5;
 			}
-			rend.xscale1 = WWIN * HFOV / rend.t1.y; //WWIN!!!
-			rend.yscale1 = HWIN * VFOV / rend.t1.y;
-			rend.x1 = WWIN / 2 + (int)(- rend.t1.x * rend.xscale1);
-			rend.xscale2 = WWIN * HFOV / rend.t2.y;
-			rend.yscale2 = HWIN * VFOV / rend.t2.y;
-			rend.x2 = WWIN / 2 + (int)(- rend.t2.x * rend.xscale2);
-			if (rend.x1 >= rend.x2 || rend.x2 < now.sx1 || rend.x1 > now.sx2)
+			rend->xscale1 = WWIN * HFOV / rend->t1.y; //WWIN!!!
+			rend->yscale1 = HWIN * VFOV / rend->t1.y;
+			rend->x1 = WWIN / 2 + (int)(- rend->t1.x * rend->xscale1);
+			rend->xscale2 = WWIN * HFOV / rend->t2.y;
+			rend->yscale2 = HWIN * VFOV / rend->t2.y;
+			rend->x2 = WWIN / 2 + (int)(- rend->t2.x * rend->xscale2);
+			if (rend->x1 >= rend->x2 || rend->x2 < now.sx1 || rend->x1 > now.sx2)
 				continue;
-			rend.yceil = rend.nowsect->ceiling - env->player.where.z;
-			rend.yfloor = rend.nowsect->floor - env->player.where.z;
-			if (rend.nowsect->neighbors[s] >= 0)
+			rend->yceil = rend->nowsect->ceiling - env->player.where.z;
+			rend->yfloor = rend->nowsect->floor - env->player.where.z;
+			if (rend->nowsect->neighbors[s] >= 0)
 			{
-				rend.nyceil = env->sector[rend.nowsect->neighbors[s]].ceiling - env->player.where.z;
-				rend.nyfloor = env->sector[rend.nowsect->neighbors[s]].floor - env->player.where.z;
+				rend->nyceil = env->sector[rend->nowsect->neighbors[s]].ceiling - env->player.where.z;
+				rend->nyfloor = env->sector[rend->nowsect->neighbors[s]].floor - env->player.where.z;
 			}
-			rend.y1a = HWIN / 2 - (int)(YAW(rend.yceil, rend.t1.y) * rend.yscale1);
-			rend.y1b = HWIN / 2 - (int)(YAW(rend.yfloor, rend.t1.y) * rend.yscale1);
-			rend.y2a = HWIN / 2 - (int)(YAW(rend.yceil, rend.t2.y) * rend.yscale2);
-			rend.y2b = HWIN / 2 - (int)(YAW(rend.yfloor, rend.t2.y) * rend.yscale2);
-			rend.ny1a = HWIN / 2 - (int)(YAW(rend.nyceil, rend.t1.y) * rend.yscale1);
-			rend.ny1b = HWIN / 2 - (int)(YAW(rend.nyfloor, rend.t1.y) * rend.yscale1);
-			rend.ny2a = HWIN / 2 - (int)(YAW(rend.nyceil, rend.t2.y) * rend.yscale2);
-			rend.ny2b = HWIN / 2 - (int)(YAW(rend.nyfloor, rend.t2.y) * rend.yscale2);
-			rend.beginx = MAX(rend.x1, now.sx1);
-			rend.endx = MIN(rend.x2, now.sx2);
-			rend.x = rend.beginx;
-			ya_int = (t_scaler)SCALER_INIT(rend.x1, rend.beginx, rend.x2, rend.y1a, rend.y2a);
-			yb_int = (t_scaler)SCALER_INIT(rend.x1, rend.beginx, rend.x2, rend.y1b, rend.y2b);
-			while (rend.x <= rend.endx)
+			rend->y1a = HWIN / 2 - (int)(YAW(rend->yceil, rend->t1.y) * rend->yscale1);
+			rend->y1b = HWIN / 2 - (int)(YAW(rend->yfloor, rend->t1.y) * rend->yscale1);
+			rend->y2a = HWIN / 2 - (int)(YAW(rend->yceil, rend->t2.y) * rend->yscale2);
+			rend->y2b = HWIN / 2 - (int)(YAW(rend->yfloor, rend->t2.y) * rend->yscale2);
+			rend->ny1a = HWIN / 2 - (int)(YAW(rend->nyceil, rend->t1.y) * rend->yscale1);
+			rend->ny1b = HWIN / 2 - (int)(YAW(rend->nyfloor, rend->t1.y) * rend->yscale1);
+			rend->ny2a = HWIN / 2 - (int)(YAW(rend->nyceil, rend->t2.y) * rend->yscale2);
+			rend->ny2b = HWIN / 2 - (int)(YAW(rend->nyfloor, rend->t2.y) * rend->yscale2);
+			rend->beginx = MAX(rend->x1, now.sx1);
+			rend->endx = MIN(rend->x2, now.sx2);
+			rend->x = rend->beginx;
+			ya_int = (t_scaler)SCALER_INIT(rend->x1, rend->beginx, rend->x2, rend->y1a, rend->y2a);
+			yb_int = (t_scaler)SCALER_INIT(rend->x1, rend->beginx, rend->x2, rend->y1b, rend->y2b);
+			while (rend->x <= rend->endx)
 			{
-				//rend.ya = (rend.x - rend.x1) * (rend.y2a - rend.y1a) / (rend.x2 - rend.x1) + rend.y1a;
-				rend.ya = scaler_next(&ya_int); //- не работает нормально?
-				rend.cya = CLAMP(rend.ya, ytop[rend.x], ybottom[rend.x]);
-				//rend.yb = (rend.x - rend.x1) * (rend.y2b - rend.y1b) / (rend.x2 - rend.x1) + rend.y1b;
-				rend.yb = scaler_next(&yb_int); //- не работает нормально??
-				rend.cyb = CLAMP(rend.yb, ytop[rend.x], ybottom[rend.x]);
-				rend.y  = ytop[rend.x];
-				while (++rend.y <= ybottom[rend.x])
+				//rend->ya = (rend->x - rend->x1) * (rend->y2a - rend->y1a) / (rend->x2 - rend->x1) + rend->y1a;
+				rend->ya = scaler_next(&ya_int); //- не работает нормально?
+				rend->cya = CLAMP(rend->ya, ytop[rend->x], ybottom[rend->x]);
+				//rend->yb = (rend->x - rend->x1) * (rend->y2b - rend->y1b) / (rend->x2 - rend->x1) + rend->y1b;
+				rend->yb = scaler_next(&yb_int); //- не работает нормально??
+				rend->cyb = CLAMP(rend->yb, ytop[rend->x], ybottom[rend->x]);
+				rend->y  = ytop[rend->x];
+				while (++rend->y <= ybottom[rend->x])
 				{
-					if (rend.y >= rend.cya && rend.y <= rend.cyb)
+					if (rend->y >= rend->cya && rend->y <= rend->cyb)
 					{
-						rend.y = rend.cyb;
+						rend->y = rend->cyb;
 						continue;
 					}
-					rend.hei = rend.y < rend.cya ? rend.yceil : rend.yfloor;
-					TOMAPCCORD(rend.hei, rend.x, rend.y, rend.mapx, rend.mapz);
-					rend.txtx = rend.mapx * env->text[0]->w / 12; // почему 256??
-					rend.txtz = rend.mapz * env->text[0]->w / 12;
+					rend->hei = rend->y < rend->cya ? rend->yceil : rend->yfloor;
+					TOMAPCCORD(rend->hei, rend->x, rend->y, rend->mapx, rend->mapz);
+					rend->txtx = rend->mapx * env->text[0]->w / 12; // почему 256??
+					rend->txtz = rend->mapz * env->text[0]->w / 12;
 					//textset здесь применить нужную текстуру пола или потолка
-					rend.pel = ((int*)env->text[0]->pixels)[abs(rend.txtz) % env->text[0]->h * env->text[0]->w + abs(rend.txtx) % env->text[0]->w]; //здесь скорее всего что то не так
-					print = (unsigned char *)&rend.pel;
-					print[0] = (int)((double)print[0] / 100 * rend.nowsect->light);
-					print[1] = (int)((double)print[1] / 100 * rend.nowsect->light);
-					print[2] = (int)((double)print[2] / 100 * rend.nowsect->light);
-					((int*)env->surface->pixels)[rend.y * WWIN + rend.x] = rend.pel;
+					rend->pel = ((int*)env->text[0]->pixels)[abs(rend->txtz) % env->text[0]->h * env->text[0]->w + abs(rend->txtx) % env->text[0]->w]; //здесь скорее всего что то не так
+					print = (unsigned char *)&rend->pel;
+					print[0] = (int)((double)print[0] / 100 * rend->nowsect->light);
+					print[1] = (int)((double)print[1] / 100 * rend->nowsect->light);
+					print[2] = (int)((double)print[2] / 100 * rend->nowsect->light);
+					((int*)env->surface->pixels)[rend->y * WWIN + rend->x] = rend->pel;
 				}
-				rend.txtx = ((rend.u0 * ((rend.x2 - rend.x) * rend.t2.y) + rend.u1 * ((rend.x - rend.x1) * rend.t1.y))\
-				/ ((rend.x2 - rend.x) * rend.t2.y + (rend.x - rend.x1) * rend.t1.y)) * (fabs(rend.vx2 - rend.vx1) + fabs(rend.vy2 - rend.vy1)) * 0.04;
-				//vline(env, rend.x, ytop[rend.x], rend.cya - 1, 0x111111, 0x222222, 0x111111); //старые заглушки пола и потолка
-				//vline(env, rend.x, rend.cyb - 1, ybottom[rend.x], 0x0000FF, 0x0000AA, 0x0000FF);
-				if (rend.nowsect->neighbors[s] >= 0)
+				rend->txtx = ((rend->u0 * ((rend->x2 - rend->x) * rend->t2.y) + rend->u1 * ((rend->x - rend->x1) * rend->t1.y))\
+				/ ((rend->x2 - rend->x) * rend->t2.y + (rend->x - rend->x1) * rend->t1.y)) * (fabs(rend->vx2 - rend->vx1) + fabs(rend->vy2 - rend->vy1)) * 0.04;
+				//vline(env, rend->x, ytop[rend->x], rend->cya - 1, 0x111111, 0x222222, 0x111111); //старые заглушки пола и потолка
+				//vline(env, rend->x, rend->cyb - 1, ybottom[rend->x], 0x0000FF, 0x0000AA, 0x0000FF);
+				if (rend->nowsect->neighbors[s] >= 0)
 				{
-					rend.nya = (rend.x - rend.x1) * (rend.ny2a - rend.ny1a) / (rend.x2 - rend.x1) + rend.ny1a;
-					rend.ncya = CLAMP(rend.nya, ytop[rend.x], ybottom[rend.x]);
-					rend.nyb = (rend.x - rend.x1) * (rend.ny2b - rend.ny1b) / (rend.x2 - rend.x1) + rend.ny1b;
-					rend.ncyb = CLAMP(rend.nyb, ytop[rend.x], ybottom[rend.x]);
-					vline2(env, &rend, rend.cya, rend.ncya - 1, (t_scaler)SCALER_INIT(rend.ya, rend.cya, rend.yb, 0, (env->text[0]->w - 1)));
-				//	vline(env, rend.x, rend.cya, rend.ncya - 1, 0, rend.x == rend.x1 || rend.x == rend.x2 ? 0 : 0xAAAAAA, 0);
-					ytop[rend.x] = CLAMP(MAX(rend.cya, rend.ncya), ytop[rend.x], HWIN - 1);
-					vline2(env, &rend, rend.ncyb + 1, rend.cyb, (t_scaler)SCALER_INIT(rend.ya, rend.ncyb + 1, rend.yb, 0, (env->text[0]->w - 1)));
-				//	vline(env, rend.x, rend.ncyb + 1, rend.cyb, 0, rend.x == rend.x1 || rend.x == rend.x2 ? 0 : 0x7C00D9 , 0);
-					ybottom[rend.x] = CLAMP(MIN(rend.cyb, rend.ncyb), 0, ybottom[rend.x]);
+					rend->nya = (rend->x - rend->x1) * (rend->ny2a - rend->ny1a) / (rend->x2 - rend->x1) + rend->ny1a;
+					rend->ncya = CLAMP(rend->nya, ytop[rend->x], ybottom[rend->x]);
+					rend->nyb = (rend->x - rend->x1) * (rend->ny2b - rend->ny1b) / (rend->x2 - rend->x1) + rend->ny1b;
+					rend->ncyb = CLAMP(rend->nyb, ytop[rend->x], ybottom[rend->x]);
+					vline2(env, rend, rend->cya, rend->ncya - 1, (t_scaler)SCALER_INIT(rend->ya, rend->cya, rend->yb, 0, (env->text[0]->w - 1)));
+				//	vline(env, rend->x, rend->cya, rend->ncya - 1, 0, rend->x == rend->x1 || rend->x == rend->x2 ? 0 : 0xAAAAAA, 0);
+					ytop[rend->x] = CLAMP(MAX(rend->cya, rend->ncya), ytop[rend->x], HWIN - 1);
+					vline2(env, rend, rend->ncyb + 1, rend->cyb, (t_scaler)SCALER_INIT(rend->ya, rend->ncyb + 1, rend->yb, 0, (env->text[0]->w - 1)));
+				//	vline(env, rend->x, rend->ncyb + 1, rend->cyb, 0, rend->x == rend->x1 || rend->x == rend->x2 ? 0 : 0x7C00D9 , 0);
+					ybottom[rend->x] = CLAMP(MIN(rend->cyb, rend->ncyb), 0, ybottom[rend->x]);
 				}
 				else
-					vline2(env, &rend, rend.cya, rend.cyb, (t_scaler)SCALER_INIT(rend.ya, rend.cya, rend.yb, 0, (env->text[0]->w - 1)));
-				//	vline(env, rend.x, rend.cya, rend.cyb, 0, rend.x == rend.x1 || rend.x == rend.x2 ? 0 : 0xAAAAAA, 0);
+					vline2(env, rend, rend->cya, rend->cyb, (t_scaler)SCALER_INIT(rend->ya, rend->cya, rend->yb, 0, (env->text[0]->w - 1)));
+				//	vline(env, rend->x, rend->cya, rend->cyb, 0, rend->x == rend->x1 || rend->x == rend->x2 ? 0 : 0xAAAAAA, 0);
 				
-				if (rend.x == 100 && rend.nowsect == &env->sector[env->player.sector])//////////////////////////////////DEBUG SHIT
+				if (rend->x == 100 && rend->nowsect == &env->sector[env->player.sector])//////////////////////////////////DEBUG SHIT
 				{
-						env->debugtempint = rend.cya;
-						env->debugtempdouble = rend.ya;
-						env->debugtempint1 = rend.t1.x;
-						env->debugtempint2 = rend.t1.y;
+						env->debugtempint = rend->cya;
+						env->debugtempdouble = rend->ya;
+						env->debugtempint1 = rend->t1.x;
+						env->debugtempint2 = rend->t1.y;
 						env->debugtempint3 = 0;
 						env->debugtempint4 = 0;
 						env->debugtempint5 = 0;
@@ -264,13 +263,13 @@ static void	render_wall(t_env *env)
 
 
 				
-				rend.x++;
+				rend->x++;
 			}
-			if (rend.nowsect->neighbors[s] >= 0 && rend.endx >= rend.beginx && (rend.head + maxqueue + 1 - rend.tail) % maxqueue)
+			if (rend->nowsect->neighbors[s] >= 0 && rend->endx >= rend->beginx && (rend->head + maxqueue + 1 - rend->tail) % maxqueue)
 			{
-				*(rend.head) = (t_now){rend.nowsect->neighbors[s], rend.beginx, rend.endx};
-				if (++rend.head == queue + maxqueue)
-					rend.head = queue;
+				*(rend->head) = (t_now){rend->nowsect->neighbors[s], rend->beginx, rend->endx};
+				if (++rend->head == queue + maxqueue)
+					rend->head = queue;
 			}
 		}
 		++renderedsect[now.sectorno];
@@ -279,13 +278,13 @@ static void	render_wall(t_env *env)
 
 int		start_engine(t_env *env, SDL_Event *e)
 {
+	t_rend		rend;
+
 	SDL_LockSurface(env->surface);
-	render_wall(env);
-	
+	render_wall(env, &rend);
+	rendersprite(env, &rend);
 	SDL_UnlockSurface(env->surface);
-	//SDL_BlitSurface(env->text[0], NULL, env->surface, NULL);
 	SDL_UpdateWindowSurface(env->window);
-	
 	handle_events(env, e);
 	return (0);
 }

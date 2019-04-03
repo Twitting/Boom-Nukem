@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/03 14:17:50 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/03 19:39:43 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,10 @@ typedef	struct		s_sprite
 	double			y;
 	int				texture;
 	double			spritedist;
+	int				height;
+	int				width;
+	int				sector;
+	int				type;
 }					t_sprite;
 
 typedef struct		s_sector
@@ -91,7 +95,7 @@ typedef struct		s_env
 	unsigned int	nvertexes;
 	int				quit;
 	SDL_Surface		*surface;
-	SDL_Surface		*text[10];
+	SDL_Surface		*text[5];
 	SDL_Window		*window;
 	int				wsad[4];
 	int				moving;
@@ -103,6 +107,9 @@ typedef struct		s_env
 	double			timer;
 	int				fps;
 	int				oldfps;
+	t_sprite		*sprite;
+	int				sprcount;
+	t_xy			plane;
 
 
 	
