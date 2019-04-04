@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:43:20 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/03 19:36:07 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/04 19:17:25 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	drawsprite(t_env *env, t_rend *rend)
 	pix = (int*)env->surface->pixels;
 	pix += rend->csprya * WWIN + rend->sprx;
 	y = rend->csprya - 1;
+	
 	//printf("!!!%d!!!\n", ((int *)(env->text[1]->pixels))[0]);
 	while (++y <= rend->cspryb)
 	{
@@ -44,7 +45,7 @@ void	spriteplane(t_env *env, t_rend *rend, int j)
 	i = -1;
 	while (++i < WWIN)
 		ybottom[i] = HWIN - 1;
-	now = (t_now){env->player.sector, 0, WWIN - 1};
+	now = rend->sprq[env->sprite[j].sector];
 	rend->nowsect = &(env->sector[now.sectorno]);
 	rend->vspr.x = env->sprite[j].x - env->player.where.x;
 	rend->vspr.y = env->sprite[j].y - env->player.where.y;
@@ -86,14 +87,14 @@ void	spriteplane(t_env *env, t_rend *rend, int j)
 	rend->sprceil =  env->sprite[j].height - env->player.where.z;
 	rend->sprfloor = rend->nowsect->floor - env->player.where.z;
 	rend->sprya = HWIN / 2 - (int)(YAW(rend->sprceil, rend->tspr.y) * rend->spryscale);
-	rend->csprya = CLAMP(rend->sprya, ytop[rend->x], ybottom[rend->x]);
 	rend->spryb = HWIN / 2 - (int)(YAW(rend->sprfloor, rend->tspr.y) * rend->spryscale);
-	rend->cspryb = CLAMP(rend->spryb, ytop[rend->x], ybottom[rend->x]);
 	rend->sprbegx = MAX(rend->sprx1, now.sx1);
 	rend->sprendx = MIN(rend->sprx2, now.sx2);
 	rend->sprx = rend->sprbegx;
 	while (rend->sprx < rend->sprendx)
 	{
+		rend->csprya = CLAMP(rend->sprya, ytop[rend->sprx], ybottom[rend->sprx]);
+		rend->cspryb = CLAMP(rend->spryb, ytop[rend->sprx], ybottom[rend->sprx]);
 		rend->txtx = (int)((double)(rend->sprx - rend->sprx1) / (double)(rend->sprx2 - rend->sprx1) * env->text[1]->w);
 		//printf("%d\n", rend->sprx - rend->sprbegx);
 		drawsprite(env, rend);
@@ -101,9 +102,7 @@ void	spriteplane(t_env *env, t_rend *rend, int j)
 	}
 }
 
-
-
-/*void	sortsprite(t_env *env)
+void	sortsprite(t_env *env)
 {
 	int			f;
 	int			i;
@@ -114,7 +113,7 @@ void	spriteplane(t_env *env, t_rend *rend, int j)
 	{
 		f = 0;
 		i = 0;
-		while (i < 1)
+		while (i < env->sprcount - 1)
 		{
 			if (env->sprite[i].spritedist < env->sprite[i + 1].spritedist)
 			{
@@ -127,22 +126,21 @@ void	spriteplane(t_env *env, t_rend *rend, int j)
 			i++;
 		}
 	}
-}*/
+}
 
 void	rendersprite(t_env *env, t_rend *rend)
 {
 	int	i;
 
 	i = -1;
-	while (++i < 1) //
+	while (++i < env->sprcount) //
 		env->sprite[i].spritedist = (env->player.where.x - env->sprite[i].x) *\
 		(env->player.where.x - env->sprite[i].x) + (env->player.where.y -\
 		env->sprite[i].y) * (env->player.where.y - env->sprite[i].y);
-	//sortsprite(env);
+	sortsprite(env);
 	i = -1;
-	while (++i < 1) //
+	while (++i < env->sprcount) //
 	{
 		spriteplane(env, rend, i);
 	}
 }
-

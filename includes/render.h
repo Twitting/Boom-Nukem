@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:42:12 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/03 19:43:29 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/04 19:15:05 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 					float rtz = (Z) * env->player.sinang - (X) * env->player.cosang; \
 					X = rtx + env->player.where.x; Z = rtz + env->player.where.y; \
 					} while(0)
+# define MAXQUEUE 32
 
 # include "engine.h"
 
@@ -34,11 +35,6 @@ typedef struct	s_now
 	int			sx1;
 	int			sx2;
 }				t_now;
-
-enum
-{
-				maxqueue = 8
-};
 
 typedef struct s_scaler
 {
@@ -52,6 +48,9 @@ typedef struct s_scaler
 
 typedef struct	s_rend
 {
+			t_now		queue[MAXQUEUE];
+			t_now		sprq[MAXQUEUE];
+			int			sectcount;
 			t_sector	*nowsect;
 			double		vx1;
 			double		vy1;
@@ -107,17 +106,11 @@ typedef struct	s_rend
 			int			pel;
 			t_xy		wintsect1;
 			t_xy		wintsect2;
+			t_scaler	ya_int;
+			t_scaler	yb_int;
 			t_xy		vspr;
-			double		transformx;
-			double		transformy;
-			int			sprx;
-			int			spriteheight;
-			int			drawstarty;
-			int			drawendy;
-			int			spritewidth;
-			int			drawstartx;
-			int			drawendx;
 			t_xy		tspr;
+			int			sprx;
 			double		sprxscale;
 			double		spryscale;
 			int			sprx1;
