@@ -1,7 +1,9 @@
 {
     "files.associations": {
 		"engine.h": "c",
-		"render.h": "c"
+		"render.h": "c",
+		"limits": "c",
+		"type_traits": "c"
 	},
     "editor.insertSpaces": false
 }

@@ -6,7 +6,7 @@
 /*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:20:03 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/03 14:13:08 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/05 18:29:43 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ void	fps(t_env *env)
 {
 	env->fps++;
 	env->timer += (clock() - env->frame) / CLOCKS_PER_SEC;
+	printf("%d   %d \n",env->player.sector,  (unsigned int)env->sprite[0].sector);
+	if (env->timer >= 0.5 && env->timer <= 0.6 && env->player.sector == (unsigned int)env->sprite[0].sector)
+	{
+		move_mob(env);
+	}
 	if (env->timer >= 1.0)
 	{
 		ft_putstr("fps = ");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:38:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/04 19:19:33 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/05 18:32:25 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	init(t_env *env)
 	env->fps = 0;
 	env->oldfps = 60;
 	env->timer = 0;
-	env->sprcount = 3;
+	env->sprcount = 1;
 	sectorlightapply(env);
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 		ft_error(4);
@@ -63,18 +63,18 @@ void	init(t_env *env)
 	env->surface = SDL_GetWindowSurface(env->window);
 	if (!(env->sprite = (t_sprite *)malloc(sizeof(t_sprite) * env->sprcount)))
 		ft_error(2);
-	env->sprite[0].x = 24;
-	env->sprite[0].y = 40;
+	env->sprite[0].pos.x = 24;
+	env->sprite[0].pos.y = 40;
 	env->sprite[0].height = 12;
 	env->sprite[0].width = 4;
 	env->sprite[0].sector = 0;
-	env->sprite[1].x = 35;
-	env->sprite[1].y = 48;
+	env->sprite[1].pos.x = 35;
+	env->sprite[1].pos.y = 48;
 	env->sprite[1].height = 12;
 	env->sprite[1].width = 4;
 	env->sprite[1].sector = 1;
-	env->sprite[2].x = 19;
-	env->sprite[2].y = 45;
+	env->sprite[2].pos.x = 19;
+	env->sprite[2].pos.y = 45;
 	env->sprite[2].height = 12;
 	env->sprite[2].width = 4;
 	env->sprite[2].sector = 0;

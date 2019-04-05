@@ -6,11 +6,117 @@
 /*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:10:46 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/03 17:12:04 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/05 18:30:39 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
+
+static int		can_i_go(t_env *env, t_xy *p, double x, double y);
+
+
+int can_i_go2(t_env *env, t_xy *p, double x, double y)
+{
+	double			oldx = x;
+	double			oldy = y;
+	double			a, b, c, s;
+	double			hh[env->sector[env->sprite[0].sector].npoints];
+	unsigned int	i = 0;
+	unsigned int	ii = i % env->sector[env->sprite[0].sector].npoints;
+	unsigned int	ii1 = (i + 1) % env->sector[env->sprite[0].sector].npoints;
+
+	while (i < env->sector[env->sprite[0].sector].npoints)
+	{
+		a = sqrt(pow(p[i].x - oldx, 2) + pow(p[i].y - oldy, 2));
+		b = sqrt(pow(p[ii1].x - oldx, 2) + pow(p[ii1].y - oldy, 2));
+		c = sqrt(pow(p[i].x - p[ii1].x, 2) + pow(p[i].y - p[ii1].y, 2));
+		s = 0.25 * sqrt(pow(pow(a, 2) + pow(b, 2) + pow(c, 2), 2) \
+			- 2 * (pow(a, 4) + pow(b, 4) + pow(c, 4)));
+		hh[i] = (2 * s) / c;
+		printf("%f \n", hh[0]);
+		if (hh[ii] < 5.0 && (env->sector[env->sprite[0].sector].neighbors[ii] != -1))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+void move_mob(t_env *env) {
+
+	t_xy oldPos;
+	t_xy playerPos;
+	t_sector		sect;
+	int			arr2[2];
+	
+	
+	arr2[0] = -1;
+	arr2[1] = 0;
+	oldPos.x = env->sprite[0].pos.x;
+	oldPos.y = env->sprite[0].pos.y;
+	playerPos.x = env->player.where.x;
+	playerPos.y = env->player.where.y;
+	sect = env->sector[env->sprite[0].sector];
+	double deltaX = fabs(playerPos.x - oldPos.x);
+    double deltaY = fabs(playerPos.y - oldPos.y);
+    double signX = oldPos.x < playerPos.x  ? 1 : -1;
+    double signY = oldPos.y < playerPos.y ? 1 : -1;
+    double error = deltaX - deltaY;
+	t_xy			points[env->sector[env->sprite[0].sector].npoints];
+
+
+    while ((unsigned int)arr2[1]++ < env->sector[env->player.sector].npoints)
+	{
+		points[arr2[1]].x = sect.vertex[arr2[1]].x;
+		points[arr2[1]].y = sect.vertex[arr2[1]].y;
+	}
+
+	
+
+    while(fabs(oldPos.x - playerPos.x) > 5.0 || fabs(oldPos.y - playerPos.y) > 5.0) 
+   {
+        double error2 = error * 2;
+        if(error2 > -deltaY) 
+        {
+            error -= deltaY;
+            oldPos.x += signX;
+        }
+        if(error2 < deltaX) 
+        {
+            error += deltaX;
+            oldPos.y += signY;
+        }
+		if(can_i_go2(env,points,env->sprite[0].pos.x, env->sprite[0].pos.y))
+		{
+			env->sprite[0].pos.x = oldPos.x;
+			env->sprite[0].pos.y = oldPos.y;
+			printf("STOP\n");
+		}
+		else
+		{
+			if(error2 > -deltaY) 
+        	{
+            	error += deltaY;
+            	oldPos.x -= signX;
+        	}
+        	if(error2 < deltaX) 
+        	{
+           		error -= deltaX;
+          		oldPos.y -= signY;
+       		}
+		}
+		
+		
+			
+		//printf("secS: %d  secP: %d\n", env->sprite[0].sector, env->player.sector);
+		while (++arr2[0] < (int)sect.npoints)
+			if (sect.neighbors[arr2[0]] >= 0 && intersect_box(oldPos, env->sprite[0].pos, sect.vertex[arr2[0] % sect.npoints], sect.vertex[(arr2[0] + 1) % sect.npoints]))
+			{	
+				env->sprite[0].sector = sect.neighbors[arr2[0]];
+				break;
+			}
+		break ;
+    }
+}
 
 void	v_collision_support(t_env *env)
 {
@@ -112,14 +218,14 @@ void	movement(t_env *env, float dx, float dy)
 	int				arr2[2];//s i
 	t_xy			points[env->sector[env->player.sector].npoints];
 	t_xy			arr[2];//p dp
-
+	arr2[0] = -1;
+	arr2[1] = 0;
 	arr[0].x = env->player.where.x;
 	arr[0].y = env->player.where.y;
 	arr[1].x = arr[0].x + dx;
 	arr[1].y = arr[0].y + dy;
 	sect = env->sector[env->player.sector];
-	arr2[0] = -1;
-	arr2[1] = 0;
+	
 	while (++arr2[0] < (int)sect.npoints)
 		if (sect.neighbors[arr2[0]] >= 0 && intersect_box(arr[0], arr[1], sect.vertex[arr2[0] % sect.npoints], sect.vertex[(arr2[0] + 1) % sect.npoints]) && point_side(arr[1].x, arr[1].y, sect.vertex[arr2[0] % sect.npoints], sect.vertex[(arr2[0] + 1) % sect.npoints]) < 0)
 		{

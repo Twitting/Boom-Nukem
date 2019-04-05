@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/03 20:11:24 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/05 16:00:03 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,7 @@ typedef struct		s_xyz
 
 typedef	struct		s_sprite
 {
-	double			x;
-	double			y;
+	t_xy			pos;
 	int				texture;
 	double			spritedist;
 	int				height;
@@ -138,5 +137,6 @@ int		start_engine(t_env *env, SDL_Event *e);
 void	inittext(t_env *env);
 void	verttosect(t_env *env, t_sector *sect, char *line, int i);
 void	neighborstosect(t_sector *sect, char *line, int i);
+void 	move_mob(t_env *env);
 
 #endif

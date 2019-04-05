@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprites.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:43:20 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/04 19:17:25 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/05 16:54:21 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ void	spriteplane(t_env *env, t_rend *rend, int j)
 		ybottom[i] = HWIN - 1;
 	now = rend->sprq[env->sprite[j].sector];
 	rend->nowsect = &(env->sector[now.sectorno]);
-	rend->vspr.x = env->sprite[j].x - env->player.where.x;
-	rend->vspr.y = env->sprite[j].y - env->player.where.y;
+	rend->vspr.x = env->sprite[j].pos.x - env->player.where.x;
+	rend->vspr.y = env->sprite[j].pos.y - env->player.where.y;
 	/*inv = 1.0 / (env->plane.x * env->player.sinang - env->player.cosang *
 	env->plane.y);
 	rend->transformx = inv * (env->player.sinang * rend->vspr.x -
@@ -84,7 +84,7 @@ void	spriteplane(t_env *env, t_rend *rend, int j)
 	rend->sprx2 = WWIN / 2 - (int)((rend->tspr2) * rend->sprxscale);
 	if (rend->sprx1 > now.sx2 || rend->sprx2 < now.sx1)
 		return ;
-	rend->sprceil =  env->sprite[j].height - env->player.where.z;
+	rend->sprceil = rend->nowsect->floor + env->sprite[j].height - env->player.where.z;
 	rend->sprfloor = rend->nowsect->floor - env->player.where.z;
 	rend->sprya = HWIN / 2 - (int)(YAW(rend->sprceil, rend->tspr.y) * rend->spryscale);
 	rend->spryb = HWIN / 2 - (int)(YAW(rend->sprfloor, rend->tspr.y) * rend->spryscale);
@@ -134,9 +134,9 @@ void	rendersprite(t_env *env, t_rend *rend)
 
 	i = -1;
 	while (++i < env->sprcount) //
-		env->sprite[i].spritedist = (env->player.where.x - env->sprite[i].x) *\
-		(env->player.where.x - env->sprite[i].x) + (env->player.where.y -\
-		env->sprite[i].y) * (env->player.where.y - env->sprite[i].y);
+		env->sprite[i].spritedist = (env->player.where.x - env->sprite[i].pos.x) *\
+		(env->player.where.x - env->sprite[i].pos.x) + (env->player.where.y -\
+		env->sprite[i].pos.y) * (env->player.where.y - env->sprite[i].pos.y);
 	sortsprite(env);
 	i = -1;
 	while (++i < env->sprcount) //
