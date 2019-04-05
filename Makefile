@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+         #
+#    By: twitting <twitting@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/04/05 15:47:18 by ebednar          ###   ########.fr        #
+#    Updated: 2019/04/05 20:25:19 by twitting         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = doom-nukem
 SRC = ./src/main.c \
-		./src/map_test.c \
+		./src/parser.c \
 		./src/vector_funcs.c \
 		./src/engine.c \
 		./src/init.c \
@@ -34,6 +34,7 @@ all: $(NAME)
 
 linux:
 	make re -C libft/
+	make re -C kiss_sdl/
 	make re -C map_editor/
 	sudo gcc $(WWW) $(SRC) $(LIBFT) $(FLAGS_LINUX) -o $(NAME)
 

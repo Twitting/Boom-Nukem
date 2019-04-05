@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initedit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 18:26:05 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/03 17:14:52 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/05 17:58:29 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,12 @@ t_edit	*init(void)
 	edit = (t_edit *)malloc(sizeof(t_edit));
 	edit->quit = 0;
 	edit->put = 0;
+	edit->playersetflag = 0;
 	edit->glvertnum = 0;
 	edit->nowln.color = 0xffffff;
 	edit->sectnum = 0;
 	edit->vertnum = 0;
+	edit->sprnum = 0;
 	sectvertinit(edit);
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 		ft_putchar('!');

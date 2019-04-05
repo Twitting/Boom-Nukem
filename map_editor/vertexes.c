@@ -3,39 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   vertexes.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 21:36:46 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/03 17:31:26 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/05 20:09:42 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "edit.h"
 #include "kiss_sdl.h"
 
-void	showvertex(t_edit *edit, t_sector sect)//prints square on created vertex
+void	putdot(t_edit *edit, int color, int x, int y)//square on window coords
 {
-	int				*pix;
-	int				i;
-	int				j;
-	unsigned int	k;
+	int	i;
+	int	j;
+	int	*pix;
 
 	pix = edit->surface->pixels;
+	i = -6;
+	while (++i < 5)
+	{
+		j = -6;
+		while (++j < 5)
+		{
+			pix[(y + j) * WWIN + x + i] = color;
+		}
+	}
+}
+
+void	showvertex(t_edit *edit, t_sector sect)//prints square on created vertex
+{
+	unsigned int	k;
+	
 	k = 0;
 	while (k <= sect.npoints)
 	{
-		i = -5;
-		while (i < 5)
-		{
-			j = -5;
-			while (j < 5)
-			{
-				pix[((edit->verts[sect.vertex[k]].y * 25 / 10) + j) * WWIN +
-					(edit->verts[sect.vertex[k]].x * 25 / 10) + i] = 0xffffff;
-				j++;
-			}
-			i++;
-		}
+		putdot(edit, 0xffffff, edit->verts[sect.vertex[k]].x * 25 / 10, edit->verts[sect.vertex[k]].y * 25 / 10);
 		k++;
 	}
 }
@@ -130,7 +133,7 @@ int	num_to_program(t_edit *edit)
 	int textbox_width =  300;
 	kiss_entry_new(&entry, &window, 1, "0", 0, 35, 320);
 	kiss_entry_new(&entry0, &window, 1, "20", 0, 105, 320);
-	kiss_entry_new(&entry01, &window, 1, "1", 0, 175, 320);
+	kiss_entry_new(&entry01, &window, 1, "80", 0, 175, 320);
 
 	while (!quit) {
 		SDL_Delay(10);
@@ -154,9 +157,9 @@ int	num_to_program(t_edit *edit)
 		SDL_RenderPresent(renderer);
 		draw = 0;
 	}
-	SECT.floor = ft_atoi(entry.text);
-	SECT.ceiling = ft_atoi(entry0.text);
-	SECT.light = ft_atoi(entry01.text);
+	SECT.floor = ft_atoi(entry.text) >= 0 ? ft_atoi(entry.text) : 0;
+	SECT.ceiling = ft_atoi(entry0.text) - SECT.floor < 10 ? SECT.floor + 10 : ft_atoi(entry0.text);
+	SECT.light = ft_atoi(entry01.text) >= 0 && ft_atoi(entry01.text) <= 100 ? ft_atoi(entry01.text) : 50;
 	//printf("%s\n", entry.text);
 	kiss_clean(&objects);
 	return (0);
@@ -174,7 +177,6 @@ void	boldlinesector(t_edit *edit)
 		j = -2;
 		while (++j < 2)
 		{
-
 			k = -2;
 			while (++k < 2)
 			{

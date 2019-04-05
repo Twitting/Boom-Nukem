@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/05 17:35:43 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/05 20:19:20 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef	struct		s_sprite
 {
 	double			x;
 	double			y;
-	int				texture;
+	SDL_Surface		*texture;
 	double			spritedist;
 	int				height;
 	int				width;
@@ -90,6 +90,7 @@ typedef struct		s_player
 
 typedef struct		s_env
 {
+	char			mapname[64];
 	t_player		player;
 	t_sector		*sector;
 	unsigned int	nsectors;
@@ -124,6 +125,7 @@ typedef struct		s_env
 	int				debugtempint5;
 }					t_env;
 
+void	spritelightapply(t_env *env, t_sprite *sprite);
 void	movement_calcs(t_env *env);
 void	movement(t_env *env, float dx, float dy);
 void	handle_events(t_env *env, SDL_Event *e);
@@ -134,7 +136,7 @@ double	point_side(double px, double py, t_xy a, t_xy b);
 int		intersect_box(t_xy a, t_xy b, t_xy c, t_xy d);
 int		overlap(double a0, double a1, double b0, double b1);
 double	vxs(double x0, double y0, double x1, double y1);
-t_env	*structure_init(void);
+void	grandparser(t_env *env);
 int		start_engine(t_env *env, SDL_Event *e);
 void	inittext(t_env *env);
 void	verttosect(t_env *env, t_sector *sect, char *line, int i);
