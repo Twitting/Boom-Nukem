@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:16:17 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/03 17:16:59 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/05 18:24:00 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,27 @@ void	putplayer(t_edit *edit)
 	edit->player.y = y;
 	edit->playerangle = 0;
 	edit->playersect = 0;
+	edit->playersetflag = 1;
 	printf("player set on x - %d	y - %d\n", x, y);
+	putdot(edit, 0x00ff00, x * 5 / 2, y * 5 / 2);
+}
+
+void	putobject(t_edit *edit, int type)
+{
+	int x;
+	int y;
+	int	color;
+
+	SDL_GetMouseState(&x,&y);
+	x = x * 2 / 5;
+	y = y * 2 / 5;
+	edit->sprites[edit->sprnum].type = type;
+	edit->sprites[edit->sprnum].x = x;
+	edit->sprites[edit->sprnum].y = y;
+	edit->sprites[edit->sprnum].sector = edit->sectnum - 1;
+	color = type == 0 ? 0x996600 : 0x0000ff;
+	putdot(edit, color, x * 5 / 2, y * 5 / 2);
+	edit->sprnum++;
 }
 
 void	handle_events(t_edit *edit, SDL_Event *e)
@@ -40,8 +60,6 @@ void	handle_events(t_edit *edit, SDL_Event *e)
 			edit->quit = 1;
 		if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_ESCAPE)
 			edit->quit = 1;
-		if (e->type == SDL_TEXTINPUT)
-			ft_putnbr(atoi(e->text.text));
 		if (e->type == SDL_MOUSEBUTTONDOWN &&
 			e->button.button == SDL_BUTTON_LEFT)
 			putsectors(edit);
@@ -51,8 +69,10 @@ void	handle_events(t_edit *edit, SDL_Event *e)
 		if (e->type == SDL_MOUSEBUTTONDOWN &&
 			e->button.button == SDL_BUTTON_RIGHT)
 			makeportals1(edit);
-		if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_p)
+		if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_p && edit->playersetflag == 0)
 			putplayer(edit);
+		if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_1)
+			putobject(edit, 0);
 	}
 }
 

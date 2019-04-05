@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:16:36 by twitting          #+#    #+#             */
-/*   Updated: 2019/03/22 22:24:54 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/05 17:57:47 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,14 @@ typedef struct		s_line
 	int				color;
 }					t_line;
 
+typedef struct		s_sprite
+{
+	int				x;
+	int				y;
+	int				type;
+	int				sector;
+}					t_sprite;
+
 typedef struct		s_edit
 {
 	SDL_Surface		*surface;
@@ -65,8 +73,10 @@ typedef struct		s_edit
 	int				quit;
 	t_line			nowln;
 	t_sector		sectors[256];
+	t_sprite		sprites[256];
 	int				sectnum;
 	int				vertnum;
+	int				sprnum;
 	int				glvertnum;
 	int				put;
 	int				portvert1;
@@ -76,8 +86,10 @@ typedef struct		s_edit
 	t_xy			player;
 	int				playersect;
 	int				playerangle;
+	int				playersetflag;
 }					t_edit;
 
+void	putdot(t_edit *edit, int color, int x, int y);
 void	portalcheck(t_edit *edit);
 void	makeportals1(t_edit *edit);
 void	makeportals2(t_edit *edit);

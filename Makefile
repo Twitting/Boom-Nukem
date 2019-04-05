@@ -6,7 +6,7 @@
 #    By: twitting <twitting@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/04/05 15:12:23 by twitting         ###   ########.fr        #
+#    Updated: 2019/04/05 17:22:54 by twitting         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ all: $(NAME)
 
 linux:
 	make re -C libft/
+	make re -C kiss_sdl/
 	make re -C map_editor/
 	sudo gcc $(WWW) $(SRC) $(LIBFT) $(FLAGS_LINUX) -o $(NAME)
 
