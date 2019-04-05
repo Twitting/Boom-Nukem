@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:42:12 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/04 19:15:05 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/05 19:26:24 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,17 @@ typedef struct	s_now
 	int			sx2;
 }				t_now;
 
+typedef	struct	s_sprque
+{
+	int			sector;
+	int			sx1;
+	int			sx2;
+	int			ytop[WWIN - 1];
+	int			ybottom[WWIN - 1];
+	char		visible;
+}				t_sprque;
+
+
 typedef struct s_scaler
 {
 	int			result;
@@ -49,8 +60,7 @@ typedef struct s_scaler
 typedef struct	s_rend
 {
 			t_now		queue[MAXQUEUE];
-			t_now		sprq[MAXQUEUE];
-			int			sectcount;
+			t_sprque	sprq[MAXQUEUE];
 			t_sector	*nowsect;
 			double		vx1;
 			double		vy1;
@@ -127,6 +137,7 @@ typedef struct	s_rend
 			double		tspr2;
 }				t_rend;
 
+void	drawsky(t_env *env, t_rend *rend, int sect);
 int		scaler_next(t_scaler *sc);
 void	rendersprite(t_env *env, t_rend *rend);
 

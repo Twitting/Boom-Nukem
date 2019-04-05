@@ -6,7 +6,7 @@
 #    By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/04/03 19:36:07 by ebednar          ###   ########.fr        #
+#    Updated: 2019/04/05 15:47:18 by ebednar          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ SRC = ./src/main.c \
 		./src/movement.c \
 		./src/textures.c \
 		./src/scaler.c \
-		./src/sprites.c
+		./src/sprites.c \
+		./src/sky.c
 LIBFT = ./libft/libft.a
 OBJECTS = $(SRC:.c=.o)
 WWW = -Wall -Wextra -Werror -Ofast

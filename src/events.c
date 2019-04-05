@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 21:52:25 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/03 14:09:07 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/05 17:25:07 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,10 @@ void	handle_events(t_env *env, SDL_Event *e)
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	SDL_GetRelativeMouseState(&x, &y);
 	env->player.angle += x * 3.14159 / 200;
+	if (x > 0)
+		env->skyangle += env->skyangle == 3840 ? -3808 : 32;
+	else
+		env->skyangle -= env->skyangle == 0 ? -3808 : 32;	
 	env->player.sinang = sin(env->player.angle);
 	env->player.cosang = cos(env->player.angle);
 	env->yaw = CLAMP(env->yaw + y * 0.01, -3, 3);

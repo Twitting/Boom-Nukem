@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:43:20 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/04 19:17:25 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/05 15:43:56 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,42 +36,14 @@ void	drawsprite(t_env *env, t_rend *rend)
 
 void	spriteplane(t_env *env, t_rend *rend, int j)
 {
-	t_now		now;
-	int			ytop[WWIN] = {0};
-	int			ybottom[WWIN];
-	//double		inv;
-	int			i;
+	t_sprque		now;
 
-	i = -1;
-	while (++i < WWIN)
-		ybottom[i] = HWIN - 1;
 	now = rend->sprq[env->sprite[j].sector];
-	rend->nowsect = &(env->sector[now.sectorno]);
+	if (now.visible == 0)
+		return ;
+	rend->nowsect = &(env->sector[now.sector]);
 	rend->vspr.x = env->sprite[j].x - env->player.where.x;
 	rend->vspr.y = env->sprite[j].y - env->player.where.y;
-	/*inv = 1.0 / (env->plane.x * env->player.sinang - env->player.cosang *
-	env->plane.y);
-	rend->transformx = inv * (env->player.sinang * rend->vspr.x -
-	env->player.cosang * rend->vspr.y);
-	rend->transformy = inv * (-env->plane.y * rend->vspr.x + env->plane.x *
-	rend->vspr.y);
-	rend->sprx = (int)((WWIN / 2) * (1 + rend->transformx / rend->transformy));
-	rend->spriteheight = (int)fabs(HWIN / rend->transformy);
-	rend->drawstarty = (HWIN / 2 - rend->spriteheight / 2 < 0) ? 0 : HWIN / 2 -
-	rend->spriteheight / 2;
-	rend->drawendy = (HWIN / 2 + rend->spriteheight / 2 >= HWIN) ? HWIN - 1 : HWIN /
-	2 + rend->spriteheight / 2;
-	rend->spritewidth = (int)fabs(HWIN / rend->transformy);
-	rend->drawstartx = (rend->sprx - rend->spritewidth / 2 < 0) ? 0 :
-	rend->sprx - rend->spritewidth / 2;
-	rend->drawendx = (rend->sprx + rend->spritewidth / 2 >= WWIN) ? WWIN - 1 :
-	rend->sprx + rend->spritewidth / 2;
-	i = rend->drawstartx;
-	while (i < rend->drawendx)
-	{
-		darwsprite(env, rend, i);
-		i++;
-	}*/
 	rend->tspr.x = rend->vspr.x * env->player.sinang - rend->vspr.y * env->player.cosang;
 	rend->tspr1 = rend->tspr.x + env->sprite[j].width / 2;
 	rend->tspr2 = rend->tspr.x - env->sprite[j].width / 2;
@@ -93,8 +65,8 @@ void	spriteplane(t_env *env, t_rend *rend, int j)
 	rend->sprx = rend->sprbegx;
 	while (rend->sprx < rend->sprendx)
 	{
-		rend->csprya = CLAMP(rend->sprya, ytop[rend->sprx], ybottom[rend->sprx]);
-		rend->cspryb = CLAMP(rend->spryb, ytop[rend->sprx], ybottom[rend->sprx]);
+		rend->csprya = CLAMP(rend->sprya, now.ytop[rend->sprx], now.ybottom[rend->sprx]);
+		rend->cspryb = CLAMP(rend->spryb, now.ytop[rend->sprx], now.ybottom[rend->sprx]);
 		rend->txtx = (int)((double)(rend->sprx - rend->sprx1) / (double)(rend->sprx2 - rend->sprx1) * env->text[1]->w);
 		//printf("%d\n", rend->sprx - rend->sprbegx);
 		drawsprite(env, rend);

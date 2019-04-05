@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/03 20:11:24 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/05 17:35:43 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 # define KNEEHEIGHT 2.0
 # define HFOV 1.0 * 0.73 * HWIN / WWIN
 # define VFOV 1.0 * 0.2 
+# define SKYSIZE 3840
 
 
 # define MIN(a, b) (((a < b)) ? (a) : (b))
@@ -109,8 +110,8 @@ typedef struct		s_env
 	int				fps;
 	int				oldfps;
 	t_sprite		*sprite;
+	int				skyangle;
 	int				sprcount;
-	t_xy			plane;
 
 
 	
