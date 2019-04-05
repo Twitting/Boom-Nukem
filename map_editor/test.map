@@ -1,15 +1,8 @@
-vertex	120	160
-vertex	130	270
-vertex	180	260
+vertex	160	130
+vertex	140	230
+vertex	230	240
 
-sector	0 20	80 0 1 2		-1 -1 -1
+sector	0 10	80 0 1 2		-1 -1 -1
 
-player	225 136	0 0
+player	0 0	0 0
 
-object	232 143	0 0
-object	237 144	0 0
-object	243 145	0 0
-object	254 153	0 0
-object	246 156	0 0
-object	223 150	0 0
-object	213 145	0 0

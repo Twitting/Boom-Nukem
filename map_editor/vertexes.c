@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 21:36:46 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/05 18:27:40 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/05 20:09:42 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,9 +157,9 @@ int	num_to_program(t_edit *edit)
 		SDL_RenderPresent(renderer);
 		draw = 0;
 	}
-	SECT.floor = ft_atoi(entry.text);
-	SECT.ceiling = ft_atoi(entry0.text);
-	SECT.light = ft_atoi(entry01.text);
+	SECT.floor = ft_atoi(entry.text) >= 0 ? ft_atoi(entry.text) : 0;
+	SECT.ceiling = ft_atoi(entry0.text) - SECT.floor < 10 ? SECT.floor + 10 : ft_atoi(entry0.text);
+	SECT.light = ft_atoi(entry01.text) >= 0 && ft_atoi(entry01.text) <= 100 ? ft_atoi(entry01.text) : 50;
 	//printf("%s\n", entry.text);
 	kiss_clean(&objects);
 	return (0);
