@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:20:03 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/03 14:13:08 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/05 16:57:45 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ int		main(void)
 	t_env		*env;
 	SDL_Event	e;
 
-	env = structure_init();
+	if (!(env = (t_env *)malloc(sizeof(t_env))))
+		ft_error(2);
+	ft_strcpy(env->mapname, "test.map");
+	grandparser(env);
 	init(env);
 	inittext(env);
 	SDL_ShowCursor(SDL_DISABLE);

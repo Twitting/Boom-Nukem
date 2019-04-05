@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   sprites.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:43:20 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/04 19:17:25 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/05 16:44:28 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
 #include "render.h"
 
-void	drawsprite(t_env *env, t_rend *rend)
+void	drawsprite(t_env *env, t_rend *rend, int j)
 {
 	int	y;
 	int	*pix;
@@ -23,12 +23,12 @@ void	drawsprite(t_env *env, t_rend *rend)
 	pix += rend->csprya * WWIN + rend->sprx;
 	y = rend->csprya - 1;
 	
-	//printf("!!!%d!!!\n", ((int *)(env->text[1]->pixels))[0]);
+	//printf("!!!%d!!!\n", ((int *)(env->sprite[j].texture->pixels))[0]);
 	while (++y <= rend->cspryb)
 	{
-		txty = (int)((double)(y - rend->sprya) / (double)(rend->spryb - rend->sprya) * env->text[1]->h);
-		if (((int *)(env->text[1]->pixels))[txty % env->text[1]->h * env->text[1]->w + rend->txtx] != -16777216)
-			*pix = ((int *)(env->text[1]->pixels))[txty % env->text[1]->h * env->text[1]->w + rend->txtx];
+		txty = (int)((double)(y - rend->sprya) / (double)(rend->spryb - rend->sprya) * env->sprite[j].texture->h);
+		if (((int *)(env->sprite[j].texture->pixels))[txty % env->sprite[j].texture->h * env->sprite[j].texture->w + rend->txtx] != -16777216)
+			*pix = ((int *)(env->sprite[j].texture->pixels))[txty % env->sprite[j].texture->h * env->sprite[j].texture->w + rend->txtx];
 		pix += WWIN;
 	}
 
@@ -95,9 +95,9 @@ void	spriteplane(t_env *env, t_rend *rend, int j)
 	{
 		rend->csprya = CLAMP(rend->sprya, ytop[rend->sprx], ybottom[rend->sprx]);
 		rend->cspryb = CLAMP(rend->spryb, ytop[rend->sprx], ybottom[rend->sprx]);
-		rend->txtx = (int)((double)(rend->sprx - rend->sprx1) / (double)(rend->sprx2 - rend->sprx1) * env->text[1]->w);
+		rend->txtx = (int)((double)(rend->sprx - rend->sprx1) / (double)(rend->sprx2 - rend->sprx1) * env->sprite[j].texture->w);
 		//printf("%d\n", rend->sprx - rend->sprbegx);
-		drawsprite(env, rend);
+		drawsprite(env, rend, j);
 		rend->sprx++;
 	}
 }
