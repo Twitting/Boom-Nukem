@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/05 20:19:20 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/06 02:20:25 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <fcntl.h>
 # include <SDL2/SDL.h>
 # include <SDL_image.h>
+# include <SDL_ttf.h>
 # include "libft.h"
 # include <stdlib.h>
 # include <time.h>
@@ -115,7 +116,8 @@ typedef struct		s_env
 	int				sprcount;
 
 
-	
+	SDL_Window		*window2;
+	SDL_Surface		*surface2;
 	double			debugtempdouble;
 	int				debugtempint;
 	double			debugtempint1;
@@ -123,6 +125,12 @@ typedef struct		s_env
 	double			debugtempint3;
 	int				debugtempint4;
 	int				debugtempint5;
+
+
+
+	int state;
+	int ng;
+	int q;
 }					t_env;
 
 void	spritelightapply(t_env *env, t_sprite *sprite);
