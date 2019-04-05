@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   edit.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:16:36 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/05 17:57:47 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/05 22:53:31 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <SDL2/SDL.h>
 # include "libft.h"
 # include <stdlib.h>
+#include "kiss_sdl.h"
 
 # include <stdio.h>/////////////////////////////////////////////
 
@@ -64,6 +65,34 @@ typedef struct		s_sprite
 	int				type;
 	int				sector;
 }					t_sprite;
+
+typedef struct		s_map_ui
+{
+	SDL_Renderer *renderer;
+	SDL_Event e;
+	kiss_array objects;
+	kiss_window window;
+	kiss_button button;
+	char *message;
+	char *message2;
+	char *message3;
+	char *message4;
+	int draw;
+	int quit;
+	char *title;
+	int textbox_width;
+	kiss_label label;
+	kiss_label label0;
+	kiss_label label1;
+	kiss_label label2;
+	kiss_label label3;
+	kiss_label label4;
+	kiss_entry entry0;
+	kiss_entry entry1;
+	kiss_entry entry2;
+	kiss_entry entry3;
+	kiss_textbox textbox1;
+}					t_map_ui;
 
 typedef struct		s_edit
 {

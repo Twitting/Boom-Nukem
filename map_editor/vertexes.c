@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vertexes.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 21:36:46 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/05 20:09:42 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/05 22:57:34 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,72 +96,89 @@ void	button_event(kiss_button *button, SDL_Event *e, int *draw,
 if (kiss_button_event(button, e, draw)) *quit = 1;
 }
 
+void init_message(t_map_ui *ui)
+{
+	char *message;
+	char *message2;
+	char *message3;
+	char *message4;
+
+	message = (char*)malloc(sizeof(char) * KISS_MAX_LENGTH);
+	message2 = (char*)malloc(sizeof(char) * KISS_MAX_LENGTH);
+	message3 = (char*)malloc(sizeof(char) * KISS_MAX_LENGTH);
+	message4 = (char*)malloc(sizeof(char) * KISS_MAX_LENGTH);
+	ui->message = message;
+	ui->message2 = message2;
+	ui->message3 = message3;
+	ui->message4 = message4;
+	strcpy(ui->message, "floor:");
+	strcpy(ui->message2, "ceiling:");
+	strcpy(ui->message3, "light:");
+	strcpy(ui->message4, "texture:");
+}
+
+void init_label(t_map_ui *ui, t_edit *edit)
+{
+	ui->quit = 0;
+	ui->draw = 1;
+	kiss_array_new(&ui->objects);
+	ui->title = ft_strjoin("set sector ", ft_itoa(edit->sectnum));
+	ui->renderer = kiss_init(ui->title, &ui->objects, 320, 350);
+	kiss_window_new(&ui->window, NULL, 0, 0, 0, kiss_screen_width,
+	kiss_screen_height);
+	kiss_label_new(&ui->label, &ui->window, ui->message, 8, 10);
+	kiss_label_new(&ui->label0, &ui->window, ui->message2, 8, 80);
+	kiss_label_new(&ui->label3, &ui->window, ui->message3, 8, 150);
+	kiss_label_new(&ui->label4, &ui->window, ui->message4, 8, 220);
+	kiss_button_new(&ui->button, &ui->window, "OK", 100, 300);
+	ui->window.visible = 1;
+	ui->textbox_width =  300;
+	kiss_entry_new(&ui->entry0, &ui->window, 1, "0", 0, 35, 320);
+	kiss_entry_new(&ui->entry1, &ui->window, 1, "20", 0, 105, 320);
+	kiss_entry_new(&ui->entry2, &ui->window, 1, "80", 0, 175, 320);
+	kiss_entry_new(&ui->entry3, &ui->window, 1, "1", 0, 250, 320);
+}
+
+void ui_draw(t_map_ui *ui)
+{
+	SDL_RenderClear(ui->renderer);
+	kiss_window_draw(&ui->window, ui->renderer);
+	kiss_label_draw(&ui->label, ui->renderer);
+	kiss_label_draw(&ui->label0, ui->renderer);
+	kiss_label_draw(&ui->label3, ui->renderer);
+	kiss_label_draw(&ui->label4, ui->renderer);
+	kiss_button_draw(&ui->button, ui->renderer);
+	kiss_entry_draw(&ui->entry0, ui->renderer);
+	kiss_entry_draw(&ui->entry1, ui->renderer);
+	kiss_entry_draw(&ui->entry2, ui->renderer);
+	kiss_entry_draw(&ui->entry3, ui->renderer);
+	SDL_RenderPresent(ui->renderer);
+	ui->draw = 0;
+}
+
 int	num_to_program(t_edit *edit)
 {
-	SDL_Renderer *renderer;
-	SDL_Event e;
-	kiss_array objects;
-	kiss_window window;
-	kiss_label label = {0};
-	kiss_button button = {0};
-	char message[KISS_MAX_LENGTH];
-	int draw, quit;
-	quit = 0;
-	draw = 1;
-	kiss_array_new(&objects);
-	char *title = ft_strjoin("set sector ", ft_itoa(edit->sectnum));
-	renderer = kiss_init(title, &objects, 320, 300);
-	if (!renderer) return 1;
-	kiss_window_new(&window, NULL, 0, 0, 0, kiss_screen_width,
-	kiss_screen_height);
-	strcpy(message, "floor:");
-	char message2[KISS_MAX_LENGTH];
-	strcpy(message2, "ceiling:");
-	kiss_label_new(&label, &window, message, 8, 10);
-	kiss_label label0 = {0};
-	kiss_label_new(&label0, &window, message2, 8, 80);
-	kiss_label label01 = {0};
-	char message3[KISS_MAX_LENGTH];
-	strcpy(message3, "light:");
-	kiss_label_new(&label01, &window, message3, 8, 150);
-	//label.textcolor.r = 255;
-	kiss_button_new(&button, &window, "OK", 100, 250);
-	window.visible = 1;
-	kiss_textbox textbox1 = {0};
-	kiss_entry entry = {0};kiss_entry entry0 = {0};kiss_entry entry01 = {0};
-	kiss_label label1 = {0}, label2 = {0};
-	int textbox_width =  300;
-	kiss_entry_new(&entry, &window, 1, "0", 0, 35, 320);
-	kiss_entry_new(&entry0, &window, 1, "20", 0, 105, 320);
-	kiss_entry_new(&entry01, &window, 1, "80", 0, 175, 320);
+	t_map_ui ui;
 
-	while (!quit) {
+	init_message(&ui);
+	init_label(&ui, edit);
+	while (!ui.quit) {
 		SDL_Delay(10);
-		while (SDL_PollEvent(&e)) {
-			if (e.type == SDL_QUIT) quit = 1;
-			button_event(&button, &e, &draw, &quit);
-			kiss_entry_event(&entry, &e, &draw);
-			kiss_entry_event(&entry0, &e, &draw);
-			kiss_entry_event(&entry01, &e, &draw);
+		while (SDL_PollEvent(&ui.e)) {
+			if (ui.e.type == SDL_QUIT) ui.quit = 1;
+			button_event(&ui.button, &ui.e, &ui.draw, &ui.quit);
+			kiss_entry_event(&ui.entry0, &ui.e, &ui.draw);
+			kiss_entry_event(&ui.entry1, &ui.e, &ui.draw);
+			kiss_entry_event(&ui.entry2, &ui.e, &ui.draw);
+			kiss_entry_event(&ui.entry3, &ui.e, &ui.draw);
 		}
-		if (!draw) continue;
-		SDL_RenderClear(renderer);
-		kiss_window_draw(&window, renderer);
-		kiss_label_draw(&label, renderer);
-		kiss_label_draw(&label0, renderer);
-		kiss_label_draw(&label01, renderer);
-		kiss_button_draw(&button, renderer);
-		kiss_entry_draw(&entry, renderer);
-		kiss_entry_draw(&entry0, renderer);
-		kiss_entry_draw(&entry01, renderer);
-		SDL_RenderPresent(renderer);
-		draw = 0;
+		if (!ui.draw) continue;
+		ui_draw(&ui);
 	}
-	SECT.floor = ft_atoi(entry.text) >= 0 ? ft_atoi(entry.text) : 0;
-	SECT.ceiling = ft_atoi(entry0.text) - SECT.floor < 10 ? SECT.floor + 10 : ft_atoi(entry0.text);
-	SECT.light = ft_atoi(entry01.text) >= 0 && ft_atoi(entry01.text) <= 100 ? ft_atoi(entry01.text) : 50;
-	//printf("%s\n", entry.text);
-	kiss_clean(&objects);
+	SECT.floor = ft_atoi(ui.entry0.text) >= 0 ? ft_atoi(ui.entry0.text) : 0;
+	SECT.ceiling = ft_atoi(ui.entry1.text) - SECT.floor < 10 ? SECT.floor + 10 : ft_atoi(ui.entry1.text);
+	SECT.light = ft_atoi(ui.entry2.text) >= 0 && ft_atoi(ui.entry2.text) <= 100 ? ft_atoi(ui.entry2.text) : 50;
+	kiss_clean(&ui.objects);
 	return (0);
 }
 
