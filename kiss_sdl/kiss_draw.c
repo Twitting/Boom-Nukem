@@ -155,7 +155,7 @@ int kiss_font_new(kiss_font *font, char *fname, kiss_array *a, int size)
 
 	if (!font || !fname) return -1;
 	kiss_string_copy(buf, KISS_MAX_LENGTH, RESDIR, fname);
-	if (!(font->font = TTF_OpenFont(buf, size))) {
+	if (!(font->font = TTF_OpenFont(buf, 25))) {
 		fprintf(stderr, "Cannot load font %s\n", fname);
 		return -1;
 	}
@@ -196,9 +196,9 @@ SDL_Renderer* kiss_init(char* title, kiss_array *a, int w, int h)
 		SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	if (renderer) kiss_array_append(a, RENDERER_TYPE, renderer);
 	r += kiss_font_new(&kiss_textfont, "../kiss_sdl/kiss_font.ttf", a,
-		kiss_textfont_size);
+		25);
 	r += kiss_font_new(&kiss_buttonfont, "../kiss_sdl/kiss_font.ttf", a,
-		kiss_buttonfont_size);
+		100);
 	r += kiss_image_new(&kiss_normal, "../kiss_sdl/kiss_normal.png", a, renderer);
 	r += kiss_image_new(&kiss_prelight, "../kiss_sdl/kiss_prelight.png", a, renderer);
 	r += kiss_image_new(&kiss_active, "../kiss_sdl/kiss_active.png", a, renderer);

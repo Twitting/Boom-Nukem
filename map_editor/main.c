@@ -6,7 +6,7 @@
 /*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:16:17 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/07 01:27:34 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/07 01:59:20 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,46 @@ void	handle_events(t_edit *edit, SDL_Event *e)
 	}
 }
 
+void	draw_string(char *text, SDL_Color color, int y, SDL_Surface *sur)
+{
+	SDL_Surface *new;
+	TTF_Font* font= TTF_OpenFont("droid.ttf", 20);
+	SDL_Rect position;
+
+	new = TTF_RenderText_Solid(font, text, color);
+	position.x = 20;
+	position.y = y;
+	position.h = 20;
+	position.w = 50;
+	SDL_BlitSurface(new, NULL, sur, &position);
+}
+
+void	draw_title(SDL_Surface *sur)
+{
+	SDL_Surface *new;
+	TTF_Font* bold= TTF_OpenFont("bold.ttf", 28);
+	TTF_Font* bold_mini= TTF_OpenFont("bold.ttf", 21);
+	SDL_Rect position;
+	SDL_Color color_title={255,0,255};
+	SDL_Color color_blue={0,255,255};
+	char *text;
+
+	new = TTF_RenderText_Solid(bold, "Welcome to Doom Nukem map editor!", color_title);
+	position.x = 10;
+	position.y = 10;
+	position.h = 20;
+	position.w = 50;
+	SDL_BlitSurface(new, NULL, sur, &position);
+	text = "There are some rules of using this program";
+	new = TTF_RenderText_Solid(bold_mini, text, color_blue);
+	position.y = 45;
+	SDL_BlitSurface(new, NULL, sur, &position);
+	text = "you MUST follow during map creating process:";
+	new = TTF_RenderText_Solid(bold_mini, text, color_blue);
+	position.y = 65;
+	SDL_BlitSurface(new, NULL, sur, &position);
+}
+
 void	rules(void)
 {
 	TTF_Init();
@@ -97,200 +137,27 @@ void	rules(void)
 	TTF_Font* font= TTF_OpenFont("droid.ttf", 20);
 	 if (bold == NULL)
         printf("Unable to load font \n");
-	SDL_Color color_title={0,255,0};
+	SDL_Color color_bold={0,255,0};
 	SDL_Color color={255,255,255};
-	SDL_Color color_bold={255,0,255};
-	SDL_Color color_blue={0,255,255};
 	SDL_Surface *new = NULL;
 
-	new = TTF_RenderText_Solid(bold, "Welcome to Doom Nukem map editor!", color_bold);
-	position.x = 10;
-	position.y = 10;
-	position.h = 20;
-	position.w = 50;
-	SDL_BlitSurface(new, NULL, sur, &position);
-
-	char *text;
-	text = "There are some rules of using this program";
-
-	new = TTF_RenderText_Solid(bold_mini, text, color_blue);
-	position.x = 10;
-	position.y = 45;
-	position.h = 20;
-	position.w = 50;
-	SDL_BlitSurface(new, NULL, sur, &position);
-
-	text = "you MUST follow during map creating process:";
-
-	new = TTF_RenderText_Solid(bold_mini, text, color_blue);
-	position.x = 10;
-	position.y = 65;
-	position.h = 20;
-	position.w = 50;
-	SDL_BlitSurface(new, NULL, sur, &position);
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
-	text = "1) All sectors must be set only in clockwise";
-
-	new = TTF_RenderText_Solid(font, text, color);
-	position.x = 20;
-	position.y = 130;
-	position.h = 20;
-	position.w = 50;
-	SDL_BlitSurface(new, NULL, sur, &position);
-
-	text = "direction, it's mandatory part of creation.";
-
-	new = TTF_RenderText_Solid(font, text, color);
-	position.x = 20;
-	position.y = 150;
-	position.h = 20;
-	position.w = 50;
-	SDL_BlitSurface(new, NULL, sur, &position);
-
-/////////////////////////////
-
-	text = "2) If ceiling set by negative number, it will be";
-
-	new = TTF_RenderText_Solid(font, text, color);
-	position.x = 20;
-	position.y = 190;
-	position.h = 20;
-	position.w = 50;
-	SDL_BlitSurface(new, NULL, sur, &position);
-
-	text = "replaced by sky.";
-
-	new = TTF_RenderText_Solid(font, text, color);
-	position.x = 20;
-	position.y = 210;
-	position.h = 20;
-	position.w = 50;
-	SDL_BlitSurface(new, NULL, sur, &position);
-
-//////////////////////////////
-
-	text = "3) Sector can be drawn in game only if you're in";
-
-	new = TTF_RenderText_Solid(font, text, color);
-	position.x = 20;
-	position.y = 250;
-	position.h = 20;
-	position.w = 50;
-	SDL_BlitSurface(new, NULL, sur, &position);
-
-	text = "it, or if it has active portals to player's sector.";
-
-	new = TTF_RenderText_Solid(font, text, color);
-	position.x = 20;
-	position.y = 270;
-	position.h = 20;
-	position.w = 50;
-	SDL_BlitSurface(new, NULL, sur, &position);
-
-//////////////////////////////
-
-	text = "4) Player (P button) can be set only in first";
-
-	new = TTF_RenderText_Solid(font, text, color);
-	position.x = 20;
-	position.y = 310;
-	position.h = 20;
-	position.w = 50;
-	SDL_BlitSurface(new, NULL, sur, &position);
-
-	text = "drawn sector.";
-
-	new = TTF_RenderText_Solid(font, text, color);
-	position.x = 20;
-	position.y = 330;
-	position.h = 20;
-	position.w = 50;
-	SDL_BlitSurface(new, NULL, sur, &position);
-
-//////////////////////////////
-
-	text = "5) Objects (1, 2 buttons) can be set only in last";
-
-	new = TTF_RenderText_Solid(font, text, color);
-	position.x = 20;
-	position.y = 370;
-	position.h = 20;
-	position.w = 50;
-	SDL_BlitSurface(new, NULL, sur, &position);
-
-	text = "drawn sector.";
-
-	new = TTF_RenderText_Solid(font, text, color);
-	position.x = 20;
-	position.y = 390;
-	position.h = 20;
-	position.w = 50;
-	SDL_BlitSurface(new, NULL, sur, &position);
-
-//////////////////////////////
-
-	text = "6) Buttons (Q button) can be set only on the wall";
-
-	new = TTF_RenderText_Solid(font, text, color);
-	position.x = 20;
-	position.y = 430;
-	position.h = 20;
-	position.w = 50;
-	SDL_BlitSurface(new, NULL, sur, &position);
-
-	text = "without portal.";
-
-	new = TTF_RenderText_Solid(font, text, color);
-	position.x = 20;
-	position.y = 450;
-	position.h = 20;
-	position.w = 50;
-	SDL_BlitSurface(new, NULL, sur, &position);
-
-//////////////////////////////
-
-	text = "7) Rate of this project can be only above 100.";
-
-	new = TTF_RenderText_Solid(font, text, color_title);
-	position.x = 20;
-	position.y = 490;
-	position.h = 20;
-	position.w = 50;
-	SDL_BlitSurface(new, NULL, sur, &position);
-
-	//////////////////////////////
-
-	text = "8) There are NO reversible actions, if ducked up";
-
-	new = TTF_RenderText_Solid(font, text, color);
-	position.x = 20;
-	position.y = 530;
-	position.h = 20;
-	position.w = 50;
-	SDL_BlitSurface(new, NULL, sur, &position);
-
-	text = "- do it again.";
-
-	new = TTF_RenderText_Solid(font, text, color);
-	position.x = 20;
-	position.y = 550;
-	position.h = 20;
-	position.w = 50;
-	SDL_BlitSurface(new, NULL, sur, &position);
-
-	//////////////////////////////
-
-	text = "9) Sectors can be only convex (vignutiy, ponel?).";
-
-	new = TTF_RenderText_Solid(font, text, color);
-	position.x = 20;
-	position.y = 590;
-	position.h = 20;
-	position.w = 50;
-	SDL_BlitSurface(new, NULL, sur, &position);
-
+	draw_title(sur);
+	draw_string("1) All sectors must be set only in clockwise", color, 130, sur);
+	draw_string("direction, it's mandatory part of creation.", color, 150, sur);
+	draw_string("2) If ceiling set by negative number, it will be", color, 190, sur);
+	draw_string("replaced by sky.", color, 210, sur);
+	draw_string("3) Sector can be drawn in game only if you're in", color, 250, sur);
+	draw_string("it, or if it has active portals to player's sector.", color, 270, sur);
+	draw_string("4) Player (P button) can be set only in first", color, 310, sur);
+	draw_string("drawn sector.", color, 330, sur);
+	draw_string("5) Objects (1, 2 buttons) can be set only in last", color, 370, sur);
+	draw_string("drawn sector.", color, 390, sur);
+	draw_string("6) Buttons (Q button) can be set only on the wall", color, 430, sur);
+	draw_string("without portal.", color, 450, sur);
+	draw_string("7) Rate of this project can be only above 100.", color_bold, 490, sur);
+	draw_string("8) There are NO reversible actions, if ducked up", color, 530, sur);
+	draw_string("- do it again.", color, 550, sur);
+	draw_string("9) Sectors can be only convex (vignutiy, ponel?).", color, 590, sur);
 
 	TTF_CloseFont(bold);
 	SDL_UpdateWindowSurface(win);
