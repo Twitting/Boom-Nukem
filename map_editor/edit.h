@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:16:36 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/06 17:03:10 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/06 20:08:13 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct		s_sector
 	unsigned int	npoints;
 	unsigned int	light;
 	int				finished;
+	int				texture;
 }					t_sector;
 
 typedef struct		s_line

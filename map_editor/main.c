@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:16:17 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/06 17:01:54 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/06 20:18:03 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	putobject(t_edit *edit, int type)
 	edit->sprites[edit->sprnum].x = x;
 	edit->sprites[edit->sprnum].y = y;
 	edit->sprites[edit->sprnum].sector = edit->sectnum - 1;
-	color = type == 0 ? 0x996600 : 0x0000ff;
+	color = type == 0 ? 0x996600 : 0xff00ff;
 	putdot(edit, color, x * 5 / 2, y * 5 / 2);
 	edit->sprnum++;
 }
@@ -73,6 +73,8 @@ void	handle_events(t_edit *edit, SDL_Event *e)
 			putplayer(edit);
 		if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_1)
 			putobject(edit, 0);
+		if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_2)
+			putobject(edit, 1);
 		if (e->type == SDL_KEYUP && e->key.keysym.sym == SDLK_q && edit->buttonflag == 1)
 			makebutton2(edit);
 		if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_q && edit->buttonflag == 0)

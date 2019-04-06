@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:25:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/06 19:36:28 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/06 20:18:57 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,16 @@ void	parsesectors(t_env *env, int fd)
 		if (line[0] == 's')
 		{
 			i += 7;
+			//env->sector[count].sky = 0;
 			env->sector[count].floor = ft_atoi(&line[i]);
 			while (line[i] != ' ')
 				i++;
 			env->sector[count].ceiling = ft_atoi(&line[i]);
+			if (env->sector[count].ceiling < 0)
+			{
+				env->sector[count].ceiling *= -1;
+				//env->sector[count].sky = 1;
+			}
 			while (line[i] != '\t')
 				i++;
 			env->sector[count].light = ft_atoi(&line[i]);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vertexes.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 21:36:46 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/05 22:58:07 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/06 20:14:47 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,9 +112,9 @@ void init_message(t_map_ui *ui)
 	ui->message3 = message3;
 	ui->message4 = message4;
 	strcpy(ui->message, "floor:");
-	strcpy(ui->message2, "ceiling:");
-	strcpy(ui->message3, "light:");
-	strcpy(ui->message4, "texture:");
+	strcpy(ui->message2, "ceiling (neg - sky):");
+	strcpy(ui->message3, "light (0-100):");
+	strcpy(ui->message4, "texture (0-5):");
 }
 
 void init_label(t_map_ui *ui, t_edit *edit)
@@ -136,7 +136,7 @@ void init_label(t_map_ui *ui, t_edit *edit)
 	kiss_entry_new(&ui->entry0, &ui->window, 1, "0", 0, 35, 320);
 	kiss_entry_new(&ui->entry1, &ui->window, 1, "20", 0, 105, 320);
 	kiss_entry_new(&ui->entry2, &ui->window, 1, "80", 0, 175, 320);
-	kiss_entry_new(&ui->entry3, &ui->window, 1, "1", 0, 250, 320);
+	kiss_entry_new(&ui->entry3, &ui->window, 1, "0", 0, 250, 320);
 }
 
 void ui_draw(t_map_ui *ui)
@@ -176,8 +176,9 @@ int	num_to_program(t_edit *edit)
 		ui_draw(&ui);
 	}
 	SECT.floor = ft_atoi(ui.entry0.text) >= 0 ? ft_atoi(ui.entry0.text) : 0;
-	SECT.ceiling = ft_atoi(ui.entry1.text) - SECT.floor < 10 ? SECT.floor + 10 : ft_atoi(ui.entry1.text);
-	SECT.light = ft_atoi(ui.entry2.text) >= 0 && ft_atoi(ui.entry2.text) <= 100 ? ft_atoi(ui.entry2.text) : 50;
+	SECT.ceiling = abs(ft_atoi(ui.entry1.text)) - SECT.floor < 10 ? SECT.floor + 10 : ft_atoi(ui.entry1.text);
+	SECT.light = ft_atoi(ui.entry2.text) >= 0 && ft_atoi(ui.entry2.text) <= 100 ? ft_atoi(ui.entry2.text) : 80;
+	SECT.texture = ft_atoi(ui.entry3.text) >= 0 && ft_atoi(ui.entry3.text) <= 5 ? ft_atoi(ui.entry3.text) : 0;
 	kiss_clean(&ui.objects);
 	return (0);
 }
