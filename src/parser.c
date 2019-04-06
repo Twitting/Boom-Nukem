@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:25:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/06 02:24:33 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/06 19:36:28 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,7 @@ void	spritelightapply(t_env *env, t_sprite *sprite)
 	int k;
 	unsigned char *pix;
 	
-	sprite->texture = sprite->type == 0? IMG_Load("textures/barrel.png") : IMG_Load("textures/barrel.png");
+	sprite->texture = sprite->type == 0 ? IMG_Load("textures/barrel.png") : IMG_Load("textures/enemy.png");
 	pix = (unsigned char *)sprite->texture->pixels;
 	j = -1;
 	while (++j < sprite->texture->h)
@@ -222,9 +222,9 @@ void	spritelightapply(t_env *env, t_sprite *sprite)
 		k = -1;
 		while (++k < sprite->texture->w - 1)
 		{
-			pix[(j * sprite->texture->h + k) * 4] = (unsigned char)((double)pix[(j * sprite->texture->h + k) * 4] / 100 * env->sector[sprite->sector].light);
-			pix[(j * sprite->texture->h + k) * 4 + 1] = (unsigned char)((double)pix[(j * sprite->texture->h + k) * 4 + 1] / 100 * env->sector[sprite->sector].light);
-			pix[(j * sprite->texture->h + k) * 4 + 2] = (unsigned char)((double)pix[(j * sprite->texture->h + k) * 4 + 2] / 100 * env->sector[sprite->sector].light);
+			pix[(j * sprite->texture->w + k) * 4] = (unsigned char)((double)pix[(j * sprite->texture->w + k) * 4] / 100 * env->sector[sprite->sector].light);
+			pix[(j * sprite->texture->w + k) * 4 + 1] = (unsigned char)((double)pix[(j * sprite->texture->w + k) * 4 + 1] / 100 * env->sector[sprite->sector].light);
+			pix[(j * sprite->texture->w + k) * 4 + 2] = (unsigned char)((double)pix[(j * sprite->texture->w + k) * 4 + 2] / 100 * env->sector[sprite->sector].light);
 		}
 	}
 	env->fps++;
@@ -244,8 +244,8 @@ void	spritemaker(t_env *env)
 		}
 		else
 		{
-			env->sprite[i].height = 15;
-			env->sprite[i].width = 5;
+			env->sprite[i].height = 20;
+			env->sprite[i].width = 7;
 		}
 		
 	}

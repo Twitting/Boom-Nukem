@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:43:20 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/05 20:24:33 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/06 19:34:24 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	drawsprite(t_env *env, t_rend *rend, int j)
 	while (++y <= rend->cspryb)
 	{
 		txty = (int)((double)(y - rend->sprya) / (double)(rend->spryb - rend->sprya) * env->sprite[j].texture->h);
-		if (((int *)(env->sprite[j].texture->pixels))[txty % env->sprite[j].texture->h * env->sprite[j].texture->w + rend->txtx] != -16777216)
+		if (((int *)(env->sprite[j].texture->pixels))[txty % env->sprite[j].texture->h * env->sprite[j].texture->w + rend->txtx] != -16777216 && 
+			((int *)(env->sprite[j].texture->pixels))[txty % env->sprite[j].texture->h * env->sprite[j].texture->w + rend->txtx] != 0)
 			*pix = ((int *)(env->sprite[j].texture->pixels))[txty % env->sprite[j].texture->h * env->sprite[j].texture->w + rend->txtx];
 		pix += WWIN;
 	}
@@ -66,7 +67,7 @@ void	spriteplane(t_env *env, t_rend *rend, int j)
 	{
 		rend->csprya = CLAMP(rend->sprya, now.ytop[rend->sprx], now.ybottom[rend->sprx]);
 		rend->cspryb = CLAMP(rend->spryb, now.ytop[rend->sprx], now.ybottom[rend->sprx]);
-		rend->txtx = (int)((double)(rend->sprx - rend->sprx1) / (double)(rend->sprx2 - rend->sprx1) * env->text[1]->w);
+		rend->txtx = (int)((double)(rend->sprx - rend->sprx1) / (double)(rend->sprx2 - rend->sprx1) * env->sprite[j].texture->w);
 		//printf("%d\n", rend->sprx - rend->sprbegx);
 		drawsprite(env, rend, j);
 		rend->sprx++;

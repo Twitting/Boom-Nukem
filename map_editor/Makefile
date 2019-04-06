@@ -6,7 +6,7 @@
 #    By: twitting <twitting@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/03/31 14:10:41 by twitting         ###   ########.fr        #
+#    Updated: 2019/04/06 16:19:41 by twitting         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ SRC = ./main.c \
 	./portals.c \
 	./portals_calcs.c \
 	./save.c \
-	./vertexes.c
+	./vertexes.c \
+	./buttons.c
 
 LIBFT = ../libft/libft.a
 OBJECTS = $(SRC:.c=.o)

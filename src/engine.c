@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/05 22:59:34 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/06 19:29:00 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -306,6 +306,7 @@ int		start_engine(t_env *env, SDL_Event *e)
 	render_wall(env, &rend);
 	rendersprite(env, &rend);
 	SDL_UnlockSurface(env->surface);
+	//SDL_BlitSurface(env->sprite[0].texture, NULL, env->surface, NULL);
 	SDL_UpdateWindowSurface(env->window);
 	handle_events(env, e);
 	return (0);

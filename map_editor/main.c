@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:16:17 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/05 18:24:00 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/06 17:01:54 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,10 @@ void	handle_events(t_edit *edit, SDL_Event *e)
 			putplayer(edit);
 		if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_1)
 			putobject(edit, 0);
+		if (e->type == SDL_KEYUP && e->key.keysym.sym == SDLK_q && edit->buttonflag == 1)
+			makebutton2(edit);
+		if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_q && edit->buttonflag == 0)
+			makebutton1(edit);
 	}
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:20:03 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/06 02:41:44 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/06 19:46:52 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,11 @@ void menu(t_env *env, SDL_Event *e)
 		rect.h = 100;
 		rect.w = 400;
 		SDL_Surface *button;
-		button = SDL_LoadBMP("src/np2.bmp");
+		button = SDL_LoadBMP("img/np2.bmp");
 		if (env->ng == 1)
-			button = SDL_LoadBMP("src/new_game.bmp");
+			button = SDL_LoadBMP("img/new_game.bmp");
 		if (env->q == 1)
-			button = SDL_LoadBMP("src/quit.bmp");
+			button = SDL_LoadBMP("img/quit.bmp");
 		SDL_BlitScaled(button, NULL, env->surface, NULL);
 		SDL_UpdateWindowSurface(env->window);
 		handle_events_menu(env, e);

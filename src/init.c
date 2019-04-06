@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:38:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/05 23:22:29 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/06 19:29:37 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ void	sectorlightapply(t_env *env)
 			k = -1;
 			while (++k < env->sector[i].text->w)
 			{
-				pix[(j * env->sector[i].text->h + k) * 4] = (unsigned char)((double)pix[(j * env->sector[i].text->h + k) * 4] / 100 * env->sector[i].light);
-				pix[(j * env->sector[i].text->h + k) * 4 + 1] = (unsigned char)((double)pix[(j * env->sector[i].text->h + k) * 4 + 1] / 100 * env->sector[i].light);
-				pix[(j * env->sector[i].text->h + k) * 4 + 2] = (unsigned char)((double)pix[(j * env->sector[i].text->h + k) * 4 + 2] / 100 * env->sector[i].light);
+				pix[(j * env->sector[i].text->w + k) * 4] = (unsigned char)((double)pix[(j * env->sector[i].text->w + k) * 4] / 100 * env->sector[i].light);
+				pix[(j * env->sector[i].text->w + k) * 4 + 1] = (unsigned char)((double)pix[(j * env->sector[i].text->w + k) * 4 + 1] / 100 * env->sector[i].light);
+				pix[(j * env->sector[i].text->w + k) * 4 + 2] = (unsigned char)((double)pix[(j * env->sector[i].text->w + k) * 4 + 2] / 100 * env->sector[i].light);
 			}
 		}
 
@@ -44,6 +44,7 @@ void	initspritelight(t_env *env)
 	int	i;
 
 	i = -1;
+	
 	while (++i < env->sprcount)
 	{
 		spritelightapply(env, &env->sprite[i]);

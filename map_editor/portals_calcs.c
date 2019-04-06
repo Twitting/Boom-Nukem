@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   portals_calcs.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 21:41:55 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/03 17:18:00 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/06 16:54:21 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "edit.h"
 
-void	putportalline(t_edit *edit)
+void	putportalline(t_edit *edit, int color)
 {
 	int i;
 	int j;
 
-	edit->nowln.color = 0xff3333;
+	edit->nowln.color = color;
 	i = -2;
 	while (++i < 2)
 	{
@@ -81,7 +81,7 @@ int		makeneighbors(t_edit *edit, int sect1, int sect2)
 	}
 	printf("PORTAL: Sect1:%d, Sect2:%d, vert1:%d, vert2:%d\n",
 		sect1, sect2, PVERT1, PVERT2);
-	putportalline(edit);
+	putportalline(edit, 0xff3333);
 	return (1);
 }
 

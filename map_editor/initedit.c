@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/20 18:26:05 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/05 17:58:29 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/06 17:02:24 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ t_edit	*init(void)
 	edit->sectnum = 0;
 	edit->vertnum = 0;
 	edit->sprnum = 0;
+	edit->buttonflag = 0;
 	sectvertinit(edit);
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 		ft_putchar('!');
