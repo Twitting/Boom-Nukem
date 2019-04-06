@@ -3,14 +3,84 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:38:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/06 19:29:37 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/06 21:41:47 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
+
+void	findbutton(t_env *env)
+{
+	unsigned int	s;
+	unsigned int	i;
+	double			x;
+	double			y;
+	
+	i = 0;
+	
+	while (i < env->butcount)
+	{
+		s = -1;
+		while (++s < env->sector[i].npoints)
+		{
+			if (env->sector[i].neighbors[s] == -2)
+			{
+				env->button[i].x1 = (env->sector[i].vertex[s % env->sector[i].npoints].x + env->sector[i].vertex[(s + 1) % env->sector[i].npoints].x) / 2;
+				env->button[i].y1 = (env->sector[i].vertex[s % env->sector[i].npoints].y + env->sector[i].vertex[(s + 1) % env->sector[i].npoints].y) / 2;
+				if (env->sector[i].vertex[s % env->sector[i].npoints].x == env->sector[i].vertex[(s + 1) % env->sector[i].npoints].x)
+				{
+					x = env->button[i].x1;
+					if (env->sector[i].vertex[s % env->sector[i].npoints].y < env->sector[i].vertex[(s + 1) % env->sector[i].npoints].y)
+						y = env->button[i].y1 + env->button[i].width;
+					else
+						y = env->button[i].y1 - env->button[i].width;
+				}
+				else if (env->sector[i].vertex[s % env->sector[i].npoints].y == env->sector[i].vertex[(s + 1) % env->sector[i].npoints].y)
+				{
+					y = env->button[i].y1;
+					if (env->sector[i].vertex[s % env->sector[i].npoints].x < env->sector[i].vertex[(s + 1) % env->sector[i].npoints].x)
+						x = env->button[i].x1 + env->button[i].width;
+					else
+						x = env->button[i].x1 - env->button[i].width;			
+				}
+				else
+				{
+					if (env->sector[i].vertex[s % env->sector[i].npoints].x < env->sector[i].vertex[(s + 1) % env->sector[i].npoints].x)
+						x = env->button[i].x1 + 0.1;
+					else
+						x = env->button[i].x1 - 0.1;
+					y = (x - env->sector[i].vertex[s % env->sector[i].npoints].x) *
+					(env->sector[i].vertex[(s + 1) % env->sector[i].npoints].y -
+					env->sector[i].vertex[s % env->sector[i].npoints].y) / (env->sector[i].vertex[(s + 1) %
+					env->sector[i].npoints].x - env->sector[i].vertex[s % env->sector[i].npoints].x) +
+					env->sector[i].vertex[s % env->sector[i].npoints].y;
+					while (((x - env->button[i].x1) * (x - env->button[i].x1) + (y -  env->button[i].y1) * (y -  env->button[i].y1)) < env->button[i].width)
+					{
+						y = (x - env->sector[i].vertex[s % env->sector[i].npoints].x) *
+						(env->sector[i].vertex[(s + 1) % env->sector[i].npoints].y -
+						env->sector[i].vertex[s % env->sector[i].npoints].y) / (env->sector[i].vertex[(s + 1) %
+						env->sector[i].npoints].x - env->sector[i].vertex[s % env->sector[i].npoints].x) +
+						env->sector[i].vertex[s % env->sector[i].npoints].y;
+						if (env->sector[i].vertex[s % env->sector[i].npoints].x < env->sector[i].vertex[(s + 1) % env->sector[i].npoints].x)
+							x += 0.1;
+						else
+							x -= 0.1;
+					}
+				}
+				env->button[i].x2 = x;
+				env->button[i].y2 = y;
+			}
+		}
+		i++;
+	}
+	// printf("%f %f\n", env->button[0].x1, env->button[0].y1);
+	// printf("%f %f\n", env->button[0].x2, env->button[0].y2);
+	// printf("%f %f\n", env->button[1].x1, env->button[1].y1);
+	// printf("%f %f\n", env->button[1].x2, env->button[1].y2);
+}
 
 void	sectorlightapply(t_env *env)
 {
@@ -62,7 +132,13 @@ void	init(t_env *env)
 	env->fps = 0;
 	env->oldfps = 60;
 	env->timer = 0;
-	//env->sprcount = 3;
+	//env->butcount = 2;//!!!!!!!!!!!!MAKE IT IN PARSER
+	// env->sector[0].ceiling *= -1;
+	// env->sector[0].sky = 1;
+	// env->sector[1].sky = 1;
+	// env->sector[2].sky = 0;
+	// env->sector[3].sky = 0;
+	// env->sector[4].sky = 0;
 	sectorlightapply(env);
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 		ft_error(4);
@@ -74,6 +150,14 @@ void	init(t_env *env)
 			ft_error(4);
 	env->surface = SDL_GetWindowSurface(env->window);
 	initspritelight(env);
+	// env->button = (t_button *)malloc(sizeof(t_button) * env->butcount);
+	// env->button[0].width = 2;
+	// env->button[0].height = 4;!!MAKE IT IN PARSER
+	// env->button[0].sector = 0;
+	// env->button[1].width = 2;
+	// env->button[1].height = 4;
+	// env->button[1].sector = 1;
+	findbutton(env);
 	// if (!(env->sprite = (t_sprite *)malloc(sizeof(t_sprite) * env->sprcount)))
 	// 	ft_error(2);
 	// env->sprite[0].x = 24;

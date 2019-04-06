@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/06 02:20:25 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/06 21:23:52 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,18 @@ typedef	struct		s_sprite
 	int				type;
 }					t_sprite;
 
+typedef	struct		s_button
+{
+	double			x1;
+	double			y1;
+	double			x2;
+	double			y2;
+	SDL_Surface		*texture;
+	int				height;
+	int				width;
+	int				sector;
+}					t_button;
+
 typedef struct		s_sector
 {
 	double			floor;
@@ -74,6 +86,7 @@ typedef struct		s_sector
 	unsigned int	npoints;
 	unsigned int	light;
 	SDL_Surface		*text;
+	int				sky;
 }					t_sector;
 
 typedef struct		s_player
@@ -114,6 +127,8 @@ typedef struct		s_env
 	t_sprite		*sprite;
 	int				skyangle;
 	int				sprcount;
+	t_button		*button;
+	unsigned int	butcount;
 
 
 	SDL_Window		*window2;

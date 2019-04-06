@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:25:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/06 20:18:57 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/06 21:37:43 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	parsesectors(t_env *env, int fd)
 		if (line[0] == 's')
 		{
 			i += 7;
-			//env->sector[count].sky = 0;
+			env->sector[count].sky = 0;
 			env->sector[count].floor = ft_atoi(&line[i]);
 			while (line[i] != ' ')
 				i++;
@@ -105,7 +105,7 @@ void	parsesectors(t_env *env, int fd)
 			if (env->sector[count].ceiling < 0)
 			{
 				env->sector[count].ceiling *= -1;
-				//env->sector[count].sky = 1;
+				env->sector[count].sky = 1;
 			}
 			while (line[i] != '\t')
 				i++;
@@ -176,6 +176,7 @@ void	getvertsectnums(t_env *env)
 	env->sector = (t_sector *)malloc(sizeof(t_sector) * (env->nsectors));
 	env->vertex = (t_xy *)malloc(sizeof(t_xy) * env->nvertexes);
 	env->sprite = (t_sprite *)malloc(sizeof(t_sprite) * env->sprcount);
+	env->button = (t_button *)malloc(sizeof(t_button) * env->nsectors);
 	if (!env->sector || !env->vertex || !env->sprite)
 		ft_error(2);
 }

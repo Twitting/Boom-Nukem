@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/06 19:29:00 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/06 21:26:11 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,7 +243,18 @@ static void	render_wall(t_env *env, t_rend *rend)
 					
 					}
 					if (rend->y < rend->cya)
-						rend->pel = ((int *)(env->text[2]->pixels))[(int)(rend->y + 100 * (env->player.yaw + 3)) % env->text[2]->h * env->text[2]->w + + (int)(env->player.angle / 6.2 * env->text[2]->w + rend->x) % env->text[2]->w];
+					{
+						if (rend->nowsect->sky != 1) 
+						{
+							rend->hei = rend->y < rend->cya ? rend->yceil : rend->yfloor;
+							TOMAPCCORD(rend->hei, rend->x, rend->y, rend->mapx, rend->mapz);
+							rend->txtx = rend->mapx * env->text[0]->w / 12; // почему 256??
+							rend->txtz = rend->mapz * env->text[0]->w / 12;
+							rend->pel = ((int*)rend->nowsect->text->pixels)[abs(rend->txtz) % rend->nowsect->text->h * rend->nowsect->text->w + abs(rend->txtx) % rend->nowsect->text->w]; //здесь скорее всего что то не так
+						}
+						else
+							rend->pel = ((int *)(env->text[2]->pixels))[(int)(rend->y + 100 * (env->player.yaw + 3)) % env->text[2]->h * env->text[2]->w + + (int)(env->player.angle / 6.2 * env->text[2]->w + rend->x) % env->text[2]->w];
+					}
 					((int*)env->surface->pixels)[rend->y * WWIN + rend->x] = rend->pel;
 				}
 				//drawsky(env, rend, now.sectorno);
@@ -259,7 +270,16 @@ static void	render_wall(t_env *env, t_rend *rend)
 					rend->ncyb = CLAMP(rend->nyb, ytop[rend->x], ybottom[rend->x]);
 					vline2(env, rend, rend->cya, rend->ncya - 1, (t_scaler)SCALER_INIT(rend->ya, rend->cya, rend->yb, 0, (env->text[0]->w - 1)));
 				//	vline(env, rend->x, rend->cya, rend->ncya - 1, 0, rend->x == rend->x1 || rend->x == rend->x2 ? 0 : 0xAAAAAA, 0);
-					ytop[rend->x] = CLAMP(MAX(rend->cya, rend->ncya), ytop[rend->x], HWIN - 1);
+					if (rend->nowsect->sky != 1)
+						if (env->sector[rend->nowsect->neighbors[s]].sky == 1)
+							ytop[rend->x] = CLAMP(rend->cya + 1, ytop[rend->x], HWIN - 1);
+						else
+							ytop[rend->x] = CLAMP(MAX(rend->cya, rend->ncya), ytop[rend->x], HWIN - 1);
+					else
+						if (env->sector[rend->nowsect->neighbors[s]].sky == 1)
+							ytop[rend->x] = CLAMP(MIN(rend->cya, rend->ncya), ytop[rend->x], HWIN - 1);
+						else
+							ytop[rend->x] = CLAMP(rend->ncya, ytop[rend->x], HWIN - 1);
 					vline2(env, rend, rend->ncyb + 1, rend->cyb, (t_scaler)SCALER_INIT(rend->ya, rend->ncyb + 1, rend->yb, 0, (env->text[0]->w - 1)));
 				//	vline(env, rend->x, rend->ncyb + 1, rend->cyb, 0, rend->x == rend->x1 || rend->x == rend->x2 ? 0 : 0x7C00D9 , 0);
 					ybottom[rend->x] = CLAMP(MIN(rend->cyb, rend->ncyb), 0, ybottom[rend->x]);
@@ -304,6 +324,7 @@ int		start_engine(t_env *env, SDL_Event *e)
 		rend.sprq[i].visible = 0;
 	SDL_LockSurface(env->surface);
 	render_wall(env, &rend);
+	renderbutton(env, &rend);
 	rendersprite(env, &rend);
 	SDL_UnlockSurface(env->surface);
 	//SDL_BlitSurface(env->sprite[0].texture, NULL, env->surface, NULL);

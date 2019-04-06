@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprites.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:43:20 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/06 19:34:24 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/06 21:28:42 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	spriteplane(t_env *env, t_rend *rend, int j)
 	rend->sprx2 = WWIN / 2 - (int)((rend->tspr2) * rend->sprxscale);
 	if (rend->sprx1 > now.sx2 || rend->sprx2 < now.sx1)
 		return ;
-	rend->sprceil =  env->sprite[j].height - env->player.where.z;
+	rend->sprceil =  rend->nowsect->floor + env->sprite[j].height - env->player.where.z;
 	rend->sprfloor = rend->nowsect->floor - env->player.where.z;
 	rend->sprya = HWIN / 2 - (int)(YAW(rend->sprceil, rend->tspr.y) * rend->spryscale);
 	rend->spryb = HWIN / 2 - (int)(YAW(rend->sprfloor, rend->tspr.y) * rend->spryscale);
