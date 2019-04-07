@@ -6,7 +6,7 @@
 /*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:20:03 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/07 03:55:36 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/07 04:06:28 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,19 @@ void handle_events_menu(t_env *env, SDL_Event *e)
 			if (env->ng == 1)
 			{
 				env->ng = 0;
-				env->state = 1;
+				if (e->button.x >= 225 && e->button.x <= 795 && 
+					e->button.y >= 420 && e->button.y <= 550)
+					env->state = 1;
 			}
 			else if (env->q == 1)
 			{
 				env->q = 0;
-				env->state = 1;
-				env->quit = 1;
+				if (e->button.x >= 370 && e->button.x <= 600 && 
+					e->button.y >= 585 && e->button.y <= 715)
+					{
+						env->state = 1;
+						env->quit = 1;
+					}
 			}
 		}
 	}
@@ -115,7 +121,7 @@ void menu_pause(t_env *env, SDL_Event *e)
 		if (env->ng == 1)
 			button = SDL_LoadBMP("img/pause_resume.bmp");
 		if (env->q == 1)
-			button = SDL_LoadBMP("img/pause_uit.bmp");
+			button = SDL_LoadBMP("img/pause_quit.bmp");
 		SDL_BlitScaled(button, NULL, env->surface, NULL);
 		SDL_UpdateWindowSurface(env->window);
 		handle_events_menu(env, e);
