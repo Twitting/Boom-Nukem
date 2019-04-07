@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:25:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/07 16:31:47 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/07 18:27:36 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,7 @@ void	getvertsectnums(t_env *env)
 	close(fd);
 	env->sector = (t_sector *)malloc(sizeof(t_sector) * (env->nsectors));
 	env->vertex = (t_xy *)malloc(sizeof(t_xy) * env->nvertexes);
+	env->sprcount++; //////////////////////
 	env->sprite = (t_sprite *)malloc(sizeof(t_sprite) * env->sprcount);
 	env->button = (t_button *)malloc(sizeof(t_button) * env->nsectors);
 	if (!env->sector || !env->vertex || !env->sprite)
@@ -198,10 +199,10 @@ void	parsesprites(t_env *env, int fd)
 		if (line[0] == 'o')
 		{
 			i += 7;
-			env->sprite[count].x = ft_atoi(&line[i]);
+			env->sprite[count].pos1.x = ft_atoi(&line[i]);
 			while (line[i] != ' ')
 				i++;
-			env->sprite[count].y = ft_atoi(&line[i]);
+			env->sprite[count].pos1.y = ft_atoi(&line[i]);
 			while (line[i] != '\t')
 				i++;
 			env->sprite[count].type = ft_atoi(&line[i]);

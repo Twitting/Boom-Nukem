@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:43:20 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/06 21:28:42 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/07 18:29:05 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void	spriteplane(t_env *env, t_rend *rend, int j)
 	if (now.visible == 0)
 		return ;
 	rend->nowsect = &(env->sector[now.sector]);
-	rend->vspr.x = env->sprite[j].x - env->player.where.x;
-	rend->vspr.y = env->sprite[j].y - env->player.where.y;
+	rend->vspr.x = env->sprite[j].pos1.x - env->player.where.x;
+	rend->vspr.y = env->sprite[j].pos1.y - env->player.where.y;
 	rend->tspr.x = rend->vspr.x * env->player.sinang - rend->vspr.y * env->player.cosang;
 	rend->tspr1 = rend->tspr.x + env->sprite[j].width / 2;
 	rend->tspr2 = rend->tspr.x - env->sprite[j].width / 2;
@@ -103,16 +103,30 @@ void	sortsprite(t_env *env)
 void	rendersprite(t_env *env, t_rend *rend)
 {
 	int	i;
+	int	x;
+	int	y;
 
 	i = -1;
 	while (++i < env->sprcount) //
-		env->sprite[i].spritedist = (env->player.where.x - env->sprite[i].x) *\
-		(env->player.where.x - env->sprite[i].x) + (env->player.where.y -\
-		env->sprite[i].y) * (env->player.where.y - env->sprite[i].y);
+		if (env->sprite[i].type == 2)
+		{
+			x = (env->sprite[i].pos1.x + env->sprite[i].pos2.x) / 2;
+			y = (env->sprite[i].pos1.y + env->sprite[i].pos2.y) / 2;
+			env->sprite[i].spritedist = (env->player.where.x - x) *
+			(env->player.where.x - x) + (env->player.where.y - y) *
+			(env->player.where.y - y);
+		}
+		else
+			env->sprite[i].spritedist = (env->player.where.x - env->sprite[i].pos1.x) *
+			(env->player.where.x - env->sprite[i].pos1.x) + (env->player.where.y -
+			env->sprite[i].pos1.y) * (env->player.where.y - env->sprite[i].pos1.y);
 	sortsprite(env);
 	i = -1;
 	while (++i < env->sprcount) //
 	{
-		spriteplane(env, rend, i);
+		if (env->sprite[i].type != 2)
+			spriteplane(env, rend, i);
+		else
+			trplane(env, rend, i);
 	}
 }

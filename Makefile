@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: twitting <twitting@student.42.fr>          +#+  +:+       +#+         #
+#    By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/04/07 16:14:15 by twitting         ###   ########.fr        #
+#    Updated: 2019/04/07 18:25:00 by ebednar          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ SRC = ./src/main.c \
 		./src/textures.c \
 		./src/scaler.c \
 		./src/sprites.c \
-		./src/buttons.c
+		./src/buttons.c \
+		./src/transparent.c
 		
 LIBFT = ./libft/libft.a
 OBJECTS = $(SRC:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:42:12 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/06 21:24:16 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/07 18:25:21 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,11 +160,37 @@ typedef struct	s_rend
 			t_scaler	butyb_int;
 			int			butya;
 			int			butyb;
+			t_xy		vtr1;
+			t_xy		vtr2;
+			t_xy		ttr1;
+			t_xy		ttr2;
+			double		trxscale1;
+			double		tryscale1;
+			double		trxscale2;
+			double		tryscale2;
+			int			trx1;
+			int			trx2;
+			int			trx;
+			double		trceil;
+			double		trfloor;
+			int			try1a;
+			int			try1b;
+			int			try2a;
+			int			try2b;
+			int			ctrya;
+			int			ctryb;
+			int			trbegx;
+			int			trendx;
+			t_scaler	trya_int;
+			t_scaler	tryb_int;
+			int			trya;
+			int			tryb;
 }				t_rend;
 
 void	drawsky(t_env *env, t_rend *rend, int sect);
 int		scaler_next(t_scaler *sc);
 void	rendersprite(t_env *env, t_rend *rend);
 void	renderbutton(t_env *env, t_rend *rend);
+void	trplane(t_env *env, t_rend *rend, int j);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:38:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/07 17:17:19 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/07 18:33:03 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ void	init(t_env *env)
 	env->fps = 0;
 	env->oldfps = 60;
 	env->timer = 0;
-	//env->butcount = 2;//!!!!!!!!!!!!MAKE IT IN PARSER
+	env->butcount = 2;//!!!!!!!!!!!!MAKE IT IN PARSER
 	// env->sector[0].ceiling *= -1;
 	// env->sector[0].sky = 1;
 	// env->sector[1].sky = 1;
@@ -169,16 +169,25 @@ void	init(t_env *env)
 			ft_error(4);
 	env->surface = SDL_GetWindowSurface(env->window);
 	initspritelight(env);
-	// env->button = (t_button *)malloc(sizeof(t_button) * env->butcount);
-	// env->button[0].width = 2;
-	// env->button[0].height = 4;!!MAKE IT IN PARSER
-	// env->button[0].sector = 0;
-	// env->button[1].width = 2;
-	// env->button[1].height = 4;
-	// env->button[1].sector = 1;
+	 env->button = (t_button *)malloc(sizeof(t_button) * env->butcount);
+	env->button[0].width = 2;
+	env->button[0].height = 4;
+	env->button[0].sector = 0;
+	env->button[1].width = 2;
+	env->button[1].height = 4;
+	env->button[1].sector = 1;
 	findbutton(env);
 	// if (!(env->sprite = (t_sprite *)malloc(sizeof(t_sprite) * env->sprcount)))
 	// 	ft_error(2);
+	printf("%d\n", env->butcount);
+	env->sprite[3].pos1.x = env->vertex[6].x;
+	env->sprite[3].pos1.y = env->vertex[6].y;
+	env->sprite[3].pos2.x = env->vertex[9].x;
+	env->sprite[3].pos2.y = env->vertex[9].y;
+	env->sprite[3].height = 30;
+	env->sprite[3].floor = 0;
+	env->sprite[3].type = 2;
+	env->sprite[3].sector = 0;
 	// env->sprite[0].x = 24;
 	// env->sprite[0].y = 40;
 	// env->sprite[0].height = 12;

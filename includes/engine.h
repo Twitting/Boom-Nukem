@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/07 17:07:36 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/07 18:25:00 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,12 @@ typedef struct		s_xyz
 
 typedef	struct		s_sprite
 {
-	double			x;
-	double			y;
+	t_xy			pos1;
+	t_xy			pos2;
 	SDL_Surface		*texture;
 	double			spritedist;
 	int				height;
+	int				floor;
 	int				width;
 	int				sector;
 	int				type;

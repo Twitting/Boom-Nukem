@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 17:47:12 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/06 21:07:52 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/07 18:25:50 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	butplane(t_env *env, t_rend *rend, int j)
 	rend->tbut1.y = rend->vbut1.x * env->player.cosang + rend->vbut1.y * env->player.sinang;
 	rend->tbut2.x = rend->vbut2.x * env->player.sinang - rend->vbut2.y * env->player.cosang;
 	rend->tbut2.y = rend->vbut2.x * env->player.cosang + rend->vbut2.y * env->player.sinang;
-	if (rend->tbut1.y <= 0 && rend->tbut2.y)
+	if (rend->tbut1.y <= 0 && rend->tbut2.y <= 0)
 		return ;
 	butintersect(rend);
 	if (rend->tbut1.y <= 0.5)

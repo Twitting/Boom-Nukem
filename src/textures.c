@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:33:20 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/05 17:52:24 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/07 18:29:05 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	inittext(t_env *env)
 	env->text[0] = IMG_Load("textures/brick.tga");
 	env->text[1] = IMG_Load("textures/barrel.png");
 	env->text[2] = IMG_Load("textures/sky.png");
+	env->text[3] = IMG_Load("textures/midspace.png");
 	/*env->text[3] = IMG_Load("textures/4.tga");
 	env->text[4] = IMG_Load("textures/5.tga");
 	env->text[5] = IMG_Load("textures/6.tga");
