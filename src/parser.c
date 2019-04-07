@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:25:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/06 21:37:43 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/07 16:31:47 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	parseplayer(t_env *env, int fd)
 	env->player.velocity.z = 0.0;
 	env->player.yaw = 0.0;
 	env->player.where.z = env->sector[env->player.sector].floor + EYEHEIGHT;
+	free(line);
 }
 
 void	parsesectors(t_env *env, int fd)
@@ -111,6 +112,9 @@ void	parsesectors(t_env *env, int fd)
 				i++;
 			env->sector[count].light = ft_atoi(&line[i]);
 			while (line[i] != ' ')
+				i++;
+			env->sector[count].textpack = ft_atoi(&line[i]);
+			while (line[i] != '\t')
 				i++;
 			verttosect(env, &env->sector[count], line, i);
 		}

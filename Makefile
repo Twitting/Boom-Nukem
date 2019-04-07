@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+         #
+#    By: twitting <twitting@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/04/06 21:21:47 by ebednar          ###   ########.fr        #
+#    Updated: 2019/04/07 16:14:15 by twitting         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,6 @@ SRC = ./src/main.c \
 		./src/textures.c \
 		./src/scaler.c \
 		./src/sprites.c \
-		./src/sky.c \
 		./src/buttons.c
 		
 LIBFT = ./libft/libft.a

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/07 03:08:39 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/07 16:13:54 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void	vline2(t_env *env, t_rend *rend, int y1, int y2, t_scaler ty) //те
 	while (++y <= y2)
 	{
 		txty = scaler_next(&ty) * (rend->nowsect->ceiling - rend->nowsect->floor) / 64;
-		*pix = ((int *)(rend->nowsect->text->pixels))[txty % rend->nowsect->text->h * rend->nowsect->text->w + rend->txtx % rend->nowsect->text->w];
+		*pix = ((int *)(rend->nowsect->text[1]->pixels))[txty % rend->nowsect->text[1]->h * rend->nowsect->text[1]->w + rend->txtx % rend->nowsect->text[1]->w];
 		//*pix = ((int *)(env->text[0]->pixels))[txty % env->text[0]->h * env->text[0]->w + rend->txtx % env->text[0]->w];
 		// print = (unsigned char *)pix;
 		// print[0] = (int)((double)print[0] / 100 * rend->nowsect->light);
@@ -231,10 +231,10 @@ static void	render_wall(t_env *env, t_rend *rend)
 					{
 					rend->hei = rend->y < rend->cya ? rend->yceil : rend->yfloor;
 					TOMAPCCORD(rend->hei, rend->x, rend->y, rend->mapx, rend->mapz);
-					rend->txtx = rend->mapx * env->text[0]->w / 12; // почему 256??
-					rend->txtz = rend->mapz * env->text[0]->w / 12;
+					rend->txtx = rend->mapx * rend->nowsect->text[0]->w / 12; // почему 256??
+					rend->txtz = rend->mapz * rend->nowsect->text[0]->w / 12;
 					//textset здесь применить нужную текстуру пола или потолка
-					rend->pel = ((int*)rend->nowsect->text->pixels)[abs(rend->txtz) % rend->nowsect->text->h * rend->nowsect->text->w + abs(rend->txtx) % rend->nowsect->text->w]; //здесь скорее всего что то не так
+					rend->pel = ((int*)rend->nowsect->text[0]->pixels)[abs(rend->txtz) % rend->nowsect->text[0]->h * rend->nowsect->text[0]->w + abs(rend->txtx) % rend->nowsect->text[0]->w]; //здесь скорее всего что то не так
 					// rend->pel = ((int*)env->text[0]->pixels)[abs(rend->txtz) % env->text[0]->h * env->text[0]->w + abs(rend->txtx) % env->text[0]->w]; //здесь скорее всего что то не так
 					// print = (unsigned char *)&rend->pel;
 					// print[0] = (int)((double)print[0] / 100 * rend->nowsect->light);
@@ -248,9 +248,9 @@ static void	render_wall(t_env *env, t_rend *rend)
 						{
 							rend->hei = rend->y < rend->cya ? rend->yceil : rend->yfloor;
 							TOMAPCCORD(rend->hei, rend->x, rend->y, rend->mapx, rend->mapz);
-							rend->txtx = rend->mapx * env->text[0]->w / 12; // почему 256??
-							rend->txtz = rend->mapz * env->text[0]->w / 12;
-							rend->pel = ((int*)rend->nowsect->text->pixels)[abs(rend->txtz) % rend->nowsect->text->h * rend->nowsect->text->w + abs(rend->txtx) % rend->nowsect->text->w]; //здесь скорее всего что то не так
+							rend->txtx = rend->mapx * rend->nowsect->text[2]->w / 12; // почему 256??
+							rend->txtz = rend->mapz * rend->nowsect->text[2]->w / 12;
+							rend->pel = ((int*)rend->nowsect->text[2]->pixels)[abs(rend->txtz) % rend->nowsect->text[2]->h * rend->nowsect->text[2]->w + abs(rend->txtx) % rend->nowsect->text[2]->w]; //здесь скорее всего что то не так
 						}
 						else
 							rend->pel = ((int *)(env->text[2]->pixels))[(int)(rend->y + 100 * (env->player.yaw + 3)) % env->text[2]->h * env->text[2]->w + + (int)(env->player.angle / 6.2 * env->text[2]->w + rend->x) % env->text[2]->w];
@@ -287,17 +287,7 @@ static void	render_wall(t_env *env, t_rend *rend)
 				else
 					vline2(env, rend, rend->cya, rend->cyb, (t_scaler)SCALER_INIT(rend->ya, rend->cya, rend->yb, 0, (env->text[0]->w - 1)));
 				//	vline(env, rend->x, rend->cya, rend->cyb, 0, rend->x == rend->x1 || rend->x == rend->x2 ? 0 : 0xAAAAAA, 0);
-				
-				if (rend->x == 100 && rend->nowsect == &env->sector[env->player.sector])//////////////////////////////////DEBUG SHIT
-				{
-						env->debugtempint = rend->cya;
-						env->debugtempdouble = rend->ya;
-						env->debugtempint1 = rend->t1.x;
-						env->debugtempint2 = rend->t1.y;
-						env->debugtempint3 = 0;
-						env->debugtempint4 = 0;
-						env->debugtempint5 = 0;
-				}
+		
 
 
 				

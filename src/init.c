@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:38:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/07 03:18:45 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/07 16:25:45 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,30 +82,49 @@ void	findbutton(t_env *env)
 	// printf("%f %f\n", env->button[1].x2, env->button[1].y2);
 }
 
+char	*gettex(t_env *env, int secnum, int tex)
+{
+	if (((TEXP == 0 || TEXP == 4) && tex == 0) || (TEXP == 5 && tex == 2))
+		return ("textures/asphalt.tga");
+	if ((TEXP == 0 && tex == 1) || (TEXP == 1 && tex == 1))
+		return ("textures/brick.tga");
+	if (((TEXP == 0 || TEXP == 1 || TEXP == 2) && tex == 2) || TEXP == 2)
+		return ("textures/metal.tga");
+	if (((TEXP == 1 || TEXP == 5) && tex == 0) || (TEXP == 3 && tex == 1))
+		return ("textures/stone.tga");
+	return ("textures/wood.tga");
+}
+
 void	sectorlightapply(t_env *env)
 {
 	int	i;
 	int j;
 	int k;
+	int	tex;
 	unsigned char *pix;
 	
-	i = -1;
-	while (++i < (int)env->nsectors)
+	tex = -1;
+	while (++tex < 3)
 	{
-		env->sector[i].text = IMG_Load("textures/brick.tga");
-		pix = (unsigned char *)env->sector[i].text->pixels;
-		j = -1;
-		while (++j < env->sector[i].text->h)
+		i = -1;
+		while (++i < (int)env->nsectors)
 		{
-			k = -1;
-			while (++k < env->sector[i].text->w)
+			if (env->sector[i].sky == 1)
+				env->sector[i].light = 100;
+			env->sector[i].text[tex] = IMG_Load(gettex(env, i, tex));
+			pix = (unsigned char *)env->sector[i].text[tex]->pixels;
+			j = -1;
+			while (++j < env->sector[i].text[tex]->h)
 			{
-				pix[(j * env->sector[i].text->w + k) * 4] = (unsigned char)((double)pix[(j * env->sector[i].text->w + k) * 4] / 100 * env->sector[i].light);
-				pix[(j * env->sector[i].text->w + k) * 4 + 1] = (unsigned char)((double)pix[(j * env->sector[i].text->w + k) * 4 + 1] / 100 * env->sector[i].light);
-				pix[(j * env->sector[i].text->w + k) * 4 + 2] = (unsigned char)((double)pix[(j * env->sector[i].text->w + k) * 4 + 2] / 100 * env->sector[i].light);
+				k = -1;
+				while (++k < env->sector[i].text[tex]->w)
+				{
+					pix[(j * env->sector[i].text[tex]->w + k) * 4] = (unsigned char)((double)pix[(j * env->sector[i].text[tex]->w + k) * 4] / 100 * env->sector[i].light);
+					pix[(j * env->sector[i].text[tex]->w + k) * 4 + 1] = (unsigned char)((double)pix[(j * env->sector[i].text[tex]->w + k) * 4 + 1] / 100 * env->sector[i].light);
+					pix[(j * env->sector[i].text[tex]->w + k) * 4 + 2] = (unsigned char)((double)pix[(j * env->sector[i].text[tex]->w + k) * 4 + 2] / 100 * env->sector[i].light);
+				}
 			}
 		}
-
 	}
 }
 

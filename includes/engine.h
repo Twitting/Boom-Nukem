@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/06 21:23:52 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/07 15:58:07 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define HFOV 1.0 * 0.73 * HWIN / WWIN
 # define VFOV 1.0 * 0.2 
 # define SKYSIZE 3840
+# define TEXP env->sector[secnum].textpack
 
 
 # define MIN(a, b) (((a < b)) ? (a) : (b))
@@ -85,8 +86,9 @@ typedef struct		s_sector
 	int				*neighbors;
 	unsigned int	npoints;
 	unsigned int	light;
-	SDL_Surface		*text;
+	SDL_Surface		*text[3];
 	int				sky;
+	int				textpack;
 }					t_sector;
 
 typedef struct		s_player
