@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 21:38:17 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/05 18:22:44 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/07 16:39:23 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ void	putsectstofile(t_edit *edit, int fd)
 		ft_putchar_fd('\t', fd);
 		ft_putnbr_fd(edit->sectors[i].light, fd);
 		ft_putchar_fd(' ', fd);
+		ft_putnbr_fd(edit->sectors[i].texture, fd);
+		ft_putchar_fd('\t', fd);
 		while (++j < (int)edit->sectors[i].npoints)
 		{
 			ft_putnbr_fd(edit->sectors[i].vertex[j], fd);

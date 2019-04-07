@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 21:41:55 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/06 16:54:21 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/07 16:40:15 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int		makeneighbors(t_edit *edit, int sect1, int sect2)
 	int	i;
 
 	i = -1;
-	if (PSECT1.floor > PSECT2.ceiling || PSECT2.floor > PSECT1.ceiling)
+	if (PSECT1.floor > abs(PSECT2.ceiling) || PSECT2.floor > abs(PSECT1.ceiling))
 		return (0);
 	while (++i < (int)PSECT1.npoints)
 	{

@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/07 15:58:07 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/07 16:45:35 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define HWIN 768
 # define EYEHEIGHT 6.0
 # define DUCKHEIGHT 2.5
-# define HEADMARGIN 1.0
+# define HEADMARGIN 2.0
 # define KNEEHEIGHT 2.0
 # define HFOV 1.0 * 0.73 * HWIN / WWIN
 # define VFOV 1.0 * 0.2 
