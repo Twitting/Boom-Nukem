@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:20:03 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/06 19:46:52 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/07 03:55:36 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,30 @@ void menu(t_env *env, SDL_Event *e)
 	}
 }
 
+void menu_pause(t_env *env, SDL_Event *e)
+{
+	env->ng = 0;
+	env->q = 0;
+	SDL_SetRelativeMouseMode(SDL_FALSE);
+	while (env->state == 2)
+	{
+		SDL_Rect rect;
+		rect.x = 320;
+		rect.y = 200;
+		rect.h = 100;
+		rect.w = 400;
+		SDL_Surface *button;
+		button = SDL_LoadBMP("img/pause.bmp");
+		if (env->ng == 1)
+			button = SDL_LoadBMP("img/pause_resume.bmp");
+		if (env->q == 1)
+			button = SDL_LoadBMP("img/pause_uit.bmp");
+		SDL_BlitScaled(button, NULL, env->surface, NULL);
+		SDL_UpdateWindowSurface(env->window);
+		handle_events_menu(env, e);
+	}
+}
+
 void start(t_env *env, SDL_Event *e)
 {
 	if (env->state == 0)
@@ -105,10 +129,11 @@ void start(t_env *env, SDL_Event *e)
 	else if (env->state == 1)
 	{
 		env->frame = clock();
-		SDL_ShowCursor(SDL_DISABLE);
 		start_engine(env, e);
 		fps(env);
 	}
+	else if (env->state == 2)
+		menu_pause(env, e);
 }
 
 int		main(void)
@@ -122,7 +147,6 @@ int		main(void)
 	grandparser(env);
 	init(env);
 	inittext(env);
-	//SDL_ShowCursor(SDL_DISABLE);
 	env->state = 0;
 	while (!(env->quit))
 	{
