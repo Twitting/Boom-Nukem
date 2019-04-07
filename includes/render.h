@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:42:12 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/07 18:25:21 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/07 19:12:22 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 					X = rtx + env->player.where.x; Z = rtz + env->player.where.y; \
 					} while(0)
 # define MAXQUEUE 32
+# define BUTTONHEIGHT 4
+# define BUTTONWIDTH 2
 
 # include "engine.h"
 

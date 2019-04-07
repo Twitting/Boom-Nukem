@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/07 18:25:00 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/07 19:58:35 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,16 @@ typedef struct		s_player
 	double			eye;
 }					t_player;
 
+typedef struct		s_wallsp
+{
+	int				vert1;
+	int				vert2;
+	int				sect1;
+	int				sect2;
+	int				minceil;
+	int				maxfl;
+}					t_wallsp;
+
 typedef struct		s_env
 {
 	char			mapname[64];
@@ -134,6 +144,7 @@ typedef struct		s_env
 	unsigned int	butcount;
 	int				jetpack;
 	int				spacebar;
+	t_wallsp		wallsp;
 
 
 	SDL_Window		*window2;

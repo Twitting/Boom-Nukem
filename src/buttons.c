@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   buttons.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 17:47:12 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/07 18:25:50 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/07 19:11:53 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "engine.h"
 #include "render.h"
@@ -112,7 +111,7 @@ void	butplane(t_env *env, t_rend *rend, int j)
 	rend->butx2 = WWIN / 2 - (int)((rend->tbut2.x) * rend->butxscale2);
 	if (rend->butx1 == rend->butx2 || rend->butx1 > now.sx2 || rend->butx2 < now.sx1)  ///// +1?
 		return ;
-	rend->butceil =  rend->nowsect->floor + 5 + env->button[j].height - env->player.where.z;
+	rend->butceil =  rend->nowsect->floor + 5 + BUTTONHEIGHT - env->player.where.z;
 	rend->butfloor = rend->nowsect->floor + 5 - env->player.where.z;
 	rend->buty1a = HWIN / 2 - (int)(YAW(rend->butceil, rend->tbut1.y) * rend->butyscale1);
 	rend->buty1b = HWIN / 2 - (int)(YAW(rend->butfloor, rend->tbut1.y) * rend->butyscale1);
@@ -141,7 +140,7 @@ void	renderbutton(t_env *env, t_rend *rend)
 	int	i;
 
 	i = -1;
-	while (++i < (int)env->butcount)
+	while (++i < (int)env->nsectors)
 	{
 		butplane(env, rend, i);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:25:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/07 18:27:36 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/07 20:35:33 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ void	parseplayer(t_env *env, int fd)
 	env->player.velocity.z = 0.0;
 	env->player.yaw = 0.0;
 	env->player.where.z = env->sector[env->player.sector].floor + EYEHEIGHT;
+	free(line);
+	get_next_line(fd, &line);
 	free(line);
 }
 
@@ -174,19 +176,20 @@ void	getvertsectnums(t_env *env)
 			env->nsectors++;
 		else if (line[0] == 'o')
 			env->sprcount++;
+		else if (line[0] == 'w')
+			env->sprcount += 2;
 		free(line);
 	}
 	close(fd);
 	env->sector = (t_sector *)malloc(sizeof(t_sector) * (env->nsectors));
 	env->vertex = (t_xy *)malloc(sizeof(t_xy) * env->nvertexes);
-	env->sprcount++; //////////////////////
 	env->sprite = (t_sprite *)malloc(sizeof(t_sprite) * env->sprcount);
 	env->button = (t_button *)malloc(sizeof(t_button) * env->nsectors);
-	if (!env->sector || !env->vertex || !env->sprite)
+	if (!env->sector || !env->vertex || !env->sprite || !env->button)
 		ft_error(2);
 }
 
-void	parsesprites(t_env *env, int fd)
+int	parsesprites(t_env *env, int fd)
 {
 	char	*line;
 	int		count;
@@ -211,13 +214,14 @@ void	parsesprites(t_env *env, int fd)
 			env->sprite[count].sector = ft_atoi(&line[i]);
 			count++;
 		}
-		else if (line[0] != 'o' && line[0] != '\0')
+		else if (line[0] != 'o' && line[0] == '\0')
 		{
 			free(line);
 			break ;
 		}
 		free(line);
 	}
+	return (count);
 }
 
 void	spritelightapply(t_env *env, t_sprite *sprite)
@@ -254,26 +258,86 @@ void	spritemaker(t_env *env)
 			env->sprite[i].height = 12;
 			env->sprite[i].width = 4;
 		}
-		else
+		else if (env->sprite[i].type == 1)
 		{
 			env->sprite[i].height = 20;
 			env->sprite[i].width = 7;
 		}
-		
 	}
 }
 
+void	makewallsp(t_env *env, int i)
+{
+	env->sprite[i].pos1.x = env->vertex[env->wallsp.vert1].x;
+	env->sprite[i].pos1.y = env->vertex[env->wallsp.vert1].y;
+	env->sprite[i + 1].pos1.x = env->vertex[env->wallsp.vert2].x;
+	env->sprite[i + 1].pos1.y = env->vertex[env->wallsp.vert2].y;
+	env->sprite[i].pos2.x = env->vertex[env->wallsp.vert2].x;
+	env->sprite[i].pos2.y = env->vertex[env->wallsp.vert2].y;
+	env->sprite[i + 1].pos2.x = env->vertex[env->wallsp.vert1].x;
+	env->sprite[i + 1].pos2.y = env->vertex[env->wallsp.vert1].y;
+	env->sprite[i].sector = env->wallsp.sect2;
+	env->sprite[i + 1].sector = env->wallsp.sect1;
+
+	env->sprite[i].height = MIN(env->sector[env->wallsp.sect1].ceiling, env->sector[env->wallsp.sect2].ceiling);
+	env->sprite[i].floor = MAX(env->sector[env->wallsp.sect1].floor, env->sector[env->wallsp.sect2].floor);
+	env->sprite[i].type = 2;
+	env->sprite[i].texture = IMG_Load("textures/bars.png");
+	env->sprite[i + 1].height = MIN(env->sector[env->wallsp.sect1].ceiling, env->sector[env->wallsp.sect2].ceiling);
+	env->sprite[i + 1].floor = MAX(env->sector[env->wallsp.sect1].floor, env->sector[env->wallsp.sect2].floor);
+	env->sprite[i + 1].type = 2;
+	env->sprite[i + 1].texture = IMG_Load("textures/bars.png");
+}
+
+void	parsewallsps(t_env *env, int fd, int count)
+{
+	char	*line;
+	int		i;
+
+	while (get_next_line(fd, &line) > 0)
+	{
+		i = 0;
+		if (line[0] == 'w')
+		{
+			i += 7;
+			env->wallsp.vert1 = ft_atoi(&line[i]);
+			while (line[i] != ' ')
+				i++;
+			env->wallsp.vert2 = ft_atoi(&line[i]);
+			while (line[i] != '\t')
+				i++;
+			env->wallsp.sect1 = ft_atoi(&line[i]);
+			while (line[i] != ' ')
+				i++;
+			env->wallsp.sect2 = ft_atoi(&line[i]);
+			makewallsp(env, count);
+			count += 2;
+			//printf("%d %d %d %d %d %d\n", env->wallsp.vert1, env->wallsp.vert2, env->wallsp.sect1, env->wallsp.sect2, count, env->sprcount);
+		}
+		else if (line[0] != 'w')
+		{
+			free(line);
+			break ;
+		}
+		free(line);
+	}
+}
+
+
 void	grandparser(t_env *env)
 {
-	int				fd;
+	int	fd;
+	int	sprites;
 
 	if ((fd = open(env->mapname, O_RDONLY)) < 0)
 		ft_putstr("openerr\n");
+	
 	getvertsectnums(env);
 	parsevertexes(env, fd);
 	parsesectors(env, fd);
 	parseplayer(env, fd);
-	parsesprites(env, fd);
+	sprites = parsesprites(env, fd);
+	parsewallsps(env, fd, sprites);
 	spritemaker(env);
 	close(fd);
 }
