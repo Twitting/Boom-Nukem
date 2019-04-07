@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 21:52:25 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/07 16:45:27 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/07 17:17:05 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@ void	keyboard_events(t_env *env, SDL_Event *e)
 		on = 1;
 	else
 		on = 0;
+	if (e->key.keysym.sym == SDLK_j)
+		env->jetpack = 1;
+	if (e->key.keysym.sym == SDLK_k)
+		env->jetpack = 0;
 	if (e->key.keysym.sym == SDLK_w)
 		env->wsad[0] = on;
 	if (e->key.keysym.sym == SDLK_s)
@@ -34,11 +38,16 @@ void	keyboard_events(t_env *env, SDL_Event *e)
 		env->falling = 1;
 	}
 	if (e->key.keysym.sym == SDLK_SPACE && on == 1)
-		if (env->ground)
+		env->spacebar = 1;
+	if (e->key.keysym.sym == SDLK_SPACE && on == 0)
+		env->spacebar = 0;	
+	if (e->key.keysym.sym == SDLK_SPACE && on == 1)
+		if (env->ground && !env->jetpack)
 		{
 			env->player.velocity.z += 1.5;
 			env->falling = 1;
 		}
+	
 }
 
 void	handle_events(t_env *env, SDL_Event *e)
@@ -46,6 +55,11 @@ void	handle_events(t_env *env, SDL_Event *e)
 	int x;
 	int y;
 
+	if (env->spacebar && env->jetpack)
+	{
+		env->player.velocity.z += 0.2;
+		env->falling = 1;
+	}
 	while (SDL_PollEvent(e))
 	{
 		if (e->type == SDL_QUIT)
