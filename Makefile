@@ -6,7 +6,7 @@
 #    By: drestles <drestles@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/04/08 02:49:12 by drestles         ###   ########.fr        #
+#    Updated: 2019/04/08 06:00:35 by drestles         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,13 @@ SRC = ./src/main.c \
 		./src/sprites.c \
 		./src/buttons.c \
 		./src/transparent.c \
-		./src/menu.c
+		./src/menu/main.c \
+		./src/menu/menu.c \
+		./src/menu/handle_pause.c \
+		./src/menu/handle_menu.c \
+		./src/menu/handle_load.c \
+		./src/menu/handle_save.c \
+		./src/menu/handle_game_mode.c \
 
 		
 LIBFT = ./libft/libft.a

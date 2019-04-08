@@ -6,7 +6,7 @@
 /*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/08 03:20:35 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/08 06:05:55 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,7 @@ typedef struct		s_env
 	int b_four;
 }					t_env;
 
+void	fps(t_env *env);
 void	spritelightapply(t_env *env, t_sprite *sprite);
 void	movement_calcs(t_env *env);
 void	movement(t_env *env, float dx, float dy);
@@ -183,16 +184,44 @@ void	inittext(t_env *env);
 void	verttosect(t_env *env, t_sector *sect, char *line, int i);
 void	neighborstosect(t_sector *sect, char *line, int i);
 
+
+/*
+** menu/menu.c
+*/
+void menu(t_env *env, SDL_Event *e);
+void start(t_env *env, SDL_Event *e);
+
 /*
 ** menu.c
 */
-void handle_events_pause(t_env *env, SDL_Event *e);
-void handle_events_menu(t_env *env, SDL_Event *e);
-void menu(t_env *env, SDL_Event *e);
 void menu_pause(t_env *env, SDL_Event *e);
 void save_game(t_env *env, SDL_Event *e);
 void load_game(t_env *env, SDL_Event *e);
+void game_mode(t_env *env, SDL_Event *e);
+
+/*
+** handle_pause.c
+*/
+void handle_events_pause(t_env *env, SDL_Event *e);
+
+/*
+** handle_menu.c
+*/
+void handle_events_menu(t_env *env, SDL_Event *e);
+
+/*
+** handle_load.c
+*/
 void handle_events_load(t_env *env, SDL_Event *e);
 
+/*
+** handle_save.c
+*/
+void handle_events_save(t_env *env, SDL_Event *e);
+
+/*
+** handle_game_mode.c
+*/
+void handle_events_game_mode(t_env *env, SDL_Event *e);
 
 #endif
