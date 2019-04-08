@@ -6,7 +6,7 @@
 /*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/07 23:13:43 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/08 03:20:35 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,10 +160,10 @@ typedef struct		s_env
 
 
 	int state;
-	int ng;
-	int save;
-	int load;
-	int q;
+	int b_one;
+	int b_two;
+	int b_three;
+	int b_four;
 }					t_env;
 
 void	spritelightapply(t_env *env, t_sprite *sprite);
@@ -182,5 +182,17 @@ int		start_engine(t_env *env, SDL_Event *e);
 void	inittext(t_env *env);
 void	verttosect(t_env *env, t_sector *sect, char *line, int i);
 void	neighborstosect(t_sector *sect, char *line, int i);
+
+/*
+** menu.c
+*/
+void handle_events_pause(t_env *env, SDL_Event *e);
+void handle_events_menu(t_env *env, SDL_Event *e);
+void menu(t_env *env, SDL_Event *e);
+void menu_pause(t_env *env, SDL_Event *e);
+void save_game(t_env *env, SDL_Event *e);
+void load_game(t_env *env, SDL_Event *e);
+void handle_events_load(t_env *env, SDL_Event *e);
+
 
 #endif

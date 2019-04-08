@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+         #
+#    By: drestles <drestles@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/04/07 18:25:00 by ebednar          ###   ########.fr        #
+#    Updated: 2019/04/08 02:49:12 by drestles         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,9 @@ SRC = ./src/main.c \
 		./src/scaler.c \
 		./src/sprites.c \
 		./src/buttons.c \
-		./src/transparent.c
+		./src/transparent.c \
+		./src/menu.c
+
 		
 LIBFT = ./libft/libft.a
 OBJECTS = $(SRC:.c=.o)
