@@ -6,7 +6,7 @@
 /*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:16:17 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/07 01:59:20 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/08 04:50:05 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ void	draw_string(char *text, SDL_Color color, int y, SDL_Surface *sur)
 	position.h = 20;
 	position.w = 50;
 	SDL_BlitSurface(new, NULL, sur, &position);
+	SDL_FreeSurface(new);
+	TTF_CloseFont(font);
 }
 
 void	draw_title(SDL_Surface *sur)
@@ -121,6 +123,9 @@ void	draw_title(SDL_Surface *sur)
 	new = TTF_RenderText_Solid(bold_mini, text, color_blue);
 	position.y = 65;
 	SDL_BlitSurface(new, NULL, sur, &position);
+	SDL_FreeSurface(new);
+	TTF_CloseFont(bold);
+	TTF_CloseFont(bold_mini);
 }
 
 void	rules(void)

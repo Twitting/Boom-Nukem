@@ -1,21 +1,23 @@
-vertex	140	170
-vertex	200	100
-vertex	250	190
-vertex	170	240
-vertex	170	200
-vertex	100	250
-vertex	150	230
-vertex	190	310
-vertex	130	330
-vertex	120	290
-vertex	160	300
+vertex	80	170
+vertex	200	230
+vertex	140	300
+vertex	90	260
+vertex	100	210
+vertex	120	110
+vertex	160	100
+vertex	170	130
+vertex	140	140
+vertex	250	330
+vertex	270	300
+vertex	240	280
+vertex	200	300
+vertex	200	320
+vertex	240	310
+vertex	240	330
 
-sector	0 20	60 3	0 1 2 3 4		-1 -1 -1 -1 -1
-sector	0 20	80 0	5 6 7 8 9		-1 -1 -1 -1 -1
+sector	0 20	80 0	0 1 2 3 4		-1 -1 -1 -1 -1
+sector	0 20	80 0	5 6 7 8		-1 -1 -1 -1
+sector	0 20	80 0	9 10 11 12 13 14 15		-1 -1 -1 -1 -1 -1 -1
 
-player	187 185	0 0
+player	0 0	0 0
 
-object	272 144	1 1
-object	278 146	1 1
-object	287 138	1 1
-object	294 168	0 1
