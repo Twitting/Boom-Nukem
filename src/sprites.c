@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:43:20 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/09 14:41:41 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/09 15:59:13 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@ void	drawsprite(t_env *env, t_rend *rend, int j)
 	while (++y <= rend->cspryb)
 	{
 		txty = (int)((double)(y - rend->sprya) / (double)(rend->spryb - rend->sprya) * env->sprite[j].texture->h);
+		if (y == HWIN / 2 && rend->sprx == WWIN / 2 && env->sprite[j].type == 1 &&
+			((int *)(env->sprite[j].texture->pixels))[txty % env->sprite[j].texture->h * env->sprite[j].texture->w + rend->txtx] != -16777216 && 
+			((int *)(env->sprite[j].texture->pixels))[txty % env->sprite[j].texture->h * env->sprite[j].texture->w + rend->txtx] != 0)
+			env->player.target = j;
 		if (((int *)(env->sprite[j].texture->pixels))[txty % env->sprite[j].texture->h * env->sprite[j].texture->w + rend->txtx] != -16777216 && 
 			((int *)(env->sprite[j].texture->pixels))[txty % env->sprite[j].texture->h * env->sprite[j].texture->w + rend->txtx] != 0)
 			*pix = ((int *)(env->sprite[j].texture->pixels))[txty % env->sprite[j].texture->h * env->sprite[j].texture->w + rend->txtx];
@@ -122,6 +126,7 @@ void	rendersprite(t_env *env, t_rend *rend)
 			env->sprite[i].pos1.y) * (env->player.where.y - env->sprite[i].pos1.y);
 	sortsprite(env);
 	i = -1;
+	env->player.target = -1;
 	while (++i < env->sprcount) //
 	{
 		if (env->sprite[i].type != 2)
@@ -129,4 +134,5 @@ void	rendersprite(t_env *env, t_rend *rend)
 		else
 			trplane(env, rend, i);
 	}
+	printf("%d\n", env->player.target);
 }
