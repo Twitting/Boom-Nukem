@@ -1,10 +1,4 @@
-vertex	270	40
-vertex	260	40
-vertex	170	190
-vertex	230	130
-vertex	260	160
 
-sector	0 20	80 0	0 1 2 3 4		-1 -1 -1 -1 -1
 
 player	0 0	0 0
 

@@ -6,7 +6,7 @@
 /*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:16:17 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/09 21:25:15 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/09 21:46:42 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,10 +119,12 @@ void	draw_title(SDL_Surface *sur)
 	position.h = 20;
 	position.w = 50;
 	SDL_BlitSurface(new, NULL, sur, &position);
+	SDL_FreeSurface(new);
 	text = "There are some rules of using this program";
 	new = TTF_RenderText_Solid(bold_mini, text, color_blue);
 	position.y = 45;
 	SDL_BlitSurface(new, NULL, sur, &position);
+	SDL_FreeSurface(new);
 	text = "you MUST follow during map creating process:";
 	new = TTF_RenderText_Solid(bold_mini, text, color_blue);
 	position.y = 65;
@@ -141,14 +143,10 @@ void	rules(void)
 	SDL_Surface *sur;
 	sur = SDL_GetWindowSurface(win);
 	SDL_FillRect(sur, NULL, 0x000000);
-	TTF_Font* bold= TTF_OpenFont("bold.ttf", 28);
-	TTF_Font* bold_mini= TTF_OpenFont("bold.ttf", 21);
-	TTF_Font* font= TTF_OpenFont("droid.ttf", 20);
-	 if (bold == NULL)
-        printf("Unable to load font \n");
+	 /* if (bold == NULL)
+        printf("Unable to load font \n"); */
 	SDL_Color color_bold={0,255,0};
 	SDL_Color color={255,255,255};
-	SDL_Surface *new = NULL;
 
 	draw_title(sur);
 	draw_string("1) All sectors must be set only in clockwise", color, 130, sur);
@@ -169,9 +167,8 @@ void	rules(void)
 	draw_string("9) Sectors can be only convex (vignutiy, ponel?).", color, 590, sur);
 	draw_string("10) Press W while making portal to make", color, 630, sur);
 	draw_string("metal bar.", color, 650, sur);
-
-	TTF_CloseFont(bold);
 	SDL_UpdateWindowSurface(win);
+	TTF_Quit();
 }
 
 int		main(void)
@@ -190,7 +187,8 @@ int		main(void)
 	}
 	i = 0;
 	savemap(edit);
-	// while (edit->sectors[i].npoints != 0)//this part just print things in stdout
+	SDL_Quit();
+	exit(1);	// while (edit->sectors[i].npoints != 0)//this part just print things in stdout
 	// {
 	// 	if (edit->sectors[i].finished == 0)
 	// 	{
