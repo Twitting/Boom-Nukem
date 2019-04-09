@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 21:38:17 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/09 16:36:20 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/09 18:26:11 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void	putspritestofile(t_edit *edit, int fd)
 		ft_putnbr_fd(edit->sprites[i].sector, fd);
 		ft_putchar_fd('\n', fd);
 	}
+	ft_putchar_fd('\n', fd);
 }
 
 void	putbarstofile(t_edit *edit, int fd)
@@ -103,7 +104,7 @@ void	putbarstofile(t_edit *edit, int fd)
 	int	i;
 
 	i = -1;
-	while (++i < edit->sprnum)
+	while (++i < edit->barsnum)
 	{
 		ft_putstr_fd("wallsp\t", fd);
 		ft_putnbr_fd(edit->bars[i].vert1, fd);
