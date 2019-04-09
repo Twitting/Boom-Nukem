@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:20:03 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/08 06:05:41 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/09 14:36:37 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ int		main(void)
 	env->state = 0;
 	while (!(env->quit))
 	{
-		start(env, &e);
-		// env->frame = clock();
-		// start_engine(env, &e);
-		// fps(env);
+		//start(env, &e);
+		env->frame = clock();
+		start_engine(env, &e);
+		fps(env);
 	}
 	SDL_DestroyWindow(env->window);
 	SDL_Quit();

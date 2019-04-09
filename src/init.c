@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:38:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/07 20:39:22 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/09 15:02:40 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,8 @@ void	sectorlightapply(t_env *env)
 		{
 			if (env->sector[i].sky == 1)
 				env->sector[i].light = 100;
+			//if (env->sector[i].text[tex] != NULL)
+			//	free(env->sector[i].text[tex]);
 			env->sector[i].text[tex] = IMG_Load(gettex(env, i, tex));
 			pix = (unsigned char *)env->sector[i].text[tex]->pixels;
 			j = -1;
@@ -136,7 +138,8 @@ void	initspritelight(t_env *env)
 	
 	while (++i < env->sprcount)
 	{
-		spritelightapply(env, &env->sprite[i]);
+		if (env->sprite[i].type == 0 || env->sprite[i].type == 1)
+			spritelightapply(env, &env->sprite[i]);
 	}
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:25:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/08 01:16:41 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/09 15:21:29 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,6 +230,7 @@ void	spritelightapply(t_env *env, t_sprite *sprite)
 	int k;
 	unsigned char *pix;
 	
+	free(sprite->texture);
 	sprite->texture = sprite->type == 0 ? IMG_Load("textures/barrel.png") : IMG_Load("textures/enemy.png");
 	pix = (unsigned char *)sprite->texture->pixels;
 	j = -1;
@@ -312,7 +313,7 @@ void	parsewallsps(t_env *env, int fd, int count)
 			env->wallsp.sect2 = ft_atoi(&line[i]);
 			makewallsp(env, count);
 			count += 2;
-			//printf("%d %d %d %d %d %d\n", env->wallsp.vert1, env->wallsp.vert2, env->wallsp.sect1, env->wallsp.sect2, count, env->sprcount);
+			printf("%d %d %d %d %d %d\n", env->wallsp.vert1, env->wallsp.vert2, env->wallsp.sect1, env->wallsp.sect2, count, env->sprcount);
 		}
 		else if (line[0] != 'w')
 		{
