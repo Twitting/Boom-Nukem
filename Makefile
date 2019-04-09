@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: drestles <drestles@student.42.fr>          +#+  +:+       +#+         #
+#    By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/04/08 06:00:35 by drestles         ###   ########.fr        #
+#    Updated: 2019/04/09 17:09:38 by ebednar          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC = ./src/main.c \
 		./src/sprites.c \
 		./src/buttons.c \
 		./src/transparent.c \
+		./src/movemob.c \
 		./src/menu/main.c \
 		./src/menu/menu.c \
 		./src/menu/handle_pause.c \

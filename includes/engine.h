@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/09 15:40:58 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/09 17:59:58 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,17 +180,17 @@ int		intersect_box(t_xy a, t_xy b, t_xy c, t_xy d);
 int		overlap(double a0, double a1, double b0, double b1);
 double	vxs(double x0, double y0, double x1, double y1);
 void	grandparser(t_env *env);
-int		start_engine(t_env *env, SDL_Event *e);
 void	inittext(t_env *env);
 void	verttosect(t_env *env, t_sector *sect, char *line, int i);
 void	neighborstosect(t_sector *sect, char *line, int i);
+void	move_mob(t_env *env);
 
 
 /*
 ** menu/menu.c
 */
 void menu(t_env *env, SDL_Event *e);
-void start(t_env *env, SDL_Event *e);
+
 
 /*
 ** menu.c

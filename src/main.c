@@ -3,19 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:20:03 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/09 14:36:37 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/09 18:06:51 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
+#include "render.h"
 
 void	fps(t_env *env)
 {
 	env->fps++;
 	env->timer += (clock() - env->frame) / CLOCKS_PER_SEC;
+	if (env->timer >= 0.9)
+		move_mob(env);
 	if (env->timer >= 1.0)
 	{
 		ft_putstr("fps = ");
@@ -43,9 +46,12 @@ void	ft_error(int errnum)
 int		main(void)
 {
 	t_env		*env;
+	t_rend		*rend;
 	SDL_Event	e;
 
 	if (!(env = (t_env *)malloc(sizeof(t_env))))
+		ft_error(2);
+	if (!(rend = (t_rend *)malloc(sizeof(t_rend))))
 		ft_error(2);
 	ft_strcpy(env->mapname, "test.map");
 	grandparser(env);
@@ -54,9 +60,9 @@ int		main(void)
 	env->state = 0;
 	while (!(env->quit))
 	{
-		//start(env, &e);
+		//start(env, &e, rend);
 		env->frame = clock();
-		start_engine(env, &e);
+		start_engine(env, &e, rend);
 		fps(env);
 	}
 	SDL_DestroyWindow(env->window);

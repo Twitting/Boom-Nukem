@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprites.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:43:20 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/09 15:59:13 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/09 17:45:40 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	spriteplane(t_env *env, t_rend *rend, int j)
 	now = rend->sprq[env->sprite[j].sector];
 	if (now.visible == 0)
 		return ;
+	//printf("%d\n", j);
 	rend->nowsect = &(env->sector[now.sector]);
 	rend->vspr.x = env->sprite[j].pos1.x - env->player.where.x;
 	rend->vspr.y = env->sprite[j].pos1.y - env->player.where.y;
@@ -134,5 +135,4 @@ void	rendersprite(t_env *env, t_rend *rend)
 		else
 			trplane(env, rend, i);
 	}
-	printf("%d\n", env->player.target);
 }

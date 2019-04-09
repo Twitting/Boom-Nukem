@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/07 19:28:48 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/09 18:06:31 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,7 +240,6 @@ static void	render_wall(t_env *env, t_rend *rend)
 					// print[0] = (int)((double)print[0] / 100 * rend->nowsect->light);
 					// print[1] = (int)((double)print[1] / 100 * rend->nowsect->light);
 					// print[2] = (int)((double)print[2] / 100 * rend->nowsect->light);
-					
 					}
 					if (rend->y < rend->cya)
 					{
@@ -287,10 +286,6 @@ static void	render_wall(t_env *env, t_rend *rend)
 				else
 					vline2(env, rend, rend->cya, rend->cyb, (t_scaler)SCALER_INIT(rend->ya, rend->cya, rend->yb, 0, (env->text[0]->w - 1)));
 				//	vline(env, rend->x, rend->cya, rend->cyb, 0, rend->x == rend->x1 || rend->x == rend->x2 ? 0 : 0xAAAAAA, 0);
-		
-
-
-				
 				rend->x++;
 			}
 			if (rend->nowsect->neighbors[s] >= 0 && rend->endx >= rend->beginx && (rend->head + MAXQUEUE + 1 - rend->tail) % MAXQUEUE)
@@ -304,19 +299,18 @@ static void	render_wall(t_env *env, t_rend *rend)
 	}
 }
 
-int		start_engine(t_env *env, SDL_Event *e)
+int		start_engine(t_env *env, SDL_Event *e, t_rend *rend)
 {
-	t_rend	rend;
 	int		i;
 
 	i = -1;
-	while (++i < MAXQUEUE)
-		rend.sprq[i].visible = 0;
+	while (++i < (int)env->nsectors)
+		rend->sprq[i].visible = 0;
 	SDL_LockSurface(env->surface);
-	render_wall(env, &rend);
-	renderbutton(env, &rend);
-	rendersprite(env, &rend);
-	SDL_UnlockSurface(env->surface);
+	render_wall(env, rend);
+	renderbutton(env, rend);
+	rendersprite(env, rend);
+	SDL_UnlockSurface(env->surface);		
 	//SDL_BlitSurface(env->sprite[0].texture, NULL, env->surface, NULL);
 	SDL_UpdateWindowSurface(env->window);
 	handle_events(env, e);

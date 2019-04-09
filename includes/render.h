@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:42:12 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/07 19:12:22 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/09 18:05:55 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ typedef	struct	s_sprque
 	int			sector;
 	int			sx1;
 	int			sx2;
-	int			ytop[WWIN - 1];
-	int			ybottom[WWIN - 1];
-	char		visible;
+	int			ytop[WWIN];
+	int			ybottom[WWIN];
+	int			visible;
 }				t_sprque;
 
 
@@ -189,10 +189,14 @@ typedef struct	s_rend
 			int			tryb;
 }				t_rend;
 
+int		start_engine(t_env *env, SDL_Event *e, t_rend *rend);
 void	drawsky(t_env *env, t_rend *rend, int sect);
 int		scaler_next(t_scaler *sc);
 void	rendersprite(t_env *env, t_rend *rend);
 void	renderbutton(t_env *env, t_rend *rend);
 void	trplane(t_env *env, t_rend *rend, int j);
+
+
+void start(t_env *env, SDL_Event *e, t_rend *rend);
 
 #endif

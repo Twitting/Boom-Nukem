@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 06:00:22 by drestles          #+#    #+#             */
-/*   Updated: 2019/04/08 06:04:36 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/09 17:58:23 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
+#include "render.h"
 
 /*
 ** STATE 0
@@ -48,14 +49,14 @@ void menu(t_env *env, SDL_Event *e)
 ** STATE 4 LOAD
 ** STATE 5 GAME MODE
 */
-void start(t_env *env, SDL_Event *e)
+void start(t_env *env, SDL_Event *e, t_rend *rend)
 {
 	if (env->state == 0)
 		menu(env, e);
 	else if (env->state == 1)
 	{
 		env->frame = clock();
-		start_engine(env, e);
+		start_engine(env, e, rend);
 		fps(env);
 	}
 	else if (env->state == 2)
