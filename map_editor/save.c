@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 21:38:17 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/07 16:39:23 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/09 16:36:20 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,25 @@ void	putspritestofile(t_edit *edit, int fd)
 	}
 }
 
+void	putbarstofile(t_edit *edit, int fd)
+{
+	int	i;
+
+	i = -1;
+	while (++i < edit->sprnum)
+	{
+		ft_putstr_fd("wallsp\t", fd);
+		ft_putnbr_fd(edit->bars[i].vert1, fd);
+		ft_putchar_fd(' ', fd);
+		ft_putnbr_fd(edit->bars[i].vert2, fd);
+		ft_putchar_fd('\t', fd);
+		ft_putnbr_fd(edit->bars[i].sect1, fd);
+		ft_putchar_fd(' ', fd);
+		ft_putnbr_fd(edit->bars[i].sect2, fd);
+		ft_putchar_fd('\n', fd);
+	}
+}
+
 void	savemap(t_edit *edit)
 {
 	int	fd;
@@ -109,4 +128,5 @@ void	savemap(t_edit *edit)
 	putsectstofile(edit, fd);
 	putplayertofile(edit, fd);
 	putspritestofile(edit, fd);
+	putbarstofile(edit, fd);
 }

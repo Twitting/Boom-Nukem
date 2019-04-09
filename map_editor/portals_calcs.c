@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 21:41:55 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/07 16:40:15 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/09 16:31:35 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,16 @@ int		checknearverts2(t_edit *edit, int first)
 	return (-1);
 }
 
+void	makebars(t_edit *edit, int sect1, int sect2)
+{
+	edit->bars[edit->barsnum].vert1 = PVERT1;
+	edit->bars[edit->barsnum].vert2 = PVERT2;
+	edit->bars[edit->barsnum].sect1 = sect1;
+	edit->bars[edit->barsnum].sect2 = sect2;
+	edit->barsnum++;
+	putportalline(edit, 0x990000);
+}
+
 int		makeneighbors(t_edit *edit, int sect1, int sect2)
 {
 	int	i;
@@ -81,7 +91,10 @@ int		makeneighbors(t_edit *edit, int sect1, int sect2)
 	}
 	printf("PORTAL: Sect1:%d, Sect2:%d, vert1:%d, vert2:%d\n",
 		sect1, sect2, PVERT1, PVERT2);
-	putportalline(edit, 0xff3333);
+	if (edit->barsflag)
+		makebars(edit, sect1, sect2);
+	else
+		putportalline(edit, 0xff3333);
 	return (1);
 }
 

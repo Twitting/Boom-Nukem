@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:16:36 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/06 20:08:13 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/09 16:27:30 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,15 @@ typedef struct		s_line
 	int				color;
 }					t_line;
 
+typedef struct		s_wallsp
+{
+	int				vert1;
+	int				vert2;
+	int				sect1;
+	int				sect2;
+}					t_wallsp;
+
+
 typedef struct		s_sprite
 {
 	int				x;
@@ -104,6 +113,8 @@ typedef struct		s_edit
 	t_line			nowln;
 	t_sector		sectors[256];
 	t_sprite		sprites[256];
+	t_wallsp		bars[256];
+	int				barsnum;
 	int				sectnum;
 	int				vertnum;
 	int				sprnum;
@@ -118,6 +129,7 @@ typedef struct		s_edit
 	int				playerangle;
 	int				playersetflag;
 	int				buttonflag;
+	int				barsflag;
 }					t_edit;
 
 void	makebutton2(t_edit *edit);

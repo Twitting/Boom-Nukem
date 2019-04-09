@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:16:17 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/08 04:55:39 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/09 16:23:43 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,10 @@ void	handle_events(t_edit *edit, SDL_Event *e)
 			makebutton2(edit);
 		if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_q && edit->buttonflag == 0)
 			makebutton1(edit);
+		if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_w)
+			edit->barsflag = 1;
+		if (e->type == SDL_KEYUP && e->key.keysym.sym == SDLK_w)
+			edit->barsflag = 0;
 	}
 }
 

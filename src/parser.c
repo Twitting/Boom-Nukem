@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:25:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/09 15:21:29 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/09 16:40:37 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,7 +230,7 @@ void	spritelightapply(t_env *env, t_sprite *sprite)
 	int k;
 	unsigned char *pix;
 	
-	free(sprite->texture);
+	//free(sprite->texture);
 	sprite->texture = sprite->type == 0 ? IMG_Load("textures/barrel.png") : IMG_Load("textures/enemy.png");
 	pix = (unsigned char *)sprite->texture->pixels;
 	j = -1;
