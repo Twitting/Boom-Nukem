@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/09 17:59:58 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/09 19:04:32 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ typedef	struct		s_sprite
 	int				width;
 	int				sector;
 	int				type;
+	int				visible;
+	int				hp;
 }					t_sprite;
 
 typedef	struct		s_button

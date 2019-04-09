@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:20:03 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/09 18:06:51 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/09 19:17:29 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	fps(t_env *env)
 {
 	env->fps++;
 	env->timer += (clock() - env->frame) / CLOCKS_PER_SEC;
-	if (env->timer >= 0.9)
+//	if (env->timer >= 0.7)
 		move_mob(env);
 	if (env->timer >= 1.0)
 	{

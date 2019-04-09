@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/09 18:06:31 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/09 18:40:26 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,8 +145,18 @@ static void	render_wall(t_env *env, t_rend *rend)
 	{
 		now = *(rend->tail);
 		rend->sprq[now.sectorno].sector = now.sectorno;
-		rend->sprq[now.sectorno].sx1 = now.sx1;
-		rend->sprq[now.sectorno].sx2 = now.sx2;
+		if (rend->sprq[now.sectorno].visible == 1)
+		{
+			if (rend->sprq[now.sectorno].sx1 > now.sx1)
+				rend->sprq[now.sectorno].sx1 = now.sx1;
+			if (rend->sprq[now.sectorno].sx2 < now.sx2)
+				rend->sprq[now.sectorno].sx2 = now.sx2;
+		}
+		else
+		{
+			rend->sprq[now.sectorno].sx1 = now.sx1;
+			rend->sprq[now.sectorno].sx2 = now.sx2;
+		}
 		rend->sprq[now.sectorno].visible = 1;
 		s = -1;
 		while (++s < WWIN)

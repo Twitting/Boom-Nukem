@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 17:06:32 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/09 18:19:55 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/09 19:23:37 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void move_mob(t_env *env)
     while (++i < env->sprcount)
     {
 		arr2[0] = -1;
-        if (env->sprite[i].type == 1 || env->sprite[i].type == 0)
-        {
+        if (env->sprite[i].visible && env->sprite[i].type == 1)
+		{
 			sect = env->sector[env->sprite[i].sector];
 			oldPos.x = env->sprite[i].pos1.x;
 			oldPos.y = env->sprite[i].pos1.y;
@@ -38,8 +38,8 @@ void move_mob(t_env *env)
 			VeryOldPos.y = env->sprite[i].pos1.y;
 			double deltaX = fabs(playerPos.x - oldPos.x);
 			double deltaY = fabs(playerPos.y - oldPos.y);
-			double signX = oldPos.x < playerPos.x ? 1 : -1;
-			double signY = oldPos.y < playerPos.y ? 1 : -1;
+			double signX = oldPos.x < playerPos.x ? 0.15 : -0.15;
+			double signY = oldPos.y < playerPos.y ? 0.15 : -0.15;
 			double error = deltaX - deltaY;       
 			while (fabs(oldPos.x - playerPos.x) > 2.0 || fabs(oldPos.y - playerPos.y) > 2.0)
 			{
@@ -48,16 +48,16 @@ void move_mob(t_env *env)
 				if (error2 > -deltaY)
 				{
 					error -= deltaY;
-					oldPos.x += signX;
+					oldPos.x += signX / 60 * env->oldfps;
 				}
 				if (error2 < deltaX)
 				{
 					error += deltaX;
-					oldPos.y += signY;
+					oldPos.y += signY / 60 * env->oldfps;
 				}
 				while (++arr2[0] < (int)sect.npoints)
 				{
-					if (sect.neighbors[arr2[0]] >= 0 && intersect_box(VeryOldPos, env->sprite[i].pos1, sect.vertex[arr2[0] % sect.npoints], sect.vertex[(arr2[0] + 1) % sect.npoints]) && point_side(oldPos.x, oldPos.y, sect.vertex[arr2[0] % sect.npoints], sect.vertex[(arr2[0] + 1) % sect.npoints]) < 0)                    
+					if (sect.neighbors[arr2[0]] >= 0 && intersect_box(VeryOldPos, oldPos, sect.vertex[arr2[0] % sect.npoints], sect.vertex[(arr2[0] + 1) % sect.npoints]) && point_side(oldPos.x, oldPos.y, sect.vertex[arr2[0] % sect.npoints], sect.vertex[(arr2[0] + 1) % sect.npoints]) < 0)                    
 					{
 						printf("sector:%d\n", env->sprite[i].sector);
 						env->sprite[i].sector = sect.neighbors[arr2[0]];

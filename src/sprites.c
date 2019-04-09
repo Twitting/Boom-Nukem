@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:43:20 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/09 17:45:40 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/09 19:14:36 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void	spriteplane(t_env *env, t_rend *rend, int j)
 	rend->sprx2 = WWIN / 2 - (int)((rend->tspr2) * rend->sprxscale);
 	if (rend->sprx1 > now.sx2 || rend->sprx2 < now.sx1)
 		return ;
+	if (rend->sprx1 + (rend->sprx2 - rend->sprx1) / 3 >= now.sx1 && rend->sprx2 - (rend->sprx2 - rend->sprx1) / 3 <= now.sx2)
+		env->sprite[j].visible = 1;
 	rend->sprceil =  rend->nowsect->floor + env->sprite[j].height - env->player.where.z;
 	rend->sprfloor = rend->nowsect->floor - env->player.where.z;
 	rend->sprya = HWIN / 2 - (int)(YAW(rend->sprceil, rend->tspr.y) * rend->spryscale);
@@ -113,6 +115,7 @@ void	rendersprite(t_env *env, t_rend *rend)
 
 	i = -1;
 	while (++i < env->sprcount) //
+	{
 		if (env->sprite[i].type == 2)
 		{
 			x = (env->sprite[i].pos1.x + env->sprite[i].pos2.x) / 2;
@@ -125,6 +128,8 @@ void	rendersprite(t_env *env, t_rend *rend)
 			env->sprite[i].spritedist = (env->player.where.x - env->sprite[i].pos1.x) *
 			(env->player.where.x - env->sprite[i].pos1.x) + (env->player.where.y -
 			env->sprite[i].pos1.y) * (env->player.where.y - env->sprite[i].pos1.y);
+		env->sprite[i].visible = 0;
+	}
 	sortsprite(env);
 	i = -1;
 	env->player.target = -1;
