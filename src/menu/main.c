@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 06:00:22 by drestles          #+#    #+#             */
-/*   Updated: 2019/04/09 17:58:23 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/09 22:24:28 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,26 +18,28 @@
 */
 void menu(t_env *env, SDL_Event *e)
 {
+	SDL_Surface *button;
 	env->b_one = 0;
+	env->b_three = 0;
 	env->b_four = 0;
+	button = SDL_LoadBMP("img/menu.bmp");
+	SDL_BlitScaled(button, NULL, env->surface, NULL);
+	SDL_FreeSurface(button);
+	SDL_UpdateWindowSurface(env->window);
 	while (env->state == 0)
 	{
-		SDL_Rect rect;
-		rect.x = 320;
-		rect.y = 200;
-		rect.h = 100;
-		rect.w = 400;
-		SDL_Surface *button;
-		button = SDL_LoadBMP("img/menu.bmp");
-		if (env->b_one == 1)
-			button = SDL_LoadBMP("img/menu_1.bmp");
-		if (env->b_three == 1)
-			button = SDL_LoadBMP("img/menu_2.bmp"); 
-		if (env->b_four == 1)
-			button = SDL_LoadBMP("img/menu_3.bmp");
-		SDL_BlitScaled(button, NULL, env->surface, NULL);
-		SDL_FreeSurface(button);
-		SDL_UpdateWindowSurface(env->window);
+		if (env->b_one == 1 | env->b_three == 1 | env->b_four == 1)
+		{
+			if (env->b_one == 1)
+				button = SDL_LoadBMP("img/menu_1.bmp");
+			else if (env->b_three == 1)
+				button = SDL_LoadBMP("img/menu_2.bmp"); 
+			else if (env->b_four == 1)
+				button = SDL_LoadBMP("img/menu_3.bmp");
+			SDL_BlitScaled(button, NULL, env->surface, NULL);
+			SDL_FreeSurface(button);
+			SDL_UpdateWindowSurface(env->window);
+		}
 		handle_events_menu(env, e);
 	}
 }

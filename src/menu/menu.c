@@ -6,7 +6,7 @@
 /*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 02:45:02 by drestles          #+#    #+#             */
-/*   Updated: 2019/04/08 06:03:13 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/09 22:30:05 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,29 +17,30 @@
 */
 void menu_pause(t_env *env, SDL_Event *e)
 {
+	SDL_Surface *button;
 	env->b_one = 0;
 	env->b_four = 0;
 	SDL_SetRelativeMouseMode(SDL_FALSE);
+	button = SDL_LoadBMP("img/pause.bmp");
+	SDL_BlitScaled(button, NULL, env->surface, NULL);
+	SDL_FreeSurface(button);
+	SDL_UpdateWindowSurface(env->window);
 	while (env->state == 2)
 	{
-		SDL_Rect rect;
-		rect.x = 320;
-		rect.y = 200;
-		rect.h = 100;
-		rect.w = 400;
-		SDL_Surface *button;
-		button = SDL_LoadBMP("img/pause.bmp");
-		if (env->b_one == 1)
-			button = SDL_LoadBMP("img/pause_1.bmp");
-		if (env->b_two == 1)
-			button = SDL_LoadBMP("img/pause_2.bmp");
-		if (env->b_three == 1)
-			button = SDL_LoadBMP("img/pause_3.bmp");
-		if (env->b_four == 1)
-			button = SDL_LoadBMP("img/pause_4.bmp");
-		SDL_BlitScaled(button, NULL, env->surface, NULL);
-		SDL_FreeSurface(button);
-		SDL_UpdateWindowSurface(env->window);
+		if (env->b_one == 1 || env->b_two == 1 || env->b_three == 1 || env->b_four == 1)
+		{
+			if (env->b_one == 1)
+				button = SDL_LoadBMP("img/pause_1.bmp");
+			else if (env->b_two == 1)
+				button = SDL_LoadBMP("img/pause_2.bmp");
+			else if (env->b_three == 1)
+				button = SDL_LoadBMP("img/pause_3.bmp");
+			else if (env->b_four == 1)
+				button = SDL_LoadBMP("img/pause_4.bmp");
+			SDL_BlitScaled(button, NULL, env->surface, NULL);
+			SDL_FreeSurface(button);
+			SDL_UpdateWindowSurface(env->window);
+		}
 		handle_events_pause(env, e);
 	}
 }
@@ -79,27 +80,28 @@ void save_game(t_env *env, SDL_Event *e)
 */
 void load_game(t_env *env, SDL_Event *e)
 {
+	SDL_Surface *button;
 	SDL_SetRelativeMouseMode(SDL_FALSE);
+	button = SDL_LoadBMP("img/load.bmp");
+	SDL_BlitScaled(button, NULL, env->surface, NULL);
+	SDL_FreeSurface(button);
+	SDL_UpdateWindowSurface(env->window);
 	while (env->state == 4)
 	{
-		SDL_Rect rect;
-		rect.x = 320;
-		rect.y = 200;
-		rect.h = 100;
-		rect.w = 400;
-		SDL_Surface *button;
-		button = SDL_LoadBMP("img/load.bmp");
-		if (env->b_one == 1)
-			button = SDL_LoadBMP("img/load_1.bmp");
-		if (env->b_two == 1)
-			button = SDL_LoadBMP("img/load_2.bmp");
-		if (env->b_three == 1)
-			button = SDL_LoadBMP("img/load_3.bmp");
-		if (env->b_four == 1)
-			button = SDL_LoadBMP("img/load_4.bmp");
-		SDL_BlitScaled(button, NULL, env->surface, NULL);
-		SDL_FreeSurface(button);
-		SDL_UpdateWindowSurface(env->window);
+		if (env->b_one == 1 || env->b_two == 1 || env->b_three == 1 || env->b_four == 1)
+		{
+			if (env->b_one == 1)
+				button = SDL_LoadBMP("img/load_1.bmp");
+			else if (env->b_two == 1)
+				button = SDL_LoadBMP("img/load_2.bmp");
+			else if (env->b_three == 1)
+				button = SDL_LoadBMP("img/load_3.bmp");
+			else if (env->b_four == 1)
+				button = SDL_LoadBMP("img/load_4.bmp");
+			SDL_BlitScaled(button, NULL, env->surface, NULL);
+			SDL_FreeSurface(button);
+			SDL_UpdateWindowSurface(env->window);
+		}
 		handle_events_load(env, e);
 	}
 }
@@ -109,25 +111,31 @@ void load_game(t_env *env, SDL_Event *e)
 */
 void game_mode(t_env *env, SDL_Event *e)
 {
+	SDL_Surface *button = NULL;
 	SDL_SetRelativeMouseMode(SDL_FALSE);
+	env->b_one = 0;
+	env->b_two = 0;
+	env->b_three = 0;
+	button = SDL_LoadBMP("img/game_mode.bmp");
+	SDL_BlitScaled(button, NULL, env->surface, NULL);
+	SDL_FreeSurface(button);
+	SDL_UpdateWindowSurface(env->window);
 	while (env->state == 5)
 	{
-		SDL_Rect rect;
-		rect.x = 320;
-		rect.y = 200;
-		rect.h = 100;
-		rect.w = 400;
-		SDL_Surface *button;
-		button = SDL_LoadBMP("img/game_mode.bmp");
-		if (env->b_one == 1)
-			button = SDL_LoadBMP("img/game_mode_1.bmp");
-		if (env->b_two == 1)
-			button = SDL_LoadBMP("img/game_mode_2.bmp");
-		if (env->b_three == 1)
-			button = SDL_LoadBMP("img/game_mode_3.bmp");
-		SDL_BlitScaled(button, NULL, env->surface, NULL);
-		SDL_FreeSurface(button);
-		SDL_UpdateWindowSurface(env->window);
+		//SDL_Surface *button;
+		//button = SDL_LoadBMP("img/game_mode.bmp");
+		if (env->b_one == 1 | env->b_two == 1 | env->b_three == 1)
+		{
+			if (env->b_one == 1)
+				button = SDL_LoadBMP("img/game_mode_1.bmp");
+			else if (env->b_two == 1)
+				button = SDL_LoadBMP("img/game_mode_2.bmp");
+			else if (env->b_three == 1)
+				button = SDL_LoadBMP("img/game_mode_3.bmp");
+			SDL_BlitScaled(button, NULL, env->surface, NULL);
+			SDL_FreeSurface(button);
+			SDL_UpdateWindowSurface(env->window);
+		}
 		handle_events_game_mode(env, e);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:20:03 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/09 20:57:59 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/09 22:29:13 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,10 @@ int		main(void)
 	env->state = 0;
 	while (!(env->quit))
 	{
-		//start(env, &e, rend);
-		env->frame = clock();
-		start_engine(env, &e, rend);
-		fps(env);
+		start(env, &e, rend);
+		//env->frame = clock();
+		// start_engine(env, &e, rend);
+		//fps(env);
 	}
 	SDL_DestroyWindow(env->window);
 	SDL_Quit();
