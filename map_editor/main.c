@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:16:17 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/09 16:23:43 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/09 21:25:15 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,8 @@ void	rules(void)
 	draw_string("8) There are NO reversible actions, if ducked up", color, 530, sur);
 	draw_string("- do it again.", color, 550, sur);
 	draw_string("9) Sectors can be only convex (vignutiy, ponel?).", color, 590, sur);
+	draw_string("10) Press W while making portal to make", color, 630, sur);
+	draw_string("metal bar.", color, 650, sur);
 
 	TTF_CloseFont(bold);
 	SDL_UpdateWindowSurface(win);
