@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 21:52:25 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/07 17:17:05 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/09 22:41:46 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,11 @@ void	handle_events(t_env *env, SDL_Event *e)
 		if (e->type == SDL_QUIT)
 			env->quit = 1;
 		if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_ESCAPE)
-			env->quit = 1;
+			env->state = 2;
 		if (e->type == SDL_KEYDOWN || e->type == SDL_KEYUP)
 			keyboard_events(env, e);
-		if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_q)
-			env->state = 2;
+		/* if (e->type == SDL_KEYDOWN && e->key.keysym.sym == SDLK_q)
+			env->state = 2; */
 	}
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	SDL_GetRelativeMouseState(&x, &y);
