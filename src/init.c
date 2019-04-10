@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:38:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/10 17:45:35 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/10 18:35:00 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ void	enemylightapply(t_env *env, t_sprite *sprite, int tex)
 	unsigned char *pix;
 	
 	sprite->hp = 100;
+	env->sprite->mobtimer = 0;
 	if (sprite->texnum == 6)
 		sprite->texnum = 0;
 	if (sprite->texture[tex] != NULL)
@@ -199,11 +200,11 @@ void	texnulling(t_env *env)
 
 	i = -1;
 	while (++i < env->sprcount)
-	{
-		j = -1;
-		while (++j < 7)
-			env->sprite[i].texture[j] = NULL;
-	}
+    {
+        j = -1;
+        while (++j < 7 && env->sprite[i].type != 2)
+            env->sprite[i].texture[j] = NULL;
+    }
 	i = -1;
 	while (++i < (int)env->nsectors)
 	{
@@ -216,7 +217,9 @@ void	texnulling(t_env *env)
 void	init(t_env *env)
 {
 	FILE		*inputFile;
-	
+
+	env->jetpack = 0;
+	env->player.hp = 100;
 	env->yaw = 0;
 	env->quit = 0;
 	env->ground = 0;
@@ -226,6 +229,7 @@ void	init(t_env *env)
 	env->fps = 0;
 	env->oldfps = 60;
 	env->timer = 0;
+	
 	//texnulling(env);
 	//env->butcount = 2;//!!!!!!!!!!!!MAKE IT IN PARSER
 	// env->sector[0].ceiling *= -1;

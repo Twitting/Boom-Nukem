@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movemob.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 17:06:32 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/10 17:18:42 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/10 18:46:22 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void move_mob(t_env *env)
     while (++i < env->sprcount)
     {
 		arr2[0] = -1;
-        if (env->sprite[i].visible && env->sprite[i].type == 1)
+        if ((env->sprite[i].sector == (int)env->player.sector || env->sprite[i].visible) && env->sprite[i].type == 1)
 		{
 			env->sprite[i].movecount++;
 			sect = env->sector[env->sprite[i].sector];
@@ -41,7 +41,7 @@ void move_mob(t_env *env)
 			double signX = oldPos.x < playerPos.x ? 0.15 : -0.15;
 			double signY = oldPos.y < playerPos.y ? 0.15 : -0.15;
 			double error = deltaX - deltaY;       
-			while (fabs(oldPos.x - playerPos.x) > 2.0 || fabs(oldPos.y - playerPos.y) > 2.0)
+			while (fabs(oldPos.x - playerPos.x) > 2 || fabs(oldPos.y - playerPos.y) > 2)
 			{
 
 				double error2 = error * 2;

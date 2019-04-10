@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/10 17:45:09 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/10 18:41:53 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef	struct		s_sprite
 	int				hp;
 	int				movecount;
 	int				texnum;
+	double			mobtimer;
 }					t_sprite;
 
 typedef	struct		s_button
@@ -108,6 +109,7 @@ typedef struct		s_player
 	unsigned int	sector;
 	double			eye;
 	int				target;
+	int				hp;
 }					t_player;
 
 typedef struct		s_wallsp
@@ -152,7 +154,6 @@ typedef struct		s_env
 	int				spacebar;
 	t_wallsp		wallsp;
 
-
 	SDL_Window		*window2;
 	SDL_Surface		*surface2;
 	double			debugtempdouble;
@@ -195,7 +196,7 @@ void	inittext(t_env *env);
 void	verttosect(t_env *env, t_sector *sect, char *line, int i);
 void	neighborstosect(t_sector *sect, char *line, int i);
 void	move_mob(t_env *env);
-
+void	mob_attack(t_env *env);
 
 /*
 ** menu/menu.c
