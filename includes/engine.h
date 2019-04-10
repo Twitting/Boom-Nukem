@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/10 19:48:33 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/10 23:02:14 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,4 +241,11 @@ void handle_events_game_mode(t_env *env, SDL_Event *e);
 
 void	save_game1(t_env *env, int i);
 void	load_player_init(t_env *env);
+
+/*
+** game_over.c
+*/
+
+void game_over(t_env *env, SDL_Event *e);
+
 #endif

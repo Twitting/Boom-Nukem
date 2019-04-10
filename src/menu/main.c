@@ -6,7 +6,7 @@
 /*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 06:00:22 by drestles          #+#    #+#             */
-/*   Updated: 2019/04/09 22:34:52 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/10 23:02:32 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void menu(t_env *env, SDL_Event *e)
 ** STATE 3 SAVE
 ** STATE 4 LOAD
 ** STATE 5 GAME MODE
+** STATE 6 GAME OVER
 */
 void start(t_env *env, SDL_Event *e, t_rend *rend)
 {
@@ -69,4 +70,6 @@ void start(t_env *env, SDL_Event *e, t_rend *rend)
 		load_game(env, e);
 	else if (env->state == 5)
 		game_mode(env, e);
+	else if (env->state == 6) /////////// <<<<================
+		game_over(env, e);
 }
