@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:25:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/09 16:40:37 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/10 15:37:27 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,18 +230,21 @@ void	spritelightapply(t_env *env, t_sprite *sprite)
 	int k;
 	unsigned char *pix;
 	
-	//free(sprite->texture);
-	sprite->texture = sprite->type == 0 ? IMG_Load("textures/barrel.png") : IMG_Load("textures/enemy.png");
-	pix = (unsigned char *)sprite->texture->pixels;
+	if (sprite->texture[0] != NULL)
+		free(sprite->texture);
+	sprite->movecount = 0;
+	sprite->texnum = 0;
+	sprite->texture[0] = IMG_Load("textures/barrel.png");
+	pix = (unsigned char *)sprite->texture[0]->pixels;
 	j = -1;
-	while (++j < sprite->texture->h)
+	while (++j < sprite->texture[0]->h)
 	{
 		k = -1;
-		while (++k < sprite->texture->w - 1)
+		while (++k < sprite->texture[0]->w - 1)
 		{
-			pix[(j * sprite->texture->w + k) * 4] = (unsigned char)((double)pix[(j * sprite->texture->w + k) * 4] / 100 * env->sector[sprite->sector].light);
-			pix[(j * sprite->texture->w + k) * 4 + 1] = (unsigned char)((double)pix[(j * sprite->texture->w + k) * 4 + 1] / 100 * env->sector[sprite->sector].light);
-			pix[(j * sprite->texture->w + k) * 4 + 2] = (unsigned char)((double)pix[(j * sprite->texture->w + k) * 4 + 2] / 100 * env->sector[sprite->sector].light);
+			pix[(j * sprite->texture[0]->w + k) * 4] = (unsigned char)((double)pix[(j * sprite->texture[0]->w + k) * 4] / 100 * env->sector[sprite->sector].light);
+			pix[(j * sprite->texture[0]->w + k) * 4 + 1] = (unsigned char)((double)pix[(j * sprite->texture[0]->w + k) * 4 + 1] / 100 * env->sector[sprite->sector].light);
+			pix[(j * sprite->texture[0]->w + k) * 4 + 2] = (unsigned char)((double)pix[(j * sprite->texture[0]->w + k) * 4 + 2] / 100 * env->sector[sprite->sector].light);
 		}
 	}
 	env->fps++;
@@ -256,19 +259,23 @@ void	spritemaker(t_env *env)
 	{
 		if (env->sprite[i].type == 0)
 		{
-			env->sprite[i].height = 12;
-			env->sprite[i].width = 4;
+			env->sprite[i].height = 7;
+			env->sprite[i].width = 3;
 		}
 		else if (env->sprite[i].type == 1)
 		{
-			env->sprite[i].height = 20;
-			env->sprite[i].width = 7;
+			env->sprite[i].height = 12;
+			env->sprite[i].width = 4;
 		}
 	}
 }
 
 void	makewallsp(t_env *env, int i)
 {
+	if (env->sprite[i].texture[0] != NULL)
+		free(env->sprite[i].texture[0]);
+	if (env->sprite[i + 1].texture[0] != NULL)
+		free(env->sprite[i + 1].texture[0]);
 	env->sprite[i].pos1.x = env->vertex[env->wallsp.vert1].x;
 	env->sprite[i].pos1.y = env->vertex[env->wallsp.vert1].y;
 	env->sprite[i + 1].pos1.x = env->vertex[env->wallsp.vert2].x;
@@ -279,15 +286,14 @@ void	makewallsp(t_env *env, int i)
 	env->sprite[i + 1].pos2.y = env->vertex[env->wallsp.vert1].y;
 	env->sprite[i].sector = env->wallsp.sect2;
 	env->sprite[i + 1].sector = env->wallsp.sect1;
-
 	env->sprite[i].height = MIN(env->sector[env->wallsp.sect1].ceiling, env->sector[env->wallsp.sect2].ceiling);
 	env->sprite[i].floor = MAX(env->sector[env->wallsp.sect1].floor, env->sector[env->wallsp.sect2].floor);
 	env->sprite[i].type = 2;
-	env->sprite[i].texture = IMG_Load("textures/bars.png");
+	env->sprite[i].texture[0] = IMG_Load("textures/bars.png");
 	env->sprite[i + 1].height = MIN(env->sector[env->wallsp.sect1].ceiling, env->sector[env->wallsp.sect2].ceiling);
 	env->sprite[i + 1].floor = MAX(env->sector[env->wallsp.sect1].floor, env->sector[env->wallsp.sect2].floor);
 	env->sprite[i + 1].type = 2;
-	env->sprite[i + 1].texture = IMG_Load("textures/bars.png");
+	env->sprite[i + 1].texture[0] = IMG_Load("textures/bars.png");
 }
 
 void	parsewallsps(t_env *env, int fd, int count)

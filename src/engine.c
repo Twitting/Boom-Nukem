@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/09 18:40:26 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/10 16:27:06 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -309,6 +309,45 @@ static void	render_wall(t_env *env, t_rend *rend)
 	}
 }
 
+void	mixtex(t_sprite *sprite)
+{
+	SDL_Surface *temp;
+
+	if (sprite->type == 1 && sprite->visible == 1)
+	{
+		temp = sprite->texture[0];
+		sprite->texture[0] = sprite->texture[sprite->texnum % 6];
+		sprite->texture[sprite->texnum % 6] = temp;
+	}
+	else if (sprite->type == 4)
+	{
+		temp = sprite->texture[0];
+		sprite->texture[0] = sprite->texture[6];
+		sprite->texture[6] = temp;
+		sprite->hp = 666;
+		sprite->height = 3;
+	}
+	temp = NULL;
+}
+
+void	animation(t_env *env)
+{
+	int	i;
+
+	i = -1;
+	while (++i < env->sprcount)
+	{
+		if (env->sprite[i].movecount >= 5)
+			{
+				env->sprite[i].movecount = 0;
+				env->sprite[i].texnum = env->sprite[i].texnum == 5 ? 0 : env->sprite[i].texnum + 1;
+				mixtex(&env->sprite[i]);
+			}
+		if (env->sprite[i].type == 4 && env->sprite[i].hp != 666)
+			mixtex(&env->sprite[i]);
+	}
+}
+
 int		start_engine(t_env *env, SDL_Event *e, t_rend *rend)
 {
 	int		i;
@@ -320,6 +359,8 @@ int		start_engine(t_env *env, SDL_Event *e, t_rend *rend)
 	render_wall(env, rend);
 	renderbutton(env, rend);
 	rendersprite(env, rend);
+	cross(env);
+	animation(env);
 	SDL_UnlockSurface(env->surface);		
 	//SDL_BlitSurface(env->sprite[0].texture, NULL, env->surface, NULL);
 	SDL_UpdateWindowSurface(env->window);

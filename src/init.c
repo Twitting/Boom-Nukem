@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:38:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/09 15:02:40 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/10 16:13:56 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,8 @@ void	sectorlightapply(t_env *env)
 		{
 			if (env->sector[i].sky == 1)
 				env->sector[i].light = 100;
-			//if (env->sector[i].text[tex] != NULL)
-			//	free(env->sector[i].text[tex]);
+			if (env->sector[i].text[tex] != NULL)
+				SDL_FreeSurface(env->sector[i].text[tex]);
 			env->sector[i].text[tex] = IMG_Load(gettex(env, i, tex));
 			pix = (unsigned char *)env->sector[i].text[tex]->pixels;
 			j = -1;
@@ -130,16 +130,86 @@ void	sectorlightapply(t_env *env)
 	}
 }
 
+char	*gettexenemy(int tex)
+{
+	if (tex == 0)
+		return ("textures/1.png");
+	else if (tex == 1)
+		return ("textures/2.png");
+	else if (tex == 2)
+		return ("textures/3.png");
+	else if (tex == 3)
+		return ("textures/4.png");
+	else if (tex == 4)
+		return ("textures/5.png");
+	else if (tex == 5)
+		return ("textures/6.png");
+	return ("textures/dead.png");
+}
+
+void	enemylightapply(t_env *env, t_sprite *sprite, int tex)
+{
+	int j;
+	int k;
+	unsigned char *pix;
+	
+	sprite->hp = 100;
+	if (sprite->texnum == 6)
+		sprite->texnum = 0;
+	if (sprite->texture[tex] != NULL)
+		SDL_FreeSurface(sprite->texture[tex]);
+	sprite->texture[tex] = IMG_Load(gettexenemy(tex));
+	pix = (unsigned char *)sprite->texture[tex]->pixels;
+	j = -1;
+	while (++j < sprite->texture[tex]->h)
+	{
+		k = -1;
+		while (++k < sprite->texture[tex]->w - 1)
+		{
+			pix[(j * sprite->texture[tex]->w + k) * 4] = (unsigned char)((double)pix[(j * sprite->texture[tex]->w + k) * 4] / 100 * env->sector[sprite->sector].light);
+			pix[(j * sprite->texture[tex]->w + k) * 4 + 1] = (unsigned char)((double)pix[(j * sprite->texture[tex]->w + k) * 4 + 1] / 100 * env->sector[sprite->sector].light);
+			pix[(j * sprite->texture[tex]->w + k) * 4 + 2] = (unsigned char)((double)pix[(j * sprite->texture[tex]->w + k) * 4 + 2] / 100 * env->sector[sprite->sector].light);
+		}
+	}
+	env->fps++;
+}
+
 void	initspritelight(t_env *env)
 {
 	int	i;
+	int	j;
 
 	i = -1;
 	
 	while (++i < env->sprcount)
 	{
-		if (env->sprite[i].type == 0 || env->sprite[i].type == 1)
+		j = -1;
+		if (env->sprite[i].type == 0)
 			spritelightapply(env, &env->sprite[i]);
+		if (env->sprite[i].type == 1)
+			while (++j < 7)
+				enemylightapply(env, &env->sprite[i], j);
+	}
+}
+
+void	texnulling(t_env *env)
+{
+	int i;
+	int	j;
+
+	i = -1;
+	while (++i < env->sprcount)
+	{
+		j = -1;
+		while (++j < 7)
+			env->sprite[i].texture[j] = NULL;
+	}
+	i = -1;
+	while (++i < (int)env->nsectors)
+	{
+		j = -1;
+		while (++j < 3)
+			env->sector[i].text[j] = NULL;
 	}
 }
 
@@ -154,6 +224,7 @@ void	init(t_env *env)
 	env->fps = 0;
 	env->oldfps = 60;
 	env->timer = 0;
+	//texnulling(env);
 	//env->butcount = 2;//!!!!!!!!!!!!MAKE IT IN PARSER
 	// env->sector[0].ceiling *= -1;
 	// env->sector[0].sky = 1;
