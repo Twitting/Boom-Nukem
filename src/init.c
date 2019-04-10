@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:38:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/10 17:45:35 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/10 19:50:11 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,8 @@ char	*gettexenemy(int tex)
 		return ("textures/5.png");
 	else if (tex == 5)
 		return ("textures/6.png");
+	else if (tex == 6)
+		return ("textures/7.png");
 	return ("textures/dead.png");
 }
 
@@ -154,8 +156,9 @@ void	enemylightapply(t_env *env, t_sprite *sprite, int tex)
 	unsigned char *pix;
 	
 	sprite->hp = 100;
-	if (sprite->texnum == 6)
-		sprite->texnum = 0;
+	env->sprite->mobtimer = 0;
+	// if (sprite->texnum == 7)
+	// 	sprite->texnum = 0;
 	if (sprite->texture[tex] != NULL)
 		SDL_FreeSurface(sprite->texture[tex]);
 	sprite->texture[tex] = IMG_Load(gettexenemy(tex));
@@ -187,7 +190,7 @@ void	initspritelight(t_env *env)
 		if (env->sprite[i].type == 0)
 			spritelightapply(env, &env->sprite[i]);
 		if (env->sprite[i].type == 1)
-			while (++j < 7)
+			while (++j < 8)
 				enemylightapply(env, &env->sprite[i], j);
 	}
 }
@@ -201,7 +204,7 @@ void	texnulling(t_env *env)
 	while (++i < env->sprcount)
 	{
 		j = -1;
-		while (++j < 7)
+		while (++j < 8 && env->sprite[i].type != 2)
 			env->sprite[i].texture[j] = NULL;
 	}
 	i = -1;
@@ -218,6 +221,7 @@ void	init(t_env *env)
 	FILE		*inputFile;
 	
 	env->yaw = 0;
+	env->player.hp = 100;
 	env->quit = 0;
 	env->ground = 0;
 	env->falling = 1;
@@ -226,7 +230,7 @@ void	init(t_env *env)
 	env->fps = 0;
 	env->oldfps = 60;
 	env->timer = 0;
-	//texnulling(env);
+	env->jetpack = 0;
 	//env->butcount = 2;//!!!!!!!!!!!!MAKE IT IN PARSER
 	// env->sector[0].ceiling *= -1;
 	// env->sector[0].sky = 1;
@@ -245,46 +249,7 @@ void	init(t_env *env)
 			ft_error(4);
 	env->surface = SDL_GetWindowSurface(env->window);
 	initspritelight(env);
-	//env->button = (t_button *)malloc(sizeof(t_button) * env->butcount);
-	// env->button[0].width = 2;
-	// env->button[0].height = 4;
-	// env->button[0].sector = 0;
-	// env->button[1].width = 2;
-	// env->button[1].height = 4;
-	// env->button[1].sector = 1;
 	findbutton(env);
-	// if (!(env->sprite = (t_sprite *)malloc(sizeof(t_sprite) * env->sprcount)))
-	// 	ft_error(2);
-
-
-
-	// env->sprite[3].pos1.x = env->vertex[6].x;
-	// env->sprite[3].pos1.y = env->vertex[6].y;
-	// env->sprite[3].pos2.x = env->vertex[9].x;
-	// env->sprite[3].pos2.y = env->vertex[9].y;
-	// env->sprite[3].height = 30;
-	// env->sprite[3].floor = 0;
-	// env->sprite[3].type = 2;
-	// env->sprite[3].sector = 0;
-
-
-
-
-	// env->sprite[0].x = 24;
-	// env->sprite[0].y = 40;
-	// env->sprite[0].height = 12;
-	// env->sprite[0].width = 4;
-	// env->sprite[0].sector = 0;
-	// env->sprite[1].x = 35;
-	// env->sprite[1].y = 48;
-	// env->sprite[1].height = 12;
-	// env->sprite[1].width = 4;
-	// env->sprite[1].sector = 1;
-	// env->sprite[2].x = 19;
-	// env->sprite[2].y = 45;
-	// env->sprite[2].height = 12;
-	// env->sprite[2].width = 4;
-	// env->sprite[2].sector = 0;
 	}
 	if ((inputFile = fopen("./save/1.dat",  "r")))
 		fread(&env->save[0], sizeof(t_player), 1, inputFile);

@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:20:03 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/10 14:39:43 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/10 19:51:15 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 void	fps(t_env *env)
 {
 	env->fps++;
-	env->timer += (clock() - env->frame) / CLOCKS_PER_SEC;
-//	if (env->timer >= 0.7)
-		move_mob(env);
+	move_mob(env);
+	mob_attack(env);
+	env->timer += (clock() - env->frame) / CLOCKS_PER_SEC;		
 	if (env->timer >= 1.0)
 	{
 		ft_putstr("fps = ");
@@ -53,9 +53,9 @@ int		main(void)
 		ft_error(2);
 	if (!(rend = (t_rend *)malloc(sizeof(t_rend))))
 		ft_error(2);
-	texnulling(env);
 	ft_strcpy(env->mapname, "test.map");
 	grandparser(env);
+	texnulling(env);
 	init(env);
 	inittext(env);
 	env->state = 0;

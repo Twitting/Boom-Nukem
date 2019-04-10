@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   menu.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 02:45:02 by drestles          #+#    #+#             */
-/*   Updated: 2019/04/10 17:36:20 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/10 19:52:35 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,44 +139,6 @@ void game_mode(t_env *env, SDL_Event *e)
 		}
 		handle_events_game_mode(env, e);
 	}
-}
-
-void	save_game1(t_env *env, int i)
-{
-	FILE			*outfile;
-
-	i == 4 ? i = 0 : i;
-	env->save[i] = env->player;
-	if (i == 0)
-		outfile = fopen("./save/1.dat", "w");
-	if (i == 1)
-		outfile = fopen("./save/2.dat", "w");
-	if (i == 2)
-		outfile = fopen("./save/3.dat", "w");
-	if (i == 3)
-		outfile = fopen("./save/4.dat", "w");
-	if (outfile == NULL)
-	{
-		fprintf(stderr, "\nError opend file\n");
-		exit(1);
-	}
-	fwrite(&env->save[i], sizeof(t_env), 1, outfile);
-	if (&fwrite != 0)
-		printf("contents to file %d written successfully !\n", i);
-	else
-		printf("error writing file !\n");
-	fclose(outfile);
-	i++;
-}
-
-
-void	load_player_init(t_env *env)
-{
-
-	env->player = env->save[env->save_number];
-	// env->player.where.y = env->save[env->save_number].where.y;
-	// env->player.sector = env->save[env->save_number].sector;
-	// env->player.where.z = env->save[env->save_number].where.z;
 }
 
 void	save_game1(t_env *env, int i)

@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 17:06:32 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/10 17:18:42 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/10 19:54:18 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void move_mob(t_env *env)
     while (++i < env->sprcount)
     {
 		arr2[0] = -1;
-        if (env->sprite[i].visible && env->sprite[i].type == 1)
+        if ((env->sprite[i].sector == (int)env->player.sector || env->sprite[i].visible) && env->sprite[i].type == 1)
 		{
 			env->sprite[i].movecount++;
 			sect = env->sector[env->sprite[i].sector];

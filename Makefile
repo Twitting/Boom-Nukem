@@ -6,7 +6,7 @@
 #    By: twitting <twitting@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/04/10 16:15:03 by twitting         ###   ########.fr        #
+#    Updated: 2019/04/10 19:47:23 by twitting         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC = ./src/main.c \
 		./src/sprites.c \
 		./src/buttons.c \
 		./src/shoot.c \
+		./src/mobattack.c \
 		./src/transparent.c \
 		./src/movemob.c \
 		./src/menu/main.c \

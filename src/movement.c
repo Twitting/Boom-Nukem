@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:10:46 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/10 16:22:12 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/10 19:53:25 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,23 @@ void	h_collision(t_env *env, t_xy *p, t_xy *d, t_xy *dd)
 
 	b_pd[1].x = p->x + dd->x;
 	b_pd[1].y = p->y + dd->y;
+	/*s = -1;
+	while (++s < env->sprcount)
+		if ()
+		if (intersect_box(*p, b_pd[1], env->sprite[s].pos1.x, env->sprite[s].pos1.y) && point_side(b_pd[1].x, b_pd[1].y, env->sector[env->player.sector].vertex[s % env->sector[env->player.sector].npoints], env->sector[env->player.sector].vertex[(s + 1) % env->sector[env->player.sector].npoints]) < 0)
+		{
+			arr[1] = env->sector[env->player.sector].neighbors[s] < 0 ? 9e9 : MAX(env->sector[env->player.sector].floor, env->sector[env->sector[env->player.sector].neighbors[s]].floor);
+			arr[2] = env->sector[env->player.sector].neighbors[s] < 0 ? 9e9 : MIN(env->sector[env->player.sector].ceiling, env->sector[env->sector[env->player.sector].neighbors[s]].ceiling);
+			if (arr[2] < env->player.where.z + HEADMARGIN || arr[1] > env->player.where.z - (env->ducking ? DUCKHEIGHT : EYEHEIGHT) + KNEEHEIGHT)
+			{
+				b_pd[0].x = env->sector[env->player.sector].vertex[(s + 1) % env->sector[env->player.sector].npoints].x - env->sector[env->player.sector].vertex[s % env->sector[env->player.sector].npoints].x;
+				b_pd[0].y = env->sector[env->player.sector].vertex[(s + 1) % env->sector[env->player.sector].npoints].y - env->sector[env->player.sector].vertex[s % env->sector[env->player.sector].npoints].y;
+				arr[0] = d->x;
+				d->x = b_pd[0].x * (d->x * b_pd[0].x + b_pd[0].y * d->y) / (b_pd[0].x * b_pd[0].x + b_pd[0].y * b_pd[0].y);
+				d->y = b_pd[0].y * (arr[0] * b_pd[0].x + b_pd[0].y * d->y) / (b_pd[0].x * b_pd[0].x + b_pd[0].y * b_pd[0].y);
+				env->moving = -1;
+			}
+		}*/
 	s = -1;
 	while (++s < (int)env->sector[env->player.sector].npoints)
 		if (intersect_box(*p, b_pd[1], env->sector[env->player.sector].vertex[s % env->sector[env->player.sector].npoints], env->sector[env->player.sector].vertex[(s + 1) % env->sector[env->player.sector].npoints]) && point_side(b_pd[1].x, b_pd[1].y, env->sector[env->player.sector].vertex[s % env->sector[env->player.sector].npoints], env->sector[env->player.sector].vertex[(s + 1) % env->sector[env->player.sector].npoints]) < 0)
