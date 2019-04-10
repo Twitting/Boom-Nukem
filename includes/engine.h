@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/10 18:41:53 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/10 19:48:33 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ typedef	struct		s_sprite
 {
 	t_xy			pos1;
 	t_xy			pos2;
-	SDL_Surface		*texture[7];
+	SDL_Surface		*texture[8];
 	double			spritedist;
 	int				height;
 	int				floor;
@@ -154,6 +154,7 @@ typedef struct		s_env
 	int				spacebar;
 	t_wallsp		wallsp;
 
+
 	SDL_Window		*window2;
 	SDL_Surface		*surface2;
 	double			debugtempdouble;
@@ -175,6 +176,7 @@ typedef struct		s_env
 	int b_four;
 }					t_env;
 
+void	mob_attack(t_env *env);
 void	enemylightapply(t_env *env, t_sprite *sprite, int tex);
 void    shoot(t_env *env, SDL_Event *e);
 void    cross(t_env *env);
@@ -196,7 +198,7 @@ void	inittext(t_env *env);
 void	verttosect(t_env *env, t_sector *sect, char *line, int i);
 void	neighborstosect(t_sector *sect, char *line, int i);
 void	move_mob(t_env *env);
-void	mob_attack(t_env *env);
+
 
 /*
 ** menu/menu.c

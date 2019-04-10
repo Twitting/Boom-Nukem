@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+         #
+#    By: twitting <twitting@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/04/10 18:35:50 by ebednar          ###   ########.fr        #
+#    Updated: 2019/04/10 19:47:23 by twitting         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,9 +23,9 @@ SRC = ./src/main.c \
 		./src/sprites.c \
 		./src/buttons.c \
 		./src/shoot.c \
+		./src/mobattack.c \
 		./src/transparent.c \
 		./src/movemob.c \
-		./src/mobattack.c \
 		./src/menu/main.c \
 		./src/menu/menu.c \
 		./src/menu/handle_pause.c \

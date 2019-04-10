@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movemob.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 17:06:32 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/10 18:46:22 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/10 19:54:18 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void move_mob(t_env *env)
 			double signX = oldPos.x < playerPos.x ? 0.15 : -0.15;
 			double signY = oldPos.y < playerPos.y ? 0.15 : -0.15;
 			double error = deltaX - deltaY;       
-			while (fabs(oldPos.x - playerPos.x) > 2 || fabs(oldPos.y - playerPos.y) > 2)
+			while (fabs(oldPos.x - playerPos.x) > 2.0 || fabs(oldPos.y - playerPos.y) > 2.0)
 			{
 
 				double error2 = error * 2;

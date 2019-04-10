@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/10 18:07:05 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/10 19:06:11 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -315,17 +315,18 @@ void	mixtex(t_sprite *sprite)
 
 	if (sprite->type == 1 && sprite->visible == 1)
 	{
+		printf("%d\n", sprite->texnum);
 		temp = sprite->texture[0];
-		sprite->texture[0] = sprite->texture[sprite->texnum % 6];
-		sprite->texture[sprite->texnum % 6] = temp;
+		sprite->texture[0] = sprite->texture[sprite->texnum % 7];
+		sprite->texture[sprite->texnum % 7] = temp;
 	}
 	else if (sprite->type == 4)
 	{
 		temp = sprite->texture[0];
-		sprite->texture[0] = sprite->texture[6];
-		sprite->texture[6] = temp;
+		sprite->texture[0] = sprite->texture[7];
+		sprite->texture[7] = temp;
 		sprite->hp = 666;
-		sprite->height = 3;
+		sprite->height = 5;
 	}
 	temp = NULL;
 }
@@ -340,7 +341,7 @@ void	animation(t_env *env)
 		if (env->sprite[i].movecount >= 5)
 			{
 				env->sprite[i].movecount = 0;
-				env->sprite[i].texnum = env->sprite[i].texnum == 5 ? 0 : env->sprite[i].texnum + 1;
+				env->sprite[i].texnum = env->sprite[i].texnum == 6 ? 0 : env->sprite[i].texnum + 1;
 				mixtex(&env->sprite[i]);
 			}
 		if (env->sprite[i].type == 4 && env->sprite[i].hp != 666)
