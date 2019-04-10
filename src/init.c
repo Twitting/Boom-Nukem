@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:38:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/10 19:50:11 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/10 20:52:57 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,7 +201,7 @@ void	texnulling(t_env *env)
 	int	j;
 
 	i = -1;
-	while (++i < env->sprcount)
+	while (++i < env->sprcount && env->sprite[i].type != 2)
 	{
 		j = -1;
 		while (++j < 8 && env->sprite[i].type != 2)
@@ -251,12 +251,28 @@ void	init(t_env *env)
 	initspritelight(env);
 	findbutton(env);
 	}
-	if ((inputFile = fopen("./save/1.dat",  "r")))
+	if ((inputFile = fopen("./save/1/player.dat",  "r")))
 		fread(&env->save[0], sizeof(t_player), 1, inputFile);
-	if ((inputFile = fopen("./save/2.dat",  "r")))
+	if ((inputFile = fopen("./save/2/player.dat",  "r")))
 		fread(&env->save[1], sizeof(t_player), 1, inputFile);
-	if ((inputFile = fopen("./save/3.dat",  "r")))
+	if ((inputFile = fopen("./save/3/player.dat",  "r")))
 		fread(&env->save[2], sizeof(t_player), 1, inputFile);
-	if ((inputFile = fopen("./save/4.dat",  "r")))
+	if ((inputFile = fopen("./save/4/player.dat",  "r")))
 		fread(&env->save[3], sizeof(t_player), 1, inputFile);
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
