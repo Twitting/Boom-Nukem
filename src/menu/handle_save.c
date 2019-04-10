@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_save.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 05:46:32 by drestles          #+#    #+#             */
-/*   Updated: 2019/04/08 05:52:04 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/10 14:49:48 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static void button_one(t_env *env, SDL_Event *e)
 	e->button.y >= 178 && e->button.y <= 415)
 	{
 		env->state = 1;
+		save_game1(env, 0);
 		/////////////////////////    сохраняем карту в 1 файл <<<<<<<<<<<<----------------------
 	}
 }
@@ -46,6 +47,8 @@ static void button_two(t_env *env, SDL_Event *e)
 	e->button.y >= 178 && e->button.y <= 411)
 	{
 		env->state = 1;
+		save_game1(env, 1);
+
 		/////////////////////////    сохраняем карту во 2 файл<<<<<<<<<<<<----------------------
 	}
 }
@@ -63,6 +66,8 @@ static void handle_up(t_env *env, SDL_Event *e)
 		e->button.y >= 500 && e->button.y <= 735)
 		{
 			env->state = 1;
+			save_game1(env, 2);
+
 			/////////////////////////     сохраняем карту в 3 файл<<<<<<<<<<<<----------------------
 		}
 	}
@@ -73,6 +78,8 @@ static void handle_up(t_env *env, SDL_Event *e)
 		e->button.y >= 500 && e->button.y <= 734)
 		{
 			env->state = 1;
+			save_game1(env, 3);
+
 			/////////////////////////     сохраняем карту в 4 файл<<<<<<<<<<<<----------------------
 		}
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/09 19:04:32 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/10 14:50:00 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ typedef struct		s_wallsp
 	int				maxfl;
 }					t_wallsp;
 
+
 typedef struct		s_env
 {
 	char			mapname[64];
@@ -160,6 +161,8 @@ typedef struct		s_env
 	int				debugtempint4;
 	int				debugtempint5;
 
+	t_player		save[4];
+	int				save_number;
 
 
 	int state;
@@ -227,4 +230,6 @@ void handle_events_save(t_env *env, SDL_Event *e);
 */
 void handle_events_game_mode(t_env *env, SDL_Event *e);
 
+void	save_game1(t_env *env, int i);
+void	load_player_init(t_env *env);
 #endif

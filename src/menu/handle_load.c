@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_load.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 05:38:44 by drestles          #+#    #+#             */
-/*   Updated: 2019/04/08 05:44:53 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/10 14:47:45 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ static void button_one(t_env *env, SDL_Event *e)
 	if (e->button.x >= 93 && e->button.x <= 345 && 
 	e->button.y >= 178 && e->button.y <= 415)
 		env->state = 1;
+		env->save_number = 0;
+		load_player_init(env);
 	/////////////////////////    загружаем карту из 1 файла <<<<<<<<<<<<----------------------
 }
 
@@ -43,6 +45,8 @@ static void button_two(t_env *env, SDL_Event *e)
 	if (e->button.x >= 680 && e->button.x <= 934 && 
 	e->button.y >= 178 && e->button.y <= 411)
 		env->state = 1;
+		env->save_number = 1;
+		load_player_init(env);
 	/////////////////////////    загружаем карту из 2 файла<<<<<<<<<<<<----------------------
 }
 
@@ -58,6 +62,8 @@ static void handle_up(t_env *env, SDL_Event *e)
 		if (e->button.x >= 186 && e->button.x <= 442 && 
 		e->button.y >= 500 && e->button.y <= 735)
 			env->state = 1;
+			env->save_number = 2;
+			load_player_init(env);
 			/////////////////////////     загружаем карту из 3 файла<<<<<<<<<<<<----------------------
 	}
 	else if (env->b_four == 1)
@@ -67,6 +73,8 @@ static void handle_up(t_env *env, SDL_Event *e)
 		e->button.y >= 500 && e->button.y <= 734)
 		{
 			env->state = 1;
+			env->save_number = 3;
+			load_player_init(env);
 			/////////////////////////     загружаем карту из 4 файла<<<<<<<<<<<<----------------------
 		}
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:38:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/09 15:02:40 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/10 14:34:24 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,8 @@ void	initspritelight(t_env *env)
 
 void	init(t_env *env)
 {
+	FILE		*inputFile;
+	
 	env->yaw = 0;
 	env->quit = 0;
 	env->ground = 0;
@@ -213,4 +215,12 @@ void	init(t_env *env)
 	// env->sprite[2].width = 4;
 	// env->sprite[2].sector = 0;
 	}
+	if ((inputFile = fopen("./save/1.dat",  "r")))
+		fread(&env->save[0], sizeof(t_player), 1, inputFile);
+	if ((inputFile = fopen("./save/2.dat",  "r")))
+		fread(&env->save[1], sizeof(t_player), 1, inputFile);
+	if ((inputFile = fopen("./save/3.dat",  "r")))
+		fread(&env->save[2], sizeof(t_player), 1, inputFile);
+	if ((inputFile = fopen("./save/4.dat",  "r")))
+		fread(&env->save[3], sizeof(t_player), 1, inputFile);
 }

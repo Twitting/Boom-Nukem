@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 21:52:25 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/09 22:41:46 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/10 15:53:56 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,7 @@ void	keyboard_events(t_env *env, SDL_Event *e)
 {
 	int		on;
 
-	if (e->type == SDL_KEYDOWN)
-		on = 1;
-	else
-		on = 0;
+	on = e->type == SDL_KEYDOWN ? 1 : 0;
 	if (e->key.keysym.sym == SDLK_j)
 		env->jetpack = 1;
 	if (e->key.keysym.sym == SDLK_k)
@@ -40,14 +37,13 @@ void	keyboard_events(t_env *env, SDL_Event *e)
 	if (e->key.keysym.sym == SDLK_SPACE && on == 1)
 		env->spacebar = 1;
 	if (e->key.keysym.sym == SDLK_SPACE && on == 0)
-		env->spacebar = 0;	
+		env->spacebar = 0;
 	if (e->key.keysym.sym == SDLK_SPACE && on == 1)
 		if (env->ground && !env->jetpack)
 		{
 			env->player.velocity.z += 1.5;
 			env->falling = 1;
 		}
-	
 }
 
 void	handle_events(t_env *env, SDL_Event *e)

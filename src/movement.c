@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:10:46 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/09 18:43:50 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/10 16:22:12 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,15 +93,30 @@ int		can_i_go(t_env *env, t_xy *p, double x, double y)
 		arr[4] = sqrt(pow(p[i].x - p[ii1].x, 2) + pow(p[i].y - p[ii1].y, 2));
 		arr[5] = 0.25 * sqrt(pow(pow(arr[2], 2) + pow(arr[3], 2) + pow(arr[4], 2), 2) - 2 * (pow(arr[2], 4) + pow(arr[3], 4) + pow(arr[4], 4)));
 		hh[i] = (2 * arr[5]) / arr[4];
-		if (arr[2] < 0.7 || arr[3] < 0.7)    //не работают косые порталы
+		// printf("I%d: a: %f b: %f c: %f\n", i, arr[2], arr[3], arr[4]);
+		if (arr[2] < 1 || arr[3] < 1)    //не работают косые порталы
 			return (0);// нет зависимости от высоты
 		i++;
 	}
+	// printf("\n");
 	return (1);
 }
 
 void	movement_support(t_env *env, float dx, float dy)
 {
+	int i;
+
+	i = 0;
+	while (i < env->sprcount)
+	{
+		if (env->sprite[i].spritedist < 3)
+		{
+			env->player.where.x -= dy;
+			env->player.where.y -= dx;
+			return ;
+		}
+		i++;
+	}
 	env->player.where.x += dx;
 	env->player.where.y += dy;
 }
