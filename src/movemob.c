@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 17:06:32 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/10 17:03:53 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/10 17:18:42 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void move_mob(t_env *env)
     t_xy VeryOldPos;
     t_xy playerPos;
     t_sector sect;
-    int arr2[4];
+    int arr2[3];
 
     arr2[1] = 0;
     int i = -1;
@@ -62,13 +62,10 @@ void move_mob(t_env *env)
 						printf("sector:%d\n", env->sprite[i].sector);
 						env->sprite[i].sector = sect.neighbors[arr2[0]];
 						env->sprite[i].movecount = 0;
-						arr2[2] = env->sprite[i].texnum - 1;
-						arr2[3] = -1;
-						while (++arr2[3] < 7)
-						{
+						env->sprite[i].texnum = 0;
+						arr2[2] = -1;
+						while (++arr2[2] < 7)
 							enemylightapply(env, &env->sprite[i], arr2[2]);
-							arr2[2] = arr2[2] == 6 ? 0 : arr2[2] + 1;
-						}
 					}
 				}
 				env->sprite[i].pos1.x = oldPos.x;
