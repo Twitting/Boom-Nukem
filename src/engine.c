@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/10 19:06:11 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/10 21:20:12 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -309,10 +309,12 @@ static void	render_wall(t_env *env, t_rend *rend)
 	}
 }
 
-void	mixtex(t_sprite *sprite)
+void	mixtex(t_env *env, t_sprite *sprite)
 {
 	SDL_Surface *temp;
 
+	if (sprite->type == 4 && sprite->hp <= 0)
+		sprite->hp = 716;
 	if (sprite->type == 1 && sprite->visible == 1)
 	{
 		printf("%d\n", sprite->texnum);
@@ -320,13 +322,23 @@ void	mixtex(t_sprite *sprite)
 		sprite->texture[0] = sprite->texture[sprite->texnum % 7];
 		sprite->texture[sprite->texnum % 7] = temp;
 	}
-	else if (sprite->type == 4)
+	else if (sprite->type == 4 && sprite->hp > 666)
+	{
+		//SDL_FreeSurface(sprite->texture[0]);
+		if ((sprite->hp - 676) % 10 == 0)
+		{
+			sprite->texture[0] = env->text[(sprite->hp - 676) / 10 + 3];
+			sprite->height--;
+		}
+		sprite->hp--;
+	}
+	else if (sprite->type == 4 && sprite->hp == 666)
 	{
 		temp = sprite->texture[0];
 		sprite->texture[0] = sprite->texture[7];
 		sprite->texture[7] = temp;
-		sprite->hp = 666;
 		sprite->height = 5;
+		sprite->hp--;
 	}
 	temp = NULL;
 }
@@ -342,10 +354,10 @@ void	animation(t_env *env)
 			{
 				env->sprite[i].movecount = 0;
 				env->sprite[i].texnum = env->sprite[i].texnum == 6 ? 0 : env->sprite[i].texnum + 1;
-				mixtex(&env->sprite[i]);
+				//mixtex(env, &env->sprite[i]);
 			}
-		if (env->sprite[i].type == 4 && env->sprite[i].hp != 666)
-			mixtex(&env->sprite[i]);
+		if (env->sprite[i].type == 4 && env->sprite[i].hp != 665)
+			mixtex(env, &env->sprite[i]);
 	}
 }
 

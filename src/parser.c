@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:25:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/10 18:04:19 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/10 21:24:58 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,7 @@ void	getvertsectnums(t_env *env)
 	env->button = (t_button *)malloc(sizeof(t_button) * env->nsectors);
 	if (!env->sector || !env->vertex || !env->sprite || !env->button)
 		ft_error(2);
+	printf("%d\n", env->sprcount);
 }
 
 int	parsesprites(t_env *env, int fd)
@@ -319,7 +320,6 @@ void	parsewallsps(t_env *env, int fd, int count)
 			env->wallsp.sect2 = ft_atoi(&line[i]);
 			makewallsp(env, count);
 			count += 2;
-			printf("%d %d %d %d %d %d\n", env->wallsp.vert1, env->wallsp.vert2, env->wallsp.sect1, env->wallsp.sect2, count, env->sprcount);
 		}
 		else if (line[0] != 'w')
 		{

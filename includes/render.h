@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:42:12 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/09 18:05:55 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/10 21:22:42 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 					float rtz = (Z) * env->player.sinang - (X) * env->player.cosang; \
 					X = rtx + env->player.where.x; Z = rtz + env->player.where.y; \
 					} while(0)
-# define MAXQUEUE 32
+# define MAXQUEUE 256
 # define BUTTONHEIGHT 4
 # define BUTTONWIDTH 2
 
