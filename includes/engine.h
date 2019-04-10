@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/10 17:45:09 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/10 19:48:33 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ typedef	struct		s_sprite
 {
 	t_xy			pos1;
 	t_xy			pos2;
-	SDL_Surface		*texture[7];
+	SDL_Surface		*texture[8];
 	double			spritedist;
 	int				height;
 	int				floor;
@@ -69,6 +69,7 @@ typedef	struct		s_sprite
 	int				hp;
 	int				movecount;
 	int				texnum;
+	double			mobtimer;
 }					t_sprite;
 
 typedef	struct		s_button
@@ -108,6 +109,7 @@ typedef struct		s_player
 	unsigned int	sector;
 	double			eye;
 	int				target;
+	int				hp;
 }					t_player;
 
 typedef struct		s_wallsp
@@ -174,6 +176,7 @@ typedef struct		s_env
 	int b_four;
 }					t_env;
 
+void	mob_attack(t_env *env);
 void	enemylightapply(t_env *env, t_sprite *sprite, int tex);
 void    shoot(t_env *env, SDL_Event *e);
 void    cross(t_env *env);

@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:25:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/10 15:37:27 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/10 18:04:19 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,10 +272,10 @@ void	spritemaker(t_env *env)
 
 void	makewallsp(t_env *env, int i)
 {
-	if (env->sprite[i].texture[0] != NULL)
-		free(env->sprite[i].texture[0]);
-	if (env->sprite[i + 1].texture[0] != NULL)
-		free(env->sprite[i + 1].texture[0]);
+	// if (env->sprite[i].texture[0] != NULL)
+	// 	free(env->sprite[i].texture[0]);
+	// if (env->sprite[i + 1].texture[0] != NULL)
+	// 	free(env->sprite[i + 1].texture[0]);
 	env->sprite[i].pos1.x = env->vertex[env->wallsp.vert1].x;
 	env->sprite[i].pos1.y = env->vertex[env->wallsp.vert1].y;
 	env->sprite[i + 1].pos1.x = env->vertex[env->wallsp.vert2].x;

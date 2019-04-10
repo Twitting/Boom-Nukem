@@ -6,7 +6,11 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:43:20 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/10 15:03:49 by twitting         ###   ########.fr       */
+<<<<<<< HEAD
+/*   Updated: 2019/04/10 19:54:55 by twitting         ###   ########.fr       */
+=======
+/*   Updated: 2019/04/10 19:59:21 by twitting         ###   ########.fr       */
+>>>>>>> 8529b98b7e42ec44d3fb4edd088140c084796a75
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +139,8 @@ void	rendersprite(t_env *env, t_rend *rend)
 	env->player.target = -1;
 	while (++i < env->sprcount) //
 	{
+		if (env->sprite[i].spritedist <= 1 && env->sprite[i].type == 3)
+			env->sprite[i].width = 0;
 		if (env->sprite[i].type != 2)
 			spriteplane(env, rend, i);
 		else

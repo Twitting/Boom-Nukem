@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 20:17:10 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/10 16:12:59 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/10 19:07:38 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,14 @@ void    cross(t_env *env)
     i = -1;
     while (++i <= 12)
     {
-        *pix1 = 0xAA0000;
+        *pix1 = 0xffffff;
         pix1 += WWIN;
     }
     pix2 += HWIN / 2 * WWIN + WWIN / 2 - 6;
     i = -1;
     while (++i <= 12)
     {
-        *pix2 = 0xAA0000;
+        *pix2 = 0xffffff;
         pix2 += 1;
     }
 }

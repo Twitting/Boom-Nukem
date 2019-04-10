@@ -6,7 +6,7 @@
 /*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:38:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/10 20:38:12 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/10 20:52:57 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,8 @@ char	*gettexenemy(int tex)
 		return ("textures/5.png");
 	else if (tex == 5)
 		return ("textures/6.png");
+	else if (tex == 6)
+		return ("textures/7.png");
 	return ("textures/dead.png");
 }
 
@@ -154,8 +156,9 @@ void	enemylightapply(t_env *env, t_sprite *sprite, int tex)
 	unsigned char *pix;
 	
 	sprite->hp = 100;
-	if (sprite->texnum == 6)
-		sprite->texnum = 0;
+	env->sprite->mobtimer = 0;
+	// if (sprite->texnum == 7)
+	// 	sprite->texnum = 0;
 	if (sprite->texture[tex] != NULL)
 		SDL_FreeSurface(sprite->texture[tex]);
 	sprite->texture[tex] = IMG_Load(gettexenemy(tex));
@@ -187,7 +190,7 @@ void	initspritelight(t_env *env)
 		if (env->sprite[i].type == 0)
 			spritelightapply(env, &env->sprite[i]);
 		if (env->sprite[i].type == 1)
-			while (++j < 7)
+			while (++j < 8)
 				enemylightapply(env, &env->sprite[i], j);
 	}
 }
@@ -201,7 +204,7 @@ void	texnulling(t_env *env)
 	while (++i < env->sprcount && env->sprite[i].type != 2)
 	{
 		j = -1;
-		while (++j < 7)
+		while (++j < 8 && env->sprite[i].type != 2)
 			env->sprite[i].texture[j] = NULL;
 	}
 	i = -1;
@@ -218,6 +221,7 @@ void	init(t_env *env)
 	FILE		*inputFile;
 	
 	env->yaw = 0;
+	env->player.hp = 100;
 	env->quit = 0;
 	env->ground = 0;
 	env->falling = 1;
@@ -227,7 +231,6 @@ void	init(t_env *env)
 	env->oldfps = 60;
 	env->timer = 0;
 	env->jetpack = 0;
-	//texnulling(env);
 	//env->butcount = 2;//!!!!!!!!!!!!MAKE IT IN PARSER
 	// env->sector[0].ceiling *= -1;
 	// env->sector[0].sky = 1;
@@ -246,9 +249,7 @@ void	init(t_env *env)
 			ft_error(4);
 	env->surface = SDL_GetWindowSurface(env->window);
 	initspritelight(env);
-
 	findbutton(env);
-
 	}
 	if ((inputFile = fopen("./save/1/player.dat",  "r")))
 		fread(&env->save[0], sizeof(t_player), 1, inputFile);
