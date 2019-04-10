@@ -6,7 +6,7 @@
 /*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 02:45:02 by drestles          #+#    #+#             */
-/*   Updated: 2019/04/10 17:36:20 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/10 20:42:32 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,14 +147,26 @@ void	save_game1(t_env *env, int i)
 
 	i == 4 ? i = 0 : i;
 	env->save[i] = env->player;
+	
+	// while (j < env->sprcount)
+	// {
+	// 	strcpy(str,"./save/");
+	// 	strcat(str,ft_itoa(i+1));
+	// 	strcat(str,"/");
+	// 	strcat(str, ft_itoa(j));
+	// 	strcat(str,".dat");
+	// 	printf("%s\n", str);
+	// 	fwrite(&env->sprite[i], sizeof(t_sprite )* 1000000, 1, fopen(str, "w"));
+	// 	j++;
+	// }
 	if (i == 0)
-		outfile = fopen("./save/1.dat", "w");
+		outfile = fopen("./save/1/player.dat", "w");
 	if (i == 1)
-		outfile = fopen("./save/2.dat", "w");
+		outfile = fopen("./save/2/player.dat", "w");
 	if (i == 2)
-		outfile = fopen("./save/3.dat", "w");
+		outfile = fopen("./save/3/player.dat", "w");
 	if (i == 3)
-		outfile = fopen("./save/4.dat", "w");
+		outfile = fopen("./save/4/player.dat", "w");
 	if (outfile == NULL)
 	{
 		fprintf(stderr, "\nError opend file\n");
@@ -169,50 +181,7 @@ void	save_game1(t_env *env, int i)
 	i++;
 }
 
-
 void	load_player_init(t_env *env)
 {
-
 	env->player = env->save[env->save_number];
-	// env->player.where.y = env->save[env->save_number].where.y;
-	// env->player.sector = env->save[env->save_number].sector;
-	// env->player.where.z = env->save[env->save_number].where.z;
-}
-
-void	save_game1(t_env *env, int i)
-{
-	FILE			*outfile;
-
-	i == 4 ? i = 0 : i;
-	env->save[i] = env->player;
-	if (i == 0)
-		outfile = fopen("./save/1.dat", "w");
-	if (i == 1)
-		outfile = fopen("./save/2.dat", "w");
-	if (i == 2)
-		outfile = fopen("./save/3.dat", "w");
-	if (i == 3)
-		outfile = fopen("./save/4.dat", "w");
-	if (outfile == NULL)
-	{
-		fprintf(stderr, "\nError opend file\n");
-		exit(1);
-	}
-	fwrite(&env->save[i], sizeof(t_env), 1, outfile);
-	if (&fwrite != 0)
-		printf("contents to file %d written successfully !\n", i);
-	else
-		printf("error writing file !\n");
-	fclose(outfile);
-	i++;
-}
-
-
-void	load_player_init(t_env *env)
-{
-
-	env->player = env->save[env->save_number];
-	// env->player.where.y = env->save[env->save_number].where.y;
-	// env->player.sector = env->save[env->save_number].sector;
-	// env->player.where.z = env->save[env->save_number].where.z;
 }

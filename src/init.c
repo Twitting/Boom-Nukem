@@ -6,7 +6,7 @@
 /*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:38:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/10 17:45:35 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/10 20:38:12 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,7 +198,7 @@ void	texnulling(t_env *env)
 	int	j;
 
 	i = -1;
-	while (++i < env->sprcount)
+	while (++i < env->sprcount && env->sprite[i].type != 2)
 	{
 		j = -1;
 		while (++j < 7)
@@ -226,6 +226,7 @@ void	init(t_env *env)
 	env->fps = 0;
 	env->oldfps = 60;
 	env->timer = 0;
+	env->jetpack = 0;
 	//texnulling(env);
 	//env->butcount = 2;//!!!!!!!!!!!!MAKE IT IN PARSER
 	// env->sector[0].ceiling *= -1;
@@ -245,53 +246,32 @@ void	init(t_env *env)
 			ft_error(4);
 	env->surface = SDL_GetWindowSurface(env->window);
 	initspritelight(env);
-	//env->button = (t_button *)malloc(sizeof(t_button) * env->butcount);
-	// env->button[0].width = 2;
-	// env->button[0].height = 4;
-	// env->button[0].sector = 0;
-	// env->button[1].width = 2;
-	// env->button[1].height = 4;
-	// env->button[1].sector = 1;
+
 	findbutton(env);
-	// if (!(env->sprite = (t_sprite *)malloc(sizeof(t_sprite) * env->sprcount)))
-	// 	ft_error(2);
 
-
-
-	// env->sprite[3].pos1.x = env->vertex[6].x;
-	// env->sprite[3].pos1.y = env->vertex[6].y;
-	// env->sprite[3].pos2.x = env->vertex[9].x;
-	// env->sprite[3].pos2.y = env->vertex[9].y;
-	// env->sprite[3].height = 30;
-	// env->sprite[3].floor = 0;
-	// env->sprite[3].type = 2;
-	// env->sprite[3].sector = 0;
-
-
-
-
-	// env->sprite[0].x = 24;
-	// env->sprite[0].y = 40;
-	// env->sprite[0].height = 12;
-	// env->sprite[0].width = 4;
-	// env->sprite[0].sector = 0;
-	// env->sprite[1].x = 35;
-	// env->sprite[1].y = 48;
-	// env->sprite[1].height = 12;
-	// env->sprite[1].width = 4;
-	// env->sprite[1].sector = 1;
-	// env->sprite[2].x = 19;
-	// env->sprite[2].y = 45;
-	// env->sprite[2].height = 12;
-	// env->sprite[2].width = 4;
-	// env->sprite[2].sector = 0;
 	}
-	if ((inputFile = fopen("./save/1.dat",  "r")))
+	if ((inputFile = fopen("./save/1/player.dat",  "r")))
 		fread(&env->save[0], sizeof(t_player), 1, inputFile);
-	if ((inputFile = fopen("./save/2.dat",  "r")))
+	if ((inputFile = fopen("./save/2/player.dat",  "r")))
 		fread(&env->save[1], sizeof(t_player), 1, inputFile);
-	if ((inputFile = fopen("./save/3.dat",  "r")))
+	if ((inputFile = fopen("./save/3/player.dat",  "r")))
 		fread(&env->save[2], sizeof(t_player), 1, inputFile);
-	if ((inputFile = fopen("./save/4.dat",  "r")))
+	if ((inputFile = fopen("./save/4/player.dat",  "r")))
 		fread(&env->save[3], sizeof(t_player), 1, inputFile);
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
