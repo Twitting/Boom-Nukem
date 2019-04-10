@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprites.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:43:20 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/09 19:14:36 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/10 15:03:49 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ void	drawsprite(t_env *env, t_rend *rend, int j)
 	//printf("!!!%d!!!\n", ((int *)(env->sprite[j].texture->pixels))[0]);
 	while (++y <= rend->cspryb)
 	{
-		txty = (int)((double)(y - rend->sprya) / (double)(rend->spryb - rend->sprya) * env->sprite[j].texture->h);
+		txty = (int)((double)(y - rend->sprya) / (double)(rend->spryb - rend->sprya) * env->sprite[j].texture[0]->h);
 		if (y == HWIN / 2 && rend->sprx == WWIN / 2 && env->sprite[j].type == 1 &&
-			((int *)(env->sprite[j].texture->pixels))[txty % env->sprite[j].texture->h * env->sprite[j].texture->w + rend->txtx] != -16777216 && 
-			((int *)(env->sprite[j].texture->pixels))[txty % env->sprite[j].texture->h * env->sprite[j].texture->w + rend->txtx] != 0)
+			((int *)(env->sprite[j].texture[0]->pixels))[txty % env->sprite[j].texture[0]->h * env->sprite[j].texture[0]->w + rend->txtx] != 0 &&//-16777216 && 
+			((int *)(env->sprite[j].texture[0]->pixels))[txty % env->sprite[j].texture[0]->h * env->sprite[j].texture[0]->w + rend->txtx] != 0)
 			env->player.target = j;
-		if (((int *)(env->sprite[j].texture->pixels))[txty % env->sprite[j].texture->h * env->sprite[j].texture->w + rend->txtx] != -16777216 && 
-			((int *)(env->sprite[j].texture->pixels))[txty % env->sprite[j].texture->h * env->sprite[j].texture->w + rend->txtx] != 0)
-			*pix = ((int *)(env->sprite[j].texture->pixels))[txty % env->sprite[j].texture->h * env->sprite[j].texture->w + rend->txtx];
+		if (((int *)(env->sprite[j].texture[0]->pixels))[txty % env->sprite[j].texture[0]->h * env->sprite[j].texture[0]->w + rend->txtx] != 0 &&//-16777216 && 
+			((int *)(env->sprite[j].texture[0]->pixels))[txty % env->sprite[j].texture[0]->h * env->sprite[j].texture[0]->w + rend->txtx] != 0)
+			*pix = ((int *)(env->sprite[j].texture[0]->pixels))[txty % env->sprite[j].texture[0]->h * env->sprite[j].texture[0]->w + rend->txtx];
 		pix += WWIN;
 	}
 }
@@ -74,7 +74,7 @@ void	spriteplane(t_env *env, t_rend *rend, int j)
 	{
 		rend->csprya = CLAMP(rend->sprya, now.ytop[rend->sprx], now.ybottom[rend->sprx]);
 		rend->cspryb = CLAMP(rend->spryb, now.ytop[rend->sprx], now.ybottom[rend->sprx]);
-		rend->txtx = (int)((double)(rend->sprx - rend->sprx1) / (double)(rend->sprx2 - rend->sprx1) * env->sprite[j].texture->w);
+		rend->txtx = (int)((double)(rend->sprx - rend->sprx1) / (double)(rend->sprx2 - rend->sprx1) * env->sprite[j].texture[0]->w);
 		//printf("%d\n", rend->sprx - rend->sprbegx);
 		drawsprite(env, rend, j);
 		rend->sprx++;

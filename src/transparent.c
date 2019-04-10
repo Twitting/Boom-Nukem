@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 16:26:23 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/09 15:22:16 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/10 14:28:46 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ void	drawtransp(t_env *env, t_rend *rend, int j)
 	//printf("!!!%d!!!\n", ((int *)(env->trton[j].texture->pixels))[0]);
 	while (++y <= rend->ctryb)
 	{
-		txty = (int)((double)(y - rend->trya) / (double)(rend->tryb - rend->trya) * env->sprite[j].texture->h);
-		if (((int *)(env->sprite[j].texture->pixels))[txty % env->sprite[j].texture->h * env->sprite[j].texture->w + rend->txtx] != -16777216 &&
-		((int *)(env->sprite[j].texture->pixels))[txty % env->sprite[j].texture->h * env->sprite[j].texture->w + rend->txtx] != 0) 
-			*pix = ((int *)(env->sprite[j].texture->pixels))[txty % env->sprite[j].texture->h * env->sprite[j].texture->w + rend->txtx];
+		txty = (int)((double)(y - rend->trya) / (double)(rend->tryb - rend->trya) * env->sprite[j].texture[0]->h);
+		if (((int *)(env->sprite[j].texture[0]->pixels))[txty % env->sprite[j].texture[0]->h * env->sprite[j].texture[0]->w + rend->txtx] != -16777216 &&
+		((int *)(env->sprite[j].texture[0]->pixels))[txty % env->sprite[j].texture[0]->h * env->sprite[j].texture[0]->w + rend->txtx] != 0) 
+			*pix = ((int *)(env->sprite[j].texture[0]->pixels))[txty % env->sprite[j].texture[0]->h * env->sprite[j].texture[0]->w + rend->txtx];
 		pix += WWIN;
 	}
 }
@@ -79,13 +79,13 @@ static void	trintersect(t_rend *rend, t_env *env, int j)
 			}
 			if (fabs(rend->ttr2.x - rend->ttr1.x) > fabs(rend->ttr2.y - rend->ttr1.y))
 			{
-				rend->u0 = (rend->ttr1.x - rend->org1.x) * (env->sprite[j].texture->w - 1) / (rend->org2.x - rend->org1.x);
-				rend->u1 = (rend->ttr2.x - rend->org1.x) * (env->sprite[j].texture->w - 1) / (rend->org2.x - rend->org1.x);
+				rend->u0 = (rend->ttr1.x - rend->org1.x) * (env->sprite[j].texture[0]->w - 1) / (rend->org2.x - rend->org1.x);
+				rend->u1 = (rend->ttr2.x - rend->org1.x) * (env->sprite[j].texture[0]->w - 1) / (rend->org2.x - rend->org1.x);
 			}
 			else
 			{
-				rend->u0 = (rend->ttr1.y - rend->org1.y) * (env->sprite[j].texture->w - 1) / (rend->org2.y - rend->org1.y);
-				rend->u1 = (rend->ttr2.y - rend->org1.y) * (env->sprite[j].texture->w - 1) / (rend->org2.y - rend->org1.y);
+				rend->u0 = (rend->ttr1.y - rend->org1.y) * (env->sprite[j].texture[0]->w - 1) / (rend->org2.y - rend->org1.y);
+				rend->u1 = (rend->ttr2.y - rend->org1.y) * (env->sprite[j].texture[0]->w - 1) / (rend->org2.y - rend->org1.y);
 			}
 		}
 }
@@ -120,7 +120,7 @@ void	trplane(t_env *env, t_rend *rend, int j)
 	if (rend->ttr1.y <= 0 && rend->ttr2.y  <= 0 )
 		return ;
 	rend->u0 = 0;
-	rend->u1 = env->sprite[j].texture->w;
+	rend->u1 = env->sprite[j].texture[0]->w;
 	trintersect(rend, env, j);
 	if (rend->ttr1.y <= 0.5)
 	{

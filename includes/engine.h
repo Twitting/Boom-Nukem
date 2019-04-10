@@ -6,7 +6,7 @@
 /*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/10 14:50:00 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/10 17:45:09 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ typedef	struct		s_sprite
 {
 	t_xy			pos1;
 	t_xy			pos2;
-	SDL_Surface		*texture;
+	SDL_Surface		*texture[7];
 	double			spritedist;
 	int				height;
 	int				floor;
@@ -67,6 +67,8 @@ typedef	struct		s_sprite
 	int				type;
 	int				visible;
 	int				hp;
+	int				movecount;
+	int				texnum;
 }					t_sprite;
 
 typedef	struct		s_button
@@ -129,7 +131,7 @@ typedef struct		s_env
 	unsigned int	nvertexes;
 	int				quit;
 	SDL_Surface		*surface;
-	SDL_Surface		*text[5];
+	SDL_Surface		*text[20];
 	SDL_Window		*window;
 	int				wsad[4];
 	int				moving;
@@ -172,6 +174,10 @@ typedef struct		s_env
 	int b_four;
 }					t_env;
 
+void	enemylightapply(t_env *env, t_sprite *sprite, int tex);
+void    shoot(t_env *env, SDL_Event *e);
+void    cross(t_env *env);
+void	texnulling(t_env *env);
 void	fps(t_env *env);
 void	spritelightapply(t_env *env, t_sprite *sprite);
 void	movement_calcs(t_env *env);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:20:03 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/09 22:31:44 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/10 14:39:43 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int		main(void)
 		ft_error(2);
 	if (!(rend = (t_rend *)malloc(sizeof(t_rend))))
 		ft_error(2);
+	texnulling(env);
 	ft_strcpy(env->mapname, "test.map");
 	grandparser(env);
 	init(env);
