@@ -6,7 +6,7 @@
 #    By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/04/11 18:23:06 by daharwoo         ###   ########.fr        #
+#    Updated: 2019/04/11 21:25:46 by daharwoo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,11 @@ SRC = ./main.c \
 	./portals_calcs.c \
 	./save.c \
 	./vertexes.c \
-	./buttons.c
+	./buttons.c \
+	./save2.c \
+	./vertexes_extra.c \
+	./vertexes_extra2.c \
+	./main_support.c
 
 LIBFT = ../libft/libft.a
 OBJECTS = $(SRC:.c=.o)

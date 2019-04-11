@@ -6,7 +6,11 @@
 /*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:25:09 by twitting          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2019/04/11 21:05:01 by daharwoo         ###   ########.fr       */
+=======
+/*   Updated: 2019/04/11 18:48:02 by twitting         ###   ########.fr       */
+>>>>>>> 4000812b3609c00b2cf9ba432f485876b72da4fd
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,7 +239,7 @@ void	spritemaker(t_env *env)
 	i = -1;
 	while (++i < env->sprcount)
 	{
-		if (env->sprite[i].type == 0)
+		if (env->sprite[i].type == 0 || env->sprite[i].type == 3)
 		{
 			env->sprite[i].height = 7;
 			env->sprite[i].width = 3;

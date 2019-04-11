@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   edit.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:16:36 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/10 23:02:36 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/11 21:22:38 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,8 @@
 # include <SDL2/SDL.h>
 # include "libft.h"
 # include <stdlib.h>
-#include "kiss_sdl.h"
-
-# include <stdio.h>/////////////////////////////////////////////
+# include "kiss_sdl.h"
+# include <stdio.h>
 
 # define PSECT1 edit->sectors[sect1]
 # define PSECT2 edit->sectors[sect2]
@@ -67,7 +66,6 @@ typedef struct		s_wallsp
 	int				sect2;
 }					t_wallsp;
 
-
 typedef struct		s_sprite
 {
 	int				x;
@@ -78,30 +76,30 @@ typedef struct		s_sprite
 
 typedef struct		s_map_ui
 {
-	SDL_Renderer *renderer;
-	SDL_Event e;
-	kiss_array objects;
-	kiss_window window;
-	kiss_button button;
-	char *message;
-	char *message2;
-	char *message3;
-	char *message4;
-	int draw;
-	int quit;
-	char *title;
-	int textbox_width;
-	kiss_label label;
-	kiss_label label0;
-	kiss_label label1;
-	kiss_label label2;
-	kiss_label label3;
-	kiss_label label4;
-	kiss_entry entry0;
-	kiss_entry entry1;
-	kiss_entry entry2;
-	kiss_entry entry3;
-	kiss_textbox textbox1;
+	SDL_Renderer	*renderer;
+	SDL_Event		e;
+	kiss_array		objects;
+	kiss_window		window;
+	kiss_button		button;
+	char			*message;
+	char			*message2;
+	char			*message3;
+	char			*message4;
+	int				draw;
+	int				quit;
+	char			*title;
+	int				textbox_width;
+	kiss_label		label;
+	kiss_label		label0;
+	kiss_label		label1;
+	kiss_label		label2;
+	kiss_label		label3;
+	kiss_label		label4;
+	kiss_entry		entry0;
+	kiss_entry		entry1;
+	kiss_entry		entry2;
+	kiss_entry		entry3;
+	kiss_textbox	textbox1;
 }					t_map_ui;
 
 typedef struct		s_edit
@@ -132,19 +130,37 @@ typedef struct		s_edit
 	int				barsflag;
 }					t_edit;
 
-void	makebutton2(t_edit *edit);
-void	makebutton1(t_edit *edit);
-void	putportalline(t_edit *edit, int color);
-int		getfirstvert(t_edit *edit, int x, int y);
-int		getsecondvert(t_edit *edit, int x, int y);
-void	putdot(t_edit *edit, int color, int x, int y);
-void	portalcheck(t_edit *edit);
-void	makeportals1(t_edit *edit);
-void	makeportals2(t_edit *edit);
-void	savemap(t_edit *edit);
-void	putsectors(t_edit *edit);
-void	portalinit(t_edit *edit);
-t_edit	*init();
-int		putline(t_edit *edit, t_line *l);
+void				handle_events2(t_edit *edit, SDL_Event *e);
+void				handle_events(t_edit *edit, SDL_Event *e);
+void				putobject(t_edit *edit, int type);
+void				putplayer(t_edit *edit);
+void				ft_error(int errnum);
+void				makebars(t_edit *edit, int sect1, int sect2);
+void				init_message(t_map_ui *ui);
+void				init_label(t_map_ui *ui, t_edit *edit);
+void				ui_draw(t_map_ui *ui);
+void				setsectnums(t_edit *edit, t_map_ui *ui);
+void				button_event(kiss_button *button, SDL_Event *e, int *draw,
+								int *quit);
+void				createornot(t_edit *edit, int x, int y);
+int					checknewvertex(t_edit *edit, int x, int y);
+void				showvertex(t_edit *edit, t_sector sect);
+void				putvertstofile(t_edit *edit, int fd);
+void				sectinfotofile(t_edit *edit, int fd, int i);
+void				ft_error(int errnum);
+void				makebutton2(t_edit *edit);
+void				makebutton1(t_edit *edit);
+void				putportalline(t_edit *edit, int color);
+int					getfirstvert(t_edit *edit, int x, int y);
+int					getsecondvert(t_edit *edit, int x, int y);
+void				putdot(t_edit *edit, int color, int x, int y);
+void				portalcheck(t_edit *edit);
+void				makeportals1(t_edit *edit);
+void				makeportals2(t_edit *edit);
+void				savemap(t_edit *edit);
+void				putsectors(t_edit *edit);
+void				portalinit(t_edit *edit);
+t_edit				*init();
+int					putline(t_edit *edit, t_line *l);
 
 #endif

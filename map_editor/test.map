@@ -1,28 +1,24 @@
-vertex	100	100
-vertex	150	60
-vertex	250	120
-vertex	180	270
-vertex	80	260
-vertex	40	200
-vertex	40	80
-vertex	60	310
-vertex	110	280
-vertex	160	300
-vertex	80	360
-vertex	40	340
-vertex	50	160
-vertex	80	200
+vertex	120	70
+vertex	90	210
+vertex	190	240
+vertex	230	140
+vertex	120	310
+vertex	60	290
 
-sector	9 20	80 0	0 1 2 3 4 5 6		-1 -1 -1 -1 -1 -1 -1
-sector	0 20	80 0	7 8 9 10 11		-1 -1 -1 -1 -1
-sector	40 50	80 0	12 0 1 2 13		-1 -1 -1 -1 -1
+sector	0 20	80 0	0 1 2 3		-1 1 -1 -1
+sector	0 20	80 0	1 4 2		2 -1 0
+sector	0 20	80 0	1 5 4		-2 -1 1
 
-player	192 168	0 0
+player	164 171	0 0
 
-object	324 96	0 1
-object	326 87	1 1
-object	321 106	0 1
-object	311 112	0 1
-object	341 69	1 1
-object	327 70	1 1
+object	136 146	0 0
+object	162 134	0 0
+object	180 137	0 0
+object	156 191	1 0
+object	142 184	1 0
+object	130 146	1 0
+object	151 137	3 0
+object	186 172	3 0
+object	193 181	3 0
 
+wallsp	1 4	1 2

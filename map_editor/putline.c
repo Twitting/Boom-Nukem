@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   putline.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 17:57:26 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/07 01:13:06 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/11 20:23:56 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	putlinelow(t_edit *edit, t_line *l)
 {
 	int		*pix;
-	int 	arr[4];//y xi dx f 
+	int		arr[4];
 
 	pix = edit->surface->pixels;
 	arr[2] = l->y1 - l->y0;
@@ -43,7 +43,7 @@ void	putlinelow(t_edit *edit, t_line *l)
 void	putlinehigh(t_edit *edit, t_line *l)
 {
 	int		*pix;
-	int 	arr[4];//y xi dx f 
+	int		arr[4];
 
 	pix = edit->surface->pixels;
 	arr[2] = l->x1 - l->x0;

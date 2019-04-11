@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   buttons.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 21:33:33 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/08 04:45:46 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/11 21:01:29 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "edit.h"
-
-//# define PSECT edit->sectors[edit->portsects[i]]
-//# define PSECT1 edit->sectors[sect1]
 
 int		makeneighbutton(t_edit *edit, int sect1)
 {
@@ -31,15 +28,12 @@ int		makeneighbutton(t_edit *edit, int sect1)
 	i = -1;
 	while (++i < (int)PSECT1.npoints)
 	{
-		
 		if ((PSECT1.vertex[i] == PVERT1 || PSECT1.vertex[i] == PVERT2) &&
 			(PSECT1.vertex[(i + 1) % PSECT1.npoints] == PVERT1 ||
 			PSECT1.vertex[(i + 1) % PSECT1.npoints] == PVERT2) &&
 			PSECT1.neighbors[i] == -1 && nobutton)
 		{
-
 			PSECT1.neighbors[i] = -2;
-			printf("BUTTON: Sector: %d, vert1: %d, vert2: %d\n", sect1, PVERT1, PVERT2);
 			putportalline(edit, 0xffff00);
 			return (1);
 		}

@@ -3,10 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+<<<<<<< HEAD
 /*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:38:09 by twitting          #+#    #+#             */
 /*   Updated: 2019/04/11 19:51:16 by daharwoo         ###   ########.fr       */
+=======
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/06 18:38:09 by twitting          #+#    #+#             */
+/*   Updated: 2019/04/11 18:55:11 by twitting         ###   ########.fr       */
+>>>>>>> 4000812b3609c00b2cf9ba432f485876b72da4fd
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +195,7 @@ void	initspritelight(t_env *env)
 	while (++i < env->sprcount)
 	{
 		j = -1;
-		if (env->sprite[i].type == 0)
+		if (env->sprite[i].type == 0 || env->sprite[i].type == 3)
 			spritelightapply(env, &env->sprite[i]);
 		if (env->sprite[i].type == 1)
 			while (++j < 8)
