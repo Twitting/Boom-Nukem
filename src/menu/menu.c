@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   menu.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 02:45:02 by drestles          #+#    #+#             */
-/*   Updated: 2019/04/10 23:00:07 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/11 16:37:11 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,21 +144,26 @@ void game_mode(t_env *env, SDL_Event *e)
 void	save_game1(t_env *env, int i)
 {
 	FILE			*outfile;
+	char			str[20];
 
 	i == 4 ? i = 0 : i;
 	env->save[i] = env->player;
+	int j = 0;
 	
-	// while (j < env->sprcount)
-	// {
-	// 	strcpy(str,"./save/");
-	// 	strcat(str,ft_itoa(i+1));
-	// 	strcat(str,"/");
-	// 	strcat(str, ft_itoa(j));
-	// 	strcat(str,".dat");
-	// 	printf("%s\n", str);
-	// 	fwrite(&env->sprite[i], sizeof(t_sprite )* 1000000, 1, fopen(str, "w"));
-	// 	j++;
-	// }
+
+	while(j < env->sprcount){
+
+			printf("j: %d  x: %f  y:  %f\n", j, env->sprite[j].pos1.x, env->sprite[j].pos1.y);
+			strcpy(str, "./save/1/");
+			strcat(str, ft_itoa(j));
+			strcat(str, "mob.dat");
+			printf("str: %s\n", str);
+			outfile = fopen(str, "w");
+			fwrite(&env->sprite[j], sizeof(t_sprite), 1, outfile);
+		j++;
+	}
+	
+
 	if (i == 0)
 		outfile = fopen("./save/1/player.dat", "w");
 	if (i == 1)
@@ -184,4 +189,25 @@ void	save_game1(t_env *env, int i)
 void	load_player_init(t_env *env)
 {
 	env->player = env->save[env->save_number];
+
+	// int j = 0;
+	// char			str[20];
+
+	// while(j < env->sprcount){
+
+			
+	// 		strcpy(str, "./save/1/");
+	// 		strcat(str, ft_itoa(j));
+	// 		strcat(str, "mob.dat");
+	// 		printf("strL: %s\n", str);
+	// 		//outfile = fopen(str, "w");
+	// 		fread(&env->sprite[j] , sizeof(t_sprite), 1, fopen(str, "r"));
+	// 		printf("j: %d  x: %f  y:  %f\n", j, env->sprite[j].pos1.x, env->sprite[j].pos1.y);
+	// 		//fwrite(&env->sprite[j], sizeof(t_sprite), 1, outfile);
+
+	// 	j++;
+	// }
+
+
+
 }
