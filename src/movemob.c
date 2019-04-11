@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movemob.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 17:06:32 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/10 19:54:18 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/11 15:46:28 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@ void move_mob(t_env *env)
 				if (error2 > -deltaY)
 				{
 					error -= deltaY;
-					oldPos.x += signX / 60 * env->oldfps;
+					oldPos.x += signX * 60 / env->oldfps;
 				}
 				if (error2 < deltaX)
 				{
 					error += deltaX;
-					oldPos.y += signY / 60 * env->oldfps;
+					oldPos.y += signY * 60 / env->oldfps;
 				}
 				while (++arr2[0] < (int)sect.npoints)
 				{

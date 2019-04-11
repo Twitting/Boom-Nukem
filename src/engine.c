@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/10 21:20:12 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/11 15:31:50 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -313,11 +313,11 @@ void	mixtex(t_env *env, t_sprite *sprite)
 {
 	SDL_Surface *temp;
 
+	env->jetpack = 0;
 	if (sprite->type == 4 && sprite->hp <= 0)
 		sprite->hp = 716;
 	if (sprite->type == 1 && sprite->visible == 1)
 	{
-		printf("%d\n", sprite->texnum);
 		temp = sprite->texture[0];
 		sprite->texture[0] = sprite->texture[sprite->texnum % 7];
 		sprite->texture[sprite->texnum % 7] = temp;
@@ -354,11 +354,43 @@ void	animation(t_env *env)
 			{
 				env->sprite[i].movecount = 0;
 				env->sprite[i].texnum = env->sprite[i].texnum == 6 ? 0 : env->sprite[i].texnum + 1;
-				//mixtex(env, &env->sprite[i]);
+				mixtex(env, &env->sprite[i]);
 			}
 		if (env->sprite[i].type == 4 && env->sprite[i].hp != 665)
 			mixtex(env, &env->sprite[i]);
 	}
+}
+
+void	pistolrender(t_env *env)
+{
+	int *pix;
+	int x;
+	int	y;
+	int a;
+	int b;
+	
+	pix = (int *)(env->surface->pixels);
+	y = 460;
+	x = WWIN / 2;
+	a = 0;
+	b = 0;
+	while (++y < HWIN)
+	{
+		x = WWIN / 2;
+		while (++x < WWIN / 2 + 263)
+		{
+			if (((int *)(env->text[8 + env->shooting / 3]->pixels))
+			[a % env->text[8 + env->shooting / 3]->h * (env->text[8 + env->shooting / 3]->w) + 
+			b % env->text[8 + env->shooting / 3]->w] != -1)
+				pix[y * WWIN + x] = ((int *)(env->text[8 + env->shooting / 3]->pixels))
+			[a % env->text[8 + env->shooting / 3]->h * (env->text[8 + env->shooting / 3]->w) + 
+			b % env->text[8 + env->shooting / 3]->w];
+			b++;
+		}
+		a++;
+	}
+	if (env->shooting > 0)
+		env->shooting--;
 }
 
 int		start_engine(t_env *env, SDL_Event *e, t_rend *rend)
@@ -366,6 +398,7 @@ int		start_engine(t_env *env, SDL_Event *e, t_rend *rend)
 	int		i;
 
 	i = -1;
+	
 	while (++i < (int)env->nsectors)
 		rend->sprq[i].visible = 0;
 	SDL_LockSurface(env->surface);
@@ -374,8 +407,9 @@ int		start_engine(t_env *env, SDL_Event *e, t_rend *rend)
 	rendersprite(env, rend);
 	cross(env);
 	animation(env);
-	SDL_UnlockSurface(env->surface);		
-	//SDL_BlitSurface(env->sprite[0].texture, NULL, env->surface, NULL);
+	pistolrender(env);
+	SDL_UnlockSurface(env->surface);
+	//SDL_BlitSurface(env->text[8 + env->shooting / 5], NULL, env->surface, NULL);
 	SDL_UpdateWindowSurface(env->window);
 	handle_events(env, e);
 	return (0);

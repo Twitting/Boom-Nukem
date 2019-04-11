@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:38:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/11 14:22:57 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/11 15:46:21 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,8 @@ void	enemylightapply(t_env *env, t_sprite *sprite, int tex)
 	unsigned char	*pix;
 
 	sprite->hp = 100;
+	sprite->movecount = 0;
+	sprite->texnum = 0;
 	env->sprite->mobtimer = 0;
 	if (sprite->texture[tex] != NULL)
 		SDL_FreeSurface(sprite->texture[tex]);
@@ -217,6 +219,7 @@ void	init(t_env *env)
 	env->yaw = 0;
 	env->player.hp = 100;
 	env->quit = 0;
+	env->shooting = 0;
 	env->ground = 0;
 	env->falling = 1;
 	env->ducking = 0;
@@ -225,6 +228,7 @@ void	init(t_env *env)
 	env->oldfps = 60;
 	env->timer = 0;
 	env->jetpack = 0;
+	ft_bzero(env->wsad, 16);
 	while (i++ < 4)
 		save_game1(env, i);
 	sectorlightapply(env);
