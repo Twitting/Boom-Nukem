@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: drestles <drestles@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/04/11 21:25:46 by daharwoo         ###   ########.fr        #
+#    Updated: 2019/04/11 21:58:52 by drestles         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ SRC = ./main.c \
 	./save2.c \
 	./vertexes_extra.c \
 	./vertexes_extra2.c \
-	./main_support.c
+	./main_support.c \
+	./rules.c
 
 LIBFT = ../libft/libft.a
 OBJECTS = $(SRC:.c=.o)

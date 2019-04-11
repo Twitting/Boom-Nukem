@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   edit.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:16:36 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/11 21:22:38 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/11 23:00:17 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <stdlib.h>
 # include "kiss_sdl.h"
 # include <stdio.h>
+#include "SDL_ttf.h"
 
 # define PSECT1 edit->sectors[sect1]
 # define PSECT2 edit->sectors[sect2]
@@ -73,6 +74,12 @@ typedef struct		s_sprite
 	int				type;
 	int				sector;
 }					t_sprite;
+
+typedef struct		s_rules
+{
+
+
+}					t_rules;
 
 typedef struct		s_map_ui
 {
@@ -162,5 +169,8 @@ void				putsectors(t_edit *edit);
 void				portalinit(t_edit *edit);
 t_edit				*init();
 int					putline(t_edit *edit, t_line *l);
+void				draw_strings(SDL_Surface *sur);
+void				draw_title(SDL_Surface *sur);
+void				draw_string(char *text, SDL_Color color, int y, SDL_Surface *sur);
 
 #endif

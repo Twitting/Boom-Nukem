@@ -1,24 +1,4 @@
-vertex	120	70
-vertex	90	210
-vertex	190	240
-vertex	230	140
-vertex	120	310
-vertex	60	290
 
-sector	0 20	80 0	0 1 2 3		-1 1 -1 -1
-sector	0 20	80 0	1 4 2		2 -1 0
-sector	0 20	80 0	1 5 4		-2 -1 1
 
-player	164 171	0 0
+player	0 0	0 0
 
-object	136 146	0 0
-object	162 134	0 0
-object	180 137	0 0
-object	156 191	1 0
-object	142 184	1 0
-object	130 146	1 0
-object	151 137	3 0
-object	186 172	3 0
-object	193 181	3 0
-
-wallsp	1 4	1 2
