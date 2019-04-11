@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:20:03 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/10 23:00:51 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/11 19:51:48 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	fps(t_env *env)
 	env->fps++;
 	move_mob(env);
 	mob_attack(env);
-	env->timer += (clock() - env->frame) / CLOCKS_PER_SEC;		
+	env->timer += (clock() - env->frame) / CLOCKS_PER_SEC;
 	if (env->timer >= 1.0)
 	{
 		ft_putstr("fps = ");

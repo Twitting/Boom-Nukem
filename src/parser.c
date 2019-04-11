@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:25:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/11 15:14:12 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/11 21:05:01 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ void	verttosect(t_env *env, t_sector *sect, char *line, int i)
 
 void	parseplayer(t_env *env, int fd)
 {
-	int	i;
-	char *line;
+	int		i;
+	char	*line;
 
 	get_next_line(fd, &line);
 	i = 0;
@@ -76,15 +76,14 @@ void	parseplayer(t_env *env, int fd)
 	while (line[i] != ' ')
 		i++;
 	env->player.sector = ft_atoi(&line[i]);
-	ft_putnbr(env->player.sector);
 	env->player.velocity.x = 0.0;
 	env->player.velocity.y = 0.0;
 	env->player.velocity.z = 0.0;
 	env->player.yaw = 0.0;
 	env->player.where.z = env->sector[env->player.sector].floor + EYEHEIGHT;
 	free(line);
-	get_next_line(fd, &line);
-	free(line);
+	if (get_next_line(fd, &line))
+		free(line);
 }
 
 void	parsesectors(t_env *env, int fd)
@@ -158,6 +157,18 @@ void	parsevertexes(t_env *env, int fd)
 	}
 }
 
+void	getvertsectnums_support(t_env *env, char *line)
+{
+	if (line[0] == 'v')
+		env->nvertexes++;
+	else if (line[0] == 's')
+		env->nsectors++;
+	else if (line[0] == 'o')
+		env->sprcount++;
+	else if (line[0] == 'w')
+		env->sprcount += 2;
+}
+
 void	getvertsectnums(t_env *env)
 {
 	int		fd;
@@ -170,14 +181,7 @@ void	getvertsectnums(t_env *env)
 		ft_putstr("openerr\n");
 	while (get_next_line(fd, &line) > 0)
 	{
-		if (line[0] == 'v')
-			env->nvertexes++;
-		else if (line[0] == 's')
-			env->nsectors++;
-		else if (line[0] == 'o')
-			env->sprcount++;
-		else if (line[0] == 'w')
-			env->sprcount += 2;
+		getvertsectnums_support(env, line);
 		free(line);
 	}
 	close(fd);
@@ -187,7 +191,6 @@ void	getvertsectnums(t_env *env)
 	env->button = (t_button *)malloc(sizeof(t_button) * env->nsectors);
 	if (!env->sector || !env->vertex || !env->sprite || !env->button)
 		ft_error(2);
-	printf("%d\n", env->sprcount);
 }
 
 int	parsesprites(t_env *env, int fd)
@@ -225,7 +228,6 @@ int	parsesprites(t_env *env, int fd)
 	return (count);
 }
 
-
 void	spritemaker(t_env *env)
 {
 	int	i;
@@ -248,10 +250,6 @@ void	spritemaker(t_env *env)
 
 void	makewallsp(t_env *env, int i)
 {
-	// if (env->sprite[i].texture[0] != NULL)
-	// 	free(env->sprite[i].texture[0]);
-	// if (env->sprite[i + 1].texture[0] != NULL)
-	// 	free(env->sprite[i + 1].texture[0]);
 	env->sprite[i].pos1.x = env->vertex[env->wallsp.vert1].x;
 	env->sprite[i].pos1.y = env->vertex[env->wallsp.vert1].y;
 	env->sprite[i + 1].pos1.x = env->vertex[env->wallsp.vert2].x;
@@ -305,7 +303,6 @@ void	parsewallsps(t_env *env, int fd, int count)
 	}
 }
 
-
 void	grandparser(t_env *env)
 {
 	int	fd;
@@ -313,7 +310,7 @@ void	grandparser(t_env *env)
 
 	if ((fd = open(env->mapname, O_RDONLY)) < 0)
 		ft_putstr("openerr\n");
-	
+
 	getvertsectnums(env);
 	parsevertexes(env, fd);
 	parsesectors(env, fd);

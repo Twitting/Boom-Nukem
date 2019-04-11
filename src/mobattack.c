@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mobattack.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 18:28:49 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/10 18:47:03 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/11 19:52:23 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	mob_attack(t_env *env)
 		{
 			if (env->sprite[i].spritedist <= 5)
 			{
-				env->sprite[i].mobtimer += (clock() - env->frame) / CLOCKS_PER_SEC;
+				env->sprite[i].mobtimer += (clock() - env->frame) /
+											CLOCKS_PER_SEC;
 				if (env->sprite[i].mobtimer >= 0.5)
 				{
 					env->sprite[i].mobtimer = 0;

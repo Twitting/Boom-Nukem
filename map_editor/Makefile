@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: twitting <twitting@student.42.fr>          +#+  +:+       +#+         #
+#    By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/04/06 16:19:41 by twitting         ###   ########.fr        #
+#    Updated: 2019/04/11 18:23:06 by daharwoo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,7 @@ clean:
 
 fclean: clean
 	/bin/rm -f $(NAME)
+	/bin/rm -f ./save
 
 re: fclean all
 

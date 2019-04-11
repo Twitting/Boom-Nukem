@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:33:20 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/11 16:14:18 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/11 21:19:04 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,4 @@ void	inittext(t_env *env)
 	env->text[9] = IMG_Load("textures/pistol4.png");
 	env->text[12] = IMG_Load("textures/sky.png");
 	env->text[13] = IMG_Load("textures/shot.png");
-
 }
