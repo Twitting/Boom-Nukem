@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 20:17:10 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/11 14:46:45 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/11 15:46:57 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 
 void    shoot(t_env *env, SDL_Event *e)
 {
-	int	i;
-
-    if (e->button.button == SDL_BUTTON_LEFT)
+    if (e->button.button == SDL_BUTTON_LEFT && env->shooting == 0)
+    {
+        env->shooting = 11;
         if (env->player.target >= 0)
         {
 			
@@ -38,6 +38,7 @@ void    shoot(t_env *env, SDL_Event *e)
                 env->sprite[env->player.target].type = 4;
            // printf("%d\n",env->sprite[env->player.target].hp);
         }
+    }
 }
 
 void    cross(t_env *env)

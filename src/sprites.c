@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:43:20 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/11 13:19:47 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/11 15:47:05 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	drawsprite(t_env *env, t_rend *rend, int j)
 	y = rend->csprya - 1;
 	
 	//printf("!!!%d!!!\n", ((int *)(env->sprite[j].texture->pixels))[0]);
+	
 	while (++y <= rend->cspryb)
 	{
 		txty = (int)((double)(y - rend->sprya) / (double)(rend->spryb - rend->sprya) * env->sprite[j].texture[0]->h);
@@ -36,12 +37,14 @@ void	drawsprite(t_env *env, t_rend *rend, int j)
 			*pix = ((int *)(env->sprite[j].texture[0]->pixels))[txty % env->sprite[j].texture[0]->h * env->sprite[j].texture[0]->w + rend->txtx];
 		pix += WWIN;
 	}
+
 }
 
 void	spriteplane(t_env *env, t_rend *rend, int j)
 {
 	t_sprque		now;
 
+	
 	now = rend->sprq[env->sprite[j].sector];
 	if (now.visible == 0)
 		return ;
@@ -70,6 +73,7 @@ void	spriteplane(t_env *env, t_rend *rend, int j)
 	rend->sprbegx = MAX(rend->sprx1, now.sx1);
 	rend->sprendx = MIN(rend->sprx2, now.sx2);
 	rend->sprx = rend->sprbegx;
+	
 	while (rend->sprx < rend->sprendx)
 	{
 		rend->csprya = CLAMP(rend->sprya, now.ytop[rend->sprx], now.ybottom[rend->sprx]);
@@ -114,6 +118,7 @@ void	rendersprite(t_env *env, t_rend *rend)
 	int	y;
 
 	i = -1;
+
 	while (++i < env->sprcount) //
 	{
 		if (env->sprite[i].type == 2)
@@ -129,9 +134,10 @@ void	rendersprite(t_env *env, t_rend *rend)
 			(env->player.where.x - env->sprite[i].pos1.x) + (env->player.where.y -
 			env->sprite[i].pos1.y) * (env->player.where.y - env->sprite[i].pos1.y);
 		env->sprite[i].visible = 0;
-	}
+	};
 	sortsprite(env);
 	i = -1;
+
 	env->player.target = -1;
 	while (++i < env->sprcount) //
 	{
@@ -141,5 +147,28 @@ void	rendersprite(t_env *env, t_rend *rend)
 			spriteplane(env, rend, i);
 		else
 			trplane(env, rend, i);
+	}
+}
+
+void	spritelightapply(t_env *env, t_sprite *sprite)
+{
+	int j;
+	int k;
+	unsigned char *pix;
+	
+	if (sprite->texture[0] != NULL)
+		free(sprite->texture);
+	sprite->texture[0] = IMG_Load("textures/barrel.png");
+	pix = (unsigned char *)sprite->texture[0]->pixels;
+	j = -1;
+	while (++j < sprite->texture[0]->h)
+	{
+		k = -1;
+		while (++k < sprite->texture[0]->w - 1)
+		{
+			pix[(j * sprite->texture[0]->w + k) * 4] = (unsigned char)((double)pix[(j * sprite->texture[0]->w + k) * 4] / 100 * env->sector[sprite->sector].light);
+			pix[(j * sprite->texture[0]->w + k) * 4 + 1] = (unsigned char)((double)pix[(j * sprite->texture[0]->w + k) * 4 + 1] / 100 * env->sector[sprite->sector].light);
+			pix[(j * sprite->texture[0]->w + k) * 4 + 2] = (unsigned char)((double)pix[(j * sprite->texture[0]->w + k) * 4 + 2] / 100 * env->sector[sprite->sector].light);
+		}
 	}
 }

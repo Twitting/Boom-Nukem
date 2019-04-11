@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: drestles <drestles@student.42.fr>          +#+  +:+       +#+         #
+#    By: twitting <twitting@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/04/10 22:21:14 by drestles         ###   ########.fr        #
+#    Updated: 2019/04/11 15:43:38 by twitting         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ SRC = ./src/main.c \
 		
 LIBFT = ./libft/libft.a
 OBJECTS = $(SRC:.c=.o)
-WWW = -Wall -Wextra -Werror -Ofast
+WWW = -Wall -Wextra -Werror -Ofast -g
 INCLUDES = -I libft -I includes/ -I includes/frameworks/SDL2.framework/Versions/A/Headers \
 -I includes/frameworks/SDL2_image.framework/Versions/A/Headers \
 -I includes/frameworks/SDL2_ttf.framework/Versions/A/Headers
@@ -47,6 +47,10 @@ FLAGS_LINUX = -I ./includes/ -I includes/frameworks/SDL2.framework/Versions/A/He
 	includes/frameworks/SDL2_image.framework/Versions/A/Headers -lm -lpthread -lSDL2main -lSDL2 -I libft -lSDL2_image
 
 all: $(NAME)
+	mkdir -p save/1
+	mkdir -p save/2
+	mkdir -p save/3
+	mkdir -p save/4
 
 linux:
 	make re -C libft/
