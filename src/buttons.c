@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 17:47:12 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/07 19:11:53 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/11 19:40:30 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,14 @@ void	drawbutton(t_env *env, t_rend *rend)
 	pix = (int*)env->surface->pixels;
 	pix += rend->cbutya * WWIN + rend->butx;
 	y = rend->cbutya - 1;
-	//printf("!!!%d!!!\n", ((int *)(env->button[j].texture->pixels))[0]);
 	while (++y <= rend->cbutyb)
 	{
-		txty = (int)((double)(y - rend->butya) / (double)(rend->butyb - rend->butya) * env->text[1]->h);
-		if (((int *)(env->text[1]->pixels))[txty % env->text[1]->h * env->text[1]->w + rend->txtx] != -16777216)
-			*pix = ((int *)(env->text[1]->pixels))[txty % env->text[1]->h * env->text[1]->w + rend->txtx];
+		txty = (int)((double)(y - rend->butya) /
+		(double)(rend->butyb -rend->butya) * env->text[1]->h);
+		if (((int *)(env->text[1]->pixels))[txty % env->text[1]->h *
+		env->text[1]->w + rend->txtx] != -16777216)
+			*pix = ((int *)(env->text[1]->pixels))
+			[txty % env->text[1]->h * env->text[1]->w + rend->txtx];
 		pix += WWIN;
 	}
 }

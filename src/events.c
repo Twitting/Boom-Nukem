@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 21:52:25 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/10 17:45:26 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/11 18:44:58 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,10 @@ void	keyboard_events(t_env *env, SDL_Event *e)
 			env->player.velocity.z += 1.5;
 			env->falling = 1;
 		}
+	// if (e->key.keysym.sym == SDLK_x)
+	// {
+	// 	sectorlightapply(env);
+	// }
 }
 
 void	handle_events(t_env *env, SDL_Event *e)

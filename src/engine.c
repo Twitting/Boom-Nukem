@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/11 16:40:36 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/11 20:53:46 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -403,7 +403,7 @@ int		start_engine(t_env *env, SDL_Event *e, t_rend *rend)
 		rend->sprq[i].visible = 0;
 	SDL_LockSurface(env->surface);
 	render_wall(env, rend);
-	renderbutton(env, rend);
+	//renderbutton(env, rend);
 	rendersprite(env, rend);
 	cross(env);
 	animation(env);

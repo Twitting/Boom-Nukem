@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:25:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/11 15:14:12 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/11 18:48:02 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ void	parseplayer(t_env *env, int fd)
 	env->player.yaw = 0.0;
 	env->player.where.z = env->sector[env->player.sector].floor + EYEHEIGHT;
 	free(line);
-	get_next_line(fd, &line);
-	free(line);
+	if (get_next_line(fd, &line))
+		free(line);
 }
 
 void	parsesectors(t_env *env, int fd)
@@ -233,7 +233,7 @@ void	spritemaker(t_env *env)
 	i = -1;
 	while (++i < env->sprcount)
 	{
-		if (env->sprite[i].type == 0)
+		if (env->sprite[i].type == 0 || env->sprite[i].type == 3)
 		{
 			env->sprite[i].height = 7;
 			env->sprite[i].width = 3;

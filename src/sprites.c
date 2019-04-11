@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:43:20 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/11 16:28:52 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/11 19:00:02 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,8 +143,9 @@ void	rendersprite(t_env *env, t_rend *rend)
 	{
 		if (env->sprite[i].spritedist <= 2 && env->sprite[i].type == 3)
 		{
+			if (env->sprite[i].width > 0)
+				env->player.hp += 50;
 			env->sprite[i].width = 0;
-			env->player.hp += 10;
 		}
 		if (env->sprite[i].type != 2)
 			spriteplane(env, rend, i);
@@ -160,8 +161,8 @@ void	spritelightapply(t_env *env, t_sprite *sprite)
 	unsigned char *pix;
 	
 	if (sprite->texture[0] != NULL)
-		free(sprite->texture);
-	sprite->texture[0] = IMG_Load("textures/barrel.png");
+		SDL_FreeSurface(sprite->texture[0]);
+	sprite->texture[0] = sprite->type == 0 ? IMG_Load("textures/barrel.png") : IMG_Load("textures/med.png");
 	pix = (unsigned char *)sprite->texture[0]->pixels;
 	j = -1;
 	while (++j < sprite->texture[0]->h)
