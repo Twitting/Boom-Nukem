@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:38:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/11 15:31:38 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/11 15:43:40 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,8 @@ void	findbutton(t_env *env)
 	unsigned int	i;
 	double			x;
 	double			y;
-	
+
 	i = 0;
-	
 	while (i < env->nsectors)
 	{
 		s = -1;
@@ -44,7 +43,7 @@ void	findbutton(t_env *env)
 					if (env->sector[i].vertex[s % env->sector[i].npoints].x < env->sector[i].vertex[(s + 1) % env->sector[i].npoints].x)
 						x = env->button[i].x1 + BUTTONWIDTH;
 					else
-						x = env->button[i].x1 - BUTTONWIDTH;			
+						x = env->button[i].x1 - BUTTONWIDTH;
 				}
 				else
 				{
@@ -57,7 +56,7 @@ void	findbutton(t_env *env)
 					env->sector[i].vertex[s % env->sector[i].npoints].y) / (env->sector[i].vertex[(s + 1) %
 					env->sector[i].npoints].x - env->sector[i].vertex[s % env->sector[i].npoints].x) +
 					env->sector[i].vertex[s % env->sector[i].npoints].y;
-					while (((x - env->button[i].x1) * (x - env->button[i].x1) + (y -  env->button[i].y1) * (y -  env->button[i].y1)) < BUTTONWIDTH)
+					while (((x - env->button[i].x1) * (x - env->button[i].x1) + (y - env->button[i].y1) * (y - env->button[i].y1)) < BUTTONWIDTH)
 					{
 						y = (x - env->sector[i].vertex[s % env->sector[i].npoints].x) *
 						(env->sector[i].vertex[(s + 1) % env->sector[i].npoints].y -
@@ -76,10 +75,6 @@ void	findbutton(t_env *env)
 		}
 		i++;
 	}
-	// printf("%f %f\n", env->button[0].x1, env->button[0].y1);
-	// printf("%f %f\n", env->button[0].x2, env->button[0].y2);
-	// printf("%f %f\n", env->button[1].x1, env->button[1].y1);
-	// printf("%f %f\n", env->button[1].x2, env->button[1].y2);
 }
 
 char	*gettex(t_env *env, int secnum, int tex)
@@ -97,12 +92,12 @@ char	*gettex(t_env *env, int secnum, int tex)
 
 void	sectorlightapply(t_env *env)
 {
-	int	i;
-	int j;
-	int k;
-	int	tex;
-	unsigned char *pix;
-	
+	int				i;
+	int				j;
+	int				k;
+	int				tex;
+	unsigned char	*pix;
+
 	tex = -1;
 	while (++tex < 3)
 	{
@@ -151,10 +146,10 @@ char	*gettexenemy(int tex)
 
 void	enemylightapply(t_env *env, t_sprite *sprite, int tex)
 {
-	int j;
-	int k;
-	unsigned char *pix;
-	
+	int				j;
+	int				k;
+	unsigned char	*pix;
+
 	sprite->hp = 100;
 	sprite->movecount = 0;
 	sprite->texnum = 0;
@@ -183,7 +178,6 @@ void	initspritelight(t_env *env)
 	int	j;
 
 	i = -1;
-	
 	while (++i < env->sprcount)
 	{
 		j = -1;
@@ -218,8 +212,10 @@ void	texnulling(t_env *env)
 
 void	init(t_env *env)
 {
-	FILE		*inputFile;
-	
+	FILE	*input_file;
+	int		i;
+
+	i = 0;
 	env->yaw = 0;
 	env->player.hp = 100;
 	env->quit = 0;
@@ -233,6 +229,8 @@ void	init(t_env *env)
 	env->timer = 0;
 	env->jetpack = 0;
 	ft_bzero(env->wsad, 16);
+	while (i++ < 4)
+		save_game1(env, i);
 	sectorlightapply(env);
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 		ft_error(4);
@@ -242,32 +240,16 @@ void	init(t_env *env)
 			SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
 			WWIN, HWIN, SDL_WINDOW_OPENGL + SDL_WINDOW_ALLOW_HIGHDPI)))
 			ft_error(4);
-	env->surface = SDL_GetWindowSurface(env->window);
-	initspritelight(env);
-	findbutton(env);
+		env->surface = SDL_GetWindowSurface(env->window);
+		initspritelight(env);
+		findbutton(env);
 	}
-	if ((inputFile = fopen("./save/1/player.dat",  "r")))
-		fread(&env->save[0], sizeof(t_player), 1, inputFile);
-	if ((inputFile = fopen("./save/2/player.dat",  "r")))
-		fread(&env->save[1], sizeof(t_player), 1, inputFile);
-	if ((inputFile = fopen("./save/3/player.dat",  "r")))
-		fread(&env->save[2], sizeof(t_player), 1, inputFile);
-	if ((inputFile = fopen("./save/4/player.dat",  "r")))
-		fread(&env->save[3], sizeof(t_player), 1, inputFile);
-
+	if ((input_file = fopen("./save/1/player.dat", "r")))
+		fread(&env->save[0], sizeof(t_player), 1, input_file);
+	if ((input_file = fopen("./save/2/player.dat", "r")))
+		fread(&env->save[1], sizeof(t_player), 1, input_file);
+	if ((input_file = fopen("./save/3/player.dat", "r")))
+		fread(&env->save[2], sizeof(t_player), 1, input_file);
+	if ((input_file = fopen("./save/4/player.dat", "r")))
+		fread(&env->save[3], sizeof(t_player), 1, input_file);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
