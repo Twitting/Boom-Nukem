@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   menu.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 02:45:02 by drestles          #+#    #+#             */
-/*   Updated: 2019/04/11 16:37:11 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/11 23:03:53 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,6 @@ void game_mode(t_env *env, SDL_Event *e)
 	SDL_UpdateWindowSurface(env->window);
 	while (env->state == 5)
 	{
-		//SDL_Surface *button;
-		//button = SDL_LoadBMP("img/game_mode.bmp");
 		if (env->b_one == 1 | env->b_two == 1 | env->b_three == 1)
 		{
 			if (env->b_one == 1)
@@ -162,8 +160,6 @@ void	save_game1(t_env *env, int i)
 			fwrite(&env->sprite[j], sizeof(t_sprite), 1, outfile);
 		j++;
 	}
-	
-
 	if (i == 0)
 		outfile = fopen("./save/1/player.dat", "w");
 	if (i == 1)
