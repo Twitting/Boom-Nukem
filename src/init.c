@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:38:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/10 20:52:57 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/11 14:58:44 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,13 +231,13 @@ void	init(t_env *env)
 	env->oldfps = 60;
 	env->timer = 0;
 	env->jetpack = 0;
-	//env->butcount = 2;//!!!!!!!!!!!!MAKE IT IN PARSER
-	// env->sector[0].ceiling *= -1;
-	// env->sector[0].sky = 1;
-	// env->sector[1].sky = 1;
-	// env->sector[2].sky = 0;
-	// env->sector[3].sky = 0;
-	// env->sector[4].sky = 0;
+	// env->sprcount++;
+	// env->sprite[env->sprcount - 1].type = 5;
+	// env->sprite[env->sprcount - 1].width = 0;
+	// env->sprite[env->sprcount - 1].height = 1;
+	// env->sprite[env->sprcount - 1].sector = 0;
+	// env->sprite[env->sprcount - 1].texture[0] = IMG_Load("textures/barrel.png");
+	ft_bzero(env->wsad, 16);
 	sectorlightapply(env);
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 		ft_error(4);

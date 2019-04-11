@@ -23,27 +23,6 @@ sector	6 30	60 4	0 1 5 4 3		-1 3 -1 0 -1
 
 player	20 40	23 0
 
-object	30 40	0 0
-object	20 45	0 0
 object	60 70	1 1
-object	60 73	1 1
-object	63 70	1 1
-object	66 73	1 1
-object	60 70	1 1
-object	60 73	1 1
-object	63 70	1 1
-object	66 73	1 1
-object	60 70	1 1
-object	60 73	1 1
-object	63 70	1 1
-object	66 73	1 1
-object	60 70	1 1
-object	60 73	1 1
-object	63 70	1 1
-object	66 73	1 1
-object	60 70	1 1
-object	60 73	1 1
-object	63 70	1 1
-object	66 73	1 1
+object	60 70	0 1
 
-wallsp	6 9	0 1
