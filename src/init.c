@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 18:38:09 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/10 20:52:57 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/11 15:31:38 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,9 +156,9 @@ void	enemylightapply(t_env *env, t_sprite *sprite, int tex)
 	unsigned char *pix;
 	
 	sprite->hp = 100;
+	sprite->movecount = 0;
+	sprite->texnum = 0;
 	env->sprite->mobtimer = 0;
-	// if (sprite->texnum == 7)
-	// 	sprite->texnum = 0;
 	if (sprite->texture[tex] != NULL)
 		SDL_FreeSurface(sprite->texture[tex]);
 	sprite->texture[tex] = IMG_Load(gettexenemy(tex));
@@ -223,6 +223,7 @@ void	init(t_env *env)
 	env->yaw = 0;
 	env->player.hp = 100;
 	env->quit = 0;
+	env->shooting = 0;
 	env->ground = 0;
 	env->falling = 1;
 	env->ducking = 0;
@@ -231,13 +232,7 @@ void	init(t_env *env)
 	env->oldfps = 60;
 	env->timer = 0;
 	env->jetpack = 0;
-	//env->butcount = 2;//!!!!!!!!!!!!MAKE IT IN PARSER
-	// env->sector[0].ceiling *= -1;
-	// env->sector[0].sky = 1;
-	// env->sector[1].sky = 1;
-	// env->sector[2].sky = 0;
-	// env->sector[3].sky = 0;
-	// env->sector[4].sky = 0;
+	ft_bzero(env->wsad, 16);
 	sectorlightapply(env);
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 		ft_error(4);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: drestles <drestles@student.42.fr>          +#+  +:+       +#+         #
+#    By: twitting <twitting@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/04/10 22:21:14 by drestles         ###   ########.fr        #
+#    Updated: 2019/04/11 14:58:21 by twitting         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ SRC = ./src/main.c \
 		
 LIBFT = ./libft/libft.a
 OBJECTS = $(SRC:.c=.o)
-WWW = -Wall -Wextra -Werror -Ofast
+WWW = -Wall -Wextra -Werror -Ofast -g
 INCLUDES = -I libft -I includes/ -I includes/frameworks/SDL2.framework/Versions/A/Headers \
 -I includes/frameworks/SDL2_image.framework/Versions/A/Headers \
 -I includes/frameworks/SDL2_ttf.framework/Versions/A/Headers

@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:33:20 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/10 20:40:51 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/11 14:17:49 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,10 @@ void	inittext(t_env *env)
 	env->text[5] = IMG_Load("textures/d3.png");
 	env->text[4] = IMG_Load("textures/d4.png");
 	env->text[3] = IMG_Load("textures/d5.png");
+	env->text[8] = IMG_Load("textures/pistol1.png");
+	env->text[11] = IMG_Load("textures/pistol2.png");
+	env->text[10] = IMG_Load("textures/pistol3.png");
+	env->text[9] = IMG_Load("textures/pistol4.png");
+	env->text[12] = IMG_Load("textures/sky.png");
+
 }

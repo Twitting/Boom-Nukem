@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/10 23:02:14 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/11 15:13:24 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ typedef struct		s_env
 	int				jetpack;
 	int				spacebar;
 	t_wallsp		wallsp;
+	int				shooting;
 
 
 	SDL_Window		*window2;
@@ -176,13 +177,13 @@ typedef struct		s_env
 	int b_four;
 }					t_env;
 
+void	spritelightapply(t_env *env, t_sprite *sprite);
 void	mob_attack(t_env *env);
 void	enemylightapply(t_env *env, t_sprite *sprite, int tex);
 void    shoot(t_env *env, SDL_Event *e);
 void    cross(t_env *env);
 void	texnulling(t_env *env);
 void	fps(t_env *env);
-void	spritelightapply(t_env *env, t_sprite *sprite);
 void	movement_calcs(t_env *env);
 void	movement(t_env *env, float dx, float dy);
 void	handle_events(t_env *env, SDL_Event *e);
