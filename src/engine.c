@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/11 15:31:50 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/11 16:40:36 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -371,13 +371,13 @@ void	pistolrender(t_env *env)
 	
 	pix = (int *)(env->surface->pixels);
 	y = 460;
-	x = WWIN / 2;
+	x = WWIN / 3 * 2;
 	a = 0;
 	b = 0;
 	while (++y < HWIN)
 	{
-		x = WWIN / 2;
-		while (++x < WWIN / 2 + 263)
+		x = WWIN / 3 * 2;
+		while (++x < WWIN / 3 * 2 + 263)
 		{
 			if (((int *)(env->text[8 + env->shooting / 3]->pixels))
 			[a % env->text[8 + env->shooting / 3]->h * (env->text[8 + env->shooting / 3]->w) + 

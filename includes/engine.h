@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/11 15:46:06 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/11 16:18:39 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ typedef struct		s_env
 	SDL_Surface		*surface;
 	SDL_Surface		*text[20];
 	SDL_Window		*window;
+	SDL_Surface		*temp;
 	int				wsad[4];
 	int				moving;
 	int				ground;

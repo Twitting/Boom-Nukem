@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprites.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/29 15:43:20 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/11 15:47:05 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/11 16:28:52 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,10 @@ void	rendersprite(t_env *env, t_rend *rend)
 	while (++i < env->sprcount) //
 	{
 		if (env->sprite[i].spritedist <= 2 && env->sprite[i].type == 3)
+		{
 			env->sprite[i].width = 0;
+			env->player.hp += 10;
+		}
 		if (env->sprite[i].type != 2)
 			spriteplane(env, rend, i);
 		else
