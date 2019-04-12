@@ -6,7 +6,7 @@
 #    By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/04/12 16:20:23 by daharwoo         ###   ########.fr        #
+#    Updated: 2019/04/12 20:02:02 by daharwoo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRC = ./src/main.c \
 		./src/walls2.c \
 		./src/wallintersect.c \
 		./src/light.c \
+		./src/rotatinglight.c \
 		./src/spritedist.c \
 		./src/findbutton.c \
 		./src/menu/main.c \
@@ -66,7 +67,7 @@ $(NAME): $(OBJECTS)
 	gcc -o $(NAME) $(OBJECTS) $(INCLUDES) $(SDL) $(LIBFT) 
 
 %.o: %.c
-	gcc $(WWW) $(INCLUDES) -F ~/Library/Frameworks/ -c $< -o $@ 
+	gcc $(WWW) $(INCLUDES) -c $< -o $@ -F includes/frameworks/
 
 clean:
 	make clean -C libft/

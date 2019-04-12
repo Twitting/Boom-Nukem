@@ -74,6 +74,7 @@ void	parseplayer(t_env *env, int fd)
 	env->player.velocity.y = 0.0;
 	env->player.velocity.z = 0.0;
 	env->player.yaw = 0.0;
+	env->player.pushingbutton = 0;
 	env->player.where.z = env->sector[env->player.sector].floor + EYEHEIGHT;
 	free(line);
 	if (get_next_line(fd, &line))
@@ -106,6 +107,7 @@ void	parsesectors(t_env *env, int fd)
 			while (line[i] != '\t')
 				i++;
 			env->sector[count].light = ft_atoi(&line[i]);
+			env->sector[count].on = env->sector[count].light > 40 ? 1 : 0;
 			while (line[i] != ' ')
 				i++;
 			env->sector[count].textpack = ft_atoi(&line[i]);

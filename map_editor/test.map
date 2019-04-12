@@ -1,4 +1,9 @@
 
 
-player	0 0	0 0
+player	132 165	0 0
+
+object	114 154	0 -1
+object	126 152	1 -1
+object	137 153	2 -1
+object	142 152	3 -1
 

@@ -6,19 +6,14 @@
 /*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/12 16:43:11 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/12 20:02:01 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "render.h"
 
-void	mixtex(t_env *env, t_sprite *sprite)
+void	mixtex_support(t_env *env, t_sprite *sprite, SDL_Surface *temp)
 {
-	SDL_Surface *temp;
-
-	env->jetpack = 0;
-	if (sprite->type == 4 && sprite->hp <= 0)
-		sprite->hp = 716;
 	if (sprite->type == 1 && sprite->visible == 1)
 	{
 		temp = sprite->texture[0];
@@ -27,7 +22,6 @@ void	mixtex(t_env *env, t_sprite *sprite)
 	}
 	else if (sprite->type == 4 && sprite->hp > 666)
 	{
-		//SDL_FreeSurface(sprite->texture[0]);
 		if ((sprite->hp - 676) % 10 == 0)
 		{
 			sprite->texture[0] = env->text[(sprite->hp - 676) / 10 + 3];
@@ -43,6 +37,16 @@ void	mixtex(t_env *env, t_sprite *sprite)
 		sprite->height = 5;
 		sprite->hp--;
 	}
+}
+
+void	mixtex(t_env *env, t_sprite *sprite)
+{
+	SDL_Surface *temp;
+
+	temp = NULL;
+	if (sprite->type == 4 && sprite->hp <= 0)
+		sprite->hp = 716;
+	mixtex_support(env, sprite, temp);
 	temp = NULL;
 }
 
@@ -95,29 +99,21 @@ void	pistolrender(t_env *env)
 
 int		start_engine(t_env *env, SDL_Event *e, t_rend *rend)
 {
-	int		i;
+	int	i;
 
 	i = -1;
-	ft_putchar('A');
 	while (++i < (int)env->nsectors)
 		rend->sprq[i].visible = 0;
 	SDL_LockSurface(env->surface);
 	render_wall(env, rend);
-	ft_putchar('b');
 	renderbutton(env, rend);
-	ft_putchar('C');
 	rendersprite(env, rend);
-	ft_putchar('d');
 	cross(env);
-	ft_putchar('E');
 	animation(env);
-	ft_putchar('f');
 	pistolrender(env);
-	ft_putchar('G');
+	pushswitch(env);
 	SDL_UnlockSurface(env->surface);
 	SDL_UpdateWindowSurface(env->window);
-	ft_putchar('h');
 	handle_events(env, e);
-	ft_putchar('I');
 	return (0);
 }

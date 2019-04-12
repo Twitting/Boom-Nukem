@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/12 14:34:22 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/12 15:40:02 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@
 # define VFOV 1.0 * 0.2 
 # define SKYSIZE 3840
 # define TEXP env->sector[secnum].textpack
-
 
 # define MIN(a, b) (((a < b)) ? (a) : (b))
 # define MAX(a, b) (((a > b)) ? (a) : (b))
@@ -95,6 +94,7 @@ typedef struct		s_sector
 	SDL_Surface		*text[3];
 	int				sky;
 	int				textpack;
+	int				on;
 }					t_sector;
 
 typedef struct		s_player
@@ -110,6 +110,7 @@ typedef struct		s_player
 	double			eye;
 	int				target;
 	int				hp;
+	int				pushingbutton;
 }					t_player;
 
 typedef struct		s_wallsp
@@ -180,6 +181,9 @@ typedef struct		s_env
 	int b_four;
 }					t_env;
 
+void	initspritelight(t_env *env);
+void	sectorlightapply(t_env *env);
+void	pushswitch(t_env *env);
 void	spritelightapply(t_env *env, t_sprite *sprite);
 void	mob_attack(t_env *env);
 void	enemylightapply(t_env *env, t_sprite *sprite, int tex);

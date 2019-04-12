@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rules.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 21:55:26 by drestles          #+#    #+#             */
-/*   Updated: 2019/04/11 22:59:04 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/12 15:09:00 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	draw_strings_one(SDL_Surface *sur, SDL_Color color)
 	color, 270, sur);
 	draw_string("4) Player (P button) can be set only in first",
 	color, 310, sur);
-	draw_string("5) Objects (1, 2 buttons) can be set only in last",
+	draw_string("5) Objects (1, 2, 3, 4 buttons) can be set only in last",
 	color, 370, sur);
 }
 
