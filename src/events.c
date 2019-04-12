@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 21:52:25 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/12 16:04:41 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/12 20:59:13 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	keyboard_events(t_env *env, SDL_Event *e)
 		env->wsad[2] = on;
 	if (e->key.keysym.sym == SDLK_d)
 		env->wsad[3] = on;
-	if (e->key.keysym.sym == SDLK_e && !on)
+	if (e->key.keysym.sym == SDLK_e && !on && checkswitch(env))
 		env->player.pushingbutton = 1;
 	if (e->key.keysym.sym == SDLK_LCTRL || e->key.keysym.sym == SDLK_RCTRL)
 	{

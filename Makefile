@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: twitting <twitting@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/04/12 20:02:02 by daharwoo         ###   ########.fr        #
+#    Updated: 2019/04/12 21:17:04 by twitting         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRC = ./src/main.c \
 		./src/walls2.c \
 		./src/wallintersect.c \
 		./src/light.c \
+		./src/lightswitch.c \
 		./src/rotatinglight.c \
 		./src/spritedist.c \
 		./src/findbutton.c \

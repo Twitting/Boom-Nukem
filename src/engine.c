@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/12 20:02:01 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/12 21:23:58 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	mixtex_support(t_env *env, t_sprite *sprite, SDL_Surface *temp)
 		sprite->texture[7] = temp;
 		sprite->height = 5;
 		sprite->hp--;
+		enemylightapply(env, sprite, 0);
 	}
 }
 

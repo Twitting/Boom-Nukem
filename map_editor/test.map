@@ -1,9 +1,24 @@
 
 
-player	132 165	0 0
+player	222 194	0 0
 
-object	114 154	0 -1
-object	126 152	1 -1
-object	137 153	2 -1
-object	142 152	3 -1
+object	188 158	0 -1
+object	204 155	1 -1
+object	220 156	2 -1
+object	237 164	3 -1
+object	216 177	1 -1
+object	230 182	0 -1
+object	244 189	1 -1
+object	258 198	1 -1
+object	270 192	1 -1
+object	277 164	1 -1
+object	259 151	1 -1
+object	234 136	2 -1
+object	214 118	2 -1
+object	196 120	2 -1
+object	182 129	2 -1
+object	168 129	2 -1
+object	162 112	2 -1
+object	203 95	2 -1
+object	258 99	3 -1
 
