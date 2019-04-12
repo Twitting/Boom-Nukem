@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprites.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 12:24:34 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/12 16:47:20 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/12 21:57:41 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ void	spriteplane(t_env *env, t_rend *rend, int j)
 	rend->vspr.x = env->sprite[j].pos1.x - env->player.where.x;
 	rend->vspr.y = env->sprite[j].pos1.y - env->player.where.y;
 	rend->tspr.x = rend->vspr.x * env->player.sinang - rend->vspr.y * env->player.cosang;
-	rend->tspr1 = rend->tspr.x + env->sprite[j].width / 2;
-	rend->tspr2 = rend->tspr.x - env->sprite[j].width / 2;
+	rend->tspr1 = rend->tspr.x + (double)(env->sprite[j].width) / 2.0;
+	rend->tspr2 = rend->tspr.x - (double)(env->sprite[j].width) / 2.0;
 	rend->tspr.y = rend->vspr.x * env->player.cosang + rend->vspr.y * env->player.sinang;
 	if (rend->tspr.y <= 0)
 		return ;

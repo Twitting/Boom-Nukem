@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/12 21:23:58 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/12 21:44:08 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,15 @@ void	mixtex(t_env *env, t_sprite *sprite)
 	temp = NULL;
 }
 
+void	mixkeytex(t_sprite *sprite)
+{
+	SDL_Surface	*temp;
+
+	temp = sprite->texture[0];
+	sprite->texture[0] = sprite->texture[sprite->texnum % 8];
+	sprite->texture[sprite->texnum % 8] = temp;
+}
+
 void	animation(t_env *env)
 {
 	int	i;
@@ -58,7 +67,7 @@ void	animation(t_env *env)
 	i = -1;
 	while (++i < env->sprcount)
 	{
-		if (env->sprite[i].movecount >= 5)
+		if (env->sprite[i].movecount >= 5 && env->sprite[i].type != 5)
 		{
 			env->sprite[i].movecount = 0;
 			env->sprite[i].texnum = env->sprite[i].texnum == 6 ? 0 : env->sprite[i].texnum + 1;
@@ -66,6 +75,16 @@ void	animation(t_env *env)
 		}
 		if (env->sprite[i].type == 4 && env->sprite[i].hp != 665)
 			mixtex(env, &env->sprite[i]);
+		if (env->sprite[i].type == 5)
+		{
+			env->sprite[i].movecount++;
+			if (env->sprite[i].movecount == 5)
+			{
+				env->sprite[i].movecount = 0;
+				env->sprite[i].texnum = env->sprite[i].texnum == 7 ? 0 : env->sprite[i].texnum + 1;
+				mixkeytex(&env->sprite[i]);
+			}
+		}
 	}
 }
 

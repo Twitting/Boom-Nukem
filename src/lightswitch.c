@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 21:15:36 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/12 21:16:43 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/12 21:53:45 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,9 @@ void	currentspritelight(t_env *env)
 					while (++j < 7)
 						enemylightapply(env, &env->sprite[i], j);
 			}
+			else if (env->sprite[i].type == 5)
+			while (++j < 8)
+				keylightapply(env, &env->sprite[i], j);
 		}
 	}
 }
@@ -90,13 +93,11 @@ void	pushswitch(t_env *env)
 		{
 			env->sector[env->player.sector].on = 1;
 			env->sector[env->player.sector].light += 40;
-			printf("on light:%d\n", env->sector[env->player.sector].light);
 		}
 		else if (env->sector[env->player.sector].on == 1)
 		{
 			env->sector[env->player.sector].on = 0;
 			env->sector[env->player.sector].light -= 40;
-			printf("off light:%d\n", env->sector[env->player.sector].light);
 		}
 		currentsectorlightapply(env, env->player.sector);
 		currentspritelight(env);

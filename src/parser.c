@@ -241,6 +241,11 @@ void	spritemaker(t_env *env)
 			env->sprite[i].height = 12;
 			env->sprite[i].width = 4;
 		}
+		else if (env->sprite[i].type == 5)
+		{
+			env->sprite[i].height = 6;
+			env->sprite[i].width = 1;
+		}
 	}
 }
 

@@ -6,7 +6,7 @@
 #    By: twitting <twitting@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/04/12 21:17:04 by twitting         ###   ########.fr        #
+#    Updated: 2019/04/12 21:46:00 by twitting         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRC = ./src/main.c \
 		./src/transparent.c \
 		./src/movemob.c \
 		./src/walls.c \
+		./src/key.c \
 		./src/walls2.c \
 		./src/wallintersect.c \
 		./src/light.c \
