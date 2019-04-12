@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+         #
+#    By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/04/12 14:34:02 by ebednar          ###   ########.fr        #
+#    Updated: 2019/04/12 16:20:23 by daharwoo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,10 +52,6 @@ FLAGS_LINUX = -I ./includes/ -I includes/frameworks/SDL2.framework/Versions/A/He
 	includes/frameworks/SDL2_image.framework/Versions/A/Headers -lm -lpthread -lSDL2main -lSDL2 -I libft -lSDL2_image
 
 all: $(NAME)
-	mkdir -p save/1
-	mkdir -p save/2
-	mkdir -p save/3
-	mkdir -p save/4
 
 linux:
 	make re -C libft/

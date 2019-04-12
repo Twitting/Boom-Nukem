@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 10:10:22 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/12 14:33:47 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/12 16:18:42 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,19 +156,19 @@ void	init_support(t_env *env)
 	findbutton(env);
 }
 
-void	init_support2(t_env *env)
-{
-	FILE	*input_file;
+// void	init_support2(t_env *env)
+// {
+// 	FILE	*input_file;
 
-	if ((input_file = fopen("./save/1/player.dat", "r")))
-		fread(&env->save[0], sizeof(t_player), 1, input_file);
-	if ((input_file = fopen("./save/2/player.dat", "r")))
-		fread(&env->save[1], sizeof(t_player), 1, input_file);
-	if ((input_file = fopen("./save/3/player.dat", "r")))
-		fread(&env->save[2], sizeof(t_player), 1, input_file);
-	if ((input_file = fopen("./save/4/player.dat", "r")))
-		fread(&env->save[3], sizeof(t_player), 1, input_file);
-}
+// 	if ((input_file = fopen("./save/1/player.dat", "r")))
+// 		fread(&env->save[0], sizeof(t_player), 1, input_file);
+// 	if ((input_file = fopen("./save/2/player.dat", "r")))
+// 		fread(&env->save[1], sizeof(t_player), 1, input_file);
+// 	if ((input_file = fopen("./save/3/player.dat", "r")))
+// 		fread(&env->save[2], sizeof(t_player), 1, input_file);
+// 	if ((input_file = fopen("./save/4/player.dat", "r")))
+// 		fread(&env->save[3], sizeof(t_player), 1, input_file);
+// }
 
 void	init(t_env *env)
 {
@@ -195,5 +195,5 @@ void	init(t_env *env)
 		ft_error(4);
 	else
 		init_support(env);
-	init_support2(env);
+	// init_support2(env);
 }

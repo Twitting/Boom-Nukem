@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   transparent.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 16:26:23 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/12 13:33:56 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/12 16:46:24 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	trintersect2(t_rend *rend, t_env *env, int j)
 	{
 		if (rend->i1.y > 0)
 			rend->ttr1 = rend->i1;
-		else 
+		else
 			rend->ttr1 = rend->i2;
 	}
 	if (rend->ttr2.y < rend->nfz.x)
@@ -78,7 +78,7 @@ void	trscale(t_rend *rend)
 	rend->trx2 = WWIN / 2 - (int)((rend->ttr2.x) * rend->trxscale2);
 }
 
-void	trstart( t_rend *rend, t_env *env, int j, t_sprque *now)
+void	trstart(t_rend *rend, t_env *env, int j, t_sprque *now)
 {
 	rend->trceil = env->sprite[j].height - env->player.where.z;
 	rend->trfloor = env->sprite[j].floor - env->player.where.z;
@@ -120,7 +120,7 @@ void	trplane(t_env *env, t_rend *rend, int j)
 	rend->ttr1.y = rend->vtr1.x * env->player.cosang + rend->vtr1.y * env->player.sinang;
 	rend->ttr2.x = rend->vtr2.x * env->player.sinang - rend->vtr2.y * env->player.cosang;
 	rend->ttr2.y = rend->vtr2.x * env->player.cosang + rend->vtr2.y * env->player.sinang;
-	if (rend->ttr1.y <= 0 && rend->ttr2.y  <= 0 )
+	if (rend->ttr1.y <= 0 && rend->ttr2.y  <= 0)
 		return ;
 	rend->u0 = 0;
 	rend->u1 = env->sprite[j].texture[0]->w;
