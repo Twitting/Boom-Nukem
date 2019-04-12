@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/12 21:45:18 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/12 22:08:21 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ typedef struct		s_player
 	int				target;
 	int				hp;
 	int				pushingbutton;
+	int				keys;
 }					t_player;
 
 typedef struct		s_wallsp
