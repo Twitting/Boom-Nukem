@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: twitting <twitting@student.42.fr>          +#+  +:+       +#+         #
+#    By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/04/11 15:43:38 by twitting         ###   ########.fr        #
+#    Updated: 2019/04/12 13:01:26 by ebednar          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,11 @@ SRC = ./src/main.c \
 		./src/mobattack.c \
 		./src/transparent.c \
 		./src/movemob.c \
+		./src/walls.c \
+		./src/walls2.c \
+		./src/wallintersect.c \
+		./src/light.c \
+		./src/spritedist.c \
 		./src/menu/main.c \
 		./src/menu/menu.c \
 		./src/menu/handle_pause.c \
@@ -35,10 +40,9 @@ SRC = ./src/main.c \
 		./src/menu/handle_game_mode.c \
 		./src/menu/game_over.c \
 
-		
 LIBFT = ./libft/libft.a
 OBJECTS = $(SRC:.c=.o)
-WWW = -Wall -Wextra -Werror -Ofast -g
+WWW = -Wall -Wextra -Werror -0fast -g
 INCLUDES = -I libft -I includes/ -I includes/frameworks/SDL2.framework/Versions/A/Headers \
 -I includes/frameworks/SDL2_image.framework/Versions/A/Headers \
 -I includes/frameworks/SDL2_ttf.framework/Versions/A/Headers

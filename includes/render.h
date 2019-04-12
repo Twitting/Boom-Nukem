@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:42:12 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/10 21:22:42 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/12 12:14:40 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,9 @@ typedef struct s_scaler
 
 typedef struct	s_rend
 {
+			int			s;
+			int			ytop[WWIN];
+			int			ybottom[WWIN];
 			t_now		queue[MAXQUEUE];
 			t_sprque	sprq[MAXQUEUE];
 			t_sector	*nowsect;
@@ -195,8 +198,10 @@ int		scaler_next(t_scaler *sc);
 void	rendersprite(t_env *env, t_rend *rend);
 void	renderbutton(t_env *env, t_rend *rend);
 void	trplane(t_env *env, t_rend *rend, int j);
-
-
-void start(t_env *env, SDL_Event *e, t_rend *rend);
+void	render_wall(t_env *env, t_rend *rend);
+void	wallintersect(t_rend *rend, t_env *env);
+void	wallxloop(t_env *env, t_rend *rend);
+void	start(t_env *env, SDL_Event *e, t_rend *rend);
+void	wallscale(t_env *env, t_rend *rend);
 
 #endif

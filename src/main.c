@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:20:03 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/11 19:51:48 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/12 11:51:37 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,18 @@
 
 void	fps(t_env *env)
 {
+	double	time;
+
 	env->fps++;
 	move_mob(env);
 	mob_attack(env);
-	env->timer += (clock() - env->frame) / CLOCKS_PER_SEC;
+	time = (clock() - env->frame) / CLOCKS_PER_SEC;
+	env->timer += time;
+	if (time < (1.0 / 90.0))
+	{
+		//printf("delay\n");
+		SDL_Delay((1.0 / 90.0 - time) * 1000);
+	}
 	if (env->timer >= 1.0)
 	{
 		ft_putstr("fps = ");
@@ -60,12 +68,7 @@ int		main(void)
 	inittext(env);
 	env->state = 0;
 	while (!(env->quit))
-	{
 		start(env, &e, rend);
-		// env->frame = clock();
-		// start_engine(env, &e, rend);
-		// fps(env);
-	}
 	SDL_DestroyWindow(env->window);
 	SDL_Quit();
 	return (0);

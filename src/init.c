@@ -1,79 +1,82 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/12 10:10:22 by ebednar           #+#    #+#             */
+/*   Updated: 2019/04/12 10:10:25 by ebednar          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "render.h"
 
-void	findbutton_sup(t_env *env, double *xy, unsigned int i, unsigned int s)
+void	findbutton_di(t_env *env, int i, int s, t_xy *xy)
 {
 	if (env->sector[i].vertex[s % env->sector[i].npoints].x < env->sector[i].vertex[(s + 1) % env->sector[i].npoints].x)
-		xy[0] = env->button[i].x1 + 0.1;
+		xy->x = env->button[i].x1 + 0.1;
 	else
-		xy[0] = env->button[i].x1 - 0.1;
-	xy[1] = (xy[0] - env->sector[i].vertex[s % env->sector[i].npoints].x) *
+		xy->x = env->button[i].x1 - 0.1;
+	xy->y = (xy->x - env->sector[i].vertex[s % env->sector[i].npoints].x) *
+	(env->sector[i].vertex[(s + 1) % env->sector[i].npoints].y -
+	env->sector[i].vertex[s % env->sector[i].npoints].y) / (env->sector[i].vertex[(s + 1) %
+	env->sector[i].npoints].x - env->sector[i].vertex[s % env->sector[i].npoints].x) +
+	env->sector[i].vertex[s % env->sector[i].npoints].y;
+	while (((xy->x - env->button[i].x1) * (xy->x - env->button[i].x1) + (xy->y - env->button[i].y1) * (xy->y - env->button[i].y1)) < BUTTONWIDTH)
+	{
+		xy->y = (xy->x - env->sector[i].vertex[s % env->sector[i].npoints].x) *
 		(env->sector[i].vertex[(s + 1) % env->sector[i].npoints].y -
 		env->sector[i].vertex[s % env->sector[i].npoints].y) / (env->sector[i].vertex[(s + 1) %
 		env->sector[i].npoints].x - env->sector[i].vertex[s % env->sector[i].npoints].x) +
 		env->sector[i].vertex[s % env->sector[i].npoints].y;
-	while (((xy[0] - env->button[i].x1) * (xy[0] - env->button[i].x1) + (xy[1] - env->button[i].y1) * (xy[1] - env->button[i].y1)) < BUTTONWIDTH)
-	{
-		xy[1] = (xy[0] - env->sector[i].vertex[s % env->sector[i].npoints].x) *
-			(env->sector[i].vertex[(s + 1) % env->sector[i].npoints].y -
-			env->sector[i].vertex[s % env->sector[i].npoints].y) / (env->sector[i].vertex[(s + 1) %
-			env->sector[i].npoints].x - env->sector[i].vertex[s % env->sector[i].npoints].x) +
-			env->sector[i].vertex[s % env->sector[i].npoints].y;
 		if (env->sector[i].vertex[s % env->sector[i].npoints].x < env->sector[i].vertex[(s + 1) % env->sector[i].npoints].x)
-			xy[0] += 0.1;
+			xy->x += 0.1;
 		else
-			xy[0] -= 0.1;
+			xy->x -= 0.1;
 	}
 }
 
-void	findbutton_sup2(t_env *env, double *xy, unsigned int s, unsigned int i)
+void	findbutton_hv(t_env *env, int i, int s)
 {
-	xy[0] = env->button[i].x1;
-	if (env->sector[i].vertex[s % env->sector[i].npoints].y < env->sector[i].vertex[(s + 1) % env->sector[i].npoints].y)
-		xy[1] = env->button[i].y1 + BUTTONWIDTH;
-	else
-		xy[1] = env->button[i].y1 - BUTTONWIDTH;
-}
+	t_xy	xy;
 
-void	findbutton_sup3(t_env *env, double *xy, unsigned int s, unsigned int i)
-{
-	if (env->sector[i].neighbors[s] == -2)
+	env->button[i].x1 = (env->sector[i].vertex[s % env->sector[i].npoints].x + env->sector[i].vertex[(s + 1) % env->sector[i].npoints].x) / 2;
+	env->button[i].y1 = (env->sector[i].vertex[s % env->sector[i].npoints].y + env->sector[i].vertex[(s + 1) % env->sector[i].npoints].y) / 2;
+	if (env->sector[i].vertex[s % env->sector[i].npoints].x == env->sector[i].vertex[(s + 1) % env->sector[i].npoints].x)
 	{
-		env->button[i].x1 = (env->sector[i].vertex[s % env->sector[i].npoints].x + env->sector[i].vertex[(s + 1) % env->sector[i].npoints].x) / 2;
-		env->button[i].y1 = (env->sector[i].vertex[s % env->sector[i].npoints].y + env->sector[i].vertex[(s + 1) % env->sector[i].npoints].y) / 2;
-		if (env->sector[i].vertex[s % env->sector[i].npoints].x == env->sector[i].vertex[(s + 1) % env->sector[i].npoints].x)
-			findbutton_sup2(env, xy, s, i);
-		else if (env->sector[i].vertex[s % env->sector[i].npoints].y == env->sector[i].vertex[(s + 1) % env->sector[i].npoints].y)
-		{
-			xy[1] = env->button[i].y1;
-			if (env->sector[i].vertex[s % env->sector[i].npoints].x < env->sector[i].vertex[(s + 1) % env->sector[i].npoints].x)
-				xy[0] = env->button[i].x1 + BUTTONWIDTH;
-			else
-				xy[0] = env->button[i].x1 - BUTTONWIDTH;
-		}
+		xy.x = env->button[i].x1;
+		if (env->sector[i].vertex[s % env->sector[i].npoints].y < env->sector[i].vertex[(s + 1) % env->sector[i].npoints].y)
+			xy.y = env->button[i].y1 + BUTTONWIDTH;
 		else
-			findbutton_sup(env, xy, i, s);
-		env->button[i].x2 = xy[0];
-		env->button[i].y2 = xy[1];
+			xy.y = env->button[i].y1 - BUTTONWIDTH;
 	}
+	else if (env->sector[i].vertex[s % env->sector[i].npoints].y == env->sector[i].vertex[(s + 1) % env->sector[i].npoints].y)
+	{
+		xy.y = env->button[i].y1;
+		if (env->sector[i].vertex[s % env->sector[i].npoints].x < env->sector[i].vertex[(s + 1) % env->sector[i].npoints].x)
+			xy.x = env->button[i].x1 + BUTTONWIDTH;
+		else
+			xy.x = env->button[i].x1 - BUTTONWIDTH;
+	}
+	else
+		findbutton_di(env, i, s, &xy);
+	env->button[i].x2 = xy.x;
+	env->button[i].y2 = xy.y;
 }
 
 void	findbutton(t_env *env)
 {
 	unsigned int	s;
 	unsigned int	i;
-	double			xy[2];
 
-	i = 0;
-	while (i++ < env->nsectors)
+	i = -1;
+	while (++i < env->nsectors)
 	{
 		s = -1;
 		while (++s < env->sector[i].npoints)
-			findbutton_sup3(env, xy, s, i);
+			if (env->sector[i].neighbors[s] == -2)
+				findbutton_hv(env, i, s);
 	}
 }
 

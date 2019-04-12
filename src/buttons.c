@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buttons.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 17:47:12 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/11 21:27:06 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/12 10:18:53 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void		drawbutton(t_env *env, t_rend *rend)
 	}
 }
 
-static void	butintersect_support(t_rend *rend)
+static void	butintersect_support(t_rend *rend, t_env *env)
 {
 	if (rend->tbut1.y < rend->nfz.x)
 	{
@@ -50,9 +50,19 @@ static void	butintersect_support(t_rend *rend)
 		else
 			rend->tbut2 = rend->i2;
 	}
+	if (fabs(rend->tbut2.x - rend->tbut1.x) > fabs(rend->tbut2.y - rend->tbut1.y))
+	{
+		rend->u0 = (rend->tbut1.x - rend->org1.x) * (env->text[1]->w - 1) / (rend->org2.x - rend->org1.x);
+		rend->u1 = (rend->tbut2.x - rend->org1.x) * (env->text[1]->w - 1) / (rend->org2.x - rend->org1.x);
+	}
+	else
+	{
+		rend->u0 = (rend->tbut1.y - rend->org1.y) * (env->text[1]->w - 1) / (rend->org2.y - rend->org1.y);
+		rend->u1 = (rend->tbut2.y - rend->org1.y) * (env->text[1]->w - 1) / (rend->org2.y - rend->org1.y);
+	}
 }
 
-static void	butintersect(t_rend *rend)
+static void	butintersect(t_rend *rend, t_env *env)
 {
 	if (rend->tbut1.y <= 0 || rend->tbut2.y <= 0)
 	{
@@ -72,7 +82,7 @@ static void	butintersect(t_rend *rend)
 					rend->wintsect1, rend->wintsect2);
 		rend->org1 = (t_xy){rend->tbut1.x, rend->tbut1.y};
 		rend->org2 = (t_xy){rend->tbut2.x, rend->tbut2.y};
-		butintersect_support(rend);
+		butintersect_support(rend, env);
 	}
 }
 
@@ -118,7 +128,7 @@ void		butplane(t_env *env, t_rend *rend, int j)
 	rend->tbut2.y = rend->vbut2.x * env->player.cosang + rend->vbut2.y * env->player.sinang;
 	if (rend->tbut1.y <= 0 && rend->tbut2.y <= 0)
 		return ;
-	butintersect(rend);
+	butintersect(rend, env);
 	if (rend->tbut1.y <= 0.5)
 	{
 		rend->tbut1.x = (0.5 - rend->tbut1.y) * (rend->tbut2.x - rend->tbut1.x) / (rend->tbut2.y - rend->tbut1.y) + rend->tbut1.x;
@@ -139,6 +149,8 @@ void		renderbutton(t_env *env, t_rend *rend)
 	i = -1;
 	while (++i < (int)env->nsectors)
 	{
+		rend->u0 = 0;
+		rend->u1 = env->text[1]->w;
 		butplane(env, rend, i);
 	}
 }

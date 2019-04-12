@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:10:46 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/11 19:58:46 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/12 12:51:53 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,14 +152,14 @@ void	movement(t_env *env, float dx, float dy)
 	arr[1].y = arr[0].y + dy;
 	sect = env->sector[env->player.sector];
 	arr2[0] = -1;
-	arr2[1] = 0;
+	arr2[1] = -1;
 	while (++arr2[0] < (int)sect.npoints)
 		if (sect.neighbors[arr2[0]] >= 0 && intersect_box(arr[0], arr[1], sect.vertex[arr2[0] % sect.npoints], sect.vertex[(arr2[0] + 1) % sect.npoints]) && point_side(arr[1].x, arr[1].y, sect.vertex[arr2[0] % sect.npoints], sect.vertex[(arr2[0] + 1) % sect.npoints]) < 0)
 		{
 			env->player.sector = sect.neighbors[arr2[0]];
 			break ;
 		}
-	while ((unsigned int)arr2[1]++ < env->sector[env->player.sector].npoints)
+	while (++arr2[1] < (int)env->sector[env->player.sector].npoints)
 	{
 		points[arr2[1]].x = sect.vertex[arr2[1]].x;
 		points[arr2[1]].y = sect.vertex[arr2[1]].y;

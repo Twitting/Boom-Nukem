@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mobattack.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 18:28:49 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/11 19:52:23 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/12 10:00:21 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ void	mob_attack(t_env *env)
 					env->sprite[i].mobtimer = 0;
 					env->player.hp -= 10;
 					printf("%d\n", env->player.hp);
+					if (env->player.hp <= 0)
+						env->state = 6;
 				}
 			}
 			else
-			{
 				env->sprite[i].mobtimer = 0;
-			}
 		}
 	}
 }
