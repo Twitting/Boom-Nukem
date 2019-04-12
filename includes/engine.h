@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/12 12:27:25 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/12 14:34:22 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,7 @@ void	verttosect(t_env *env, t_sector *sect, char *line, int i);
 void	neighborstosect(t_sector *sect, char *line, int i);
 void	move_mob(t_env *env);
 void	spritedist(t_env *env);
+void	findbutton(t_env *env);
 
 /*
 ** menu/menu.c

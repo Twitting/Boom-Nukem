@@ -6,31 +6,12 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 16:26:23 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/12 13:00:46 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/12 13:33:56 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
 #include "render.h"
-
-void	drawtransp(t_env *env, t_rend *rend, int j)
-{
-	int	y;
-	int	*pix;
-	int	txty;
-
-	pix = (int*)env->surface->pixels;
-	pix += rend->ctrya * WWIN + rend->trx;
-	y = rend->ctrya - 1;
-	while (++y <= rend->ctryb)
-	{
-		txty = (int)((double)(y - rend->trya) / (double)(rend->tryb - rend->trya) * env->sprite[j].texture[0]->h);
-		if (((int *)(env->sprite[j].texture[0]->pixels))[txty % env->sprite[j].texture[0]->h * env->sprite[j].texture[0]->w + rend->txtx] != -16777216 &&
-		((int *)(env->sprite[j].texture[0]->pixels))[txty % env->sprite[j].texture[0]->h * env->sprite[j].texture[0]->w + rend->txtx] != 0) 
-			*pix = ((int *)(env->sprite[j].texture[0]->pixels))[txty % env->sprite[j].texture[0]->h * env->sprite[j].texture[0]->w + rend->txtx];
-		pix += WWIN;
-	}
-}
 
 void	trintersect2(t_rend *rend, t_env *env, int j)
 {
@@ -82,6 +63,47 @@ void	trintersect(t_rend *rend, t_env *env, int j)
 	}
 }
 
+void	trscale(t_rend *rend)
+{
+	if (rend->ttr1.y <= 0.5)
+	{
+		rend->ttr1.x = (0.5 - rend->ttr1.y) * (rend->ttr2.x - rend->ttr1.x) / (rend->ttr2.y - rend->ttr1.y) + rend->ttr1.x;
+		rend->ttr1.y = 0.5;
+	}
+	rend->trxscale1 = WWIN * HFOV / rend->ttr1.y;
+	rend->tryscale1 = HWIN * VFOV / rend->ttr1.y;
+	rend->trx1 = WWIN / 2 - (int)((rend->ttr1.x) * rend->trxscale1);
+	rend->trxscale2 = WWIN * HFOV / rend->ttr2.y;
+	rend->tryscale2 = HWIN * VFOV / rend->ttr2.y;
+	rend->trx2 = WWIN / 2 - (int)((rend->ttr2.x) * rend->trxscale2);
+}
+
+void	trstart( t_rend *rend, t_env *env, int j, t_sprque *now)
+{
+	rend->trceil = env->sprite[j].height - env->player.where.z;
+	rend->trfloor = env->sprite[j].floor - env->player.where.z;
+	rend->try1a = HWIN / 2 - (int)(YAW(rend->trceil, rend->ttr1.y) * rend->tryscale1);
+	rend->try1b = HWIN / 2 - (int)(YAW(rend->trfloor, rend->ttr1.y) * rend->tryscale1);
+	rend->try2a = HWIN / 2 - (int)(YAW(rend->trceil, rend->ttr2.y) * rend->tryscale2);
+	rend->try2b = HWIN / 2 - (int)(YAW(rend->trfloor, rend->ttr2.y) * rend->tryscale2);
+	rend->trbegx = MAX(rend->trx1, now->sx1);
+	rend->trendx = MIN(rend->trx2, now->sx2);
+	rend->trx = rend->trbegx;
+	rend->trya_int = (t_scaler)SCALER_INIT(rend->trx1, rend->trbegx, rend->trx2, rend->try1a, rend->try2a);
+	rend->tryb_int = (t_scaler)SCALER_INIT(rend->trx1, rend->trbegx, rend->trx2, rend->try1b, rend->try2b);
+	while (rend->trx < rend->trendx)
+	{
+		rend->trya = scaler_next(&rend->trya_int);
+		rend->ctrya = CLAMP(rend->trya, now->ytop[rend->trx], now->ybottom[rend->trx]);
+		rend->tryb = scaler_next(&rend->tryb_int);
+		rend->ctryb = CLAMP(rend->tryb, now->ytop[rend->trx], now->ybottom[rend->trx]);
+		rend->txtx = ((rend->u0 * ((rend->trx2 - rend->trx) * rend->ttr2.y) + rend->u1 * ((rend->trx - rend->trx1) * rend->ttr1.y))
+		/ ((rend->trx2 - rend->trx) * rend->ttr2.y + (rend->trx - rend->trx1) * rend->ttr1.y)) * (fabs(rend->vtr2.x - rend->vtr1.x) + fabs(rend->vtr2.y - rend->vtr1.y)) * 0.12;
+		drawtransp(env, rend, j);
+		rend->trx++;
+	}
+}
+
 void	trplane(t_env *env, t_rend *rend, int j)
 {
 	t_sprque		now;
@@ -103,39 +125,8 @@ void	trplane(t_env *env, t_rend *rend, int j)
 	rend->u0 = 0;
 	rend->u1 = env->sprite[j].texture[0]->w;
 	trintersect(rend, env, j);
-	if (rend->ttr1.y <= 0.5)
-	{
-		rend->ttr1.x = (0.5 - rend->ttr1.y) * (rend->ttr2.x - rend->ttr1.x) / (rend->ttr2.y - rend->ttr1.y) + rend->ttr1.x;
-		rend->ttr1.y = 0.5;
-	}
-	rend->trxscale1 = WWIN * HFOV / rend->ttr1.y;
-	rend->tryscale1 = HWIN * VFOV / rend->ttr1.y;
-	rend->trx1 = WWIN / 2 - (int)((rend->ttr1.x) * rend->trxscale1);
-	rend->trxscale2 = WWIN * HFOV / rend->ttr2.y;
-	rend->tryscale2 = HWIN * VFOV / rend->ttr2.y;
-	rend->trx2 = WWIN / 2 - (int)((rend->ttr2.x) * rend->trxscale2);
+	trscale(rend);
 	if (rend->trx1 >= rend->trx2 || rend->trx1 > now.sx2 || rend->trx2 < now.sx1)
 		return ;
-	rend->trceil = env->sprite[j].height - env->player.where.z;
-	rend->trfloor = env->sprite[j].floor - env->player.where.z;
-	rend->try1a = HWIN / 2 - (int)(YAW(rend->trceil, rend->ttr1.y) * rend->tryscale1);
-	rend->try1b = HWIN / 2 - (int)(YAW(rend->trfloor, rend->ttr1.y) * rend->tryscale1);
-	rend->try2a = HWIN / 2 - (int)(YAW(rend->trceil, rend->ttr2.y) * rend->tryscale2);
-	rend->try2b = HWIN / 2 - (int)(YAW(rend->trfloor, rend->ttr2.y) * rend->tryscale2);
-	rend->trbegx = MAX(rend->trx1, now.sx1);
-	rend->trendx = MIN(rend->trx2, now.sx2);
-	rend->trx = rend->trbegx;
-	rend->trya_int = (t_scaler)SCALER_INIT(rend->trx1, rend->trbegx, rend->trx2, rend->try1a, rend->try2a);
-	rend->tryb_int = (t_scaler)SCALER_INIT(rend->trx1, rend->trbegx, rend->trx2, rend->try1b, rend->try2b);
-	while (rend->trx < rend->trendx)
-	{
-		rend->trya = scaler_next(&rend->trya_int);
-		rend->ctrya = CLAMP(rend->trya, now.ytop[rend->trx], now.ybottom[rend->trx]);
-		rend->tryb = scaler_next(&rend->tryb_int);
-		rend->ctryb = CLAMP(rend->tryb, now.ytop[rend->trx], now.ybottom[rend->trx]);
-		rend->txtx = ((rend->u0 * ((rend->trx2 - rend->trx) * rend->ttr2.y) + rend->u1 * ((rend->trx - rend->trx1) * rend->ttr1.y))\
-		/ ((rend->trx2 - rend->trx) * rend->ttr2.y + (rend->trx - rend->trx1) * rend->ttr1.y)) * (fabs(rend->vtr2.x - rend->vtr1.x) + fabs(rend->vtr2.y - rend->vtr1.y)) * 0.12;
-		drawtransp(env, rend, j);
-		rend->trx++;
-	}
+	trstart(rend, env, j, &now);
 }
