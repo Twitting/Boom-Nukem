@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 10:10:22 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 16:43:05 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/14 18:50:00 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	init_music(t_env *env)
 	env->sound[9] = Mix_LoadWAV("music/jump_2.wav");
 	env->sound[10] = Mix_LoadWAV("music/up_and_down.wav");
 	env->sound[11] = Mix_LoadWAV("music/key.wav");
+	env->sound[12] = Mix_LoadWAV("music/auto_door.wav");
 }
 
 void	init_fonts(t_env *env)

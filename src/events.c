@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 21:52:25 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/14 18:45:25 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/14 18:57:46 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,9 @@ void	keyboard_events(t_env *env, SDL_Event *e)
 	}
 	if (e->key.keysym.sym == SDLK_e && !on && env->player.keys > 0)
 	{
+		Mix_PlayChannel(-1, env->sound[12], 0);
 		if (openbars(env))
 			env->player.keys--;
-		//Mix_PlayChannel(-1, env->sound[5], 0);
-		//env->player.pushingbutton = 1;
 	}
 	keyboard_events2(env, e, on);
 }
