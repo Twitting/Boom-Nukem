@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movemob.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 17:06:32 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 16:18:28 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/14 18:30:16 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ void	move_mob_support2(t_env *env, double *dxdysxsyee, t_xy *opvoppp, int i)
 	if (dxdysxsyee[5] > -dxdysxsyee[1])
 	{
 		dxdysxsyee[4] -= dxdysxsyee[1];
-		opvoppp[0].x += dxdysxsyee[2] * 60 * 30 / (env->sector[env->sprite[i].sector].light * env->oldfps);
+		opvoppp[0].x += dxdysxsyee[2] * 60 * 40 / (env->sector[env->sprite[i].sector].light * env->oldfps);
 	}
 	if (dxdysxsyee[5] < dxdysxsyee[0])
 	{
 		dxdysxsyee[4] += dxdysxsyee[0];
-		opvoppp[0].y += dxdysxsyee[3] * 60 * 30 / (env->sector[env->sprite[i].sector].light * env->oldfps);
+		opvoppp[0].y += dxdysxsyee[3] * 60 * 40 / (env->sector[env->sprite[i].sector].light * env->oldfps);
 	}
 }
 

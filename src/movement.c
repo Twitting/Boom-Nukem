@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:10:46 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 18:08:39 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/14 18:28:06 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void	movement_support(t_env *env, float dx, float dy)
 	i = 0;
 	while (i < env->sprcount)
 	{
-		if (env->sprite[i].spritedist < env->sprite[i].width * 2 && env->sprite[i].type != 2 && env->sprite[i].type != 3 && env->sprite[i].type != 5)
+		if (env->sprite[i].spritedist < env->sprite[i].width * 2 && env->sprite[i].type == 0)
 		{
 			env->player.where.x -= dy;
 			env->player.where.y -= dx;
