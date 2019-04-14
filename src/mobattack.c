@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mobattack.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 18:28:49 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/12 10:00:21 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/14 03:08:58 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@ void	mob_attack(t_env *env)
 				if (env->sprite[i].mobtimer >= 0.5)
 				{
 					env->sprite[i].mobtimer = 0;
+					//////////
+					if (env->player.hp > 50)
+						Mix_PlayChannel(-1, env->sound[3], 0);
+					else
+						Mix_PlayChannel(-1, env->sound[4], 0);
+					env->blood = 150;
+					////////
 					env->player.hp -= 10;
 					printf("%d\n", env->player.hp);
 					if (env->player.hp <= 0)

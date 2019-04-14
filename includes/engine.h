@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/12 22:08:21 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/14 03:26:03 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <SDL2/SDL.h>
 # include <SDL_image.h>
 # include <SDL_ttf.h>
+# include <SDL_mixer.h>
 # include "libft.h"
 # include <stdlib.h>
 # include <time.h>
@@ -174,12 +175,24 @@ typedef struct		s_env
 	t_player		save[4];
 	int				save_number;
 
-
 	int state;
 	int b_one;
 	int b_two;
 	int b_three;
 	int b_four;
+
+	int head;
+	int head_shot;
+	int keys_shot;
+	int key;
+	SDL_Surface		*text_head[26];
+	SDL_Surface		*text_keys[8];
+	SDL_Surface		*game_over[48];
+	Mix_Music *music[2];
+	Mix_Chunk *sound[11];
+	int blood;
+	int volume;
+
 }					t_env;
 
 void	keylightapply(t_env *env, t_sprite *sprite, int tex);
@@ -214,10 +227,12 @@ void	move_mob(t_env *env);
 void	spritedist(t_env *env);
 void	findbutton(t_env *env);
 
+
 /*
-** menu/menu.c
+** menu/main.c
 */
 void menu(t_env *env, SDL_Event *e);
+void put_hp(t_env *env);
 
 
 /*
@@ -259,7 +274,16 @@ void	load_player_init(t_env *env);
 /*
 ** game_over.c
 */
-
 void game_over(t_env *env, SDL_Event *e);
+
+/*
+** head.c
+*/
+void head_one(t_env *env);
+void head_two(t_env *env);
+void head_three(t_env *env);
+void head_four(t_env *env);
+void head_five(t_env *env);
+void keys(t_env *env);
 
 #endif

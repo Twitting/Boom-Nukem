@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 06:00:22 by drestles          #+#    #+#             */
-/*   Updated: 2019/04/12 11:10:05 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/14 03:14:15 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void start(t_env *env, SDL_Event *e, t_rend *rend)
 		menu(env, e);
 	else if (env->state == 1)
 	{
+		if (Mix_PlayingMusic() == 0)
+			Mix_PlayMusic(env->music[1], -1);
 		env->frame = clock();
 		start_engine(env, e, rend);
 		fps(env);
@@ -72,4 +74,21 @@ void start(t_env *env, SDL_Event *e, t_rend *rend)
 		game_mode(env, e);
 	else if (env->state == 6) /////////// <<<<================
 		game_over(env, e);
+}
+
+void put_hp(t_env *env)
+{
+	if (env->player.hp > 80)
+		head_one(env);
+	else if (env->player.hp > 60)
+		head_two(env);
+	else if (env->player.hp > 40)
+		head_three(env);
+	else if (env->player.hp > 20)
+		head_four(env);
+	else
+		head_five(env);
+	env->player.keys = 1;
+	if (env->player.keys > 0)
+		keys(env);
 }

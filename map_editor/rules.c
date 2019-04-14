@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rules.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 21:55:26 by drestles          #+#    #+#             */
-/*   Updated: 2019/04/12 15:09:00 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/13 19:22:31 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	title_first(SDL_Surface *sur)
 	color_title.r = 255;
 	color_title.g = 0;
 	color_title.b = 255;
-	bold = TTF_OpenFont("bold.ttf", 28);
+	bold = TTF_OpenFont("fonts/bold.ttf", 28);
 	new = TTF_RenderText_Solid(bold,
 	"Welcome to Doom Nukem map editor!", color_title);
 	position.x = 10;
@@ -58,7 +58,7 @@ void		draw_string(char *text, SDL_Color color, int y, SDL_Surface *sur)
 	TTF_Font	*font;
 	SDL_Rect	position;
 
-	font = TTF_OpenFont("droid.ttf", 20);
+	font = TTF_OpenFont("fonts/droid.ttf", 20);
 	new = TTF_RenderText_Solid(font, text, color);
 	position.x = 20;
 	position.y = y;
@@ -78,7 +78,7 @@ void		draw_title(SDL_Surface *sur)
 	char		*text;
 
 	title_first(sur);
-	bold_mini = TTF_OpenFont("bold.ttf", 21);
+	bold_mini = TTF_OpenFont("fonts/bold.ttf", 21);
 	color_blue.r = 0;
 	color_blue.g = 255;
 	color_blue.b = 255;

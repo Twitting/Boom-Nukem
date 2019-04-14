@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/12 21:44:08 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/14 03:34:06 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,11 @@ void	pistolrender(t_env *env)
 
 int		start_engine(t_env *env, SDL_Event *e, t_rend *rend)
 {
+	//Mix_Music *music = NULL;
+	//music = Mix_LoadMUS("music/1.mp3");
+	//Mix_PlayMusic(music, -1);
+	/////////////////////////////
+
 	int	i;
 
 	i = -1;
@@ -133,6 +138,11 @@ int		start_engine(t_env *env, SDL_Event *e, t_rend *rend)
 	pistolrender(env);
 	pushswitch(env);
 	SDL_UnlockSurface(env->surface);
+	////////////////////////////////////////////////////////////
+	if (env->blood-- > 0)
+		SDL_BlitScaled(env->text_head[25], NULL, env->surface, NULL);
+	put_hp(env);
+	////////////////////////////////////////////////////////////
 	SDL_UpdateWindowSurface(env->window);
 	handle_events(env, e);
 	return (0);

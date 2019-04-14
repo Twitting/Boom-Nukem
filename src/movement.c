@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:10:46 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/12 12:51:53 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/14 02:37:30 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	v_collision_support(t_env *env)
 		env->player.velocity.z = 0;
 		env->falling = 0;
 		env->ground = 1;
+		
 	}
 	else if (env->player.velocity.z > 0 &&
 			nz > env->sector[env->player.sector].ceiling)
