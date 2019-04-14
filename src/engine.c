@@ -6,7 +6,7 @@
 /*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 03:34:06 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/14 06:41:17 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,11 +138,11 @@ int		start_engine(t_env *env, SDL_Event *e, t_rend *rend)
 	pistolrender(env);
 	pushswitch(env);
 	SDL_UnlockSurface(env->surface);
-	////////////////////////////////////////////////////////////
+	///////////////////////   BLOOOD   /////////////////////////
 	if (env->blood-- > 0)
 		SDL_BlitScaled(env->text_head[25], NULL, env->surface, NULL);
 	put_hp(env);
-	////////////////////////////////////////////////////////////
+	/////////////////////////////////////////// and hp /////////
 	SDL_UpdateWindowSurface(env->window);
 	handle_events(env, e);
 	return (0);

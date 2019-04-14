@@ -6,7 +6,7 @@
 /*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 10:10:22 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 03:54:15 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/14 06:27:33 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,12 @@ void	init_support(t_env *env)
 
 void	init_music(t_env *env)
 {
-
-	//Mix_PlayChannel(-1, env->sound[10], 0);
 	Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096);
 	env->volume = Mix_VolumeMusic(-1);
 	env->music[0] = Mix_LoadMUS("music/2.mp3");
 	env->music[1] = Mix_LoadMUS("music/1.mp3");
 	env->sound[0] = Mix_LoadWAV("music/pistol_1.wav");
 	Mix_VolumeChunk(env->sound[0], MIX_MAX_VOLUME/4);
-	//env->sound[1] = Mix_LoadWAV("music/pistol_2.wav");
 	env->sound[2] = Mix_LoadWAV("music/pistol_pere.wav");
 	env->sound[3] = Mix_LoadWAV("music/oy_1.wav");
 	env->sound[4] = Mix_LoadWAV("music/oy_2.wav");
@@ -64,6 +61,14 @@ void	init_music(t_env *env)
 	env->sound[8] = Mix_LoadWAV("music/jump_1.wav");
 	env->sound[9] = Mix_LoadWAV("music/jump_2.wav");
 	env->sound[10] = Mix_LoadWAV("music/up_and_down.wav");
+}
+
+void	init_fonts(t_env *env)
+{
+	TTF_Init();
+	env->fonts[0] = TTF_OpenFont("fonts/Pasajero.otf", 40);
+	env->fonts[1] = TTF_OpenFont("fonts/Pasajero.otf", 50);
+	env->fonts[2] = TTF_OpenFont("fonts/Pasajero.otf", 30);
 }
 
 void	init(t_env *env)
@@ -91,6 +96,6 @@ void	init(t_env *env)
 		ft_error(4);
 	else
 		init_support(env);
-	TTF_Init();
 	init_music(env);
+	init_fonts(env);
 }

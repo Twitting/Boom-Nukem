@@ -6,7 +6,7 @@
 /*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 02:45:02 by drestles          #+#    #+#             */
-/*   Updated: 2019/04/14 03:11:36 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/14 06:39:06 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,7 @@
 
 void	menu_pause(t_env *env, SDL_Event *e)
 {
-	//Mix_Music *music = NULL;
-	//music = Mix_LoadMUS("music/1.mp3");
-	//Mix_PlayMusic(music, -1);
-/////////////////////
-
+	Mix_PauseMusic();
 	SDL_Surface *button;
 
 	env->b_one = 0;

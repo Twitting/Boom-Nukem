@@ -6,42 +6,31 @@
 /*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 21:52:25 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/14 03:52:17 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/14 06:22:14 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
-#define PROC_VOLUME 0.78125
 
 void	keyboard_events2(t_env *env, SDL_Event *e, int on)
 {
 	if (e->key.keysym.sym == SDLK_SPACE && on == 1)
-	{
-		
 		env->spacebar = 1;
-	}
 	if (e->key.keysym.sym == SDLK_SPACE && on == 0)
-	{
-		
 		env->spacebar = 0;
-	}
 	if (e->key.keysym.sym == SDLK_SPACE && on == 1)
 		if (env->ground && !env->jetpack)
 		{
-			/////////////////////
 			Mix_PlayChannel(-1, env->sound[10], 0);
-			//////////
 			env->player.velocity.z += 1.5;
 			env->falling = 1;
 		}
 	//printf ("keycode %d\n", e->key.keysym.sym);
-	//printf ("	volume %d\n", env->volume);
 	if (e->type == SDL_KEYUP && e->key.keysym.sym == 1073741901 && env->volume > 0) //////down
 	{
 		env->volume -= 15;
 		if (env->volume < 0)
 			env->volume = 0;
-		printf ("SOUND = %d%%\n", (int)((float)env->volume * PROC_VOLUME));
 		Mix_VolumeMusic(env->volume);
 	}
 	if (e->type == SDL_KEYUP && e->key.keysym.sym == 1073741898 && env->volume < 128) //////up
@@ -49,9 +38,20 @@ void	keyboard_events2(t_env *env, SDL_Event *e, int on)
 		env->volume += 15;
 		if (env->volume > 128)
 			env->volume = 128;
-		printf ("SOUND = %d%%\n", (int)((float)env->volume * PROC_VOLUME));
 		Mix_VolumeMusic(env->volume);
 	}
+	if (e->type == SDL_KEYUP && e->key.keysym.sym == 127)
+	{
+		if (env->help)
+			env->help = 0;
+		else
+			env->help = 1;
+	}
+	//1073741910 //-
+	//1073741911 //+
+
+	////////////////
+
 }
 
 void	keyboard_events(t_env *env, SDL_Event *e)

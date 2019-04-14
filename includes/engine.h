@@ -6,7 +6,7 @@
 /*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/14 03:26:03 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/14 06:41:08 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # define VFOV 1.0 * 0.2 
 # define SKYSIZE 3840
 # define TEXP env->sector[secnum].textpack
+# define PROC_VOLUME 0.78125
 
 # define MIN(a, b) (((a < b)) ? (a) : (b))
 # define MAX(a, b) (((a > b)) ? (a) : (b))
@@ -192,6 +193,8 @@ typedef struct		s_env
 	Mix_Chunk *sound[11];
 	int blood;
 	int volume;
+	TTF_Font	*fonts[3];
+	int help;
 
 }					t_env;
 
@@ -234,6 +237,15 @@ void	findbutton(t_env *env);
 void menu(t_env *env, SDL_Event *e);
 void put_hp(t_env *env);
 
+/*
+** game_bar/help.c
+*/
+void help(t_env *env);
+
+/*
+** game_bar/key.c
+*/
+void keys(t_env *env);
 
 /*
 ** menu.c
