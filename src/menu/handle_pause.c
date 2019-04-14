@@ -6,29 +6,29 @@
 /*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 05:19:27 by drestles          #+#    #+#             */
-/*   Updated: 2019/04/10 23:00:13 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/14 17:38:54 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
 
-static void button_two(t_env *env, SDL_Event *e)
+static void	button_two(t_env *env, SDL_Event *e)
 {
 	env->b_two = 0;
-	if (e->button.x >= 360 && e->button.x <= 662 && 
+	if (e->button.x >= 360 && e->button.x <= 662 &&
 	e->button.y >= 223 && e->button.y <= 366)
 		env->state = 3;
 }
 
-static void button_one(t_env *env, SDL_Event *e)
+static void	button_one(t_env *env, SDL_Event *e)
 {
 	env->b_one = 0;
-	if (e->button.x >= 267 && e->button.x <= 750 && 
+	if (e->button.x >= 267 && e->button.x <= 750 &&
 	e->button.y >= 40 && e->button.y <= 184)
 		env->state = 1;
 }
 
-static void handle_up(t_env *env, SDL_Event *e)
+static void	handle_up(t_env *env, SDL_Event *e)
 {
 	if (env->b_one == 1)
 		button_one(env, e);
@@ -37,14 +37,14 @@ static void handle_up(t_env *env, SDL_Event *e)
 	else if (env->b_three == 1)
 	{
 		env->b_three = 0;
-		if (e->button.x >= 363 && e->button.x <= 662 && 
+		if (e->button.x >= 363 && e->button.x <= 662 &&
 		e->button.y >= 407 && e->button.y <= 549)
 			env->state = 4;
 	}
 	else if (env->b_four == 1)
 	{
 		env->b_four = 0;
-		if (e->button.x >= 385 && e->button.x <= 628 && 
+		if (e->button.x >= 385 && e->button.x <= 628 &&
 		e->button.y >= 594 && e->button.y <= 735)
 		{
 			env->state = 1;
@@ -53,22 +53,23 @@ static void handle_up(t_env *env, SDL_Event *e)
 	}
 }
 
-static void handle_down(t_env *env, SDL_Event *e)
+static void	handle_down(t_env *env, SDL_Event *e)
 {
-	if (e->button.x >= 267 && e->button.x <= 750 && 
+	if (e->button.x >= 267 && e->button.x <= 750 &&
 	e->button.y >= 40 && e->button.y <= 184)
-			env->b_one = 1;
-	else if (e->button.x >= 360 && e->button.x <= 662 && 
+		env->b_one = 1;
+	else if (e->button.x >= 360 && e->button.x <= 662 &&
 	e->button.y >= 223 && e->button.y <= 366)
 		env->b_two = 1;
-	else if (e->button.x >= 363 && e->button.x <= 662 && 
+	else if (e->button.x >= 363 && e->button.x <= 662 &&
 	e->button.y >= 407 && e->button.y <= 549)
 		env->b_three = 1;
-	else if (e->button.x >= 385 && e->button.x <= 628 && 
+	else if (e->button.x >= 385 && e->button.x <= 628 &&
 	e->button.y >= 594 && e->button.y <= 735)
 		env->b_four = 1;
 }
-void handle_events_pause(t_env *env, SDL_Event *e)
+
+void		handle_events_pause(t_env *env, SDL_Event *e)
 {
 	while (SDL_PollEvent(e))
 	{

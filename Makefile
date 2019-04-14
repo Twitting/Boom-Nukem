@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+         #
+#    By: drestles <drestles@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/04/14 14:58:34 by ebednar          ###   ########.fr        #
+#    Updated: 2019/04/14 17:43:40 by drestles         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,7 @@ SRC = ./src/main.c \
 		./src/menu/handle_save.c \
 		./src/menu/handle_game_mode.c \
 		./src/menu/game_over.c \
+		./src/menu/menu_pause.c \
 		./src/game_bar/help.c \
 		./src/game_bar/key.c \
 		./src/game_bar/head.c \
