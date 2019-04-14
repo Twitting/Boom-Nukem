@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 06:00:22 by drestles          #+#    #+#             */
-/*   Updated: 2019/04/12 11:10:05 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/14 07:31:20 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,10 @@ void start(t_env *env, SDL_Event *e, t_rend *rend)
 		menu(env, e);
 	else if (env->state == 1)
 	{
+		if (Mix_PlayingMusic() == 0)
+			Mix_PlayMusic(env->music[1], -1);
+		if (Mix_PausedMusic())
+			Mix_ResumeMusic();
 		env->frame = clock();
 		start_engine(env, e, rend);
 		fps(env);
@@ -70,6 +74,7 @@ void start(t_env *env, SDL_Event *e, t_rend *rend)
 		load_game(env, e);
 	else if (env->state == 5)
 		game_mode(env, e);
-	else if (env->state == 6) /////////// <<<<================
+	else if (env->state == 6)
 		game_over(env, e);
 }
+

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 21:52:25 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/12 12:39:41 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/14 07:34:38 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,37 @@ void	keyboard_events2(t_env *env, SDL_Event *e, int on)
 	if (e->key.keysym.sym == SDLK_SPACE && on == 1)
 		if (env->ground && !env->jetpack)
 		{
+			Mix_PlayChannel(-1, env->sound[10], 0);
 			env->player.velocity.z += 1.5;
 			env->falling = 1;
 		}
+	//printf ("keycode %d\n", e->key.keysym.sym);
+	if (e->type == SDL_KEYUP && e->key.keysym.sym == 1073741901 && env->volume > 0) //////down
+	{
+		env->volume -= 15;
+		if (env->volume < 0)
+			env->volume = 0;
+		Mix_VolumeMusic(env->volume);
+	}
+	if (e->type == SDL_KEYUP && e->key.keysym.sym == 1073741898 && env->volume < 128) //////up
+	{
+		env->volume += 15;
+		if (env->volume > 128)
+			env->volume = 128;
+		Mix_VolumeMusic(env->volume);
+	}
+	if (e->type == SDL_KEYUP && e->key.keysym.sym == 127)
+	{
+		if (env->help)
+			env->help = 0;
+		else
+			env->help = 1;
+	}
+	//1073741910 //-
+	//1073741911 //+
+
+	////////////////
+
 }
 
 void	keyboard_events(t_env *env, SDL_Event *e)
@@ -43,6 +71,11 @@ void	keyboard_events(t_env *env, SDL_Event *e)
 		env->wsad[2] = on;
 	if (e->key.keysym.sym == SDLK_d)
 		env->wsad[3] = on;
+	if (e->key.keysym.sym == SDLK_e && !on && checkswitch(env))
+	{
+		Mix_PlayChannel(-1, env->sound[5], 0);
+		env->player.pushingbutton = 1;
+	}
 	if (e->key.keysym.sym == SDLK_LCTRL || e->key.keysym.sym == SDLK_RCTRL)
 	{
 		env->ducking = on;

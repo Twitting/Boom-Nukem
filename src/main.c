@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:20:03 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/12 11:51:37 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/14 07:35:11 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,12 @@ void	fps(t_env *env)
 	}
 	if (env->timer >= 1.0)
 	{
-		ft_putstr("fps = ");
-		ft_putnbr(env->fps);
-		ft_putchar('\n');
+		//ft_putstr("fps = ");
+		/////
+		//env->print_fps = env->fps;
+		/////
+		//ft_putnbr(env->fps);
+		//ft_putchar('\n');
 		env->oldfps = env->fps;
 		env->fps = 0;
 		env->timer -= 1;
