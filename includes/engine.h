@@ -6,7 +6,7 @@
 /*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/14 06:41:08 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/14 07:33:31 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,17 +235,6 @@ void	findbutton(t_env *env);
 ** menu/main.c
 */
 void menu(t_env *env, SDL_Event *e);
-void put_hp(t_env *env);
-
-/*
-** game_bar/help.c
-*/
-void help(t_env *env);
-
-/*
-** game_bar/key.c
-*/
-void keys(t_env *env);
 
 /*
 ** menu.c
@@ -289,7 +278,7 @@ void	load_player_init(t_env *env);
 void game_over(t_env *env, SDL_Event *e);
 
 /*
-** head.c
+** game_bar/head.c
 */
 void head_one(t_env *env);
 void head_two(t_env *env);
@@ -297,5 +286,26 @@ void head_three(t_env *env);
 void head_four(t_env *env);
 void head_five(t_env *env);
 void keys(t_env *env);
+
+/*
+** game_bar/help.c
+*/
+void help(t_env *env);
+
+/*
+** game_bar/key.c
+*/
+void keys(t_env *env);
+
+/*
+** game_bar/bar.c
+*/
+void put_bar(t_env *env);
+
+/*
+** game_bar/hp.c
+*/
+void good_frame_for_head(t_env *env);
+void put_hp(t_env *env);
 
 #endif

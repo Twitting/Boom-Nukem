@@ -6,7 +6,7 @@
 /*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 01:25:35 by drestles          #+#    #+#             */
-/*   Updated: 2019/04/14 06:38:20 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/14 07:34:07 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,12 @@ void head_one(t_env *env)
 {
 	SDL_Rect	position;
 	SDL_Rect	position2;
+
 	position.x = 20;
 	position.y = 650;
 	position2.x = 120;
 	position2.y = 725;
-	env->head_shot++;
-	if (env->head_shot > 100000)
-		env->head_shot = 0;
-	int time_o = env->head_shot % 25;
-	if (time_o == 0)
-	{
-		env->head++;
-		env->head %= 4;
-	}
+	good_frame_for_head(env);
 	if (env->head == 0)
 		SDL_BlitSurface(env->text_head[0], NULL, env->surface, &position);
 	else if (env->head == 1)
@@ -42,26 +35,18 @@ void head_one(t_env *env)
 		SDL_BlitSurface(env->text_head[15], NULL, env->surface, &position2);
 	else
 		SDL_BlitSurface(env->text_head[16], NULL, env->surface, &position2);
-	
 }
 
 void head_two(t_env *env)
 {
 	SDL_Rect	position;
 	SDL_Rect	position2;
+
 	position.x = 20;
 	position.y = 650;
 	position2.x = 120;
 	position2.y = 725;
-	env->head_shot++;
-	if (env->head_shot > 100000)
-		env->head_shot = 0;
-	unsigned long time_o = env->head_shot % 25;
-	if (time_o == 0)
-	{
-		env->head++;
-		env->head %= 4;
-	}
+	good_frame_for_head(env);
 	if (env->head == 0)
 		SDL_BlitSurface(env->text_head[3], NULL, env->surface, &position);
 	else if (env->head == 1)
@@ -80,19 +65,12 @@ void head_three(t_env *env)
 {
 	SDL_Rect	position;
 	SDL_Rect	position2;
+
 	position.x = 20;
 	position.y = 650;
 	position2.x = 120;
 	position2.y = 725;
-	env->head_shot++;
-	if (env->head_shot > 100000)
-		env->head_shot = 0;
-	unsigned long time_o = env->head_shot % 25;
-	if (time_o == 0)
-	{
-		env->head++;
-		env->head %= 4;
-	}
+	good_frame_for_head(env);
 	if (env->head == 0)
 		SDL_BlitSurface(env->text_head[6], NULL, env->surface, &position);
 	else if (env->head == 1)
@@ -111,19 +89,12 @@ void head_four(t_env *env)
 {
 	SDL_Rect	position;
 	SDL_Rect	position2;
+
 	position.x = 20;
 	position.y = 650;
 	position2.x = 120;
 	position2.y = 725;
-	env->head_shot++;
-	if (env->head_shot > 100000)
-		env->head_shot = 0;
-	unsigned long time_o = env->head_shot % 25;
-	if (time_o == 0)
-	{
-		env->head++;
-		env->head %= 4;
-	}
+	good_frame_for_head(env);
 	if (env->head == 0)
 		SDL_BlitSurface(env->text_head[9], NULL, env->surface, &position);
 	else if (env->head == 1)
@@ -142,19 +113,12 @@ void head_five(t_env *env)
 {
 	SDL_Rect	position;
 	SDL_Rect	position2;
+
 	position.x = 20;
 	position.y = 650;
 	position2.x = 120;
 	position2.y = 725;
-	env->head_shot++;
-	if (env->head_shot > 100000)
-		env->head_shot = 0;
-	unsigned long time_o = env->head_shot % 25;
-	if (time_o == 0)
-	{
-		env->head++;
-		env->head %= 4;
-	}
+	good_frame_for_head(env);
 	if (env->head == 0)
 		SDL_BlitSurface(env->text_head[12], NULL, env->surface, &position);
 	else if (env->head == 1)

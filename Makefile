@@ -6,7 +6,7 @@
 #    By: drestles <drestles@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/04/14 06:40:50 by drestles         ###   ########.fr        #
+#    Updated: 2019/04/14 07:27:10 by drestles         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,6 @@ SRC = ./src/main.c \
 		./src/rotatinglight.c \
 		./src/spritedist.c \
 		./src/findbutton.c \
-		./src/head.c \
 		./src/menu/main.c \
 		./src/menu/menu.c \
 		./src/menu/handle_pause.c \
@@ -45,7 +44,10 @@ SRC = ./src/main.c \
 		./src/menu/handle_game_mode.c \
 		./src/menu/game_over.c \
 		./src/game_bar/help.c \
-		./src/game_bar/key.c
+		./src/game_bar/key.c \
+		./src/game_bar/head.c \
+		./src/game_bar/bar.c \
+		./src/game_bar/hp.c
 
 LIBFT = ./libft/libft.a
 OBJECTS = $(SRC:.c=.o)

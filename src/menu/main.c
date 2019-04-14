@@ -6,7 +6,7 @@
 /*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 06:00:22 by drestles          #+#    #+#             */
-/*   Updated: 2019/04/14 06:35:30 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/14 07:31:20 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,23 +78,3 @@ void start(t_env *env, SDL_Event *e, t_rend *rend)
 		game_over(env, e);
 }
 
-
-
-void put_hp(t_env *env)
-{
-	if (env->help)
-		help(env);
-	if (env->player.hp > 80)
-		head_one(env);
-	else if (env->player.hp > 60)
-		head_two(env);
-	else if (env->player.hp > 40)
-		head_three(env);
-	else if (env->player.hp > 20)
-		head_four(env);
-	else
-		head_five(env);
-	env->player.keys = 1;
-	if (env->player.keys > 0)
-		keys(env);
-}

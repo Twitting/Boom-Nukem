@@ -6,32 +6,35 @@
 /*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/14 06:36:58 by drestles          #+#    #+#             */
-/*   Updated: 2019/04/14 06:39:23 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/14 07:34:20 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
 #include "render.h"
 
-
-
-void keys(t_env *env)
+static void	good_frame(t_env *env)
 {
-	SDL_Rect	position;
-	SDL_Rect	position2;
-	position.x = 300;
-	position.y = 665;
-	position2.x = 300;
-	position2.y = 650;
+	int frame;
+
 	env->keys_shot++;
 	if (env->keys_shot > 100000)
 		env->keys_shot = 0;
-	unsigned long time_o = env->keys_shot % 10;
-	if (time_o == 0)
+	frame = env->keys_shot % 10;
+	if (frame == 0)
 	{
 		env->key++;
 		env->key %= 8;
 	}
+}
+
+static void choose_of_side(t_env *env)
+{
+	SDL_Rect	position;
+
+	position.x = 300;
+	position.y = 665;
+	good_frame(env);
 	if (env->key == 0)
 		SDL_BlitSurface(env->text_keys[0], NULL, env->surface, &position);
 	else if (env->key == 1)
@@ -48,12 +51,13 @@ void keys(t_env *env)
 		SDL_BlitSurface(env->text_keys[6], NULL, env->surface, &position);
 	else
 		SDL_BlitSurface(env->text_keys[7], NULL, env->surface, &position);
+}
 
+static void first_layer_of_key(t_env *env, char *str)
+{
+	SDL_Rect	position;
 	SDL_Surface	*new;
 	SDL_Color	color_title;
-
-	char *str;
-	str = ft_itoa(env->player.keys);
 
 	position.x = 344;
 	position.y = 711;
@@ -64,17 +68,32 @@ void keys(t_env *env)
 	str, color_title);
 	SDL_BlitSurface(new, NULL, env->surface, &position);
 	SDL_FreeSurface(new);
+}
+
+static void second_layer_of_key(t_env *env, char *str)
+{
+	SDL_Rect	position;
+	SDL_Surface	*new;
+	SDL_Color	color_title;
 
 	position.x = 341;
+	position.y = 711;
 	color_title.r = 216;
 	color_title.g = 160;
 	color_title.b = 55;
 	new = TTF_RenderText_Solid(env->fonts[0],
 	str, color_title);
 	SDL_BlitSurface(new, NULL, env->surface, &position);
-	SDL_UpdateWindowSurface(env->window);
 	SDL_FreeSurface(new);
+}
+
+void keys(t_env *env)
+{
+	char *str;
+
+	choose_of_side(env);
+	str = ft_itoa(env->player.keys);
+	first_layer_of_key(env, str);
+	second_layer_of_key(env, str);
 	free(str);
-	//TTF_CloseFont(bold);
-	//TTF_CloseFont(bold2);
 }
