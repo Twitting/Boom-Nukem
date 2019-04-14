@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   walls2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 12:11:56 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 19:20:13 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/14 20:39:01 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,13 @@ void	wallscale(t_env *env, t_rend *rend)
 
 void	tomapccord(t_rend *rend, t_env *env)
 {
+	double rtx;
+	double rtz;
+
 	rend->mapz = (rend->hei) * HWIN * VFOV / ((HWIN / 2 - (rend->y)) - env->player.yaw * HWIN * VFOV);
 	rend->mapx = (rend->mapz) * (WWIN / 2 - (rend->x)) / (WWIN * HFOV);
-	float rtx = (rend->mapz) * EPCOS + (rend->mapx) * EPSIN;
-	float rtz = (rend->mapz) * EPSIN - (rend->mapx) * EPCOS;
+	rtx = (rend->mapz) * EPCOS + (rend->mapx) * EPSIN;
+	rtz = (rend->mapz) * EPSIN - (rend->mapx) * EPCOS;
 	rend->mapx = rtx + EPW.x;
 	rend->mapz = rtz + EPW.y;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/14 12:23:00 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/14 16:43:04 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/14 20:15:12 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,7 +193,7 @@ void	getvertsectnums(t_env *env)
 	env->nvertexes = 0;
 	env->sprcount = 0;
 	if ((fd = open(env->mapname, O_RDONLY)) < 0)
-		ft_putstr("openerr\n");
+		ft_error(3);
 	while (get_next_line(fd, &line) > 0)
 	{
 		getvertsectnums_support(env, line);
@@ -343,11 +343,15 @@ void	grandparser(t_env *env)
 	int	sprites;
 
 	if ((fd = open(env->mapname, O_RDONLY)) < 0)
-		ft_putstr("openerr\n");
+		ft_error(3);
 	getvertsectnums(env);
+	if (env->nvertexes < 3 || env->nsectors < 1)
+		ft_error(3);
 	parsevertexes(env, fd);
 	parsesectors(env, fd);
 	parseplayer(env, fd);
+	if (env->player.where.x == 0)
+		ft_error(3);
 	sprites = parsesprites(env, fd);
 	parsewallsps(env, fd, sprites);
 	spritemaker(env);

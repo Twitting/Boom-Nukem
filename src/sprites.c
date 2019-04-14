@@ -6,7 +6,7 @@
 /*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 12:24:34 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 20:07:05 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/14 20:12:42 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ void	putspritesobjects(t_env *env, int i)
 	}
 	if (ESPRI.spritedist <= 2 && ESPRI.type == 6 && ESPRI.texnum == 0)
 	{
+		Mix_HaltMusic();
 		Mix_PlayChannel(-1, env->sound[14], 0);
 		env->state = 6;
 	}

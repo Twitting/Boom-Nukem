@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   save.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 21:38:17 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/14 16:02:27 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/14 20:34:37 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	savemap(t_edit *edit)
 {
 	int	fd;
 
-	if ((fd = open("test.map", O_WRONLY | O_CREAT | O_TRUNC,
+	if ((fd = open("created.map", O_WRONLY | O_CREAT | O_TRUNC,
 		S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)) < 0)
 		perror("open failed\n");
 	putvertstofile(edit, fd);
