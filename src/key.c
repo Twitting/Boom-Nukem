@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 21:30:49 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/14 12:30:28 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/14 16:05:25 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,18 @@ char	*gettexkey(int tex)
 	else if (tex == 6)
 		return ("textures/k7.png");
 	return ("textures/k8.png");
+}
+
+void	inittext_term(t_env *env)
+{
+	env->text[14] = IMG_Load("textures/t1.png");
+	env->text[15] = IMG_Load("textures/t2.png");
+	env->text[16] = IMG_Load("textures/t3.png");
+	env->text[17] = IMG_Load("textures/t4.png");
+	env->text[18] = IMG_Load("textures/t5.png");
+	env->text[19] = IMG_Load("textures/t6.png");
+	env->text[20] = IMG_Load("textures/t7.png");
+	env->text[21] = IMG_Load("textures/t8.png");
 }
 
 void	keylightapply(t_env *env, t_sprite *sprite, int tex)

@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 16:40:53 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/14 16:43:06 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,42 @@ void	mixkeytex(t_sprite *sprite)
 	sprite->texture[sprite->texnum % 8] = temp;
 }
 
+void	applytermtex(t_env *env, t_sprite *sprite)
+{
+	sprite->texture[0] = env->text[14 + sprite->texnum];
+	if (sprite->texnum == 0 || sprite->texnum == 4)
+		sprite->width = 3;
+	else if (sprite->texnum == 6 || sprite->texnum == 2)
+		sprite->width = 1;
+	else
+		sprite->width = 2;
+}
+
+void	termtex(t_env *env, t_sprite *sprite)
+{
+	int	px;
+	int	py;
+
+	px = env->player.where.x - sprite->pos1.x;
+	py = env->player.where.y - sprite->pos1.y;
+	if (px >= 0 && px >= -py && py <= 0)
+		sprite->texnum = 0;
+	else if (px >= 0 && px >= py && py >= 0)
+		sprite->texnum = 1;
+	else if (px >= 0 && px < py && py >= 0)
+		sprite->texnum = 2;
+	else if (px <= 0 && py > -px && py >= 0)
+		sprite->texnum = 3;
+	else if (px <= 0 && py <= -px && py >= 0)
+		sprite->texnum = 4;
+	else if (px <= 0 && -py <= -px && py <= 0)
+		sprite->texnum = 5;
+	else if (px <= 0 && -py > -px && py <= 0)
+		sprite->texnum = 6;
+	else
+		sprite->texnum = 7;
+}
+
 void	animation(t_env *env)
 {
 	int	i;
@@ -69,7 +105,7 @@ void	animation(t_env *env)
 	i = -1;
 	while (++i < env->sprcount)
 	{
-		if (env->sprite[i].movecount >= 5 && env->sprite[i].type != 5)
+		if (env->sprite[i].movecount >= 5 && env->sprite[i].type != 5 && env->sprite[i].type != 6)
 		{
 			env->sprite[i].movecount = 0;
 			env->sprite[i].texnum = env->sprite[i].texnum == 6 ? 0 : env->sprite[i].texnum + 1;
@@ -86,6 +122,11 @@ void	animation(t_env *env)
 				env->sprite[i].texnum = env->sprite[i].texnum == 7 ? 0 : env->sprite[i].texnum + 1;
 				mixkeytex(&env->sprite[i]);
 			}
+		}
+		if (env->sprite[i].type == 6)
+		{
+			termtex(env, &env->sprite[i]);
+			applytermtex(env, &env->sprite[i]);
 		}
 	}
 }

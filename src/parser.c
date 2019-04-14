@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/14 12:23:00 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/14 15:30:42 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/14 16:43:04 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,7 +265,7 @@ void	spritemaker(t_env *env)
 			env->sprite[i].height = 12;
 			env->sprite[i].width = 4;
 		}
-		else if (env->sprite[i].type == 5)
+		else if (env->sprite[i].type >= 5)
 		{
 			env->sprite[i].height = 6;
 			env->sprite[i].width = 1;

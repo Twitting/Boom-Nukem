@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/14 16:40:53 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/14 16:43:06 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ typedef struct		s_env
 	unsigned int	nvertexes;
 	int				quit;
 	SDL_Surface		*surface;
-	SDL_Surface		*text[20];
+	SDL_Surface		*text[22];
 	SDL_Window		*window;
 	SDL_Surface		*temp;
 	int				wsad[4];
@@ -177,13 +177,14 @@ typedef struct		s_env
 	SDL_Surface		*text_keys[8];
 	SDL_Surface		*game_over[48];
 	Mix_Music		*music[2];
-	Mix_Chunk		*sound[11];
+	Mix_Chunk		*sound[12];
 	int				blood;
 	int				volume;
 	TTF_Font		*fonts[3];
 	int				help;
 }					t_env;
 
+void				inittext_term(t_env *env);
 void				sortsprite(t_env *env);
 void				keylightapply(t_env *env, t_sprite *sprite, int tex);
 void				sectorlightapply_support(t_env *env, int *ijkt,

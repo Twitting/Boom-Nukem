@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 10:10:22 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 16:41:14 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/14 16:43:05 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	init_music(t_env *env)
 	env->sound[8] = Mix_LoadWAV("music/jump_1.wav");
 	env->sound[9] = Mix_LoadWAV("music/jump_2.wav");
 	env->sound[10] = Mix_LoadWAV("music/up_and_down.wav");
+	env->sound[11] = Mix_LoadWAV("music/key.wav");
 }
 
 void	init_fonts(t_env *env)
