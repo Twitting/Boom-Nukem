@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/14 12:23:00 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/14 20:05:53 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/14 20:15:12 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -345,11 +345,13 @@ void	grandparser(t_env *env)
 	if ((fd = open(env->mapname, O_RDONLY)) < 0)
 		ft_error(3);
 	getvertsectnums(env);
-	if (env->nvertexes < 3 || env->nsectors < 1 || env->player.where.x == 0)
+	if (env->nvertexes < 3 || env->nsectors < 1)
 		ft_error(3);
 	parsevertexes(env, fd);
 	parsesectors(env, fd);
 	parseplayer(env, fd);
+	if (env->player.where.x == 0)
+		ft_error(3);
 	sprites = parsesprites(env, fd);
 	parsewallsps(env, fd, sprites);
 	spritemaker(env);
