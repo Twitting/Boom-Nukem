@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vertexes_extra2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 21:10:24 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/11 21:12:36 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/14 16:06:21 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	init_label(t_map_ui *ui, t_edit *edit)
 	ui->quit = 0;
 	ui->draw = 1;
 	kiss_array_new(&ui->objects);
-	ui->title = ft_strjoin("set sector ", ft_itoa(edit->sectnum));
+	ui->title = ft_strjoinfree_right("set sector ", ft_itoa(edit->sectnum));
 	ui->renderer = kiss_init(ui->title, &ui->objects, 320, 350);
 	kiss_window_new(&ui->window, NULL, 0, 0, 0, kiss_screen_width,
 	kiss_screen_height);

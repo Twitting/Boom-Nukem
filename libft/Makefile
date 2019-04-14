@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: twitting <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: drestles <drestles@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2018/12/20 20:34:24 by twitting         ###   ########.fr        #
+#    Updated: 2019/04/14 15:47:55 by drestles         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,7 +75,8 @@ SRC = ft_atoi.c \
 	ft_swapptr.c \
 	ft_tolower.c \
 	ft_toupper.c \
-	get_next_line.c
+	get_next_line.c \
+	ft_strjoinfree_right.c
 OBJECTS = $(SRC:%.c=%.o)
 FLAGS = -Wall -Wextra -Werror -c
 
