@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:20:03 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/14 07:35:11 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/14 12:33:20 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,9 @@ void	fps(t_env *env)
 	time = (clock() - env->frame) / CLOCKS_PER_SEC;
 	env->timer += time;
 	if (time < (1.0 / 90.0))
-	{
-		//printf("delay\n");
 		SDL_Delay((1.0 / 90.0 - time) * 1000);
-	}
 	if (env->timer >= 1.0)
 	{
-		//ft_putstr("fps = ");
-		/////
-		//env->print_fps = env->fps;
-		/////
-		//ft_putnbr(env->fps);
-		//ft_putchar('\n');
 		env->oldfps = env->fps;
 		env->fps = 0;
 		env->timer -= 1;

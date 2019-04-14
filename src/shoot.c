@@ -3,22 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   shoot.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 20:17:10 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 03:33:50 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/14 13:03:45 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <engine.h>
 #include <render.h>
 
-void shoot(t_env *env, SDL_Event *e)
+void	shoot(t_env *env, SDL_Event *e)
 {
 	if (e->button.button == SDL_BUTTON_LEFT && env->shooting == 0)
 	{
 		Mix_PlayChannel(-1, env->sound[0], 0);
-
 		env->shooting = 11;
 		if (env->player.target >= 0)
 		{

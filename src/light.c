@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 12:24:25 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/12 21:16:36 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/14 12:31:27 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 void	spritelightapply(t_env *env, t_sprite *sprite)
 {
-	int j;
-	int k;
-	unsigned char *pix;
-	
+	int				j;
+	int				k;
+	unsigned char	*pix;
+
 	if (sprite->texture[0] != NULL)
 		SDL_FreeSurface(sprite->texture[0]);
 	sprite->texture[0] = sprite->type == 0 ? IMG_Load("textures/barrel.png") : IMG_Load("textures/med.png");
@@ -54,7 +54,6 @@ char	*gettex(t_env *env, int secnum, int tex)
 		return ("textures/stone.tga");
 	return ("textures/wood.tga");
 }
-
 
 void	sectorlightapply(t_env *env)
 {

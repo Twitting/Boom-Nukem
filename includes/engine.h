@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/14 07:33:31 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/14 13:09:09 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,7 @@ typedef struct		s_env
 
 }					t_env;
 
+void	sortsprite(t_env *env);
 void	keylightapply(t_env *env, t_sprite *sprite, int tex);
 void	sectorlightapply_support(t_env *env, int *ijkt, unsigned char *pix);
 char	*gettex(t_env *env, int secnum, int tex);

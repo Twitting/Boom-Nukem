@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   walls.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 10:37:22 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 10:52:26 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/14 13:13:46 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	wallstart(t_env *env, t_rend *rend, t_now *now)
 	wallxloop(env, rend);
 }
 
-void	startcalc(t_env *env, t_rend *rend, t_now *now)
+void	calc_support(t_env *env, t_rend *rend)
 {
 	rend->vx1 = rend->nowsect->vertex[rend->s % rend->nowsect->npoints].x - env->player.where.x;
 	rend->vy1 = rend->nowsect->vertex[rend->s % rend->nowsect->npoints].y - env->player.where.y;
@@ -40,21 +40,22 @@ void	startcalc(t_env *env, t_rend *rend, t_now *now)
 	rend->t1.y = rend->vx1 * env->player.cosang + rend->vy1 * env->player.sinang;
 	rend->t2.x = rend->vx2 * env->player.sinang - rend->vy2 * env->player.cosang;
 	rend->t2.y = rend->vx2 * env->player.cosang + rend->vy2 * env->player.sinang;
+}
+
+void	startcalc(t_env *env, t_rend *rend, t_now *now)
+{
+	calc_support(env, rend);
 	if (rend->t1.y <= 0 && rend->t2.y <= 0)
 		return ;
 	rend->u0 = 0;
 	rend->u1 = (env->text[0]->w - 1);
 	wallintersect(rend, env);
 	wallscale(env, rend);
-	// if (now->sectorno == (int)env->player.sector && s == 2)
-	// 	printf("abs %f %f %f\n", rend->t1.y, rend->t1.x, rend->t2.x);
 	if (rend->x1 >= rend->x2 || rend->x2 < now->sx1 || rend->x1 > now->sx2)
 		return ;
 	wallstart(env, rend, now);
 	if (rend->nowsect->neighbors[rend->s] >= 0 && rend->endx >= rend->beginx && (rend->head + MAXQUEUE + 1 - rend->tail) % MAXQUEUE)
 	{
-		//printf("pl %d port %d\n", env->player.sector, rend->head->sectorno);
-		//printf("1 %f 2 %f\n", rend->t1.x, rend->t2.x);
 		if (portaledge(env, rend) == 0)
 			*(rend->head) = (t_now){rend->nowsect->neighbors[rend->s], rend->beginx, rend->endx};
 		else if (portaledge(env, rend) == 1)

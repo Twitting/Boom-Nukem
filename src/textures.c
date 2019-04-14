@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:33:20 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 07:35:46 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/14 13:10:12 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ static void	inittext_game_over(t_env *env)
 	inittext_game_over_two(env);
 }
 
-void	inittext(t_env *env)
+void		inittext(t_env *env)
 {
 	env->text[0] = IMG_Load("textures/brick.tga");
 	env->text[1] = IMG_Load("textures/switch.bmp");

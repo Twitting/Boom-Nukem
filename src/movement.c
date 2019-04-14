@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:10:46 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 02:37:30 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/14 11:53:47 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ void	movement_support(t_env *env, float dx, float dy)
 	i = 0;
 	while (i < env->sprcount)
 	{
-		if (env->sprite[i].spritedist < 3 && env->sprite[i].type != 2 && env->sprite[i].type != 3)
+		if (env->sprite[i].spritedist < env->sprite[i].width * 2 && env->sprite[i].type != 2 && env->sprite[i].type != 3 && env->sprite[i].type != 5)
 		{
 			env->player.where.x -= dy;
 			env->player.where.y -= dx;

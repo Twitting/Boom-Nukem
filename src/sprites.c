@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 12:24:34 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/12 21:57:41 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/14 13:09:27 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,9 @@ void	drawsprite(t_env *env, t_rend *rend, int j)
 	{
 		txty = (int)((double)(y - rend->sprya) / (double)(rend->spryb - rend->sprya) * env->sprite[j].texture[0]->h);
 		if (y == HWIN / 2 && rend->sprx == WWIN / 2 && env->sprite[j].type == 1 &&
-			((int *)(env->sprite[j].texture[0]->pixels))[txty % env->sprite[j].texture[0]->h * env->sprite[j].texture[0]->w + rend->txtx] != 0 &&//-16777216 &&
 			((int *)(env->sprite[j].texture[0]->pixels))[txty % env->sprite[j].texture[0]->h * env->sprite[j].texture[0]->w + rend->txtx] != 0)
 			env->player.target = j;
-		if (((int *)(env->sprite[j].texture[0]->pixels))[txty % env->sprite[j].texture[0]->h * env->sprite[j].texture[0]->w + rend->txtx] != 0 &&//-16777216 &&
-			((int *)(env->sprite[j].texture[0]->pixels))[txty % env->sprite[j].texture[0]->h * env->sprite[j].texture[0]->w + rend->txtx] != 0)
+		if (((int *)(env->sprite[j].texture[0]->pixels))[txty % env->sprite[j].texture[0]->h * env->sprite[j].texture[0]->w + rend->txtx] != 0)
 			*pix = ((int *)(env->sprite[j].texture[0]->pixels))[txty % env->sprite[j].texture[0]->h * env->sprite[j].texture[0]->w + rend->txtx];
 		pix += WWIN;
 	}
@@ -81,29 +79,24 @@ void	spriteplane(t_env *env, t_rend *rend, int j)
 	spriteplane2(env, rend, j, &now);
 }
 
-void	sortsprite(t_env *env)
+void	putspritesobjects(t_env *env, int i)
 {
-	int			f;
-	int			i;
-	t_sprite	temp;
-
-	f = 1;
-	while (f == 1)
+	if (env->sprite[i].spritedist <= 2 && env->sprite[i].type == 3 && env->player.hp < 100)
 	{
-		f = 0;
-		i = 0;
-		while (i < env->sprcount - 1)
+		if (env->sprite[i].width > 0)
 		{
-			if (env->sprite[i].spritedist < env->sprite[i + 1].spritedist)
-			{
-				temp = env->sprite[i];
-				env->sprite[i] = env->sprite[i + 1];
-				env->sprite[i + 1] = temp;
-				f = 1;
-				break ;
-			}
-			i++;
+			if (env->player.hp <= 70)
+				env->player.hp += 30;
+			else
+				env->player.hp = 100;
 		}
+		env->sprite[i].width = 0;
+	}
+	if (env->sprite[i].spritedist <= 2 && env->sprite[i].type == 5)
+	{
+		if (env->sprite[i].width > 0)
+			env->player.keys++;
+		env->sprite[i].width = 0;
 	}
 }
 
@@ -117,12 +110,7 @@ void	rendersprite(t_env *env, t_rend *rend)
 	env->player.target = -1;
 	while (++i < env->sprcount)
 	{
-		if (env->sprite[i].spritedist <= 2 && env->sprite[i].type == 3)
-		{
-			if (env->sprite[i].width > 0)
-				env->player.hp += 50;
-			env->sprite[i].width = 0;
-		}
+		putspritesobjects(env, i);
 		if (env->sprite[i].type != 2)
 			spriteplane(env, rend, i);
 		else
