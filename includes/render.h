@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:42:12 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/12 13:33:56 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/13 11:34:21 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,5 +204,6 @@ void	wallxloop(t_env *env, t_rend *rend);
 void	start(t_env *env, SDL_Event *e, t_rend *rend);
 void	wallscale(t_env *env, t_rend *rend);
 void	drawtransp(t_env *env, t_rend *rend, int j);
+int		portaledge(t_env *env, t_rend *rend);
 
 #endif

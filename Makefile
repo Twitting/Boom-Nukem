@@ -6,7 +6,7 @@
 #    By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/04/12 14:34:02 by ebednar          ###   ########.fr        #
+#    Updated: 2019/04/13 11:11:08 by ebednar          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRC = ./src/main.c \
 		./src/light.c \
 		./src/spritedist.c \
 		./src/findbutton.c \
+		./src/portal.c \
 		./src/menu/main.c \
 		./src/menu/menu.c \
 		./src/menu/handle_pause.c \

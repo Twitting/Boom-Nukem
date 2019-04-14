@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 10:37:22 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/12 12:13:18 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/14 10:50:29 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,17 @@ void	startcalc(t_env *env, t_rend *rend, t_now *now)
 	wallstart(env, rend, now);
 	if (rend->nowsect->neighbors[rend->s] >= 0 && rend->endx >= rend->beginx && (rend->head + MAXQUEUE + 1 - rend->tail) % MAXQUEUE)
 	{
-		*(rend->head) = (t_now){rend->nowsect->neighbors[rend->s], rend->beginx, rend->endx};
+		//printf("pl %d port %d\n", env->player.sector, rend->head->sectorno);
+		//printf("1 %f 2 %f\n", rend->t1.x, rend->t2.x);
+		if (portaledge(env, rend) == 0)
+			*(rend->head) = (t_now){rend->nowsect->neighbors[rend->s], rend->beginx, rend->endx};
+		else if (portaledge(env, rend) == 1)
+		{
+			if (rend->t2.y > 0)
+				*(rend->head) = (t_now){rend->nowsect->neighbors[rend->s], 0, rend->endx};
+			else
+				*(rend->head) = (t_now){rend->nowsect->neighbors[rend->s], rend->beginx, 0};
+		}
 		if (++rend->head == rend->queue + MAXQUEUE)
 			rend->head = rend->queue;
 	}
