@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprites.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 12:24:34 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 16:43:02 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/14 20:07:05 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,10 @@ void	putspritesobjects(t_env *env, int i)
 		env->sprite[i].width = 0;
 	}
 	if (env->sprite[i].spritedist <= 2 && env->sprite[i].type == 6 && env->sprite[i].texnum == 0)
+	{
+		Mix_PlayChannel(-1, env->sound[14], 0);
 		env->state = 6;
+	}
 }
 
 void	rendersprite(t_env *env, t_rend *rend)

@@ -6,14 +6,14 @@
 /*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 01:25:35 by drestles          #+#    #+#             */
-/*   Updated: 2019/04/14 07:34:07 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/14 19:29:47 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
 #include "render.h"
 
-void head_one(t_env *env)
+void	head_one(t_env *env)
 {
 	SDL_Rect	position;
 	SDL_Rect	position2;
@@ -37,7 +37,7 @@ void head_one(t_env *env)
 		SDL_BlitSurface(env->text_head[16], NULL, env->surface, &position2);
 }
 
-void head_two(t_env *env)
+void	head_two(t_env *env)
 {
 	SDL_Rect	position;
 	SDL_Rect	position2;
@@ -61,7 +61,7 @@ void head_two(t_env *env)
 		SDL_BlitSurface(env->text_head[18], NULL, env->surface, &position2);
 }
 
-void head_three(t_env *env)
+void	head_three(t_env *env)
 {
 	SDL_Rect	position;
 	SDL_Rect	position2;
@@ -85,7 +85,7 @@ void head_three(t_env *env)
 		SDL_BlitSurface(env->text_head[20], NULL, env->surface, &position2);
 }
 
-void head_four(t_env *env)
+void	head_four(t_env *env)
 {
 	SDL_Rect	position;
 	SDL_Rect	position2;
@@ -109,7 +109,7 @@ void head_four(t_env *env)
 		SDL_BlitSurface(env->text_head[22], NULL, env->surface, &position2);
 }
 
-void head_five(t_env *env)
+void	head_five(t_env *env)
 {
 	SDL_Rect	position;
 	SDL_Rect	position2;
@@ -132,4 +132,3 @@ void head_five(t_env *env)
 	else
 		SDL_BlitSurface(env->text_head[24], NULL, env->surface, &position2);
 }
-
