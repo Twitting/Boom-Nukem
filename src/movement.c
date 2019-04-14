@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:10:46 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 13:58:22 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/14 18:28:06 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int		h_collision(t_env *env, t_xy *p, t_xy *d, t_xy *dd)
 				d->x = b_pd[0].x * (d->x * b_pd[0].x + b_pd[0].y * d->y) / (b_pd[0].x * b_pd[0].x + b_pd[0].y * b_pd[0].y);
 				d->y = b_pd[0].y * (arr[0] * b_pd[0].x + b_pd[0].y * d->y) / (b_pd[0].x * b_pd[0].x + b_pd[0].y * b_pd[0].y);
 				env->moving = -1;
+				return(0);
 			}
 	s = -1;
 	while (++s < (int)env->sector[env->player.sector].npoints)
@@ -95,8 +96,8 @@ int		h_collision(t_env *env, t_xy *p, t_xy *d, t_xy *dd)
 				h_collision_support(env, arr, b_pd, d, s);
 		}
 	}
-	return (0);
 	env->falling = 1;
+	return (0);
 }
 
 int		can_i_go(t_env *env, t_xy *p, double x, double y)
@@ -117,8 +118,8 @@ int		can_i_go(t_env *env, t_xy *p, double x, double y)
 		arr[4] = sqrt(pow(p[i].x - p[ii1].x, 2) + pow(p[i].y - p[ii1].y, 2));
 		arr[5] = 0.25 * sqrt(pow(pow(arr[2], 2) + pow(arr[3], 2) + pow(arr[4], 2), 2) - 2 * (pow(arr[2], 4) + pow(arr[3], 4) + pow(arr[4], 4)));
 		hh[i] = (2 * arr[5]) / arr[4];
-		if (arr[2] < 1 || arr[3] < 1)
-			return (0);
+		//if (arr[2] < 1 || arr[3] < 1)
+		//	return (0);
 		i++;
 	}
 	return (1);
@@ -131,7 +132,7 @@ void	movement_support(t_env *env, float dx, float dy)
 	i = 0;
 	while (i < env->sprcount)
 	{
-		if (env->sprite[i].spritedist < env->sprite[i].width * 2 && env->sprite[i].type != 2 && env->sprite[i].type != 3 && env->sprite[i].type != 5)
+		if (env->sprite[i].spritedist < env->sprite[i].width * 2 && env->sprite[i].type == 0)
 		{
 			env->player.where.x -= dy;
 			env->player.where.y -= dx;

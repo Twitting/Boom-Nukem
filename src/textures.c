@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:33:20 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 13:10:12 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/14 15:56:32 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,4 +130,5 @@ void		inittext(t_env *env)
 	inittext_head(env);
 	inittext_game_over(env);
 	inittext_keys(env);
+	inittext_term(env);
 }

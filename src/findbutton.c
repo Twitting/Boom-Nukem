@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   findbutton.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 14:33:24 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/12 16:19:11 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/14 16:27:16 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,14 @@ void	findbutton(t_env *env)
 	while (++i < env->nsectors)
 	{
 		s = -1;
+		env->button[i].visible = 0;
 		while (++s < env->sector[i].npoints)
+		{
 			if (env->sector[i].neighbors[s] == -2)
+			{
+				env->button[i].visible = 1;
 				findbutton_hv(env, i, s);
+			}
+		}
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   spritedist.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 12:26:48 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 13:08:27 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/14 15:31:34 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void	spritedist(t_env *env)
 			env->sprite[i].spritedist = (env->player.where.x - env->sprite[i].pos1.x) *
 			(env->player.where.x - env->sprite[i].pos1.x) + (env->player.where.y -
 			env->sprite[i].pos1.y) * (env->player.where.y - env->sprite[i].pos1.y);
-		env->sprite[i].visible = 0;
+		if (env->sprite[i].type != 2)
+			env->sprite[i].visible = 0;
 	}
 }
 

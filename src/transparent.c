@@ -6,7 +6,7 @@
 /*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 16:26:23 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 18:20:55 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/14 19:20:32 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ void	trstart(t_rend *rend, t_env *env, int j, t_sprque *now)
 		rend->tryb = scaler_next(&rend->tryb_int);
 		rend->ctryb = CLAMP(rend->tryb, now->ytop[rend->trx], now->ybottom[rend->trx]);
 		rend->txtx = ((rend->u0 * ((rend->trx2 - rend->trx) * rend->ttr2.y) + rend->u1 * ((rend->trx - rend->trx1) * rend->ttr1.y))
-		/ ((rend->trx2 - rend->trx) * rend->ttr2.y + (rend->trx - rend->trx1) * rend->ttr1.y)) * (fabs(rend->vtr2.x - rend->vtr1.x) + fabs(rend->vtr2.y - rend->vtr1.y)) * 0.12;
+		/ ((rend->trx2 - rend->trx) * rend->ttr2.y + (rend->trx - rend->trx1) * rend->ttr1.y)) * (fabs(rend->vtr2.x - rend->vtr1.x) + fabs(rend->vtr2.y - rend->vtr1.y)) * 0.002;
 		drawtransp(env, rend, j);
 		rend->trx++;
 	}
@@ -141,7 +141,7 @@ void	trplane(t_env *env, t_rend *rend, int j)
 	t_sprque		now;
 
 	now = rend->sprq[env->sprite[j].sector];
-	if (now.visible == 0)
+	if (now.visible == 0 || env->sprite[j].visible == 0)
 		return ;
 	rend->nowsect = &(env->sector[now.sector]);
 	rend->vtr1.x = env->sprite[j].pos1.x - env->player.where.x;

@@ -6,7 +6,7 @@
 /*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 06:00:22 by drestles          #+#    #+#             */
-/*   Updated: 2019/04/14 07:31:20 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/14 17:41:34 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@
 /*
 ** STATE 0
 */
-void menu(t_env *env, SDL_Event *e)
+
+void	menu(t_env *env, SDL_Event *e)
 {
 	SDL_Surface *button;
+
 	env->b_one = 0;
 	env->b_three = 0;
 	env->b_four = 0;
@@ -33,7 +35,7 @@ void menu(t_env *env, SDL_Event *e)
 			if (env->b_one == 1)
 				button = SDL_LoadBMP("img/menu_1.bmp");
 			else if (env->b_three == 1)
-				button = SDL_LoadBMP("img/menu_2.bmp"); 
+				button = SDL_LoadBMP("img/menu_2.bmp");
 			else if (env->b_four == 1)
 				button = SDL_LoadBMP("img/menu_3.bmp");
 			SDL_BlitScaled(button, NULL, env->surface, NULL);
@@ -43,8 +45,9 @@ void menu(t_env *env, SDL_Event *e)
 		handle_events_menu(env, e);
 	}
 }
+
 /*
-** STATE 0 MENU 
+** STATE 0 MENU
 ** STATE 1 GAME
 ** STATE 2 PAUSE
 ** STATE 3 SAVE
@@ -52,7 +55,8 @@ void menu(t_env *env, SDL_Event *e)
 ** STATE 5 GAME MODE
 ** STATE 6 GAME OVER
 */
-void start(t_env *env, SDL_Event *e, t_rend *rend)
+
+void	start(t_env *env, SDL_Event *e, t_rend *rend)
 {
 	if (env->state == 0)
 		menu(env, e);
@@ -77,4 +81,3 @@ void start(t_env *env, SDL_Event *e, t_rend *rend)
 	else if (env->state == 6)
 		game_over(env, e);
 }
-

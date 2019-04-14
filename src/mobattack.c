@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 18:28:49 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 12:37:18 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/14 18:30:32 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ void	mob_attack(t_env *env)
 	{
 		if (env->sprite[i].type == 1)
 		{
-			if (env->sprite[i].spritedist <= 5)
+			if (env->sprite[i].spritedist <= 9)
 			{
 				env->sprite[i].mobtimer += (clock() - env->frame) /
 											CLOCKS_PER_SEC;
-				if (env->sprite[i].mobtimer >= 0.5)
+				if (env->sprite[i].mobtimer >= 0.2)
 					mobcrushesface(env, i);
 			}
 			else
