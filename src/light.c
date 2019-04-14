@@ -18,28 +18,28 @@ void	spritelightapply(t_env *env, t_sprite *sprite)
 	int				k;
 	unsigned char	*pix;
 
-	if (sprite->texture[0] != NULL)
-		SDL_FreeSurface(sprite->texture[0]);
-	sprite->texture[0] = sprite->type == 0 ? IMG_Load("textures/barrel.png") : IMG_Load("textures/med.png");
-	pix = (unsigned char *)sprite->texture[0]->pixels;
+	if (SPRTE[0] != NULL)
+		SDL_FreeSurface(SPRTE[0]);
+	SPRTE[0] = sprite->type == 0 ? IMG_Load("textures/barrel.png") : IMG_Load("textures/med.png");
+	pix = (unsigned char *)SPRTE[0]->pixels;
 	j = -1;
-	while (++j < sprite->texture[0]->h)
+	while (++j < SPRTE[0]->h)
 	{
 		k = -1;
-		while (++k < sprite->texture[0]->w - 1)
+		while (++k < SPRTE[0]->w - 1)
 		{
-			pix[(j * sprite->texture[0]->w + k) * 4] = (unsigned char)((double)pix[(j * sprite->texture[0]->w + k) * 4] / 100 * env->sector[sprite->sector].light);
-			pix[(j * sprite->texture[0]->w + k) * 4 + 1] = (unsigned char)((double)pix[(j * sprite->texture[0]->w + k) * 4 + 1] / 100 * env->sector[sprite->sector].light);
-			pix[(j * sprite->texture[0]->w + k) * 4 + 2] = (unsigned char)((double)pix[(j * sprite->texture[0]->w + k) * 4 + 2] / 100 * env->sector[sprite->sector].light);
+			pix[(j * SPRTE[0]->w + k) * 4] = ESECT3] / 100 * ESEC[sprite->sector].light);
+			pix[(j * SPRTE[0]->w + k) * 4 + 1] = ESECT3 + 1] / 100 * ESEC[sprite->sector].light);
+			pix[(j * SPRTE[0]->w + k) * 4 + 2] = ESECT3 + 2] / 100 * ESEC[sprite->sector].light);
 		}
 	}
 }
 
 void	sectorlightapply_support(t_env *env, int *ijkt, unsigned char *pix)
 {
-	pix[(ijkt[1] * env->sector[ijkt[0]].text[ijkt[3]]->w + ijkt[2]) * 4] = (unsigned char)((double)pix[(ijkt[1] * env->sector[ijkt[0]].text[ijkt[3]]->w + ijkt[2]) * 4] / 100 * env->sector[ijkt[0]].light);
-	pix[(ijkt[1] * env->sector[ijkt[0]].text[ijkt[3]]->w + ijkt[2]) * 4 + 1] = (unsigned char)((double)pix[(ijkt[1] * env->sector[ijkt[0]].text[ijkt[3]]->w + ijkt[2]) * 4 + 1] / 100 * env->sector[ijkt[0]].light);
-	pix[(ijkt[1] * env->sector[ijkt[0]].text[ijkt[3]]->w + ijkt[2]) * 4 + 2] = (unsigned char)((double)pix[(ijkt[1] * env->sector[ijkt[0]].text[ijkt[3]]->w + ijkt[2]) * 4 + 2] / 100 * env->sector[ijkt[0]].light);
+	pix[(ijkt[1] * ESECT->w + ijkt[2]) * 4] = ESECT2] / 100 * ESEC[ijkt[0]].light);
+	pix[(ijkt[1] * ESECT->w + ijkt[2]) * 4 + 1] = ESECT2 + 1] / 100 * ESEC[ijkt[0]].light);
+	pix[(ijkt[1] * ESECT->w + ijkt[2]) * 4 + 2] = ESECT2 + 2] / 100 * ESEC[ijkt[0]].light);
 }
 
 char	*gettex(t_env *env, int secnum, int tex)
@@ -66,17 +66,17 @@ void	sectorlightapply(t_env *env)
 		ijkt[0] = -1;
 		while (++ijkt[0] < (int)env->nsectors)
 		{
-			if (env->sector[ijkt[0]].sky == 1)
-				env->sector[ijkt[0]].light = 100;
-			if (env->sector[ijkt[0]].text[ijkt[3]] != NULL)
-				SDL_FreeSurface(env->sector[ijkt[0]].text[ijkt[3]]);
-			env->sector[ijkt[0]].text[ijkt[3]] = IMG_Load(gettex(env, ijkt[0], ijkt[3]));
-			pix = (unsigned char *)env->sector[ijkt[0]].text[ijkt[3]]->pixels;
+			if (ESEC[ijkt[0]].sky == 1)
+				ESEC[ijkt[0]].light = 100;
+			if (ESECT != NULL)
+				SDL_FreeSurface(ESECT);
+			ESECT = IMG_Load(gettex(env, ijkt[0], ijkt[3]));
+			pix = (unsigned char *)ESECT->pixels;
 			ijkt[1] = -1;
-			while (++ijkt[1] < env->sector[ijkt[0]].text[ijkt[3]]->h)
+			while (++ijkt[1] < ESECT->h)
 			{
 				ijkt[2] = -1;
-				while (++ijkt[2] < env->sector[ijkt[0]].text[ijkt[3]]->w)
+				while (++ijkt[2] < ESECT->w)
 					sectorlightapply_support(env, ijkt, pix);
 			}
 		}

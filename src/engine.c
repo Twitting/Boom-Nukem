@@ -16,26 +16,26 @@ void	mixtex_support(t_env *env, t_sprite *sprite, SDL_Surface *temp)
 {
 	if (sprite->type == 1 && sprite->visible == 1)
 	{
-		temp = sprite->texture[0];
-		sprite->texture[0] = sprite->texture[sprite->texnum % 7];
-		sprite->texture[sprite->texnum % 7] = temp;
+		temp = SPRTE[0];
+		SPRTE[0] = SPRTE[sprite->texnum % 7];
+		SPRTE[sprite->texnum % 7] = temp;
 	}
 	else if (sprite->type == 4 && sprite->hp > 666)
 	{
 		if (sprite->hp == 716)
-			SDL_FreeSurface(sprite->texture[0]);
+			SDL_FreeSurface(SPRTE[0]);
 		if ((sprite->hp - 676) % 10 == 0)
 		{
-			sprite->texture[0] = env->text[(sprite->hp - 676) / 10 + 3];
+			SPRTE[0] = env->text[(sprite->hp - 676) / 10 + 3];
 			sprite->height--;
 		}
 		sprite->hp--;
 	}
 	else if (sprite->type == 4 && sprite->hp == 666)
 	{
-		temp = sprite->texture[0];
-		sprite->texture[0] = sprite->texture[7];
-		sprite->texture[7] = temp;
+		temp = SPRTE[0];
+		SPRTE[0] = SPRTE[7];
+		SPRTE[7] = temp;
 		sprite->height = 5;
 		sprite->hp--;
 		enemylightapply(env, sprite, 0);
@@ -57,14 +57,14 @@ void	mixkeytex(t_sprite *sprite)
 {
 	SDL_Surface	*temp;
 
-	temp = sprite->texture[0];
-	sprite->texture[0] = sprite->texture[sprite->texnum % 8];
-	sprite->texture[sprite->texnum % 8] = temp;
+	temp = SPRTE[0];
+	SPRTE[0] = SPRTE[sprite->texnum % 8];
+	SPRTE[sprite->texnum % 8] = temp;
 }
 
 void	applytermtex(t_env *env, t_sprite *sprite)
 {
-	sprite->texture[0] = env->text[14 + sprite->texnum];
+	SPRTE[0] = env->text[14 + sprite->texnum];
 	if (sprite->texnum == 0 || sprite->texnum == 4)
 		sprite->width = 3;
 	else if (sprite->texnum == 6 || sprite->texnum == 2)
@@ -78,8 +78,8 @@ void	termtex(t_env *env, t_sprite *sprite)
 	int	px;
 	int	py;
 
-	px = env->player.where.x - sprite->pos1.x;
-	py = env->player.where.y - sprite->pos1.y;
+	px = EPW.x - sprite->pos1.x;
+	py = EPW.y - sprite->pos1.y;
 	if (px >= 0 && px >= -py && py <= 0)
 		sprite->texnum = 0;
 	else if (px >= 0 && px >= py && py >= 0)
@@ -105,28 +105,28 @@ void	animation(t_env *env)
 	i = -1;
 	while (++i < env->sprcount)
 	{
-		if (env->sprite[i].movecount >= 5 && env->sprite[i].type != 5 && env->sprite[i].type != 6)
+		if (ESPRI.movecount >= 5 && ESPRI.type != 5 && ESPRI.type != 6)
 		{
-			env->sprite[i].movecount = 0;
-			env->sprite[i].texnum = env->sprite[i].texnum == 6 ? 0 : env->sprite[i].texnum + 1;
-			mixtex(env, &env->sprite[i]);
+			ESPRI.movecount = 0;
+			ESPRI.texnum = ESPRI.texnum == 6 ? 0 : ESPRI.texnum + 1;
+			mixtex(env, &ESPRI);
 		}
-		if (env->sprite[i].type == 4 && env->sprite[i].hp != 665)
-			mixtex(env, &env->sprite[i]);
-		if (env->sprite[i].type == 5)
+		if (ESPRI.type == 4 && ESPRI.hp != 665)
+			mixtex(env, &ESPRI);
+		if (ESPRI.type == 5)
 		{
-			env->sprite[i].movecount++;
-			if (env->sprite[i].movecount == 5)
+			ESPRI.movecount++;
+			if (ESPRI.movecount == 5)
 			{
-				env->sprite[i].movecount = 0;
-				env->sprite[i].texnum = env->sprite[i].texnum == 7 ? 0 : env->sprite[i].texnum + 1;
-				mixkeytex(&env->sprite[i]);
+				ESPRI.movecount = 0;
+				ESPRI.texnum = ESPRI.texnum == 7 ? 0 : ESPRI.texnum + 1;
+				mixkeytex(&ESPRI);
 			}
 		}
-		if (env->sprite[i].type == 6)
+		if (ESPRI.type == 6)
 		{
-			termtex(env, &env->sprite[i]);
-			applytermtex(env, &env->sprite[i]);
+			termtex(env, &ESPRI);
+			applytermtex(env, &ESPRI);
 		}
 	}
 }
@@ -146,26 +146,22 @@ void	pistolrender(t_env *env)
 		xyab[0] = WWIN / 3 * 2;
 		while (++xyab[0] < WWIN / 3 * 2 + 263)
 		{
-			if (((int *)(env->text[8 + env->shooting / 3]->pixels))
-			[xyab[2] % env->text[8 + env->shooting / 3]->h * (env->text[8 + env->shooting / 3]->w) +
-			xyab[3] % env->text[8 + env->shooting / 3]->w] != -1)
-				pix[xyab[1] * WWIN + xyab[0]] = ((int *)(env->text[8 + env->shooting / 3]->pixels))
-			[xyab[2] % env->text[8 + env->shooting / 3]->h * (env->text[8 + env->shooting / 3]->w) +
-			xyab[3] % env->text[8 + env->shooting / 3]->w];
+			if (((int *)(env->text[8 + ESHOOT / 3]->pixels))
+			[xyab[2] % env->text[8 + ESHOOT / 3]->h * (env->text[8 + ESHOOT / 3]->w) +
+			xyab[3] % env->text[8 + ESHOOT / 3]->w] != -1)
+				pix[xyab[1] * WWIN + xyab[0]] = ((int *)(env->text[8 + ESHOOT / 3]->pixels))
+			[xyab[2] % env->text[8 + ESHOOT / 3]->h * (env->text[8 + ESHOOT / 3]->w) +
+			xyab[3] % env->text[8 + ESHOOT / 3]->w];
 			xyab[3]++;
 		}
 		xyab[2]++;
 	}
-	if (env->shooting > 0)
-		env->shooting--;
+	if (ESHOOT > 0)
+		ESHOOT--;
 }
 
 int		start_engine(t_env *env, SDL_Event *e, t_rend *rend)
 {
-	//Mix_Music *music = NULL;
-	//music = Mix_LoadMUS("music/1.mp3");
-	//Mix_PlayMusic(music, -1);
-	/////////////////////////////
 	int	i;
 
 	i = -1;
@@ -188,11 +184,9 @@ int		start_engine(t_env *env, SDL_Event *e, t_rend *rend)
 	pushswitch(env);
 	ft_putchar('h');
 	SDL_UnlockSurface(env->surface);
-	///////////////////////   BLOOOD   /////////////////////////
 	if (env->blood-- > 0)
 		SDL_BlitScaled(env->text_head[25], NULL, env->surface, NULL);
 	put_bar(env);
-	/////////////////////////////////////////// and hp /////////
 	SDL_UpdateWindowSurface(env->window);
 	handle_events(env, e);
 	return (0);

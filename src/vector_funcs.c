@@ -24,7 +24,7 @@ int		overlap(double a0, double a1, double b0, double b1)
 	return (0);
 }
 
-int		intersect_box(t_xy a, t_xy b, t_xy c, t_xy d)
+int		i_b(t_xy a, t_xy b, t_xy c, t_xy d)
 {
 	if (overlap(a.x, b.x, c.x, d.x) && overlap(a.y, b.y, c.y, d.y))
 		return (1);

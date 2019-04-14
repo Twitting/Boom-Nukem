@@ -65,7 +65,7 @@ void	playerinit(t_env *env)
 	env->player.yaw = 0.0;
 	env->player.keys = 0;
 	env->player.pushingbutton = 0;
-	env->player.where.z = env->sector[env->player.sector].floor + EYEHEIGHT;
+	EPW.z = ESEC[EPS].floor + EYEHEIGHT;
 	env->player.hp = 100;
 	env->player.eye = EYEHEIGHT;
 }
@@ -79,16 +79,16 @@ void	parseplayer(t_env *env, int fd)
 	i = 0;
 	while (line[i] != '\t')
 		i++;
-	env->player.where.x = ft_atoi(&line[i]);
+	EPW.x = ft_atoi(&line[i]);
 	while (line[i] != ' ')
 		i++;
-	env->player.where.y = ft_atoi(&line[i]);
+	EPW.y = ft_atoi(&line[i]);
 	while (line[i] != '\t')
 		i++;
 	env->player.angle = (ft_atoi(&line[i]) % 360) * M_PI / 180;
 	while (line[i] != ' ')
 		i++;
-	env->player.sector = ft_atoi(&line[i]);
+	EPS = ft_atoi(&line[i]);
 	playerinit(env);
 	free(line);
 	if (get_next_line(fd, &line))
@@ -98,23 +98,23 @@ void	parseplayer(t_env *env, int fd)
 void	parsesectors_support(t_env *env, int count, char *line, int *i)
 {
 	(*i) += 7;
-	env->sector[count].sky = 0;
-	env->sector[count].floor = ft_atoi(&line[*i]);
+	ESEC[count].sky = 0;
+	ESEC[count].floor = ft_atoi(&line[*i]);
 	while (line[*i] != ' ')
 		(*i)++;
-	env->sector[count].ceiling = ft_atoi(&line[*i]);
-	if (env->sector[count].ceiling < 0)
+	ESEC[count].ceiling = ft_atoi(&line[*i]);
+	if (ESEC[count].ceiling < 0)
 	{
-		env->sector[count].ceiling *= -1;
-		env->sector[count].sky = 1;
+		ESEC[count].ceiling *= -1;
+		ESEC[count].sky = 1;
 	}
 	while (line[*i] != '\t')
 		(*i)++;
-	env->sector[count].light = ft_atoi(&line[*i]);
-	env->sector[count].on = env->sector[count].light > 40 ? 1 : 0;
+	ESEC[count].light = ft_atoi(&line[*i]);
+	ESEC[count].on = ESEC[count].light > 40 ? 1 : 0;
 	while (line[*i] != ' ')
 		(*i)++;
-	env->sector[count].textpack = ft_atoi(&line[*i]);
+	ESEC[count].textpack = ft_atoi(&line[*i]);
 	while (line[*i] != '\t')
 		(*i)++;
 }
@@ -132,7 +132,7 @@ void	parsesectors(t_env *env, int fd)
 		if (line[0] == 's')
 		{
 			parsesectors_support(env, count, line, &i);
-			verttosect(env, &env->sector[count], line, i);
+			verttosect(env, &ESEC[count], line, i);
 		}
 		else if (line[0] != 's')
 		{
@@ -200,11 +200,11 @@ void	getvertsectnums(t_env *env)
 		free(line);
 	}
 	close(fd);
-	env->sector = (t_sector *)malloc(sizeof(t_sector) * (env->nsectors));
+	ESEC = (t_sector *)malloc(sizeof(t_sector) * (env->nsectors));
 	env->vertex = (t_xy *)malloc(sizeof(t_xy) * env->nvertexes);
 	env->sprite = (t_sprite *)malloc(sizeof(t_sprite) * env->sprcount);
 	env->button = (t_button *)malloc(sizeof(t_button) * env->nsectors);
-	if (!env->sector || !env->vertex || !env->sprite || !env->button)
+	if (!ESEC || !env->vertex || !env->sprite || !env->button)
 		ft_error(2);
 }
 
@@ -255,47 +255,47 @@ void	spritemaker(t_env *env)
 	i = -1;
 	while (++i < env->sprcount)
 	{
-		if (env->sprite[i].type == 0 || env->sprite[i].type == 3)
+		if (ESPRI.type == 0 || ESPRI.type == 3)
 		{
-			env->sprite[i].height = 7;
-			env->sprite[i].width = 3;
+			ESPRI.height = 7;
+			ESPRI.width = 3;
 		}
-		else if (env->sprite[i].type == 1)
+		else if (ESPRI.type == 1)
 		{
-			env->sprite[i].height = 12;
-			env->sprite[i].width = 4;
+			ESPRI.height = 12;
+			ESPRI.width = 4;
 		}
-		else if (env->sprite[i].type >= 5)
+		else if (ESPRI.type >= 5)
 		{
-			env->sprite[i].height = 6;
-			env->sprite[i].width = 1;
+			ESPRI.height = 6;
+			ESPRI.width = 1;
 		}
 	}
 }
 
 void	makewallsp(t_env *env, int i)
 {
-	env->sprite[i].pos1.x = env->vertex[env->wallsp.vert1].x;
-	env->sprite[i].pos1.y = env->vertex[env->wallsp.vert1].y;
+	ESPRI.pos1.x = env->vertex[env->wallsp.vert1].x;
+	ESPRI.pos1.y = env->vertex[env->wallsp.vert1].y;
 	env->sprite[i + 1].pos1.x = env->vertex[env->wallsp.vert2].x;
 	env->sprite[i + 1].pos1.y = env->vertex[env->wallsp.vert2].y;
-	env->sprite[i].pos2.x = env->vertex[env->wallsp.vert2].x;
-	env->sprite[i].pos2.y = env->vertex[env->wallsp.vert2].y;
+	ESPRI.pos2.x = env->vertex[env->wallsp.vert2].x;
+	ESPRI.pos2.y = env->vertex[env->wallsp.vert2].y;
 	env->sprite[i + 1].pos2.x = env->vertex[env->wallsp.vert1].x;
 	env->sprite[i + 1].pos2.y = env->vertex[env->wallsp.vert1].y;
-	env->sprite[i].sector = env->wallsp.sect2;
+	ESPRI.sector = env->wallsp.sect2;
 	env->sprite[i + 1].sector = env->wallsp.sect1;
-	env->sprite[i].height = MIN(env->sector[env->wallsp.sect1].ceiling, env->sector[env->wallsp.sect2].ceiling);
-	env->sprite[i].floor = MAX(env->sector[env->wallsp.sect1].floor, env->sector[env->wallsp.sect2].floor);
-	env->sprite[i].type = 2;
-	env->sprite[i].texture[0] = IMG_Load("textures/bars.png");
-	env->sprite[i + 1].height = MIN(env->sector[env->wallsp.sect1].ceiling, env->sector[env->wallsp.sect2].ceiling);
-	env->sprite[i + 1].floor = MAX(env->sector[env->wallsp.sect1].floor, env->sector[env->wallsp.sect2].floor);
+	ESPRI.height = MIN(ESEC[env->wallsp.sect1].ceiling, ESEC[env->wallsp.sect2].ceiling);
+	ESPRI.floor = MAX(ESEC[env->wallsp.sect1].floor, ESEC[env->wallsp.sect2].floor);
+	ESPRI.type = 2;
+	ESPRI.texture[0] = IMG_Load("textures/bars.png");
+	env->sprite[i + 1].height = MIN(ESEC[env->wallsp.sect1].ceiling, ESEC[env->wallsp.sect2].ceiling);
+	env->sprite[i + 1].floor = MAX(ESEC[env->wallsp.sect1].floor, ESEC[env->wallsp.sect2].floor);
 	env->sprite[i + 1].type = 2;
 	env->sprite[i + 1].texture[0] = IMG_Load("textures/bars.png");
-	env->sprite[i].openbar = 0;
+	ESPRI.openbar = 0;
 	env->sprite[i + 1].openbar = 0;
-	env->sprite[i].visible = 1;
+	ESPRI.visible = 1;
 	env->sprite[i + 1].visible = 1;
 }
 

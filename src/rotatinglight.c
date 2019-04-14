@@ -41,19 +41,19 @@ void	enemylightapply(t_env *env, t_sprite *sprite, int tex)
 	sprite->movecount = 0;
 	sprite->texnum = 0;
 	sprite->mobtimer = 0;
-	if (sprite->texture[tex] != NULL)
-		SDL_FreeSurface(sprite->texture[tex]);
-	sprite->texture[tex] = IMG_Load(gettexenemy(tex, sprite));
-	pix = (unsigned char *)sprite->texture[tex]->pixels;
+	if (SPRTE[tex] != NULL)
+		SDL_FreeSurface(SPRTE[tex]);
+	SPRTE[tex] = IMG_Load(gettexenemy(tex, sprite));
+	pix = (unsigned char *)SPRTE[tex]->pixels;
 	j = -1;
-	while (++j < sprite->texture[tex]->h)
+	while (++j < SPRTE[tex]->h)
 	{
 		k = -1;
-		while (++k < sprite->texture[tex]->w - 1)
+		while (++k < SPRTE[tex]->w - 1)
 		{
-			pix[(j * sprite->texture[tex]->w + k) * 4] = (unsigned char)((double)pix[(j * sprite->texture[tex]->w + k) * 4] / 100 * env->sector[sprite->sector].light);
-			pix[(j * sprite->texture[tex]->w + k) * 4 + 1] = (unsigned char)((double)pix[(j * sprite->texture[tex]->w + k) * 4 + 1] / 100 * env->sector[sprite->sector].light);
-			pix[(j * sprite->texture[tex]->w + k) * 4 + 2] = (unsigned char)((double)pix[(j * sprite->texture[tex]->w + k) * 4 + 2] / 100 * env->sector[sprite->sector].light);
+			pix[(j * SPRTE[tex]->w + k) * 4] = (unsigned char)((double)pix[(j * SPRTE[tex]->w + k) * 4] / 100 * ESEC[sprite->sector].light);
+			pix[(j * SPRTE[tex]->w + k) * 4 + 1] = (unsigned char)((double)pix[(j * SPRTE[tex]->w + k) * 4 + 1] / 100 * ESEC[sprite->sector].light);
+			pix[(j * SPRTE[tex]->w + k) * 4 + 2] = (unsigned char)((double)pix[(j * SPRTE[tex]->w + k) * 4 + 2] / 100 * ESEC[sprite->sector].light);
 		}
 	}
 }
@@ -67,13 +67,13 @@ void	initspritelight(t_env *env)
 	while (++i < env->sprcount)
 	{
 		j = -1;
-		if (env->sprite[i].type == 0 || env->sprite[i].type == 3)
-			spritelightapply(env, &env->sprite[i]);
-		if (env->sprite[i].type == 1)
+		if (ESPRI.type == 0 || ESPRI.type == 3)
+			spritelightapply(env, &ESPRI);
+		if (ESPRI.type == 1)
 			while (++j < 7)
-				enemylightapply(env, &env->sprite[i], j);
-		else if (env->sprite[i].type == 5)
+				enemylightapply(env, &ESPRI, j);
+		else if (ESPRI.type == 5)
 			while (++j < 8)
-				keylightapply(env, &env->sprite[i], j);
+				keylightapply(env, &ESPRI, j);
 	}
 }

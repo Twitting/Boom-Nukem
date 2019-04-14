@@ -14,7 +14,7 @@
 
 void	mobcrushesface(t_env *env, int i)
 {
-	env->sprite[i].mobtimer = 0;
+	ESPRI.mobtimer = 0;
 	if (env->player.hp > 50)
 		Mix_PlayChannel(-1, env->sound[3], 0);
 	else
@@ -35,17 +35,17 @@ void	mob_attack(t_env *env)
 	i = -1;
 	while (++i < env->sprcount)
 	{
-		if (env->sprite[i].type == 1)
+		if (ESPRI.type == 1)
 		{
-			if (env->sprite[i].spritedist <= 9)
+			if (ESPRI.spritedist <= 9)
 			{
-				env->sprite[i].mobtimer += (clock() - env->frame) /
+				ESPRI.mobtimer += (clock() - env->frame) /
 											CLOCKS_PER_SEC;
-				if (env->sprite[i].mobtimer >= 0.2)
+				if (ESPRI.mobtimer >= 0.2)
 					mobcrushesface(env, i);
 			}
 			else
-				env->sprite[i].mobtimer = 0;
+				ESPRI.mobtimer = 0;
 		}
 	}
 }

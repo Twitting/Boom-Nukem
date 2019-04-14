@@ -14,23 +14,23 @@
 
 void	findbutton_di(t_env *env, int i, int s, t_xy *xy)
 {
-	if (env->sector[i].vertex[s % env->sector[i].npoints].x < env->sector[i].vertex[(s + 1) % env->sector[i].npoints].x)
-		xy->x = env->button[i].x1 + 0.1;
+	if (ESIV[s % ESIN].x < ESIV[(s + 1) % ESIN].x)
+		xy->x = EBUTT.x1 + 0.1;
 	else
-		xy->x = env->button[i].x1 - 0.1;
-	xy->y = (xy->x - env->sector[i].vertex[s % env->sector[i].npoints].x) *
-	(env->sector[i].vertex[(s + 1) % env->sector[i].npoints].y -
-	env->sector[i].vertex[s % env->sector[i].npoints].y) / (env->sector[i].vertex[(s + 1) %
-	env->sector[i].npoints].x - env->sector[i].vertex[s % env->sector[i].npoints].x) +
-	env->sector[i].vertex[s % env->sector[i].npoints].y;
-	while (((xy->x - env->button[i].x1) * (xy->x - env->button[i].x1) + (xy->y - env->button[i].y1) * (xy->y - env->button[i].y1)) < BUTTONWIDTH)
+		xy->x = EBUTT.x1 - 0.1;
+	xy->y = (xy->x - ESIV[s % ESIN].x) *
+	(ESIV[(s + 1) % ESIN].y -
+	ESIV[s % ESIN].y) / (ESIV[(s + 1) %
+	ESIN].x - ESIV[s % ESIN].x) +
+	ESIV[s % ESIN].y;
+	while (((xy->x - EBUTT.x1) * (xy->x - EBUTT.x1) + (xy->y - EBUTT.y1) * (xy->y - EBUTT.y1)) < BUTTONWIDTH)
 	{
-		xy->y = (xy->x - env->sector[i].vertex[s % env->sector[i].npoints].x) *
-		(env->sector[i].vertex[(s + 1) % env->sector[i].npoints].y -
-		env->sector[i].vertex[s % env->sector[i].npoints].y) / (env->sector[i].vertex[(s + 1) %
-		env->sector[i].npoints].x - env->sector[i].vertex[s % env->sector[i].npoints].x) +
-		env->sector[i].vertex[s % env->sector[i].npoints].y;
-		if (env->sector[i].vertex[s % env->sector[i].npoints].x < env->sector[i].vertex[(s + 1) % env->sector[i].npoints].x)
+		xy->y = (xy->x - ESIV[s % ESIN].x) *
+		(ESIV[(s + 1) % ESIN].y -
+		ESIV[s % ESIN].y) / (ESIV[(s + 1) %
+		ESIN].x - ESIV[s % ESIN].x) +
+		ESIV[s % ESIN].y;
+		if (ESIV[s % ESIN].x < ESIV[(s + 1) % ESIN].x)
 			xy->x += 0.1;
 		else
 			xy->x -= 0.1;
@@ -41,28 +41,28 @@ void	findbutton_hv(t_env *env, int i, int s)
 {
 	t_xy	xy;
 
-	env->button[i].x1 = (env->sector[i].vertex[s % env->sector[i].npoints].x + env->sector[i].vertex[(s + 1) % env->sector[i].npoints].x) / 2;
-	env->button[i].y1 = (env->sector[i].vertex[s % env->sector[i].npoints].y + env->sector[i].vertex[(s + 1) % env->sector[i].npoints].y) / 2;
-	if (env->sector[i].vertex[s % env->sector[i].npoints].x == env->sector[i].vertex[(s + 1) % env->sector[i].npoints].x)
+	EBUTT.x1 = (ESIV[s % ESIN].x + ESIV[(s + 1) % ESIN].x) / 2;
+	EBUTT.y1 = (ESIV[s % ESIN].y + ESIV[(s + 1) % ESIN].y) / 2;
+	if (ESIV[s % ESIN].x == ESIV[(s + 1) % ESIN].x)
 	{
-		xy.x = env->button[i].x1;
-		if (env->sector[i].vertex[s % env->sector[i].npoints].y < env->sector[i].vertex[(s + 1) % env->sector[i].npoints].y)
-			xy.y = env->button[i].y1 + BUTTONWIDTH;
+		xy.x = EBUTT.x1;
+		if (ESIV[s % ESIN].y < ESIV[(s + 1) % ESIN].y)
+			xy.y = EBUTT.y1 + BUTTONWIDTH;
 		else
-			xy.y = env->button[i].y1 - BUTTONWIDTH;
+			xy.y = EBUTT.y1 - BUTTONWIDTH;
 	}
-	else if (env->sector[i].vertex[s % env->sector[i].npoints].y == env->sector[i].vertex[(s + 1) % env->sector[i].npoints].y)
+	else if (ESIV[s % ESIN].y == ESIV[(s + 1) % ESIN].y)
 	{
-		xy.y = env->button[i].y1;
-		if (env->sector[i].vertex[s % env->sector[i].npoints].x < env->sector[i].vertex[(s + 1) % env->sector[i].npoints].x)
-			xy.x = env->button[i].x1 + BUTTONWIDTH;
+		xy.y = EBUTT.y1;
+		if (ESIV[s % ESIN].x < ESIV[(s + 1) % ESIN].x)
+			xy.x = EBUTT.x1 + BUTTONWIDTH;
 		else
-			xy.x = env->button[i].x1 - BUTTONWIDTH;
+			xy.x = EBUTT.x1 - BUTTONWIDTH;
 	}
 	else
 		findbutton_di(env, i, s, &xy);
-	env->button[i].x2 = xy.x;
-	env->button[i].y2 = xy.y;
+	EBUTT.x2 = xy.x;
+	EBUTT.y2 = xy.y;
 }
 
 void	findbutton(t_env *env)
@@ -74,12 +74,12 @@ void	findbutton(t_env *env)
 	while (++i < env->nsectors)
 	{
 		s = -1;
-		env->button[i].visible = 0;
-		while (++s < env->sector[i].npoints)
+		EBUTT.visible = 0;
+		while (++s < ESIN)
 		{
-			if (env->sector[i].neighbors[s] == -2)
+			if (ESEC[i].neighbors[s] == -2)
 			{
-				env->button[i].visible = 1;
+				EBUTT.visible = 1;
 				findbutton_hv(env, i, s);
 			}
 		}

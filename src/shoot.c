@@ -15,10 +15,10 @@
 
 void	shoot(t_env *env, SDL_Event *e)
 {
-	if (e->button.button == SDL_BUTTON_LEFT && env->shooting == 0)
+	if (e->button.button == SDL_BUTTON_LEFT && ESHOOT == 0)
 	{
 		Mix_PlayChannel(-1, env->sound[0], 0);
-		env->shooting = 11;
+		ESHOOT = 11;
 		if (env->player.target >= 0)
 		{
 			Mix_PlayChannel(-1, env->sound[6], 0);

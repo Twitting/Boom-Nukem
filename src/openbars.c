@@ -18,11 +18,11 @@ int	openbars(t_env *env)
 
 	i = -1;
 	while (++i < env->sprcount)
-		if (env->sprite[i].openbar == 0 && env->sprite[i].type == 2 &&
-		env->sprite[i].sector == (int)env->player.sector)
-			if (env->sprite[i].spritedist <= 10)
+		if (ESPRI.openbar == 0 && ESPRI.type == 2 &&
+		ESPRI.sector == (int)EPS)
+			if (ESPRI.spritedist <= 10)
 			{
-				env->sprite[i].openbar = 1;
+				ESPRI.openbar = 1;
 				if (env->sprite[i + 1].type == 2)
 					env->sprite[i + 1].openbar = 1;
 				if (env->sprite[i - 1].type == 2)
@@ -36,46 +36,45 @@ void	barsanimate2(t_env *env, int i)
 {
 	t_xy	xy;
 
-	xy.x = env->sprite[i].pos2.x - 0.3;
-	if (xy.x < env->sprite[i].pos1.x)
-		xy.x = env->sprite[i].pos1.x;
-	xy.y = (xy.x - env->sprite[i].pos1.x) *	(env->sprite[i].pos2.y - env->sprite[i].pos1.y) /
-	(env->sprite[i].pos2.x - env->sprite[i].pos1.x) + env->sprite[i].pos1.y;
-	env->sprite[i].pos2.x = xy.x;
-	env->sprite[i].pos2.y = xy.y;
+	xy.x = ESPRI.pos2.x - 0.3;
+	if (xy.x < ESPRI.pos1.x)
+		xy.x = ESPRI.pos1.x;
+	xy.y = (xy.x - ESPRI.pos1.x) *	(ESPRI.pos2.y - ESPRI.pos1.y) /
+	(ESPRI.pos2.x - ESPRI.pos1.x) + ESPRI.pos1.y;
+	ESPRI.pos2.x = xy.x;
+	ESPRI.pos2.y = xy.y;
 }
 
 void	barsanimate1(t_env *env, int i)
 {
-	//ft_putendl("open!");
-	if (env->sprite[i].pos1.x == env->sprite[i].pos2.x)
+	if (ESPRI.pos1.x == ESPRI.pos2.x)
 	{
-		if (env->sprite[i].pos1.y < env->sprite[i].pos2.y)
+		if (ESPRI.pos1.y < ESPRI.pos2.y)
 		{
-			env->sprite[i].pos2.y = env->sprite[i].pos2.y - 0.4;
-			if (env->sprite[i].pos1.y > env->sprite[i].pos2.y)
-				env->sprite[i].pos2.y = env->sprite[i].pos1.y;
+			ESPRI.pos2.y = ESPRI.pos2.y - 0.4;
+			if (ESPRI.pos1.y > ESPRI.pos2.y)
+				ESPRI.pos2.y = ESPRI.pos1.y;
 		}
 		else
 		{
-			env->sprite[i].pos2.y = env->sprite[i].pos2.y + 0.4;
-			if (env->sprite[i].pos1.y < env->sprite[i].pos2.y)
-				env->sprite[i].pos2.y = env->sprite[i].pos1.y;
+			ESPRI.pos2.y = ESPRI.pos2.y + 0.4;
+			if (ESPRI.pos1.y < ESPRI.pos2.y)
+				ESPRI.pos2.y = ESPRI.pos1.y;
 		}
 	}
-	else if (env->sprite[i].pos1.y == env->sprite[i].pos2.y)
+	else if (ESPRI.pos1.y == ESPRI.pos2.y)
 	{
-		if (env->sprite[i].pos1.x < env->sprite[i].pos2.x)
+		if (ESPRI.pos1.x < ESPRI.pos2.x)
 		{
-			env->sprite[i].pos2.x = env->sprite[i].pos2.x - 0.4;
-			if (env->sprite[i].pos1.x > env->sprite[i].pos2.x)
-				env->sprite[i].pos2.x = env->sprite[i].pos1.x;
+			ESPRI.pos2.x = ESPRI.pos2.x - 0.4;
+			if (ESPRI.pos1.x > ESPRI.pos2.x)
+				ESPRI.pos2.x = ESPRI.pos1.x;
 		}
 		else
 		{
-			env->sprite[i].pos2.x = env->sprite[i].pos2.x + 0.4;
-			if (env->sprite[i].pos1.x < env->sprite[i].pos2.x)
-				env->sprite[i].pos2.x = env->sprite[i].pos1.x;
+			ESPRI.pos2.x = ESPRI.pos2.x + 0.4;
+			if (ESPRI.pos1.x < ESPRI.pos2.x)
+				ESPRI.pos2.x = ESPRI.pos1.x;
 		}
 	}
 	else
@@ -88,14 +87,14 @@ void	barsanimate(t_env *env)
 
 	i = -1;
 	while (++i < env->sprcount)
-		if (env->sprite[i].openbar == 1 && env->sprite[i].type == 2)
+		if (ESPRI.openbar == 1 && ESPRI.type == 2)
 		{
-			if (env->sprite[i].pos1.x != env->sprite[i].pos2.x || env->sprite[i].pos1.y != env->sprite[i].pos2.y)
+			if (ESPRI.pos1.x != ESPRI.pos2.x || ESPRI.pos1.y != ESPRI.pos2.y)
 				barsanimate1(env, i);
 			else
 			{
-				env->sprite[i].visible = 0;
-				env->sprite[i].openbar = 1;
-			}	
+				ESPRI.visible = 0;
+				ESPRI.openbar = 1;
+			}
 		}
 }

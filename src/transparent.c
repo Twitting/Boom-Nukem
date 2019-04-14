@@ -31,13 +31,13 @@ void	trintersect2(t_rend *rend, t_env *env, int j)
 	}
 	if (fabs(rend->ttr2.x - rend->ttr1.x) > fabs(rend->ttr2.y - rend->ttr1.y))
 	{
-		rend->u0 = (rend->ttr1.x - rend->org1.x) * (env->sprite[j].texture[0]->w - 1) / (rend->org2.x - rend->org1.x);
-		rend->u1 = (rend->ttr2.x - rend->org1.x) * (env->sprite[j].texture[0]->w - 1) / (rend->org2.x - rend->org1.x);
+		rend->u0 = (rend->ttr1.x - RO1.x) * (ESJT0->w - 1) / (RO2.x - RO1.x);
+		rend->u1 = (rend->ttr2.x - RO1.x) * (ESJT0->w - 1) / (RO2.x - RO1.x);
 	}
 	else
 	{
-		rend->u0 = (rend->ttr1.y - rend->org1.y) * (env->sprite[j].texture[0]->w - 1) / (rend->org2.y - rend->org1.y);
-		rend->u1 = (rend->ttr2.y - rend->org1.y) * (env->sprite[j].texture[0]->w - 1) / (rend->org2.y - rend->org1.y);
+		rend->u0 = (rend->ttr1.y - RO1.y) * (ESJT0->w - 1) / (RO2.y - RO1.y);
+		rend->u1 = (rend->ttr2.y - RO1.y) * (ESJT0->w - 1) / (RO2.y - RO1.y);
 	}
 }
 
@@ -57,8 +57,8 @@ void	trintersect(t_rend *rend, t_env *env, int j)
 		rend->wintsect1.x = rend->nfside.x;
 		rend->wintsect2.x = rend->nfside.y;
 		rend->i2 = intersect(rend->ttr1, rend->ttr2, rend->wintsect1, rend->wintsect2);
-		rend->org1 = (t_xy){rend->ttr1.x, rend->ttr1.y};
-		rend->org2 = (t_xy){rend->ttr2.x, rend->ttr2.y};
+		RO1 = (t_xy){rend->ttr1.x, rend->ttr1.y};
+		RO2 = (t_xy){rend->ttr2.x, rend->ttr2.y};
 		trintersect2(rend, env, j);
 	}
 }
@@ -81,7 +81,6 @@ void	trscale(t_rend *rend)
 t_scaler	scaler_init_support3(t_rend *rend)
 {
 	t_scaler temp;
-// a = trx1 b = trbegx c = trx2 d = try1a f = try2a
 	temp = (t_scaler)
 	{rend->try1a + (rend->trbegx - 1 - rend->trx1) *
 		(rend->try2a - rend->try1a) / (rend->trx2 - rend->trx1),
@@ -112,8 +111,8 @@ t_scaler	scaler_init_support4(t_rend *rend)
 
 void	trstart(t_rend *rend, t_env *env, int j, t_sprque *now)
 {
-	rend->trceil = env->sprite[j].height - env->player.where.z;
-	rend->trfloor = env->sprite[j].floor - env->player.where.z;
+	rend->trceil = env->sprite[j].height - EPW.z;
+	rend->trfloor = env->sprite[j].floor - EPW.z;
 	rend->try1a = HWIN / 2 - (int)(YAW(rend->trceil, rend->ttr1.y) * rend->tryscale1);
 	rend->try1b = HWIN / 2 - (int)(YAW(rend->trfloor, rend->ttr1.y) * rend->tryscale1);
 	rend->try2a = HWIN / 2 - (int)(YAW(rend->trceil, rend->ttr2.y) * rend->tryscale2);
@@ -143,19 +142,19 @@ void	trplane(t_env *env, t_rend *rend, int j)
 	now = rend->sprq[env->sprite[j].sector];
 	if (now.visible == 0 || env->sprite[j].visible == 0)
 		return ;
-	rend->nowsect = &(env->sector[now.sector]);
-	rend->vtr1.x = env->sprite[j].pos1.x - env->player.where.x;
-	rend->vtr1.y = env->sprite[j].pos1.y - env->player.where.y;
-	rend->vtr2.x = env->sprite[j].pos2.x - env->player.where.x;
-	rend->vtr2.y = env->sprite[j].pos2.y - env->player.where.y;
-	rend->ttr1.x = rend->vtr1.x * env->player.sinang - rend->vtr1.y * env->player.cosang;
-	rend->ttr1.y = rend->vtr1.x * env->player.cosang + rend->vtr1.y * env->player.sinang;
-	rend->ttr2.x = rend->vtr2.x * env->player.sinang - rend->vtr2.y * env->player.cosang;
-	rend->ttr2.y = rend->vtr2.x * env->player.cosang + rend->vtr2.y * env->player.sinang;
+	rend->nowsect = &(ESEC[now.sector]);
+	rend->vtr1.x = env->sprite[j].pos1.x - EPW.x;
+	rend->vtr1.y = env->sprite[j].pos1.y - EPW.y;
+	rend->vtr2.x = env->sprite[j].pos2.x - EPW.x;
+	rend->vtr2.y = env->sprite[j].pos2.y - EPW.y;
+	rend->ttr1.x = rend->vtr1.x * EPSIN - rend->vtr1.y * EPCOS;
+	rend->ttr1.y = rend->vtr1.x * EPCOS + rend->vtr1.y * EPSIN;
+	rend->ttr2.x = rend->vtr2.x * EPSIN - rend->vtr2.y * EPCOS;
+	rend->ttr2.y = rend->vtr2.x * EPCOS + rend->vtr2.y * EPSIN;
 	if (rend->ttr1.y <= 0 && rend->ttr2.y <= 0)
 		return ;
 	rend->u0 = 0;
-	rend->u1 = env->sprite[j].texture[0]->w;
+	rend->u1 = ESJT0->w;
 	trintersect(rend, env, j);
 	trscale(rend);
 	if (rend->trx1 >= rend->trx2 || rend->trx1 > now.sx2 || rend->trx2 < now.sx1)

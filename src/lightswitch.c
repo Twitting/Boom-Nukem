@@ -21,18 +21,18 @@ void	currentsectorlightapply(t_env *env, int secnum)
 	while (++ijkt[3] < 3)
 	{
 		ijkt[0] = secnum;
-		if (env->sector[ijkt[0]].sky == 1)
-			env->sector[ijkt[0]].light = 100;
-		if (env->sector[ijkt[0]].text[ijkt[3]] != NULL)
-			SDL_FreeSurface(env->sector[ijkt[0]].text[ijkt[3]]);
-		env->sector[ijkt[0]].text[ijkt[3]] =
+		if (ESEC[ijkt[0]].sky == 1)
+			ESEC[ijkt[0]].light = 100;
+		if (ESECT != NULL)
+			SDL_FreeSurface(ESECT);
+		ESECT =
 			IMG_Load(gettex(env, ijkt[0], ijkt[3]));
-		pix = (unsigned char *)env->sector[ijkt[0]].text[ijkt[3]]->pixels;
+		pix = (unsigned char *)ESECT->pixels;
 		ijkt[1] = -1;
-		while (++ijkt[1] < env->sector[ijkt[0]].text[ijkt[3]]->h)
+		while (++ijkt[1] < ESECT->h)
 		{
 			ijkt[2] = -1;
-			while (++ijkt[2] < env->sector[ijkt[0]].text[ijkt[3]]->w)
+			while (++ijkt[2] < ESECT->w)
 				sectorlightapply_support(env, ijkt, pix);
 		}
 	}
@@ -47,21 +47,21 @@ void	currentspritelight(t_env *env)
 	while (++i < env->sprcount)
 	{
 		j = -1;
-		if (env->sprite[i].sector == (int)env->player.sector)
+		if (ESPRI.sector == (int)EPS)
 		{
-			if (env->sprite[i].type == 0 || env->sprite[i].type == 3)
-				spritelightapply(env, &env->sprite[i]);
-			if (env->sprite[i].type == 1 || env->sprite[i].type == 4)
+			if (ESPRI.type == 0 || ESPRI.type == 3)
+				spritelightapply(env, &ESPRI);
+			if (ESPRI.type == 1 || ESPRI.type == 4)
 			{
-				if (env->sprite[i].type == 4)
-					enemylightapply(env, &env->sprite[i], 0);
+				if (ESPRI.type == 4)
+					enemylightapply(env, &ESPRI, 0);
 				else
 					while (++j < 7)
-						enemylightapply(env, &env->sprite[i], j);
+						enemylightapply(env, &ESPRI, j);
 			}
-			else if (env->sprite[i].type == 5)
+			else if (ESPRI.type == 5)
 				while (++j < 8)
-					keylightapply(env, &env->sprite[i], j);
+					keylightapply(env, &ESPRI, j);
 		}
 	}
 }
@@ -71,14 +71,14 @@ int		checkswitch(t_env *env)
 	double	buttondist;
 
 	buttondist =
-	(env->player.where.x - (env->button[env->player.sector].x1 +
-	env->button[env->player.sector].x2) / 2) *
-	(env->player.where.x - (env->button[env->player.sector].x1 +
-	env->button[env->player.sector].x2) / 2) +
-	(env->player.where.y - (env->button[env->player.sector].y1 +
-	env->button[env->player.sector].y2) / 2) *
-	(env->player.where.y - (env->button[env->player.sector].y1 +
-	env->button[env->player.sector].y2) / 2);
+	(EPW.x - (env->button[EPS].x1 +
+	env->button[EPS].x2) / 2) *
+	(EPW.x - (env->button[EPS].x1 +
+	env->button[EPS].x2) / 2) +
+	(EPW.y - (env->button[EPS].y1 +
+	env->button[EPS].y2) / 2) *
+	(EPW.y - (env->button[EPS].y1 +
+	env->button[EPS].y2) / 2);
 	if (buttondist <= 10)
 		return (1);
 	return (0);
@@ -90,17 +90,17 @@ void	pushswitch(t_env *env)
 
 	if (env->player.pushingbutton)
 	{
-		if (env->sector[env->player.sector].on == 0)
+		if (ESEC[EPS].on == 0)
 		{
-			env->sector[env->player.sector].on = 1;
-			env->sector[env->player.sector].light += 40;
+			ESEC[EPS].on = 1;
+			ESEC[EPS].light += 40;
 		}
-		else if (env->sector[env->player.sector].on == 1)
+		else if (ESEC[EPS].on == 1)
 		{
-			env->sector[env->player.sector].on = 0;
-			env->sector[env->player.sector].light -= 40;
+			ESEC[EPS].on = 0;
+			ESEC[EPS].light -= 40;
 		}
-		currentsectorlightapply(env, env->player.sector);
+		currentsectorlightapply(env, EPS);
 		currentspritelight(env);
 		env->player.pushingbutton = 0;
 		i = -1;

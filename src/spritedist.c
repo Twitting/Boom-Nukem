@@ -21,20 +21,20 @@ void	spritedist(t_env *env)
 	i = -1;
 	while (++i < env->sprcount)
 	{
-		if (env->sprite[i].type == 2)
+		if (ESPRI.type == 2)
 		{
-			x = (env->sprite[i].pos1.x + env->sprite[i].pos2.x) / 2;
-			y = (env->sprite[i].pos1.y + env->sprite[i].pos2.y) / 2;
-			env->sprite[i].spritedist = (env->player.where.x - x) *
-			(env->player.where.x - x) + (env->player.where.y - y) *
-			(env->player.where.y - y);
+			x = (ESPRI.pos1.x + ESPRI.pos2.x) / 2;
+			y = (ESPRI.pos1.y + ESPRI.pos2.y) / 2;
+			ESPRI.spritedist = (EPW.x - x) *
+			(EPW.x - x) + (EPW.y - y) *
+			(EPW.y - y);
 		}
 		else
-			env->sprite[i].spritedist = (env->player.where.x - env->sprite[i].pos1.x) *
-			(env->player.where.x - env->sprite[i].pos1.x) + (env->player.where.y -
-			env->sprite[i].pos1.y) * (env->player.where.y - env->sprite[i].pos1.y);
-		if (env->sprite[i].type != 2)
-			env->sprite[i].visible = 0;
+			ESPRI.spritedist = (EPW.x - ESPRI.pos1.x) *
+			(EPW.x - ESPRI.pos1.x) + (EPW.y -
+			ESPRI.pos1.y) * (EPW.y - ESPRI.pos1.y);
+		if (ESPRI.type != 2)
+			ESPRI.visible = 0;
 	}
 }
 
@@ -49,9 +49,15 @@ void	drawtransp(t_env *env, t_rend *rend, int j)
 	y = rend->ctrya - 1;
 	while (++y <= rend->ctryb)
 	{
-		txty = (int)((double)(y - rend->trya) / (double)(rend->tryb - rend->trya) * env->sprite[j].texture[0]->h);
-		if (((int *)(env->sprite[j].texture[0]->pixels))[txty % env->sprite[j].texture[0]->h * env->sprite[j].texture[0]->w + rend->txtx] != 0)
-			*pix = ((int *)(env->sprite[j].texture[0]->pixels))[txty % env->sprite[j].texture[0]->h * env->sprite[j].texture[0]->w + rend->txtx];
+		txty = (int)((double)(y - rend->trya) /
+				(double)(rend->tryb - rend->trya) *
+				ESJT0->h);
+		if (((int *)(ESJT0->pixels))[txty %
+				ESJT0->h *
+				ESJT0->w + rend->txtx] != 0)
+			*pix = ((int *)(ESJT0->pixels))[txty %
+				ESJT0->h *
+				ESJT0->w + rend->txtx];
 		pix += WWIN;
 	}
 }
@@ -69,10 +75,10 @@ void	sortsprite(t_env *env)
 		i = 0;
 		while (i < env->sprcount - 1)
 		{
-			if (env->sprite[i].spritedist < env->sprite[i + 1].spritedist)
+			if (ESPRI.spritedist < env->sprite[i + 1].spritedist)
 			{
-				temp = env->sprite[i];
-				env->sprite[i] = env->sprite[i + 1];
+				temp = ESPRI;
+				ESPRI = env->sprite[i + 1];
 				env->sprite[i + 1] = temp;
 				f = 1;
 				break ;

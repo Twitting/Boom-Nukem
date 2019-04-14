@@ -44,12 +44,12 @@ void	wallscale(t_env *env, t_rend *rend)
 	rend->xscale2 = WWIN * HFOV / rend->t2.y;
 	rend->yscale2 = HWIN * VFOV / rend->t2.y;
 	rend->x2 = WWIN / 2 + (int)(-rend->t2.x * rend->xscale2);
-	rend->yceil = rend->nowsect->ceiling - env->player.where.z;
-	rend->yfloor = rend->nowsect->floor - env->player.where.z;
+	rend->yceil = rend->nowsect->ceiling - EPW.z;
+	rend->yfloor = rend->nowsect->floor - EPW.z;
 	if (rend->nowsect->neighbors[rend->s] >= 0)
 	{
-		rend->nyceil = env->sector[rend->nowsect->neighbors[rend->s]].ceiling - env->player.where.z;
-		rend->nyfloor = env->sector[rend->nowsect->neighbors[rend->s]].floor - env->player.where.z;
+		rend->nyceil = ESEC[rend->nowsect->neighbors[rend->s]].ceiling - EPW.z;
+		rend->nyfloor = ESEC[rend->nowsect->neighbors[rend->s]].floor - EPW.z;
 	}
 }
 
@@ -57,10 +57,10 @@ void	tomapccord(t_rend *rend, t_env *env)
 {
 	rend->mapz = (rend->hei) * HWIN * VFOV / ((HWIN / 2 - (rend->y)) - env->player.yaw * HWIN * VFOV);
 	rend->mapx = (rend->mapz) * (WWIN / 2 - (rend->x)) / (WWIN * HFOV);
-	float rtx = (rend->mapz) * env->player.cosang + (rend->mapx) * env->player.sinang;
-	float rtz = (rend->mapz) * env->player.sinang - (rend->mapx) * env->player.cosang;
-	rend->mapx = rtx + env->player.where.x;
-	rend->mapz = rtz + env->player.where.y;
+	float rtx = (rend->mapz) * EPCOS + (rend->mapx) * EPSIN;
+	float rtz = (rend->mapz) * EPSIN - (rend->mapx) * EPCOS;
+	rend->mapx = rtx + EPW.x;
+	rend->mapz = rtz + EPW.y;
 }
 
 void	textceilfloor(t_env *env, t_rend *rend)
@@ -130,14 +130,14 @@ void	rendportals(t_env *env, t_rend *rend)
 	vline2(env, rend, rend->cya, rend->ncya - 1, scaler_init_support7(rend, env));
 	if (rend->nowsect->sky != 1)
 	{
-		if (env->sector[rend->nowsect->neighbors[rend->s]].sky == 1)
+		if (ESEC[rend->nowsect->neighbors[rend->s]].sky == 1)
 			rend->ytop[rend->x] = CLAMP(rend->cya + 1, rend->ytop[rend->x], HWIN - 1);
 		else
 			rend->ytop[rend->x] = CLAMP(MAX(rend->cya, rend->ncya), rend->ytop[rend->x], HWIN - 1);
 	}
 	else
 	{
-		if (env->sector[rend->nowsect->neighbors[rend->s]].sky == 1)
+		if (ESEC[rend->nowsect->neighbors[rend->s]].sky == 1)
 			rend->ytop[rend->x] = CLAMP(MIN(rend->cya, rend->ncya), rend->ytop[rend->x], HWIN - 1);
 		else
 			rend->ytop[rend->x] = CLAMP(rend->ncya, rend->ytop[rend->x], HWIN - 1);

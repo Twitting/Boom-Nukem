@@ -14,8 +14,8 @@
 
 void	wallintersect_1(t_rend *rend)
 {
-	rend->org1 = (t_xy){rend->t1.x, rend->t1.y};
-	rend->org2 = (t_xy){rend->t2.x, rend->t2.y};
+	RO1 = (t_xy){rend->t1.x, rend->t1.y};
+	RO2 = (t_xy){rend->t2.x, rend->t2.y};
 	if (rend->t1.y < rend->nfz.x)
 	{
 		if (rend->i1.y > 0)
@@ -48,13 +48,13 @@ void	wallintersect_2(t_rend *rend, t_env *env)
 	}
 	if (fabs(rend->t2.x - rend->t1.x) > fabs(rend->t2.y - rend->t1.y))
 	{
-		rend->u0 = (rend->t1.x - rend->org1.x) * (env->text[0]->w - 1) / (rend->org2.x - rend->org1.x);
-		rend->u1 = (rend->t2.x - rend->org1.x) * (env->text[0]->w - 1) / (rend->org2.x - rend->org1.x);
+		rend->u0 = (rend->t1.x - RO1.x) * (env->text[0]->w - 1) / (RO2.x - RO1.x);
+		rend->u1 = (rend->t2.x - RO1.x) * (env->text[0]->w - 1) / (RO2.x - RO1.x);
 	}
 	else
 	{
-		rend->u0 = (rend->t1.y - rend->org1.y) * (env->text[0]->w - 1) / (rend->org2.y - rend->org1.y);
-		rend->u1 = (rend->t2.y - rend->org1.y) * (env->text[0]->w - 1) / (rend->org2.y - rend->org1.y);
+		rend->u0 = (rend->t1.y - RO1.y) * (env->text[0]->w - 1) / (RO2.y - RO1.y);
+		rend->u1 = (rend->t2.y - RO1.y) * (env->text[0]->w - 1) / (RO2.y - RO1.y);
 	}
 }
 

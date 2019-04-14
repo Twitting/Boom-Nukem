@@ -52,13 +52,13 @@ static void	butintersect_support(t_rend *rend, t_env *env)
 	}
 	if (fabs(rend->tbut2.x - rend->tbut1.x) > fabs(rend->tbut2.y - rend->tbut1.y))
 	{
-		rend->u0 = (rend->tbut1.x - rend->org1.x) * (env->text[1]->w - 1) / (rend->org2.x - rend->org1.x);
-		rend->u1 = (rend->tbut2.x - rend->org1.x) * (env->text[1]->w - 1) / (rend->org2.x - rend->org1.x);
+		rend->u0 = (rend->tbut1.x - RO1.x) * (env->text[1]->w - 1) / (RO2.x - RO1.x);
+		rend->u1 = (rend->tbut2.x - RO1.x) * (env->text[1]->w - 1) / (RO2.x - RO1.x);
 	}
 	else
 	{
-		rend->u0 = (rend->tbut1.y - rend->org1.y) * (env->text[1]->w - 1) / (rend->org2.y - rend->org1.y);
-		rend->u1 = (rend->tbut2.y - rend->org1.y) * (env->text[1]->w - 1) / (rend->org2.y - rend->org1.y);
+		rend->u0 = (rend->tbut1.y - RO1.y) * (env->text[1]->w - 1) / (RO2.y - RO1.y);
+		rend->u1 = (rend->tbut2.y - RO1.y) * (env->text[1]->w - 1) / (RO2.y - RO1.y);
 	}
 }
 
@@ -80,8 +80,8 @@ static void	butintersect(t_rend *rend, t_env *env)
 		rend->wintsect2.x = rend->nfside.y;
 		rend->i2 = intersect(rend->tbut1, rend->tbut2,
 					rend->wintsect1, rend->wintsect2);
-		rend->org1 = (t_xy){rend->tbut1.x, rend->tbut1.y};
-		rend->org2 = (t_xy){rend->tbut2.x, rend->tbut2.y};
+		RO1 = (t_xy){rend->tbut1.x, rend->tbut1.y};
+		RO2 = (t_xy){rend->tbut2.x, rend->tbut2.y};
 		butintersect_support(rend, env);
 	}
 }
@@ -123,8 +123,8 @@ void		butplane_support(t_rend *rend, int j, t_env *env)
 	rend->butx2 = WWIN / 2 - (int)((rend->tbut2.x) * rend->butxscale2);
 	if (rend->butx1 == rend->butx2 || rend->butx1 > rend->sprq[j].sx2 || rend->butx2 < rend->sprq[j].sx1)
 		return ;
-	rend->butceil = rend->nowsect->floor + 5 + BUTTONHEIGHT - env->player.where.z;
-	rend->butfloor = rend->nowsect->floor + 5 - env->player.where.z;
+	rend->butceil = rend->nowsect->floor + 5 + BUTTONHEIGHT - EPW.z;
+	rend->butfloor = rend->nowsect->floor + 5 - EPW.z;
 	rend->buty1a = HWIN / 2 - (int)(YAW(rend->butceil, rend->tbut1.y) * rend->butyscale1);
 	rend->buty1b = HWIN / 2 - (int)(YAW(rend->butfloor, rend->tbut1.y) * rend->butyscale1);
 	rend->buty2a = HWIN / 2 - (int)(YAW(rend->butceil, rend->tbut2.y) * rend->butyscale2);
@@ -149,15 +149,15 @@ void		butplane(t_env *env, t_rend *rend, int j)
 {
 	if (rend->sprq[j].visible == 0 || env->button[j].visible == 0)
 		return ;
-	rend->nowsect = &(env->sector[rend->sprq[j].sector]);
-	rend->vbut1.x = env->button[j].x1 - env->player.where.x;
-	rend->vbut1.y = env->button[j].y1 - env->player.where.y;
-	rend->vbut2.x = env->button[j].x2 - env->player.where.x;
-	rend->vbut2.y = env->button[j].y2 - env->player.where.y;
-	rend->tbut1.x = rend->vbut1.x * env->player.sinang - rend->vbut1.y * env->player.cosang;
-	rend->tbut1.y = rend->vbut1.x * env->player.cosang + rend->vbut1.y * env->player.sinang;
-	rend->tbut2.x = rend->vbut2.x * env->player.sinang - rend->vbut2.y * env->player.cosang;
-	rend->tbut2.y = rend->vbut2.x * env->player.cosang + rend->vbut2.y * env->player.sinang;
+	rend->nowsect = &(ESEC[rend->sprq[j].sector]);
+	rend->vbut1.x = env->button[j].x1 - EPW.x;
+	rend->vbut1.y = env->button[j].y1 - EPW.y;
+	rend->vbut2.x = env->button[j].x2 - EPW.x;
+	rend->vbut2.y = env->button[j].y2 - EPW.y;
+	rend->tbut1.x = rend->vbut1.x * EPSIN - rend->vbut1.y * EPCOS;
+	rend->tbut1.y = rend->vbut1.x * EPCOS + rend->vbut1.y * EPSIN;
+	rend->tbut2.x = rend->vbut2.x * EPSIN - rend->vbut2.y * EPCOS;
+	rend->tbut2.y = rend->vbut2.x * EPCOS + rend->vbut2.y * EPSIN;
 	if (rend->tbut1.y <= 0 && rend->tbut2.y <= 0)
 		return ;
 	butintersect(rend, env);

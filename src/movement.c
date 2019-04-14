@@ -17,26 +17,25 @@ void	v_collision_support(t_env *env)
 	double	nz;
 
 	env->player.velocity.z -= (0.05 * 60.0 / (double)env->oldfps);
-	nz = env->player.where.z + env->player.velocity.z;
+	nz = EPW.z + env->player.velocity.z;
 	if (env->player.velocity.z < 0 && nz <
-			env->sector[env->player.sector].floor + env->player.eye)
+			ESEC[EPS].floor + env->player.eye)
 	{
-		env->player.where.z = env->sector[env->player.sector].floor
+		EPW.z = ESEC[EPS].floor
 			+ env->player.eye;
 		env->player.velocity.z = 0;
 		env->falling = 0;
 		env->ground = 1;
-		
 	}
 	else if (env->player.velocity.z > 0 &&
-			nz > env->sector[env->player.sector].ceiling)
+			nz > ESEC[EPS].ceiling)
 	{
 		env->player.velocity.z = 0;
 		env->falling = 1;
 	}
 	if (env->falling)
 	{
-		env->player.where.z += env->player.velocity.z;
+		EPW.z += env->player.velocity.z;
 		env->moving = 1;
 	}
 }
@@ -51,15 +50,22 @@ void	v_collision(t_env *env)
 
 void	h_collision_support(t_env *env, double *arr, t_xy *b_pd, t_xy *d, int s)
 {
-	arr[1] = env->sector[env->player.sector].neighbors[s] < 0 ? 9e9 : MAX(env->sector[env->player.sector].floor, env->sector[env->sector[env->player.sector].neighbors[s]].floor);
-	arr[2] = env->sector[env->player.sector].neighbors[s] < 0 ? 9e9 : MIN(env->sector[env->player.sector].ceiling, env->sector[env->sector[env->player.sector].neighbors[s]].ceiling);
-	if (arr[2] < env->player.where.z + HEADMARGIN || arr[1] > env->player.where.z - (env->ducking ? DUCKHEIGHT : EYEHEIGHT) + KNEEHEIGHT)
+	arr[1] = ESEC[EPS].neighbors[s] < 0 ? 9e9 :
+			MAX(ESEC[EPS].floor, ESEC[ESEC[EPS].neighbors[s]].floor);
+	arr[2] = ESEC[EPS].neighbors[s] < 0 ? 9e9 :
+			MIN(ESEC[EPS].ceiling, ESEC[ESEC[EPS].neighbors[s]].ceiling);
+	if (arr[2] < EPW.z + HEADMARGIN || arr[1] > EPW.z
+			- (env->ducking ? DUCKHEIGHT : EYEHEIGHT) + KNEEHEIGHT)
 	{
-		b_pd[0].x = env->sector[env->player.sector].vertex[(s + 1) % env->sector[env->player.sector].npoints].x - env->sector[env->player.sector].vertex[s % env->sector[env->player.sector].npoints].x;
-		b_pd[0].y = env->sector[env->player.sector].vertex[(s + 1) % env->sector[env->player.sector].npoints].y - env->sector[env->player.sector].vertex[s % env->sector[env->player.sector].npoints].y;
+		b_pd[0].x = ESEC[EPS].vertex[(s + 1) %
+				ESEC[EPS].npoints].x - ESEC[EPS].vertex[s % ESEC[EPS].npoints].x;
+		b_pd[0].y = ESEC[EPS].vertex[(s + 1) %
+				ESEC[EPS].npoints].y - ESEC[EPS].vertex[s % ESEC[EPS].npoints].y;
 		arr[0] = d->x;
-		d->x = b_pd[0].x * (d->x * b_pd[0].x + b_pd[0].y * d->y) / (b_pd[0].x * b_pd[0].x + b_pd[0].y * b_pd[0].y);
-		d->y = b_pd[0].y * (arr[0] * b_pd[0].x + b_pd[0].y * d->y) / (b_pd[0].x * b_pd[0].x + b_pd[0].y * b_pd[0].y);
+		d->x = b_pd[0].x * (d->x * b_pd[0].x + b_pd[0].y * d->y) /
+				(b_pd[0].x * b_pd[0].x + b_pd[0].y * b_pd[0].y);
+		d->y = b_pd[0].y * (arr[0] * b_pd[0].x + b_pd[0].y * d->y) /
+				(b_pd[0].x * b_pd[0].x + b_pd[0].y * b_pd[0].y);
 		env->moving = -1;
 	}
 }
@@ -75,7 +81,7 @@ int		h_collision(t_env *env, t_xy *p, t_xy *d, t_xy *dd)
 	s = -1;
 	while (++s < env->sprcount)
 		if (env->sprite[s].type == 2)
-			if (intersect_box(*p, b_pd[1], env->sprite[s].pos1, env->sprite[s].pos2) && point_side(b_pd[1].x, b_pd[1].y, env->sprite[s].pos1, env->sprite[s].pos2) < 0)
+			if (WTF4) < 0)
 			{
 				b_pd[0].x = env->sprite[s].pos2.x - env->sprite[s].pos1.x;
 				b_pd[0].y = env->sprite[s].pos2.y - env->sprite[s].pos1.y;
@@ -86,13 +92,13 @@ int		h_collision(t_env *env, t_xy *p, t_xy *d, t_xy *dd)
 				return(0);
 			}
 	s = -1;
-	while (++s < (int)env->sector[env->player.sector].npoints)
+	while (++s < (int)ESEC[EPS].npoints)
 	{
-		if (intersect_box(*p, b_pd[1], env->sector[env->player.sector].vertex[s % env->sector[env->player.sector].npoints], env->sector[env->player.sector].vertex[(s + 1) % env->sector[env->player.sector].npoints]) && point_side(b_pd[1].x, b_pd[1].y, env->sector[env->player.sector].vertex[s % env->sector[env->player.sector].npoints], env->sector[env->player.sector].vertex[(s + 1) % env->sector[env->player.sector].npoints]) < 0)
+		if (WTF3) < 0)
 		{
-			arr[1] = env->sector[env->player.sector].neighbors[s] < 0 ? 9e9 : MAX(env->sector[env->player.sector].floor, env->sector[env->sector[env->player.sector].neighbors[s]].floor);
-			arr[2] = env->sector[env->player.sector].neighbors[s] < 0 ? 9e9 : MIN(env->sector[env->player.sector].ceiling, env->sector[env->sector[env->player.sector].neighbors[s]].ceiling);
-			if (arr[2] < env->player.where.z + HEADMARGIN || arr[1] > env->player.where.z - (env->ducking ? DUCKHEIGHT : EYEHEIGHT) + KNEEHEIGHT)
+			arr[1] = ESEC[EPS].neighbors[s] < 0 ? 9e9 : MAX(ESEC[EPS].floor, ESEC[ESEC[EPS].neighbors[s]].floor);
+			arr[2] = ESEC[EPS].neighbors[s] < 0 ? 9e9 : MIN(ESEC[EPS].ceiling, ESEC[ESEC[EPS].neighbors[s]].ceiling);
+			if (arr[2] < EPW.z + HEADMARGIN || arr[1] > EPW.z - (env->ducking ? DUCKHEIGHT : EYEHEIGHT) + KNEEHEIGHT)
 				h_collision_support(env, arr, b_pd, d, s);
 		}
 	}
@@ -102,16 +108,16 @@ int		h_collision(t_env *env, t_xy *p, t_xy *d, t_xy *dd)
 
 int		can_i_go(t_env *env, t_xy *p, double x, double y)
 {
-	double			hh[env->sector[env->player.sector].npoints];
+	double			hh[ESEC[EPS].npoints];
 	unsigned int	i;
 	unsigned int	ii1;
 	double			arr[6];
 
 	i = 0;
-	ii1 = (i + 1) % env->sector[env->player.sector].npoints;
+	ii1 = (i + 1) % ESEC[EPS].npoints;
 	arr[0] = x;
 	arr[1] = y;
-	while (i < env->sector[env->player.sector].npoints)
+	while (i < ESEC[EPS].npoints)
 	{
 		arr[2] = sqrt(pow(p[i].x - arr[0], 2) + pow(p[i].y - arr[1], 2));
 		arr[3] = sqrt(pow(p[ii1].x - arr[0], 2) + pow(p[ii1].y - arr[1], 2));
@@ -132,49 +138,49 @@ void	movement_support(t_env *env, float dx, float dy)
 	i = 0;
 	while (i < env->sprcount)
 	{
-		if (env->sprite[i].spritedist < env->sprite[i].width * 2 && env->sprite[i].type == 0)
+		if (ESPRI.spritedist < ESPRI.width * 2 && ESPRI.type == 0)
 		{
-			env->player.where.x -= dy;
-			env->player.where.y -= dx;
+			EPW.x -= dy;
+			EPW.y -= dx;
 			return ;
 		}
 		i++;
 	}
-	env->player.where.x += dx;
-	env->player.where.y += dy;
+	EPW.x += dx;
+	EPW.y += dy;
 }
 
 void	movement(t_env *env, float dx, float dy)
 {
 	t_sector		sect;
 	int				arr2[2];
-	t_xy			points[env->sector[env->player.sector].npoints];
+	t_xy			points[ESEC[EPS].npoints];
 	t_xy			arr[2];
 
-	arr[0].x = env->player.where.x;
-	arr[0].y = env->player.where.y;
+	arr[0].x = EPW.x;
+	arr[0].y = EPW.y;
 	arr[1].x = arr[0].x + dx;
 	arr[1].y = arr[0].y + dy;
-	sect = env->sector[env->player.sector];
+	sect = ESEC[EPS];
 	arr2[0] = -1;
 	arr2[1] = -1;
-	while (++arr2[0] < (int)env->sector[env->player.sector].npoints)
+	while (++arr2[0] < (int)ESEC[EPS].npoints)
 		if (sect.neighbors[arr2[0]] < 0)
-			if (intersect_box(arr[0], arr[1], env->sector[env->player.sector].vertex[arr2[0] % env->sector[env->player.sector].npoints], env->sector[env->player.sector].vertex[(arr2[0] + 1) % env->sector[env->player.sector].npoints]) && point_side(arr[1].x,arr[1].y, env->sector[env->player.sector].vertex[arr2[0] % env->sector[env->player.sector].npoints], env->sector[env->player.sector].vertex[(arr2[0] + 1) % env->sector[env->player.sector].npoints]) < 0)
+			if (WTF1) < 0)
 				return ;
 	arr2[0] = -1;
 	while (++arr2[0] < (int)sect.npoints)
-		if (sect.neighbors[arr2[0]] >= 0 && intersect_box(arr[0], arr[1], sect.vertex[arr2[0] % sect.npoints], sect.vertex[(arr2[0] + 1) % sect.npoints]) && point_side(arr[1].x, arr[1].y, sect.vertex[arr2[0] % sect.npoints], sect.vertex[(arr2[0] + 1) % sect.npoints]) < 0)
+		if (WTF2) < 0)
 		{
-			env->player.sector = sect.neighbors[arr2[0]];
+			EPS = sect.neighbors[arr2[0]];
 			break ;
 		}
-	while (++arr2[1] < (int)env->sector[env->player.sector].npoints)
+	while (++arr2[1] < (int)ESEC[EPS].npoints)
 	{
-		points[arr2[1]].x = sect.vertex[arr2[1]].x;
-		points[arr2[1]].y = sect.vertex[arr2[1]].y;
+		points[arr2[1]].x = SV[arr2[1]].x;
+		points[arr2[1]].y = SV[arr2[1]].y;
 	}
-	if (can_i_go(env, points, env->player.where.x + dx, env->player.where.y + dy))
+	if (can_i_go(env, points, EPW.x + dx, EPW.y + dy))
 		movement_support(env, dx, dy);
 }
 
@@ -255,8 +261,8 @@ void	movement_calcs(t_env *env)
 	wsad_read(env);
 	if (env->moving)
 	{
-		p.x = env->player.where.x;
-		p.y = env->player.where.y;
+		p.x = EPW.x;
+		p.y = EPW.y;
 		d.x = env->player.velocity.x;
 		d.y = env->player.velocity.y;
 		dd.x = env->player.dvelocity.x;

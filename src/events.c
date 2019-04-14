@@ -78,7 +78,7 @@ void	keyboard_events(t_env *env, SDL_Event *e)
 	if (e->key.keysym.sym == SDLK_d)
 		env->wsad[3] = on;
 	if (e->key.keysym.sym == SDLK_e && !on && checkswitch(env) &&
-	env->button[env->player.sector].visible == 1)
+	env->button[EPS].visible == 1)
 	{
 		Mix_PlayChannel(-1, env->sound[5], 0);
 		env->player.pushingbutton = 1;
@@ -99,8 +99,8 @@ void	handle_events2(t_env *env, int x, int y)
 		env->skyangle += env->skyangle == 3840 ? -3808 : 32;
 	else
 		env->skyangle -= env->skyangle == 0 ? -3808 : 32;
-	env->player.sinang = sin(env->player.angle);
-	env->player.cosang = cos(env->player.angle);
+	EPSIN = sin(env->player.angle);
+	EPCOS = cos(env->player.angle);
 	env->yaw = CLAMP(env->yaw + y * 0.01, -3, 3);
 	env->player.yaw = env->yaw;
 	movement_calcs(env);

@@ -64,14 +64,14 @@ void	wallstart(t_env *env, t_rend *rend, t_now *now)
 
 void	calc_support(t_env *env, t_rend *rend)
 {
-	rend->vx1 = rend->nowsect->vertex[rend->s % rend->nowsect->npoints].x - env->player.where.x;
-	rend->vy1 = rend->nowsect->vertex[rend->s % rend->nowsect->npoints].y - env->player.where.y;
-	rend->vx2 = rend->nowsect->vertex[(rend->s + 1) % rend->nowsect->npoints].x - env->player.where.x;
-	rend->vy2 = rend->nowsect->vertex[(rend->s + 1) % rend->nowsect->npoints].y - env->player.where.y;
-	rend->t1.x = rend->vx1 * env->player.sinang - rend->vy1 * env->player.cosang;
-	rend->t1.y = rend->vx1 * env->player.cosang + rend->vy1 * env->player.sinang;
-	rend->t2.x = rend->vx2 * env->player.sinang - rend->vy2 * env->player.cosang;
-	rend->t2.y = rend->vx2 * env->player.cosang + rend->vy2 * env->player.sinang;
+	rend->vx1 = rend->nowsect->vertex[rend->s % rend->nowsect->npoints].x - EPW.x;
+	rend->vy1 = rend->nowsect->vertex[rend->s % rend->nowsect->npoints].y - EPW.y;
+	rend->vx2 = rend->nowsect->vertex[(rend->s + 1) % rend->nowsect->npoints].x - EPW.x;
+	rend->vy2 = rend->nowsect->vertex[(rend->s + 1) % rend->nowsect->npoints].y - EPW.y;
+	rend->t1.x = rend->vx1 * EPSIN - rend->vy1 * EPCOS;
+	rend->t1.y = rend->vx1 * EPCOS + rend->vy1 * EPSIN;
+	rend->t2.x = rend->vx2 * EPSIN - rend->vy2 * EPCOS;
+	rend->t2.y = rend->vx2 * EPCOS + rend->vy2 * EPSIN;
 }
 
 void	startcalc(t_env *env, t_rend *rend, t_now *now)
@@ -125,7 +125,7 @@ void	render_queue(t_env *env, t_rend *rend, t_now *now)
 	while (++rend->s < WWIN)
 		rend->sprq[now->sectorno].ybottom[rend->s] = rend->ybottom[rend->s];
 	rend->s = -1;
-	rend->nowsect = &(env->sector[now->sectorno]);
+	rend->nowsect = &(ESEC[now->sectorno]);
 	while (++rend->s < (int)rend->nowsect->npoints)
 		startcalc(env, rend, now);
 }
@@ -142,7 +142,7 @@ void	init_wall(t_env *env, t_rend *rend)
 		rend->ytop[rend->s] = 0;
 		rend->ybottom[rend->s] = HWIN - 1;
 	}
-	*(rend->head) = (t_now){env->player.sector, 0, WWIN - 1};
+	*(rend->head) = (t_now){EPS, 0, WWIN - 1};
 }
 
 void	render_wall(t_env *env, t_rend *rend)

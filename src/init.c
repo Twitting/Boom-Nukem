@@ -18,18 +18,18 @@ void	texnulling(t_env *env)
 	int	j;
 
 	i = -1;
-	while (++i < env->sprcount && env->sprite[i].type != 2)
+	while (++i < env->sprcount && ESPRI.type != 2)
 	{
 		j = -1;
-		while (++j < 8 && env->sprite[i].type != 2)
-			env->sprite[i].texture[j] = NULL;
+		while (++j < 8 && ESPRI.type != 2)
+			ESPRI.texture[j] = NULL;
 	}
 	i = -1;
 	while (++i < (int)env->nsectors)
 	{
 		j = -1;
 		while (++j < 3)
-			env->sector[i].text[j] = NULL;
+			ESEC[i].text[j] = NULL;
 	}
 }
 
@@ -82,7 +82,7 @@ void	init(t_env *env)
 	i = 0;
 	env->yaw = 0;
 	env->quit = 0;
-	env->shooting = 0;
+	ESHOOT = 0;
 	env->ground = 0;
 	env->falling = 1;
 	env->ducking = 0;

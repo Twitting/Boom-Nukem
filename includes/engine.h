@@ -209,7 +209,7 @@ void				init(t_env *env);
 void				ft_error(int errnum);
 t_xy				intersect(t_xy a, t_xy b, t_xy c, t_xy d);
 double				point_side(double px, double py, t_xy a, t_xy b);
-int					intersect_box(t_xy a, t_xy b, t_xy c, t_xy d);
+int					i_b(t_xy a, t_xy b, t_xy c, t_xy d);
 int					overlap(double a0, double a1, double b0, double b1);
 double				vxs(double x0, double y0, double x1, double y1);
 void				grandparser(t_env *env);
@@ -296,5 +296,30 @@ void				put_bar(t_env *env);
 */
 void				good_frame_for_head(t_env *env);
 void				put_hp(t_env *env);
+
+# define ESPRI env->sprite[i]
+# define ESHOOT env->shooting
+# define ESIV env->sector[i].vertex
+# define ESIN env->sector[i].npoints
+# define EBUTT env->button[i]
+# define SPRTE sprite->texture
+# define ESEC env->sector
+# define ESECT ESEC[ijkt[0]].text[ijkt[3]]
+# define ESECT2 (unsigned char)((double)pix[(ijkt[1] * ESECT->w + ijkt[2]) * 4
+# define ESECT3 (unsigned char)((double)pix[(j * SPRTE[0]->w + k) * 4
+# define EPS env->player.sector
+# define SV sect.vertex
+# define WTF1 i_b(arr[0], arr[1], ESEC[EPS].vertex[arr2[0] % ESEC[EPS].npoints], ESEC[EPS].vertex[(arr2[0] + 1) % ESEC[EPS].npoints]) && point_side(arr[1].x,arr[1].y, ESEC[EPS].vertex[arr2[0] % ESEC[EPS].npoints], ESEC[EPS].vertex[(arr2[0] + 1) % ESEC[EPS].npoints]
+# define WTF2 sect.neighbors[arr2[0]] >= 0 && i_b(arr[0], arr[1], SV[arr2[0] % sect.npoints], SV[(arr2[0] + 1) % sect.npoints]) && point_side(arr[1].x, arr[1].y, SV[arr2[0] % sect.npoints], SV[(arr2[0] + 1) % sect.npoints]
+# define WTF3 i_b(*p, b_pd[1], ESEC[EPS].vertex[s % ESEC[EPS].npoints], ESEC[EPS].vertex[(s + 1) % ESEC[EPS].npoints]) && point_side(b_pd[1].x, b_pd[1].y, ESEC[EPS].vertex[s % ESEC[EPS].npoints], ESEC[EPS].vertex[(s + 1) % ESEC[EPS].npoints]
+# define WTF4 i_b(*p, b_pd[1], env->sprite[s].pos1, env->sprite[s].pos2) && point_side(b_pd[1].x, b_pd[1].y, env->sprite[s].pos1, env->sprite[s].pos2
+# define WTF5 sect.neighbors[arr2[0]] >= 0 && i_b(opvoppp[1], opvoppp[0], SV[arr2[0] % sect.npoints], SV[(arr2[0] + 1) % sect.npoints]) && point_side(opvoppp[0].x, opvoppp[0].y, SV[arr2[0] % sect.npoints], SV[(arr2[0] + 1) % sect.npoints]
+# define ESJT0 env->sprite[j].texture[0]
+# define EPW env->player.where
+# define EPSIN env->player.sinang
+# define EPCOS  env->player.cosang
+# define RO1 rend->org1
+# define RO2 rend->org2
+
 
 #endif

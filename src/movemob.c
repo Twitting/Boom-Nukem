@@ -37,12 +37,14 @@ void	move_mob_support2(t_env *env, double *dxdysxsyee, t_xy *opvoppp, int i)
 	if (dxdysxsyee[5] > -dxdysxsyee[1])
 	{
 		dxdysxsyee[4] -= dxdysxsyee[1];
-		opvoppp[0].x += dxdysxsyee[2] * 60 * 30 / (env->sector[env->sprite[i].sector].light * env->oldfps);
+		opvoppp[0].x += dxdysxsyee[2] * 60 * 30 /
+			(ESEC[ESPRI.sector].light * env->oldfps);
 	}
 	if (dxdysxsyee[5] < dxdysxsyee[0])
 	{
 		dxdysxsyee[4] += dxdysxsyee[0];
-		opvoppp[0].y += dxdysxsyee[3] * 60 * 30 / (env->sector[env->sprite[i].sector].light * env->oldfps);
+		opvoppp[0].y += dxdysxsyee[3] * 60 * 30 /
+			(ESEC[ESPRI.sector].light * env->oldfps);
 	}
 }
 
@@ -51,19 +53,21 @@ void	move_mob_support(t_env *env, int *arr2, double *dxdysxsyee, t_xy *opvoppp)
 	t_sector sect;
 
 	arr2[0] = -1;
-	if ((env->sprite[arr2[3]].sector == (int)env->player.sector || env->sprite[arr2[3]].visible) && env->sprite[arr2[3]].type == 1)
+	if ((env->sprite[arr2[3]].sector == (int)EPS ||
+			env->sprite[arr2[3]].visible) && env->sprite[arr2[3]].type == 1)
 	{
 		env->sprite[arr2[3]].movecount++;
-		sect = env->sector[env->sprite[arr2[3]].sector];
+		sect = ESEC[env->sprite[arr2[3]].sector];
 		opvoppp[0] = env->sprite[arr2[3]].pos1;
 		opvoppp[1] = env->sprite[arr2[3]].pos1;
 		move_mob_support3(dxdysxsyee, opvoppp);
-		while (fabs(opvoppp[0].x - opvoppp[2].x) > 2.0 || fabs(opvoppp[0].y - opvoppp[2].y) > 2.0)
+		while (fabs(opvoppp[0].x - opvoppp[2].x) > 2.0 ||
+			fabs(opvoppp[0].y - opvoppp[2].y) > 2.0)
 		{
 			move_mob_support2(env, dxdysxsyee, opvoppp, arr2[3]);
 			while (++arr2[0] < (int)sect.npoints)
 			{
-				if (sect.neighbors[arr2[0]] >= 0 && intersect_box(opvoppp[1], opvoppp[0], sect.vertex[arr2[0] % sect.npoints], sect.vertex[(arr2[0] + 1) % sect.npoints]) && point_side(opvoppp[0].x, opvoppp[0].y, sect.vertex[arr2[0] % sect.npoints], sect.vertex[(arr2[0] + 1) % sect.npoints]) < 0)
+				if (WTF5) < 0)
 					move_mob_support4(env, arr2, sect);
 			}
 			env->sprite[arr2[3]].pos1 = opvoppp[0];
@@ -80,8 +84,8 @@ void	move_mob(t_env *env)
 
 	arr2[1] = 0;
 	arr2[3] = -1;
-	opvoppp[2].x = env->player.where.x;
-	opvoppp[2].y = env->player.where.y;
+	opvoppp[2].x = EPW.x;
+	opvoppp[2].y = EPW.y;
 	while (++arr2[3] < env->sprcount)
 	{
 		move_mob_support(env, arr2, dxdysxsyee, opvoppp);
