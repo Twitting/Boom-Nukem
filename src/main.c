@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:20:03 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/14 16:43:04 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/14 19:56:16 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	ft_error(int errnum)
 	exit(errnum);
 }
 
-int		main(void)
+int		main(int argc, char **argv)
 {
 	t_env		*env;
 	t_rend		*rend;
@@ -55,7 +55,10 @@ int		main(void)
 		ft_error(2);
 	if (!(rend = (t_rend *)malloc(sizeof(t_rend))))
 		ft_error(2);
-	ft_strcpy(env->mapname, "test.map");
+	if (argc > 1 && !ft_strcmp(argv[1], "map"))
+		ft_strcpy(env->mapname, "created.map");
+	else
+		ft_strcpy(env->mapname, "epic.map");
 	grandparser(env);
 	texnulling(env);
 	init(env);
