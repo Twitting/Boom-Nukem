@@ -6,7 +6,7 @@
 /*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 02:45:02 by drestles          #+#    #+#             */
-/*   Updated: 2019/04/14 17:42:49 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/14 17:49:52 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,37 +67,6 @@ void	load_game(t_env *env, SDL_Event *e)
 			SDL_UpdateWindowSurface(env->window);
 		}
 		handle_events_load(env, e);
-	}
-}
-
-void	game_mode(t_env *env, SDL_Event *e)
-{
-	SDL_Surface *button;
-
-	button = NULL;
-	SDL_SetRelativeMouseMode(SDL_FALSE);
-	env->b_one = 0;
-	env->b_two = 0;
-	env->b_three = 0;
-	button = SDL_LoadBMP("img/game_mode.bmp");
-	SDL_BlitScaled(button, NULL, env->surface, NULL);
-	SDL_FreeSurface(button);
-	SDL_UpdateWindowSurface(env->window);
-	while (env->state == 5)
-	{
-		if (env->b_one == 1 | env->b_two == 1 | env->b_three == 1)
-		{
-			if (env->b_one == 1)
-				button = SDL_LoadBMP("img/game_mode_1.bmp");
-			else if (env->b_two == 1)
-				button = SDL_LoadBMP("img/game_mode_2.bmp");
-			else if (env->b_three == 1)
-				button = SDL_LoadBMP("img/game_mode_3.bmp");
-			SDL_BlitScaled(button, NULL, env->surface, NULL);
-			SDL_FreeSurface(button);
-			SDL_UpdateWindowSurface(env->window);
-		}
-		handle_events_game_mode(env, e);
 	}
 }
 
