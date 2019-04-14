@@ -6,7 +6,7 @@
 /*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 18:28:49 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 20:06:38 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/14 20:12:32 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	mobcrushesface(t_env *env, int i)
 	env->player.hp -= 10;
 	if (env->player.hp <= 0)
 	{
+		Mix_HaltMusic();
 		Mix_PlayChannel(-1, env->sound[13], 0);
 		env->state = 6;
 	}
