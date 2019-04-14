@@ -6,7 +6,7 @@
 #    By: drestles <drestles@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/04/14 17:43:40 by drestles         ###   ########.fr        #
+#    Updated: 2019/04/14 18:14:51 by drestles         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,6 @@ SRC = ./src/main.c \
 		./src/portal.c \
 		./src/openbars.c \
 		./src/menu/main.c \
-		./src/menu/menu.c \
 		./src/menu/handle_pause.c \
 		./src/menu/handle_menu.c \
 		./src/menu/handle_load.c \
@@ -46,6 +45,9 @@ SRC = ./src/main.c \
 		./src/menu/handle_game_mode.c \
 		./src/menu/game_over.c \
 		./src/menu/menu_pause.c \
+		./src/menu/game_mode.c \
+		./src/menu/save_game.c \
+		./src/menu/load_game.c \
 		./src/game_bar/help.c \
 		./src/game_bar/key.c \
 		./src/game_bar/head.c \
