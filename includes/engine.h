@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/14 13:46:35 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/14 16:05:17 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ typedef struct		s_env
 	unsigned int	nvertexes;
 	int				quit;
 	SDL_Surface		*surface;
-	SDL_Surface		*text[20];
+	SDL_Surface		*text[22];
 	SDL_Window		*window;
 	SDL_Surface		*temp;
 	int				wsad[4];
@@ -182,6 +182,7 @@ typedef struct		s_env
 	int				help;
 }					t_env;
 
+void				inittext_term(t_env *env);
 void				sortsprite(t_env *env);
 void				keylightapply(t_env *env, t_sprite *sprite, int tex);
 void				sectorlightapply_support(t_env *env, int *ijkt,

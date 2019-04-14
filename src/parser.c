@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/14 12:23:00 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/14 12:47:26 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/14 15:41:07 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,7 +265,7 @@ void	spritemaker(t_env *env)
 			env->sprite[i].height = 12;
 			env->sprite[i].width = 4;
 		}
-		else if (env->sprite[i].type == 5)
+		else if (env->sprite[i].type >= 5)
 		{
 			env->sprite[i].height = 6;
 			env->sprite[i].width = 1;

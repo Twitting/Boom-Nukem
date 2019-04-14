@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 12:24:34 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 13:09:27 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/14 16:24:20 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ void	putspritesobjects(t_env *env, int i)
 			env->player.keys++;
 		env->sprite[i].width = 0;
 	}
+	if (env->sprite[i].spritedist <= 2 && env->sprite[i].type == 6 && env->sprite[i].texnum == 0)
+		env->state = 6;
 }
 
 void	rendersprite(t_env *env, t_rend *rend)
