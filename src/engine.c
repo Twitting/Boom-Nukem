@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 10:52:09 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/14 11:04:13 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	mixtex_support(t_env *env, t_sprite *sprite, SDL_Surface *temp)
 	}
 	else if (sprite->type == 4 && sprite->hp > 666)
 	{
+		if (sprite->hp == 716)
+			SDL_FreeSurface(sprite->texture[0]);
 		if ((sprite->hp - 676) % 10 == 0)
 		{
 			sprite->texture[0] = env->text[(sprite->hp - 676) / 10 + 3];
