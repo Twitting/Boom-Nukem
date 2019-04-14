@@ -1,0 +1,209 @@
+vertex	50	50
+vertex	50	80
+vertex	70	80
+vertex	70	50
+vertex	30	30
+vertex	30	80
+vertex	110	30
+vertex	110	80
+vertex	30	120
+vertex	60	120
+vertex	80	120
+vertex	110	120
+vertex	60	140
+vertex	80	140
+vertex	60	150
+vertex	130	150
+vertex	130	140
+vertex	120	140
+vertex	120	130
+vertex	130	130
+vertex	120	120
+vertex	130	120
+vertex	120	110
+vertex	130	110
+vertex	120	100
+vertex	130	100
+vertex	120	90
+vertex	130	90
+vertex	120	80
+vertex	130	80
+vertex	120	70
+vertex	130	70
+vertex	120	60
+vertex	130	60
+vertex	120	50
+vertex	130	50
+vertex	120	40
+vertex	130	40
+vertex	170	50
+vertex	170	40
+vertex	170	80
+vertex	180	70
+vertex	180	40
+vertex	170	90
+vertex	180	100
+vertex	190	100
+vertex	200	90
+vertex	200	80
+vertex	190	70
+vertex	210	90
+vertex	210	80
+vertex	220	90
+vertex	220	80
+vertex	240	110
+vertex	260	110
+vertex	280	90
+vertex	280	70
+vertex	260	50
+vertex	240	50
+vertex	220	70
+vertex	180	140
+vertex	190	140
+vertex	180	180
+vertex	180	190
+vertex	210	190
+vertex	220	190
+vertex	230	190
+vertex	230	140
+vertex	130	180
+vertex	130	190
+vertex	120	180
+vertex	120	220
+vertex	130	220
+vertex	80	220
+vertex	80	260
+vertex	130	260
+vertex	210	210
+vertex	220	210
+vertex	200	210
+vertex	200	220
+vertex	220	220
+vertex	190	210
+vertex	190	220
+vertex	180	210
+vertex	180	220
+vertex	170	210
+vertex	170	220
+vertex	160	210
+vertex	160	220
+vertex	160	260
+vertex	170	260
+vertex	170	170
+vertex	160	170
+vertex	170	160
+vertex	160	160
+vertex	170	150
+vertex	160	150
+vertex	170	140
+vertex	160	140
+vertex	170	110
+vertex	160	110
+vertex	160	100
+
+sector	130 -200	80 0	0 1 2 3		1 4 3 2
+sector	170 -200	80 2	4 5 1 0		-1 -1 0 2
+sector	170 -200	80 2	4 0 3 6		1 0 3 -1
+sector	170 -200	80 2	3 2 7 6		0 -1 -1 2
+sector	130 200	80 2	1 5 8 9 10 11 7 2		-1 -1 -1 5 -1 -1 -1 0
+sector	130 150	60 2	9 12 13 10		-2 6 -1 4
+sector	130 150	50 5	12 14 15 16 17 13		-1 -1 -1 7 -1 5
+sector	128 150	50 5	18 17 16 19		-1 6 -1 8
+sector	126 150	80 5	20 18 19 21		-1 7 -1 9
+sector	124 150	80 0	22 20 21 23		-1 8 -1 10
+sector	122 150	80 0	24 22 23 25		-1 9 -1 11
+sector	120 150	80 0	26 24 25 27		-1 10 -1 12
+sector	118 150	80 0	28 26 27 29		-1 11 -1 13
+sector	116 150	80 0	30 28 29 31		-1 12 -1 14
+sector	114 150	80 0	32 30 31 33		-1 13 -1 15
+sector	112 150	80 0	34 32 33 35		-1 14 -1 16
+sector	110 150	80 0	36 34 35 37		-1 15 17 -1
+sector	110 130	80 0	37 35 38 39		16 -1 18 -1
+sector	100 130	80 0	39 38 40 41 42		17 -1 19 -1 -2
+sector	100 160	80 0	41 40 43 44 45 46 47 48		18 -1 40 23 -1 20 -1 -2
+sector	100 120	80 0	46 49 50 47		-1 21 -1 19
+sector	100 120	80 0	50 49 51 52		20 -1 22 -1
+sector	30 120	80 0	51 53 54 55 56 57 58 59 52		-1 -1 -1 -1 -1 -1 -1 -2 21
+sector	100 120	80 0	44 60 61 45		-1 24 -1 19
+sector	100 140	80 3	60 62 63 64 65 66 67 61		-2 25 -1 28 -1 -1 -1 23
+sector	100 120	80 0	62 68 69 63		-1 26 -1 24
+sector	100 120	80 0	68 70 71 72 69		-1 -1 27 -1 25
+sector	100 150	30 0	71 73 74 75 72		-1 -1 -1 -2 26
+sector	100 120	80 0	64 76 77 65		-1 29 -1 24
+sector	100 120	80 0	76 78 79 80 77		-1 30 -1 -1 28
+sector	105 140	80 0	78 81 82 79		-1 31 -1 29
+sector	110 140	80 0	81 83 84 82		-1 32 -1 30
+sector	115 140	80 0	83 85 86 84		-1 33 -1 31
+sector	115 140	80 0	86 85 87 88		32 35 -1 34
+sector	115 140	30 0	88 89 90 86		-1 -1 -1 33
+sector	115 140	80 0	85 91 92 87		-1 36 -1 33
+sector	120 140	80 0	91 93 94 92		-1 37 -1 35
+sector	125 140	80 0	93 95 96 94		-1 38 -1 36
+sector	130 140	80 0	95 97 98 96		-1 39 -1 37
+sector	130 140	80 0	97 99 100 98		-1 40 -1 38
+sector	130 140	20 0	43 101 100 99 44		-1 -1 39 -1 19
+
+player	63 57	0 0
+
+object	88 47	0 4
+object	93 47	0 4
+object	96 46	0 4
+object	101 46	0 4
+object	105 46	0 4
+object	109 46	0 4
+object	88 56	0 4
+object	94 56	0 4
+object	100 56	0 4
+object	105 56	0 4
+object	109 55	0 4
+object	86 64	0 4
+object	92 64	0 4
+object	101 64	0 4
+object	107 64	0 4
+object	106 70	0 4
+object	98 70	0 4
+object	90 70	0 4
+object	85 71	0 4
+object	86 81	0 4
+object	93 81	0 4
+object	98 81	0 4
+object	105 81	0 4
+object	108 86	0 4
+object	102 87	0 4
+object	95 86	0 4
+object	89 86	0 4
+object	86 92	0 4
+object	94 93	0 4
+object	102 94	0 4
+object	108 96	0 4
+object	100 101	0 4
+object	93 101	0 4
+object	85 102	0 4
+object	44 126	1 16
+object	83 184	1 21
+object	80 250	6 22
+object	146 193	0 24
+object	150 192	0 24
+object	155 193	0 24
+object	160 192	0 24
+object	164 192	0 24
+object	149 217	1 24
+object	166 220	1 24
+object	224 119	0 27
+object	228 119	0 27
+object	231 119	0 27
+object	246 94	1 27
+object	230 102	1 27
+object	246 108	1 27
+object	241 86	1 27
+object	226 87	3 27
+object	227 92	3 27
+object	254 166	1 34
+object	248 164	1 34
+object	242 166	1 34
+object	176 166	1 35
+object	96 171	1 40
+object	100 175	0 40
+object	104 166	5 40
+
+wallsp	50 49	20 21

@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 21:52:25 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/14 14:51:07 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/14 18:45:25 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ void	keyboard_events(t_env *env, SDL_Event *e)
 		env->wsad[2] = on;
 	if (e->key.keysym.sym == SDLK_d)
 		env->wsad[3] = on;
-	if (e->key.keysym.sym == SDLK_e && !on && checkswitch(env))
+	if (e->key.keysym.sym == SDLK_e && !on && checkswitch(env) &&
+	env->button[env->player.sector].visible == 1)
 	{
 		Mix_PlayChannel(-1, env->sound[5], 0);
 		env->player.pushingbutton = 1;

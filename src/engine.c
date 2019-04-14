@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 16:43:06 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/14 18:43:41 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,13 +172,21 @@ int		start_engine(t_env *env, SDL_Event *e, t_rend *rend)
 	while (++i < (int)env->nsectors)
 		rend->sprq[i].visible = 0;
 	SDL_LockSurface(env->surface);
+	ft_putchar('A');
 	render_wall(env, rend);
+	ft_putchar('b');
 	renderbutton(env, rend);
+	ft_putchar('C');
 	rendersprite(env, rend);
+	ft_putchar('d');
 	cross(env);
+	ft_putchar('E');
 	animation(env);
+	ft_putchar('f');
 	pistolrender(env);
+	ft_putchar('G');
 	pushswitch(env);
+	ft_putchar('h');
 	SDL_UnlockSurface(env->surface);
 	///////////////////////   BLOOOD   /////////////////////////
 	if (env->blood-- > 0)
