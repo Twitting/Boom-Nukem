@@ -6,7 +6,7 @@
 /*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 05:53:07 by drestles          #+#    #+#             */
-/*   Updated: 2019/04/13 21:12:06 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/14 17:35:42 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void button_one(t_env *env, SDL_Event *e)
 	e->button.y >= 305 && e->button.y <= 420)
 	{
 		env->state = 1;
-		/////////////////////////    выбирает EASY mode <<<<<<<<<<<<----------------------
+		env->mode = 1;
 	}
 }
 
@@ -47,7 +47,7 @@ static void handle_up(t_env *env, SDL_Event *e)
 		e->button.y >= 448 && e->button.y <= 567)
 		{
 			env->state = 1;
-			/////////////////////////     выбирает MEDIUM mode<<<<<<<<<<<<----------------------
+			env->mode = 2;
 		}
 	}
 	else if (env->b_three == 1)
@@ -57,7 +57,7 @@ static void handle_up(t_env *env, SDL_Event *e)
 		e->button.y >= 595 && e->button.y <= 714)
 		{
 			env->state = 1;
-			/////////////////////////      выбирает HARD mode<<<<<<<<<<<<----------------------
+			env->mode = 3;
 		}
 	}
 }
