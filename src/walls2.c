@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 12:11:56 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 10:52:47 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/14 15:55:51 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	textceilfloor(t_env *env, t_rend *rend)
 		{
 			rend->hei = rend->y < rend->cya ? rend->yceil : rend->yfloor;
 			TOMAPCCORD(rend->hei, rend->x, rend->y, rend->mapx, rend->mapz);
-			rend->txtx = rend->mapx * rend->nowsect->text[2]->w / 12; // почему 256??
+			rend->txtx = rend->mapx * rend->nowsect->text[2]->w / 12;
 			rend->txtz = rend->mapz * rend->nowsect->text[2]->w / 12;
 			rend->pel = ((int*)rend->nowsect->text[2]->pixels)[abs(rend->txtz) % rend->nowsect->text[2]->h * rend->nowsect->text[2]->w + abs(rend->txtx) % rend->nowsect->text[2]->w];
 		}

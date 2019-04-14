@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:10:46 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 13:58:22 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/14 16:26:28 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int		h_collision(t_env *env, t_xy *p, t_xy *d, t_xy *dd)
 				d->x = b_pd[0].x * (d->x * b_pd[0].x + b_pd[0].y * d->y) / (b_pd[0].x * b_pd[0].x + b_pd[0].y * b_pd[0].y);
 				d->y = b_pd[0].y * (arr[0] * b_pd[0].x + b_pd[0].y * d->y) / (b_pd[0].x * b_pd[0].x + b_pd[0].y * b_pd[0].y);
 				env->moving = -1;
+				return(0);
 			}
 	s = -1;
 	while (++s < (int)env->sector[env->player.sector].npoints)
@@ -95,8 +96,8 @@ int		h_collision(t_env *env, t_xy *p, t_xy *d, t_xy *dd)
 				h_collision_support(env, arr, b_pd, d, s);
 		}
 	}
-	return (0);
 	env->falling = 1;
+	return (0);
 }
 
 int		can_i_go(t_env *env, t_xy *p, double x, double y)

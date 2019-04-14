@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 13:31:38 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/14 16:40:53 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ int		start_engine(t_env *env, SDL_Event *e, t_rend *rend)
 	//music = Mix_LoadMUS("music/1.mp3");
 	//Mix_PlayMusic(music, -1);
 	/////////////////////////////
-
 	int	i;
 
 	i = -1;

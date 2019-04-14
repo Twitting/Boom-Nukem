@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/14 13:46:35 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/14 16:40:53 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef	struct		s_sprite
 	int				movecount;
 	int				texnum;
 	double			mobtimer;
+	int				openbar;
 }					t_sprite;
 
 typedef	struct		s_button
@@ -81,6 +82,7 @@ typedef	struct		s_button
 	int				height;
 	int				width;
 	int				sector;
+	int				visible;
 }					t_button;
 
 typedef struct		s_sector
@@ -215,6 +217,8 @@ void				neighborstosect(t_sector *sect, char *line, int i);
 void				move_mob(t_env *env);
 void				spritedist(t_env *env);
 void				findbutton(t_env *env);
+void				barsanimate(t_env *env);
+int					openbars(t_env *env);
 /*
 ** menu/main.c
 */

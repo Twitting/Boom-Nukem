@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/14 12:23:00 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/14 12:47:26 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/14 15:30:42 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -293,6 +293,10 @@ void	makewallsp(t_env *env, int i)
 	env->sprite[i + 1].floor = MAX(env->sector[env->wallsp.sect1].floor, env->sector[env->wallsp.sect2].floor);
 	env->sprite[i + 1].type = 2;
 	env->sprite[i + 1].texture[0] = IMG_Load("textures/bars.png");
+	env->sprite[i].openbar = 0;
+	env->sprite[i + 1].openbar = 0;
+	env->sprite[i].visible = 1;
+	env->sprite[i + 1].visible = 1;
 }
 
 void	parsewallsps_support(t_env *env, char *line, int *i)
