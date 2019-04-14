@@ -6,34 +6,24 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 21:52:25 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/14 13:31:38 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/14 13:58:22 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
 
-void	keyboard_events2(t_env *env, SDL_Event *e, int on)
+void	keyboard_events3(t_env *env, SDL_Event *e)
 {
-	if (e->key.keysym.sym == SDLK_SPACE && on == 1)
-		env->spacebar = 1;
-	if (e->key.keysym.sym == SDLK_SPACE && on == 0)
-		env->spacebar = 0;
-	if (e->key.keysym.sym == SDLK_SPACE && on == 1)
-		if (env->ground && !env->jetpack)
-		{
-			Mix_PlayChannel(-1, env->sound[10], 0);
-			env->player.velocity.z += 1.5;
-			env->falling = 1;
-		}
-	//printf ("keycode %d\n", e->key.keysym.sym);
-	if (e->type == SDL_KEYUP && e->key.keysym.sym == 1073741901 && env->volume > 0) //////down
+	if (e->type == SDL_KEYUP && e->key.keysym.sym ==
+		1073741901 && env->volume > 0)
 	{
 		env->volume -= 15;
 		if (env->volume < 0)
 			env->volume = 0;
 		Mix_VolumeMusic(env->volume);
 	}
-	if (e->type == SDL_KEYUP && e->key.keysym.sym == 1073741898 && env->volume < 128) //////up
+	if (e->type == SDL_KEYUP && e->key.keysym.sym ==
+		1073741898 && env->volume < 128)
 	{
 		env->volume += 15;
 		if (env->volume > 128)
@@ -47,11 +37,27 @@ void	keyboard_events2(t_env *env, SDL_Event *e, int on)
 		else
 			env->help = 1;
 	}
-	//1073741910 //-
-	//1073741911 //+
+}
 
-	////////////////
-
+void	keyboard_events2(t_env *env, SDL_Event *e, int on)
+{
+	if (e->key.keysym.sym == SDLK_LCTRL || e->key.keysym.sym == SDLK_RCTRL)
+	{
+		env->ducking = on;
+		env->falling = 1;
+	}
+	if (e->key.keysym.sym == SDLK_SPACE && on == 1)
+		env->spacebar = 1;
+	if (e->key.keysym.sym == SDLK_SPACE && on == 0)
+		env->spacebar = 0;
+	if (e->key.keysym.sym == SDLK_SPACE && on == 1)
+		if (env->ground && !env->jetpack)
+		{
+			Mix_PlayChannel(-1, env->sound[10], 0);
+			env->player.velocity.z += 1.5;
+			env->falling = 1;
+		}
+	keyboard_events3(env, e);
 }
 
 void	keyboard_events(t_env *env, SDL_Event *e)
@@ -75,11 +81,6 @@ void	keyboard_events(t_env *env, SDL_Event *e)
 	{
 		Mix_PlayChannel(-1, env->sound[5], 0);
 		env->player.pushingbutton = 1;
-	}
-	if (e->key.keysym.sym == SDLK_LCTRL || e->key.keysym.sym == SDLK_RCTRL)
-	{
-		env->ducking = on;
-		env->falling = 1;
 	}
 	keyboard_events2(env, e, on);
 }

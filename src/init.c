@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 10:10:22 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 07:34:51 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/14 12:29:22 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	init_music(t_env *env)
 	env->music[0] = Mix_LoadMUS("music/2.mp3");
 	env->music[1] = Mix_LoadMUS("music/1.mp3");
 	env->sound[0] = Mix_LoadWAV("music/pistol_1.wav");
-	Mix_VolumeChunk(env->sound[0], MIX_MAX_VOLUME/4);
+	Mix_VolumeChunk(env->sound[0], MIX_MAX_VOLUME / 4);
 	env->sound[2] = Mix_LoadWAV("music/pistol_pere.wav");
 	env->sound[3] = Mix_LoadWAV("music/oy_1.wav");
 	env->sound[4] = Mix_LoadWAV("music/oy_2.wav");
@@ -77,13 +77,11 @@ void	init(t_env *env)
 
 	i = 0;
 	env->yaw = 0;
-	env->player.hp = 100;
 	env->quit = 0;
 	env->shooting = 0;
 	env->ground = 0;
 	env->falling = 1;
 	env->ducking = 0;
-	env->player.eye = EYEHEIGHT;
 	env->fps = 0;
 	env->oldfps = 60;
 	env->timer = 0;

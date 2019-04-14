@@ -2,7 +2,13 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
-
+/*                                                    +:+ +:+         +:+     */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/14 12:23:00 by twitting          #+#    #+#             */
+/*   Updated: 2019/04/14 12:47:26 by twitting         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "engine.h"
 
@@ -51,6 +57,19 @@ void	verttosect(t_env *env, t_sector *sect, char *line, int i)
 	neighborstosect(sect, line, i);
 }
 
+void	playerinit(t_env *env)
+{
+	env->player.velocity.x = 0.0;
+	env->player.velocity.y = 0.0;
+	env->player.velocity.z = 0.0;
+	env->player.yaw = 0.0;
+	env->player.keys = 0;
+	env->player.pushingbutton = 0;
+	env->player.where.z = env->sector[env->player.sector].floor + EYEHEIGHT;
+	env->player.hp = 100;
+	env->player.eye = EYEHEIGHT;
+}
+
 void	parseplayer(t_env *env, int fd)
 {
 	int		i;
@@ -70,15 +89,34 @@ void	parseplayer(t_env *env, int fd)
 	while (line[i] != ' ')
 		i++;
 	env->player.sector = ft_atoi(&line[i]);
-	env->player.velocity.x = 0.0;
-	env->player.velocity.y = 0.0;
-	env->player.velocity.z = 0.0;
-	env->player.yaw = 0.0;
-	env->player.pushingbutton = 0;
-	env->player.where.z = env->sector[env->player.sector].floor + EYEHEIGHT;
+	playerinit(env);
 	free(line);
 	if (get_next_line(fd, &line))
 		free(line);
+}
+
+void	parsesectors_support(t_env *env, int count, char *line, int *i)
+{
+	(*i) += 7;
+	env->sector[count].sky = 0;
+	env->sector[count].floor = ft_atoi(&line[*i]);
+	while (line[*i] != ' ')
+		(*i)++;
+	env->sector[count].ceiling = ft_atoi(&line[*i]);
+	if (env->sector[count].ceiling < 0)
+	{
+		env->sector[count].ceiling *= -1;
+		env->sector[count].sky = 1;
+	}
+	while (line[*i] != '\t')
+		(*i)++;
+	env->sector[count].light = ft_atoi(&line[*i]);
+	env->sector[count].on = env->sector[count].light > 40 ? 1 : 0;
+	while (line[*i] != ' ')
+		(*i)++;
+	env->sector[count].textpack = ft_atoi(&line[*i]);
+	while (line[*i] != '\t')
+		(*i)++;
 }
 
 void	parsesectors(t_env *env, int fd)
@@ -93,26 +131,7 @@ void	parsesectors(t_env *env, int fd)
 		i = 0;
 		if (line[0] == 's')
 		{
-			i += 7;
-			env->sector[count].sky = 0;
-			env->sector[count].floor = ft_atoi(&line[i]);
-			while (line[i] != ' ')
-				i++;
-			env->sector[count].ceiling = ft_atoi(&line[i]);
-			if (env->sector[count].ceiling < 0)
-			{
-				env->sector[count].ceiling *= -1;
-				env->sector[count].sky = 1;
-			}
-			while (line[i] != '\t')
-				i++;
-			env->sector[count].light = ft_atoi(&line[i]);
-			env->sector[count].on = env->sector[count].light > 40 ? 1 : 0;
-			while (line[i] != ' ')
-				i++;
-			env->sector[count].textpack = ft_atoi(&line[i]);
-			while (line[i] != '\t')
-				i++;
+			parsesectors_support(env, count, line, &i);
 			verttosect(env, &env->sector[count], line, i);
 		}
 		else if (line[0] != 's')
@@ -189,7 +208,22 @@ void	getvertsectnums(t_env *env)
 		ft_error(2);
 }
 
-int	parsesprites(t_env *env, int fd)
+void	parsesprites_support(t_env *env, int count, char *line, int *i)
+{
+	(*i) += 7;
+	env->sprite[count].pos1.x = ft_atoi(&line[(*i)]);
+	while (line[(*i)] != ' ')
+		(*i)++;
+	env->sprite[count].pos1.y = ft_atoi(&line[(*i)]);
+	while (line[(*i)] != '\t')
+		(*i)++;
+	env->sprite[count].type = ft_atoi(&line[(*i)]);
+	while (line[(*i)] != ' ')
+		(*i)++;
+	env->sprite[count].sector = ft_atoi(&line[(*i)]);
+}
+
+int		parsesprites(t_env *env, int fd)
 {
 	char	*line;
 	int		count;
@@ -201,17 +235,7 @@ int	parsesprites(t_env *env, int fd)
 		i = 0;
 		if (line[0] == 'o')
 		{
-			i += 7;
-			env->sprite[count].pos1.x = ft_atoi(&line[i]);
-			while (line[i] != ' ')
-				i++;
-			env->sprite[count].pos1.y = ft_atoi(&line[i]);
-			while (line[i] != '\t')
-				i++;
-			env->sprite[count].type = ft_atoi(&line[i]);
-			while (line[i] != ' ')
-				i++;
-			env->sprite[count].sector = ft_atoi(&line[i]);
+			parsesprites_support(env, count, line, &i);
 			count++;
 		}
 		else if (line[0] != 'o' && line[0] == '\0')
@@ -271,6 +295,21 @@ void	makewallsp(t_env *env, int i)
 	env->sprite[i + 1].texture[0] = IMG_Load("textures/bars.png");
 }
 
+void	parsewallsps_support(t_env *env, char *line, int *i)
+{
+	(*i) += 7;
+	env->wallsp.vert1 = ft_atoi(&line[(*i)]);
+	while (line[(*i)] != ' ')
+		(*i)++;
+	env->wallsp.vert2 = ft_atoi(&line[(*i)]);
+	while (line[(*i)] != '\t')
+		(*i)++;
+	env->wallsp.sect1 = ft_atoi(&line[(*i)]);
+	while (line[(*i)] != ' ')
+		(*i)++;
+	env->wallsp.sect2 = ft_atoi(&line[(*i)]);
+}
+
 void	parsewallsps(t_env *env, int fd, int count)
 {
 	char	*line;
@@ -281,17 +320,7 @@ void	parsewallsps(t_env *env, int fd, int count)
 		i = 0;
 		if (line[0] == 'w')
 		{
-			i += 7;
-			env->wallsp.vert1 = ft_atoi(&line[i]);
-			while (line[i] != ' ')
-				i++;
-			env->wallsp.vert2 = ft_atoi(&line[i]);
-			while (line[i] != '\t')
-				i++;
-			env->wallsp.sect1 = ft_atoi(&line[i]);
-			while (line[i] != ' ')
-				i++;
-			env->wallsp.sect2 = ft_atoi(&line[i]);
+			parsewallsps_support(env, line, &i);
 			makewallsp(env, count);
 			count += 2;
 		}
@@ -311,7 +340,6 @@ void	grandparser(t_env *env)
 
 	if ((fd = open(env->mapname, O_RDONLY)) < 0)
 		ft_putstr("openerr\n");
-
 	getvertsectnums(env);
 	parsevertexes(env, fd);
 	parsesectors(env, fd);

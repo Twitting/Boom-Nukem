@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   transparent.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 16:26:23 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 07:48:17 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/14 13:11:16 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	trplane(t_env *env, t_rend *rend, int j)
 	rend->ttr1.y = rend->vtr1.x * env->player.cosang + rend->vtr1.y * env->player.sinang;
 	rend->ttr2.x = rend->vtr2.x * env->player.sinang - rend->vtr2.y * env->player.cosang;
 	rend->ttr2.y = rend->vtr2.x * env->player.cosang + rend->vtr2.y * env->player.sinang;
-	if (rend->ttr1.y <= 0 && rend->ttr2.y  <= 0)
+	if (rend->ttr1.y <= 0 && rend->ttr2.y <= 0)
 		return ;
 	rend->u0 = 0;
 	rend->u1 = env->sprite[j].texture[0]->w;

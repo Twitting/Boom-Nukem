@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   spritedist.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 12:26:48 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/12 20:02:35 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/14 13:08:27 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,31 @@ void	drawtransp(t_env *env, t_rend *rend, int j)
 		if (((int *)(env->sprite[j].texture[0]->pixels))[txty % env->sprite[j].texture[0]->h * env->sprite[j].texture[0]->w + rend->txtx] != 0)
 			*pix = ((int *)(env->sprite[j].texture[0]->pixels))[txty % env->sprite[j].texture[0]->h * env->sprite[j].texture[0]->w + rend->txtx];
 		pix += WWIN;
+	}
+}
+
+void	sortsprite(t_env *env)
+{
+	int			f;
+	int			i;
+	t_sprite	temp;
+
+	f = 1;
+	while (f == 1)
+	{
+		f = 0;
+		i = 0;
+		while (i < env->sprcount - 1)
+		{
+			if (env->sprite[i].spritedist < env->sprite[i + 1].spritedist)
+			{
+				temp = env->sprite[i];
+				env->sprite[i] = env->sprite[i + 1];
+				env->sprite[i + 1] = temp;
+				f = 1;
+				break ;
+			}
+			i++;
+		}
 	}
 }

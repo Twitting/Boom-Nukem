@@ -16,3 +16,7 @@ player	169 230	0 0
 object	160 219	5 0
 object	193 228	3 0
 
+object	60 70	0 1
+object	65 60	3 1
+object	65 70	5 1
+object	20 45	5 0

@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 10:37:22 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 12:08:23 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/14 13:58:20 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	wallstart(t_env *env, t_rend *rend, t_now *now)
 	wallxloop(env, rend);
 }
 
-void	startcalc(t_env *env, t_rend *rend, t_now *now)
+void	calc_support(t_env *env, t_rend *rend)
 {
 	rend->vx1 = rend->nowsect->vertex[rend->s % rend->nowsect->npoints].x - env->player.where.x;
 	rend->vy1 = rend->nowsect->vertex[rend->s % rend->nowsect->npoints].y - env->player.where.y;
@@ -40,6 +40,11 @@ void	startcalc(t_env *env, t_rend *rend, t_now *now)
 	rend->t1.y = rend->vx1 * env->player.cosang + rend->vy1 * env->player.sinang;
 	rend->t2.x = rend->vx2 * env->player.sinang - rend->vy2 * env->player.cosang;
 	rend->t2.y = rend->vx2 * env->player.cosang + rend->vy2 * env->player.sinang;
+}
+
+void	startcalc(t_env *env, t_rend *rend, t_now *now)
+{
+	calc_support(env, rend);
 	if (rend->t1.y <= 0 && rend->t2.y <= 0)
 		return ;
 	rend->u0 = 0;
