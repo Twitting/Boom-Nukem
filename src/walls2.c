@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   walls2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 12:11:56 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 10:52:47 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/14 19:19:01 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,22 @@ void	wallscale(t_env *env, t_rend *rend)
 	}
 }
 
+void	tomapccord(t_rend *rend, t_env *env)
+{
+	rend->mapz = (rend->hei) * HWIN * VFOV / ((HWIN / 2 - (rend->y)) - env->player.yaw * HWIN * VFOV);
+	rend->mapx = (rend->mapz) * (WWIN / 2 - (rend->x)) / (WWIN * HFOV);
+	float rtx = (rend->mapz) * env->player.cosang + (rend->mapx) * env->player.sinang;
+	float rtz = (rend->mapz) * env->player.sinang - (rend->mapx) * env->player.cosang;
+	rend->mapx = rtx + env->player.where.x;
+	rend->mapz = rtz + env->player.where.y;
+}
+
 void	textceilfloor(t_env *env, t_rend *rend)
 {
 	if (rend->y >= rend->cyb)
 	{
 		rend->hei = rend->y < rend->cya ? rend->yceil : rend->yfloor;
-		TOMAPCCORD(rend->hei, rend->x, rend->y, rend->mapx, rend->mapz);
+		tomapccord(rend, env);
 		rend->txtx = rend->mapx * rend->nowsect->text[0]->w / 12;
 		rend->txtz = rend->mapz * rend->nowsect->text[0]->w / 12;
 		rend->pel = ((int*)rend->nowsect->text[0]->pixels)[abs(rend->txtz) % rend->nowsect->text[0]->h * rend->nowsect->text[0]->w + abs(rend->txtx) % rend->nowsect->text[0]->w];
@@ -68,8 +78,8 @@ void	textceilfloor(t_env *env, t_rend *rend)
 		if (rend->nowsect->sky != 1)
 		{
 			rend->hei = rend->y < rend->cya ? rend->yceil : rend->yfloor;
-			TOMAPCCORD(rend->hei, rend->x, rend->y, rend->mapx, rend->mapz);
-			rend->txtx = rend->mapx * rend->nowsect->text[2]->w / 12; // почему 256??
+			tomapccord(rend, env);
+			rend->txtx = rend->mapx * rend->nowsect->text[2]->w / 12;
 			rend->txtz = rend->mapz * rend->nowsect->text[2]->w / 12;
 			rend->pel = ((int*)rend->nowsect->text[2]->pixels)[abs(rend->txtz) % rend->nowsect->text[2]->h * rend->nowsect->text[2]->w + abs(rend->txtx) % rend->nowsect->text[2]->w];
 		}
@@ -79,13 +89,45 @@ void	textceilfloor(t_env *env, t_rend *rend)
 	((int*)env->surface->pixels)[rend->y * WWIN + rend->x] = rend->pel;
 }
 
+t_scaler	scaler_init_support7(t_rend *rend, t_env *env)
+{
+	t_scaler temp;
+
+	temp = (t_scaler)
+	{0 + (rend->cya - 1 - rend->ya) *
+		((env->text[0]->w - 1)) / (rend->yb - rend->ya),
+		(((env->text[0]->w - 1) < 0) ^
+		(rend->yb < rend->ya)) ? -1 : 1,
+		abs((env->text[0]->w - 1)),
+		abs(rend->yb - rend->ya),
+		(int)((rend->cya - 1 - rend->ya) * abs((env->text[0]->w - 1)))
+		% abs(rend->yb - rend->ya)};
+	return (temp);
+}
+
+t_scaler	scaler_init_support8(t_rend *rend, t_env *env)
+{
+	t_scaler temp;
+
+	temp = (t_scaler)
+	{0 + (rend->ncyb + 1 - 1 - rend->ya) *
+		((env->text[0]->w - 1)) / (rend->yb - rend->ya),
+		(((env->text[0]->w - 1) < 0) ^
+		(rend->yb < rend->ya)) ? -1 : 1,
+		abs((env->text[0]->w - 1) - 0),
+		abs(rend->yb - rend->ya),
+		(int)((rend->ncyb - rend->ya) * abs((env->text[0]->w - 1) -
+		0)) % abs(rend->yb - rend->ya)};
+	return (temp);
+}
+
 void	rendportals(t_env *env, t_rend *rend)
 {
 	rend->nya = (rend->x - rend->x1) * (rend->ny2a - rend->ny1a) / (rend->x2 - rend->x1) + rend->ny1a;
 	rend->ncya = CLAMP(rend->nya, rend->ytop[rend->x], rend->ybottom[rend->x]);
 	rend->nyb = (rend->x - rend->x1) * (rend->ny2b - rend->ny1b) / (rend->x2 - rend->x1) + rend->ny1b;
 	rend->ncyb = CLAMP(rend->nyb, rend->ytop[rend->x], rend->ybottom[rend->x]);
-	vline2(env, rend, rend->cya, rend->ncya - 1, (t_scaler)SCALER_INIT(rend->ya, rend->cya, rend->yb, 0, (env->text[0]->w - 1)));
+	vline2(env, rend, rend->cya, rend->ncya - 1, scaler_init_support7(rend, env));
 	if (rend->nowsect->sky != 1)
 	{
 		if (env->sector[rend->nowsect->neighbors[rend->s]].sky == 1)
@@ -100,7 +142,7 @@ void	rendportals(t_env *env, t_rend *rend)
 		else
 			rend->ytop[rend->x] = CLAMP(rend->ncya, rend->ytop[rend->x], HWIN - 1);
 	}
-	vline2(env, rend, rend->ncyb + 1, rend->cyb, (t_scaler)SCALER_INIT(rend->ya, rend->ncyb + 1, rend->yb, 0, (env->text[0]->w - 1)));
+	vline2(env, rend, rend->ncyb + 1, rend->cyb, scaler_init_support8(rend, env));
 	rend->ybottom[rend->x] = CLAMP(MIN(rend->cyb, rend->ncyb), 0, rend->ybottom[rend->x]);
 }
 
@@ -127,7 +169,7 @@ void	wallxloop(t_env *env, t_rend *rend)
 		if (rend->nowsect->neighbors[rend->s] >= 0)
 			rendportals(env, rend);
 		else
-			vline2(env, rend, rend->cya, rend->cyb, (t_scaler)SCALER_INIT(rend->ya, rend->cya, rend->yb, 0, (env->text[0]->w - 1)));
+			vline2(env, rend, rend->cya, rend->cyb, scaler_init_support7(rend, env));
 		rend->x++;
 	}
 }

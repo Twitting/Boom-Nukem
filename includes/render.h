@@ -3,28 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   render.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:42:12 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 13:48:22 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/14 19:09:44 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RENDER_H
 # define RENDER_H
-# define SCALER_INIT(a, b, c, d, f)\
-					{d + (b - 1 - a) * (f - d) / (c - a), \
-					((f < d) ^ (c < a)) ? -1 : 1, abs(f - d), \
-					abs(c - a), (int)((b - 1 - a) * abs(f - d)) % abs(c - a)}
-# define TOMAPCCORD(mapy, screenx, screeny, x, z) \
-					do {z = (mapy) * HWIN * VFOV / ((HWIN / 2 - (screeny)) - env->player.yaw * HWIN * VFOV); \
-					x = (z) * (WWIN / 2 - (screenx)) / (WWIN * HFOV); \
-					TOABSCOORD(x,z); } while (0)
-# define TOABSCOORD(X, Z) \
-					do {float rtx = (Z) * env->player.cosang + (X) * env->player.sinang; \
-					float rtz = (Z) * env->player.sinang - (X) * env->player.cosang; \
-					X = rtx + env->player.where.x; Z = rtz + env->player.where.y; \
-					} while(0)
 # define MAXQUEUE 256
 # define BUTTONHEIGHT 4
 # define BUTTONWIDTH 2
@@ -113,9 +100,9 @@ typedef struct	s_rend
 	t_xy		org2;
 	int			txtx;
 	int			txtz;
-	float		hei;
-	float		mapx;
-	float		mapz;
+	double		hei;
+	double		mapx;
+	double		mapz;
 	int			pel;
 	t_xy		wintsect1;
 	t_xy		wintsect2;

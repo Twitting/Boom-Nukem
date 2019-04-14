@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buttons.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 17:47:12 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/12 10:18:53 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/14 18:06:33 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,38 @@ static void	butintersect(t_rend *rend, t_env *env)
 	}
 }
 
+t_scaler	scaler_init_support1(t_rend *rend)
+{
+	t_scaler temp;
+
+	temp = (t_scaler)
+	{rend->buty1a + (rend->butbegx - 1 - rend->butx1) *
+		(rend->buty2a - rend->buty1a) / (rend->butx2 - rend->butx1),
+		((rend->buty2a < rend->buty1a) ^
+		(rend->butx2 < rend->butx1)) ? -1 : 1,
+		abs(rend->buty2a - rend->buty1a),
+		abs(rend->butx2 - rend->butx1),
+		(int)((rend->butbegx - 1 - rend->butx1) * abs(rend->buty2a -
+		rend->buty1a)) % abs(rend->butx2 - rend->butx1)};
+	return (temp);
+}
+
+t_scaler	scaler_init_support2(t_rend *rend)
+{
+	t_scaler temp;
+
+	temp = (t_scaler)
+	{rend->buty1b + (rend->butbegx - 1 - rend->butx1) *
+		(rend->buty2b - rend->buty1b) / (rend->butx2 - rend->butx1),
+		((rend->buty2b < rend->buty1b) ^
+		(rend->butx2 < rend->butx1)) ? -1 : 1,
+		abs(rend->buty2b - rend->buty1b),
+		abs(rend->butx2 - rend->butx1),
+		(int)((rend->butbegx - 1 - rend->butx1) * abs(rend->buty2b -
+		rend->buty1b)) % abs(rend->butx2 - rend->butx1)};
+	return (temp);
+}
+
 void		butplane_support(t_rend *rend, int j, t_env *env)
 {
 	rend->butx2 = WWIN / 2 - (int)((rend->tbut2.x) * rend->butxscale2);
@@ -100,8 +132,8 @@ void		butplane_support(t_rend *rend, int j, t_env *env)
 	rend->butbegx = MAX(rend->butx1, rend->sprq[j].sx1);
 	rend->butendx = MIN(rend->butx2, rend->sprq[j].sx2);
 	rend->butx = rend->butbegx;
-	rend->butya_int = (t_scaler)SCALER_INIT(rend->butx1, rend->butbegx, rend->butx2, rend->buty1a, rend->buty2a);
-	rend->butyb_int = (t_scaler)SCALER_INIT(rend->butx1, rend->butbegx, rend->butx2, rend->buty1b, rend->buty2b);
+	rend->butya_int = scaler_init_support1(rend);
+	rend->butyb_int = scaler_init_support2(rend);
 	while (rend->butx++ < rend->butendx)
 	{
 		rend->butya = scaler_next(&rend->butya_int);

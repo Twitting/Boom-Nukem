@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   transparent.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 16:26:23 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 13:11:16 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/14 18:20:55 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,38 @@ void	trscale(t_rend *rend)
 	rend->trx2 = WWIN / 2 - (int)((rend->ttr2.x) * rend->trxscale2);
 }
 
+t_scaler	scaler_init_support3(t_rend *rend)
+{
+	t_scaler temp;
+// a = trx1 b = trbegx c = trx2 d = try1a f = try2a
+	temp = (t_scaler)
+	{rend->try1a + (rend->trbegx - 1 - rend->trx1) *
+		(rend->try2a - rend->try1a) / (rend->trx2 - rend->trx1),
+		((rend->try2a < rend->try1a) ^
+		(rend->trx2 < rend->trx1)) ? -1 : 1,
+		abs(rend->try2a - rend->try1a),
+		abs(rend->trx2 - rend->trx1),
+		(int)((rend->trbegx - 1 - rend->trx1) * abs(rend->try2a -
+		rend->try1a)) % abs(rend->trx2 - rend->trx1)};
+	return (temp);
+}
+
+t_scaler	scaler_init_support4(t_rend *rend)
+{
+	t_scaler temp;
+
+	temp = (t_scaler)
+	{rend->try1b + (rend->trbegx - 1 - rend->trx1) *
+		(rend->try2b - rend->try1b) / (rend->trx2 - rend->trx1),
+		((rend->try2b < rend->try1b) ^
+		(rend->trx2 < rend->trx1)) ? -1 : 1,
+		abs(rend->try2b - rend->try1b),
+		abs(rend->trx2 - rend->trx1),
+		(int)((rend->trbegx - 1 - rend->trx1) * abs(rend->try2b -
+		rend->try1b)) % abs(rend->trx2 - rend->trx1)};
+	return (temp);
+}
+
 void	trstart(t_rend *rend, t_env *env, int j, t_sprque *now)
 {
 	rend->trceil = env->sprite[j].height - env->player.where.z;
@@ -89,8 +121,8 @@ void	trstart(t_rend *rend, t_env *env, int j, t_sprque *now)
 	rend->trbegx = MAX(rend->trx1, now->sx1);
 	rend->trendx = MIN(rend->trx2, now->sx2);
 	rend->trx = rend->trbegx;
-	rend->trya_int = (t_scaler)SCALER_INIT(rend->trx1, rend->trbegx, rend->trx2, rend->try1a, rend->try2a);
-	rend->tryb_int = (t_scaler)SCALER_INIT(rend->trx1, rend->trbegx, rend->trx2, rend->try1b, rend->try2b);
+	rend->trya_int = scaler_init_support3(rend);
+	rend->tryb_int = scaler_init_support4(rend);;
 	while (rend->trx < rend->trendx)
 	{
 		rend->trya = scaler_next(&rend->trya_int);

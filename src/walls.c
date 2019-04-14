@@ -3,14 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   walls.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 10:37:22 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 13:58:20 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/14 19:19:46 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "render.h"
+
+t_scaler	scaler_init_support5(t_rend *rend)
+{
+	t_scaler temp;
+
+	temp = (t_scaler)
+	{rend->y1a + (rend->beginx - 1 - rend->x1) *
+		(rend->y2a - rend->y1a) / (rend->x2 - rend->x1),
+		((rend->y2a < rend->y1a) ^
+		(rend->x2 < rend->x1)) ? -1 : 1,
+		abs(rend->y2a - rend->y1a),
+		abs(rend->x2 - rend->x1),
+		(int)((rend->beginx - 1 - rend->x1) * abs(rend->y2a -
+		rend->y1a)) % abs(rend->x2 - rend->x1)};
+	return (temp);
+}
+
+t_scaler	scaler_init_support6(t_rend *rend)
+{
+	t_scaler temp;
+
+	temp = (t_scaler)
+	{rend->y1b + (rend->beginx - 1 - rend->x1) *
+		(rend->y2b - rend->y1b) / (rend->x2 - rend->x1),
+		((rend->y2b < rend->y1b) ^
+		(rend->x2 < rend->x1)) ? -1 : 1,
+		abs(rend->y2b - rend->y1b),
+		abs(rend->x2 - rend->x1),
+		(int)((rend->beginx - 1 - rend->x1) * abs(rend->y2b -
+		rend->y1b)) % abs(rend->x2 - rend->x1)};
+	return (temp);
+}
 
 void	wallstart(t_env *env, t_rend *rend, t_now *now)
 {
@@ -25,8 +57,8 @@ void	wallstart(t_env *env, t_rend *rend, t_now *now)
 	rend->beginx = MAX(rend->x1, now->sx1);
 	rend->endx = MIN(rend->x2, now->sx2);
 	rend->x = rend->beginx;
-	rend->ya_int = (t_scaler)SCALER_INIT(rend->x1, rend->beginx, rend->x2, rend->y1a, rend->y2a);
-	rend->yb_int = (t_scaler)SCALER_INIT(rend->x1, rend->beginx, rend->x2, rend->y1b, rend->y2b);
+	rend->ya_int = scaler_init_support5(rend);
+	rend->yb_int = scaler_init_support6(rend);
 	wallxloop(env, rend);
 }
 
