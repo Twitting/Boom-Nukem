@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/22 17:01:28 by twitting          #+#    #+#             */
-/*   Updated: 2018/12/12 14:01:00 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/14 15:47:09 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,6 @@ size_t				ft_lstlen(t_list *lst);
 char				*ft_strset(char *s, char c);
 char				*ft_strnset(char *s, char c, int n);
 int					get_next_line(const int fd, char **line);
+char				*ft_strjoinfree_right(char const *s1, char const *s2);
 
 #endif

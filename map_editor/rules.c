@@ -6,7 +6,7 @@
 /*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 21:55:26 by drestles          #+#    #+#             */
-/*   Updated: 2019/04/13 19:22:31 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/14 15:37:24 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	draw_strings_one(SDL_Surface *sur, SDL_Color color)
 	color, 270, sur);
 	draw_string("4) Player (P button) can be set only in first",
 	color, 310, sur);
-	draw_string("5) Objects (1, 2, 3, 4 buttons) can be set only in last",
+	draw_string("5) Objects (1 - barrel, 2 - enemy, 3 - medkit,",
 	color, 370, sur);
 }
 
@@ -106,7 +106,7 @@ void		draw_strings(SDL_Surface *sur)
 	draw_strings_one(sur, color);
 	draw_string("replaced by sky.", color, 210, sur);
 	draw_string("drawn sector.", color, 330, sur);
-	draw_string("drawn sector.", color, 390, sur);
+	draw_string(" 4 - key) can be set only in last drawn sector.", color, 390, sur);
 	draw_string("6) Buttons (Q button) can be set only on the wall",
 	color, 430, sur);
 	draw_string("without portal.", color, 450, sur);

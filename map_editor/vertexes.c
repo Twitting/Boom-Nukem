@@ -3,15 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   vertexes.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 21:36:46 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/11 21:12:32 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/14 16:06:28 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "edit.h"
 #include "kiss_sdl.h"
+
+static void free_all(t_map_ui *ui)
+{
+	kiss_clean(&(ui->objects));
+	free(ui->message);
+	free(ui->message2);
+	free(ui->message3);
+	free(ui->message4);
+	free(ui->title);
+}
 
 int		num_to_program(t_edit *edit)
 {
@@ -37,7 +47,7 @@ int		num_to_program(t_edit *edit)
 		ui_draw(&ui);
 	}
 	setsectnums(edit, &ui);
-	kiss_clean(&ui.objects);
+	free_all(&ui);
 	return (0);
 }
 
