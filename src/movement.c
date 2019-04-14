@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:10:46 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 02:37:30 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/14 13:32:39 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,11 @@ void	h_collision_support(t_env *env, double *arr, t_xy *b_pd, t_xy *d, int s)
 	}
 }
 
-void	h_collision(t_env *env, t_xy *p, t_xy *d, t_xy *dd)
+int		h_collision(t_env *env, t_xy *p, t_xy *d, t_xy *dd)
 {
-	int			s;
-	double		arr[3];
-	t_xy		b_pd[2];
+	int		s;
+	double	arr[3];
+	t_xy	b_pd[2];
 
 	b_pd[1].x = p->x + dd->x;
 	b_pd[1].y = p->y + dd->y;
@@ -86,6 +86,7 @@ void	h_collision(t_env *env, t_xy *p, t_xy *d, t_xy *dd)
 			}
 	s = -1;
 	while (++s < (int)env->sector[env->player.sector].npoints)
+	{
 		if (intersect_box(*p, b_pd[1], env->sector[env->player.sector].vertex[s % env->sector[env->player.sector].npoints], env->sector[env->player.sector].vertex[(s + 1) % env->sector[env->player.sector].npoints]) && point_side(b_pd[1].x, b_pd[1].y, env->sector[env->player.sector].vertex[s % env->sector[env->player.sector].npoints], env->sector[env->player.sector].vertex[(s + 1) % env->sector[env->player.sector].npoints]) < 0)
 		{
 			arr[1] = env->sector[env->player.sector].neighbors[s] < 0 ? 9e9 : MAX(env->sector[env->player.sector].floor, env->sector[env->sector[env->player.sector].neighbors[s]].floor);
@@ -93,6 +94,8 @@ void	h_collision(t_env *env, t_xy *p, t_xy *d, t_xy *dd)
 			if (arr[2] < env->player.where.z + HEADMARGIN || arr[1] > env->player.where.z - (env->ducking ? DUCKHEIGHT : EYEHEIGHT) + KNEEHEIGHT)
 				h_collision_support(env, arr, b_pd, d, s);
 		}
+	}
+	return (0);
 	env->falling = 1;
 }
 
@@ -154,6 +157,11 @@ void	movement(t_env *env, float dx, float dy)
 	sect = env->sector[env->player.sector];
 	arr2[0] = -1;
 	arr2[1] = -1;
+	while (++arr2[0] < (int)env->sector[env->player.sector].npoints)
+		if (sect.neighbors[arr2[0]] < 0)
+			if (intersect_box(arr[0], arr[1], env->sector[env->player.sector].vertex[arr2[0] % env->sector[env->player.sector].npoints], env->sector[env->player.sector].vertex[(arr2[0] + 1) % env->sector[env->player.sector].npoints]) && point_side(arr[1].x,arr[1].y, env->sector[env->player.sector].vertex[arr2[0] % env->sector[env->player.sector].npoints], env->sector[env->player.sector].vertex[(arr2[0] + 1) % env->sector[env->player.sector].npoints]) < 0)
+				return ;
+	arr2[0] = -1;
 	while (++arr2[0] < (int)sect.npoints)
 		if (sect.neighbors[arr2[0]] >= 0 && intersect_box(arr[0], arr[1], sect.vertex[arr2[0] % sect.npoints], sect.vertex[(arr2[0] + 1) % sect.npoints]) && point_side(arr[1].x, arr[1].y, sect.vertex[arr2[0] % sect.npoints], sect.vertex[(arr2[0] + 1) % sect.npoints]) < 0)
 		{
@@ -198,23 +206,23 @@ t_xy	wsad_read_support2(t_env *env, t_xy dmv)
 {
 	if (env->wsad[0])
 	{
-		dmv.x += cos(env->player.angle) * 1;
-		dmv.y += sin(env->player.angle) * 1;
+		dmv.x += cos(env->player.angle) * 2.0;
+		dmv.y += sin(env->player.angle) * 2.0;
 	}
 	if (env->wsad[1])
 	{
-		dmv.x -= cos(env->player.angle) * 1;
-		dmv.y -= sin(env->player.angle) * 1;
+		dmv.x -= cos(env->player.angle) * 2.0;
+		dmv.y -= sin(env->player.angle) * 2.0;
 	}
 	if (env->wsad[2])
 	{
-		dmv.x += sin(env->player.angle) * 1;
-		dmv.y -= cos(env->player.angle) * 1;
+		dmv.x += sin(env->player.angle) * 2.0;
+		dmv.y -= cos(env->player.angle) * 2.0;
 	}
 	if (env->wsad[3])
 	{
-		dmv.x -= sin(env->player.angle) * 1;
-		dmv.y += cos(env->player.angle) * 1;
+		dmv.x -= sin(env->player.angle) * 2.0;
+		dmv.y += cos(env->player.angle) * 2.0;
 	}
 	return (dmv);
 }
@@ -232,8 +240,8 @@ void	wsad_read(t_env *env)
 	dmv = wsad_read_support2(env, dmv);
 	env->player.velocity.x = mv.x * 60.0 / (double)env->oldfps;
 	env->player.velocity.y = mv.y * 60.0 / (double)env->oldfps;
-	env->player.dvelocity.x = dmv.x / fabs(dmv.x) * 1.5 * 60.0 / (double)env->oldfps;
-	env->player.dvelocity.y = dmv.y / fabs(dmv.y) * 1.5 * 60.0 / (double)env->oldfps;
+	env->player.dvelocity.x = dmv.x * 60.0 / (double)env->oldfps;
+	env->player.dvelocity.y = dmv.y * 60.0 / (double)env->oldfps;
 	env->moving = (mv.x != 0 || mv.y != 0 || env->falling) ? 1 : 0;
 }
 
