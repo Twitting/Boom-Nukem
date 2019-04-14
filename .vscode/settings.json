@@ -1,7 +1,0 @@
-{
-    "files.associations": {
-		"engine.h": "c",
-		"render.h": "c"
-	},
-    "editor.insertSpaces": false
-}
