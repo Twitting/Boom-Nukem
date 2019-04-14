@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/14 13:46:35 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/14 15:23:33 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ typedef struct		s_env
 	SDL_Surface		*text_keys[8];
 	SDL_Surface		*game_over[48];
 	Mix_Music		*music[2];
-	Mix_Chunk		*sound[11];
+	Mix_Chunk		*sound[12];
 	int				blood;
 	int				volume;
 	TTF_Font		*fonts[3];
