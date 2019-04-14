@@ -6,27 +6,27 @@
 /*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/14 06:34:02 by drestles          #+#    #+#             */
-/*   Updated: 2019/04/14 07:32:40 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/14 19:46:18 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
 #include "render.h"
 
-static void free_for_help(SDL_Surface	*new, char *str, char *ia)
+static void	free_for_help(SDL_Surface *new, char *str, char *ia)
 {
 	free(ia);
 	free(str);
 	SDL_FreeSurface(new);
 }
 
-void help(t_env *env)
+void		help(t_env *env)
 {
 	SDL_Surface	*new;
 	SDL_Color	color;
 	SDL_Rect	position;
-	char *str;
-	char *ia;
+	char		*str;
+	char		*ia;
 
 	position.x = 840;
 	position.y = 10;

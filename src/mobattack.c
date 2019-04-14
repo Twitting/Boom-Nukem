@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mobattack.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 18:28:49 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 18:30:32 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/14 20:12:32 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,11 @@ void	mobcrushesface(t_env *env, int i)
 	env->blood = 150;
 	env->player.hp -= 10;
 	if (env->player.hp <= 0)
+	{
+		Mix_HaltMusic();
+		Mix_PlayChannel(-1, env->sound[13], 0);
 		env->state = 6;
+	}
 }
 
 void	mob_attack(t_env *env)

@@ -6,7 +6,7 @@
 /*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/14 06:36:58 by drestles          #+#    #+#             */
-/*   Updated: 2019/04/14 07:34:20 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/14 19:46:43 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	good_frame(t_env *env)
 	}
 }
 
-static void choose_of_side(t_env *env)
+static void	choose_of_side(t_env *env)
 {
 	SDL_Rect	position;
 
@@ -53,7 +53,7 @@ static void choose_of_side(t_env *env)
 		SDL_BlitSurface(env->text_keys[7], NULL, env->surface, &position);
 }
 
-static void first_layer_of_key(t_env *env, char *str)
+static void	first_layer_of_key(t_env *env, char *str)
 {
 	SDL_Rect	position;
 	SDL_Surface	*new;
@@ -70,7 +70,7 @@ static void first_layer_of_key(t_env *env, char *str)
 	SDL_FreeSurface(new);
 }
 
-static void second_layer_of_key(t_env *env, char *str)
+static void	second_layer_of_key(t_env *env, char *str)
 {
 	SDL_Rect	position;
 	SDL_Surface	*new;
@@ -87,7 +87,7 @@ static void second_layer_of_key(t_env *env, char *str)
 	SDL_FreeSurface(new);
 }
 
-void keys(t_env *env)
+void		keys(t_env *env)
 {
 	char *str;
 

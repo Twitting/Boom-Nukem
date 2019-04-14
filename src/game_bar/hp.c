@@ -6,14 +6,14 @@
 /*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/14 07:26:44 by drestles          #+#    #+#             */
-/*   Updated: 2019/04/14 07:33:43 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/14 19:41:41 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
 #include "render.h"
 
-void good_frame_for_head(t_env *env)
+void	good_frame_for_head(t_env *env)
 {
 	int frame;
 
@@ -28,7 +28,7 @@ void good_frame_for_head(t_env *env)
 	}
 }
 
-void put_hp(t_env *env)
+void	put_hp(t_env *env)
 {
 	if (env->player.hp > 80)
 		head_one(env);
