@@ -6,7 +6,7 @@
 /*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:20:03 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/14 19:56:16 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/14 20:33:09 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,15 @@ void	ft_error(int errnum)
 	exit(errnum);
 }
 
+void	remove_src(void)
+{
+	system("rm -rf textures");
+	system("rm -rf music");
+	system("rm -rf img");
+	system("rm -rf fonts");
+	system("rm epic.map");
+}
+
 int		main(int argc, char **argv)
 {
 	t_env		*env;
@@ -55,6 +64,7 @@ int		main(int argc, char **argv)
 		ft_error(2);
 	if (!(rend = (t_rend *)malloc(sizeof(t_rend))))
 		ft_error(2);
+	system("tar -xf resources.doom");
 	if (argc > 1 && !ft_strcmp(argv[1], "map"))
 		ft_strcpy(env->mapname, "created.map");
 	else
@@ -68,5 +78,6 @@ int		main(int argc, char **argv)
 		start(env, &e, rend);
 	SDL_DestroyWindow(env->window);
 	SDL_Quit();
+	remove_src();
 	return (0);
 }

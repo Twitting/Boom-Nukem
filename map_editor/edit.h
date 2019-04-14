@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   edit.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 16:16:36 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/13 19:22:42 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/14 20:36:37 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # include "libft.h"
 # include <stdlib.h>
 # include "kiss_sdl.h"
-# include <stdio.h>
 # include "SDL_ttf.h"
 
 # define PSECT1 edit->sectors[sect1]
