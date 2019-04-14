@@ -57,12 +57,12 @@ void	remove_src(void)
 int		main(int argc, char **argv)
 {
 	t_env		*env;
-	t_rend		*rend;
+	t_rend		*R;
 	SDL_Event	e;
 
 	if (!(env = (t_env *)malloc(sizeof(t_env))))
 		ft_error(2);
-	if (!(rend = (t_rend *)malloc(sizeof(t_rend))))
+	if (!(R = (t_rend *)malloc(sizeof(t_rend))))
 		ft_error(2);
 	system("tar -xf resources.doom");
 	if (argc > 1 && !ft_strcmp(argv[1], "map"))
@@ -75,7 +75,7 @@ int		main(int argc, char **argv)
 	inittext(env);
 	env->state = 0;
 	while (!(env->quit))
-		start(env, &e, rend);
+		start(env, &e, R);
 	SDL_DestroyWindow(env->window);
 	SDL_Quit();
 	remove_src();

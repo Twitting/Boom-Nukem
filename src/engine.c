@@ -26,7 +26,7 @@ void	mixtex_support(t_env *env, t_sprite *sprite, SDL_Surface *temp)
 			SDL_FreeSurface(SPRTE[0]);
 		if ((sprite->hp - 676) % 10 == 0)
 		{
-			SPRTE[0] = env->text[(sprite->hp - 676) / 10 + 3];
+			SPRTE[0] = ET[(sprite->hp - 676) / 10 + 3];
 			sprite->height--;
 		}
 		sprite->hp--;
@@ -64,7 +64,7 @@ void	mixkeytex(t_sprite *sprite)
 
 void	applytermtex(t_env *env, t_sprite *sprite)
 {
-	SPRTE[0] = env->text[14 + sprite->texnum];
+	SPRTE[0] = ET[14 + sprite->texnum];
 	if (sprite->texnum == 0 || sprite->texnum == 4)
 		sprite->width = 3;
 	else if (sprite->texnum == 6 || sprite->texnum == 2)
@@ -146,12 +146,12 @@ void	pistolrender(t_env *env)
 		xyab[0] = WWIN / 3 * 2;
 		while (++xyab[0] < WWIN / 3 * 2 + 263)
 		{
-			if (((int *)(env->text[8 + ESHOOT / 3]->pixels))
-			[xyab[2] % env->text[8 + ESHOOT / 3]->h * (env->text[8 + ESHOOT / 3]->w) +
-			xyab[3] % env->text[8 + ESHOOT / 3]->w] != -1)
-				pix[xyab[1] * WWIN + xyab[0]] = ((int *)(env->text[8 + ESHOOT / 3]->pixels))
-			[xyab[2] % env->text[8 + ESHOOT / 3]->h * (env->text[8 + ESHOOT / 3]->w) +
-			xyab[3] % env->text[8 + ESHOOT / 3]->w];
+			if (((int *)(ET[8 + ESHOOT / 3]->pixels))
+			[xyab[2] % ET[8 + ESHOOT / 3]->h * (ET[8 + ESHOOT / 3]->w) +
+			xyab[3] % ET[8 + ESHOOT / 3]->w] != -1)
+				pix[xyab[1] * WWIN + xyab[0]] = ((int *)(ET[8 + ESHOOT / 3]->pixels))
+			[xyab[2] % ET[8 + ESHOOT / 3]->h * (ET[8 + ESHOOT / 3]->w) +
+			xyab[3] % ET[8 + ESHOOT / 3]->w];
 			xyab[3]++;
 		}
 		xyab[2]++;
@@ -160,20 +160,20 @@ void	pistolrender(t_env *env)
 		ESHOOT--;
 }
 
-int		start_engine(t_env *env, SDL_Event *e, t_rend *rend)
+int		start_engine(t_env *env, SDL_Event *e, t_rend *R)
 {
 	int	i;
 
 	i = -1;
 	while (++i < (int)env->nsectors)
-		rend->sprq[i].visible = 0;
+		R->sprq[i].visible = 0;
 	SDL_LockSurface(env->surface);
 	ft_putchar('A');
-	render_wall(env, rend);
+	render_wall(env, R);
 	ft_putchar('b');
-	renderbutton(env, rend);
+	renderbutton(env, R);
 	ft_putchar('C');
-	rendersprite(env, rend);
+	rendersprite(env, R);
 	ft_putchar('d');
 	cross(env);
 	ft_putchar('E');

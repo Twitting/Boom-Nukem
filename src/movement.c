@@ -188,23 +188,23 @@ t_xy	wsad_read_support(t_env *env, t_xy mv)
 {
 	if (env->wsad[0])
 	{
-		mv.x += cos(env->player.angle) * 0.4;
-		mv.y += sin(env->player.angle) * 0.4;
+		mv.x += cos(PANG) * 0.4;
+		mv.y += sin(PANG) * 0.4;
 	}
 	if (env->wsad[1])
 	{
-		mv.x -= cos(env->player.angle) * 0.4;
-		mv.y -= sin(env->player.angle) * 0.4;
+		mv.x -= cos(PANG) * 0.4;
+		mv.y -= sin(PANG) * 0.4;
 	}
 	if (env->wsad[2])
 	{
-		mv.x += sin(env->player.angle) * 0.4;
-		mv.y -= cos(env->player.angle) * 0.4;
+		mv.x += sin(PANG) * 0.4;
+		mv.y -= cos(PANG) * 0.4;
 	}
 	if (env->wsad[3])
 	{
-		mv.x -= sin(env->player.angle) * 0.4;
-		mv.y += cos(env->player.angle) * 0.4;
+		mv.x -= sin(PANG) * 0.4;
+		mv.y += cos(PANG) * 0.4;
 	}
 	return (mv);
 }
@@ -213,23 +213,23 @@ t_xy	wsad_read_support2(t_env *env, t_xy dmv)
 {
 	if (env->wsad[0])
 	{
-		dmv.x += cos(env->player.angle) * 2.0;
-		dmv.y += sin(env->player.angle) * 2.0;
+		dmv.x += cos(PANG) * 2.0;
+		dmv.y += sin(PANG) * 2.0;
 	}
 	if (env->wsad[1])
 	{
-		dmv.x -= cos(env->player.angle) * 2.0;
-		dmv.y -= sin(env->player.angle) * 2.0;
+		dmv.x -= cos(PANG) * 2.0;
+		dmv.y -= sin(PANG) * 2.0;
 	}
 	if (env->wsad[2])
 	{
-		dmv.x += sin(env->player.angle) * 2.0;
-		dmv.y -= cos(env->player.angle) * 2.0;
+		dmv.x += sin(PANG) * 2.0;
+		dmv.y -= cos(PANG) * 2.0;
 	}
 	if (env->wsad[3])
 	{
-		dmv.x -= sin(env->player.angle) * 2.0;
-		dmv.y += cos(env->player.angle) * 2.0;
+		dmv.x -= sin(PANG) * 2.0;
+		dmv.y += cos(PANG) * 2.0;
 	}
 	return (dmv);
 }

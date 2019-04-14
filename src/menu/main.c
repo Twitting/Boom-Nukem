@@ -56,7 +56,7 @@ void	menu(t_env *env, SDL_Event *e)
 ** STATE 6 GAME OVER
 */
 
-void	start(t_env *env, SDL_Event *e, t_rend *rend)
+void	start(t_env *env, SDL_Event *e, t_rend *R)
 {
 	if (env->state == 0)
 		menu(env, e);
@@ -67,7 +67,7 @@ void	start(t_env *env, SDL_Event *e, t_rend *rend)
 		if (Mix_PausedMusic())
 			Mix_ResumeMusic();
 		env->frame = clock();
-		start_engine(env, e, rend);
+		start_engine(env, e, R);
 		fps(env);
 	}
 	else if (env->state == 2)

@@ -12,65 +12,65 @@
 
 #include "render.h"
 
-int	portaledge_sup1(t_env *env, t_rend *rend, t_xy *p, t_xy *d)
+int	portaledge_sup1(t_env *env, t_rend *R, t_xy *p, t_xy *d)
 {
 	d->x = p->x + 1;
 	d->y = p->y + 1;
-	rend->butx = 0;
-	if (i_b(*p, *d, ESEC[EPS].vertex[rend->s %
+	R->butx = 0;
+	if (i_b(*p, *d, ESEC[EPS].vertex[R->s %
 	ESEC[EPS].npoints],
-	ESEC[EPS].vertex[(rend->s + 1) %
+	ESEC[EPS].vertex[(R->s + 1) %
 	ESEC[EPS].npoints]) &&
-	point_side(d->x, d->y, ESEC[EPS].vertex[rend->s %
+	point_side(d->x, d->y, ESEC[EPS].vertex[R->s %
 	ESEC[EPS].npoints],
-	ESEC[EPS].vertex[(rend->s + 1) %
+	ESEC[EPS].vertex[(R->s + 1) %
 	ESEC[EPS].npoints]) < 0)
 		return (1);
 	d->x = p->x - 2;
 	d->y = p->y - 2;
-	rend->butx = 0;
-	if (i_b(*p, *d, ESEC[EPS].vertex[rend->s %
+	R->butx = 0;
+	if (i_b(*p, *d, ESEC[EPS].vertex[R->s %
 	ESEC[EPS].npoints],
-	ESEC[EPS].vertex[(rend->s + 1) %
+	ESEC[EPS].vertex[(R->s + 1) %
 	ESEC[EPS].npoints]) &&
-	point_side(d->x, d->y, ESEC[EPS].vertex[rend->s %
+	point_side(d->x, d->y, ESEC[EPS].vertex[R->s %
 	ESEC[EPS].npoints],
-	ESEC[EPS].vertex[(rend->s + 1) %
+	ESEC[EPS].vertex[(R->s + 1) %
 	ESEC[EPS].npoints]) < 0)
 		return (1);
 	return (0);
 }
 
-int	portaledge_sup2(t_env *env, t_rend *rend, t_xy *p, t_xy *d)
+int	portaledge_sup2(t_env *env, t_rend *R, t_xy *p, t_xy *d)
 {
 	d->x = p->x;
 	d->y = p->y - 2;
-	rend->butx = 0;
-	if (i_b(*p, *d, ESEC[EPS].vertex[rend->s %
+	R->butx = 0;
+	if (i_b(*p, *d, ESEC[EPS].vertex[R->s %
 	ESEC[EPS].npoints],
-	ESEC[EPS].vertex[(rend->s + 1) %
+	ESEC[EPS].vertex[(R->s + 1) %
 	ESEC[EPS].npoints]) &&
-	point_side(d->x, d->y, ESEC[EPS].vertex[rend->s %
+	point_side(d->x, d->y, ESEC[EPS].vertex[R->s %
 	ESEC[EPS].npoints],
-	ESEC[EPS].vertex[(rend->s + 1) %
+	ESEC[EPS].vertex[(R->s + 1) %
 	ESEC[EPS].npoints]) < 0)
 		return (1);
 	d->x = p->x + 2;
 	d->y = p->y + 2;
-	rend->butx = 0;
-	if (i_b(*p, *d, ESEC[EPS].vertex[rend->s %
+	R->butx = 0;
+	if (i_b(*p, *d, ESEC[EPS].vertex[R->s %
 	ESEC[EPS].npoints],
-	ESEC[EPS].vertex[(rend->s + 1) %
+	ESEC[EPS].vertex[(R->s + 1) %
 	ESEC[EPS].npoints]) &&
-	point_side(d->x, d->y, ESEC[EPS].vertex[rend->s %
+	point_side(d->x, d->y, ESEC[EPS].vertex[R->s %
 	ESEC[EPS].npoints],
-	ESEC[EPS].vertex[(rend->s + 1) %
+	ESEC[EPS].vertex[(R->s + 1) %
 	ESEC[EPS].npoints]) < 0)
 		return (1);
 	return (0);
 }
 
-int	portaledge(t_env *env, t_rend *rend)
+int	portaledge(t_env *env, t_rend *R)
 {
 	t_xy	p;
 	t_xy	d;
@@ -78,13 +78,13 @@ int	portaledge(t_env *env, t_rend *rend)
 
 	i = -1;
 	while (++i < (int)ESEC[EPS].npoints)
-		if (rend->head->sectorno ==
+		if (R->head->sectorno ==
 			ESEC[EPS].neighbors[i])
 		{
 			p.x = EPW.x;
 			p.y = EPW.y;
-			if (portaledge_sup1(env, rend, &p, &d) ||
-				portaledge_sup2(env, rend, &p, &d))
+			if (portaledge_sup1(env, R, &p, &d) ||
+				portaledge_sup2(env, R, &p, &d))
 				return (1);
 		}
 	return (0);

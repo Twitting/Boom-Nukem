@@ -320,6 +320,9 @@ void				put_hp(t_env *env);
 # define EPCOS  env->player.cosang
 # define RO1 rend->org1
 # define RO2 rend->org2
-
+# define R rend
+# define NST nowsect->text
+# define PANG env->player.angle
+# define ET env->text
 
 #endif

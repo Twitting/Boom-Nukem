@@ -112,20 +112,20 @@ static void	inittext_game_over(t_env *env)
 
 void		inittext(t_env *env)
 {
-	env->text[0] = IMG_Load("textures/brick.tga");
-	env->text[1] = IMG_Load("textures/switch.bmp");
-	env->text[2] = IMG_Load("textures/sky.png");
-	env->text[7] = IMG_Load("textures/d1.png");
-	env->text[6] = IMG_Load("textures/d2.png");
-	env->text[5] = IMG_Load("textures/d3.png");
-	env->text[4] = IMG_Load("textures/d4.png");
-	env->text[3] = IMG_Load("textures/d5.png");
-	env->text[8] = IMG_Load("textures/pistol1.png");
-	env->text[11] = IMG_Load("textures/pistol2.png");
-	env->text[10] = IMG_Load("textures/pistol3.png");
-	env->text[9] = IMG_Load("textures/pistol4.png");
-	env->text[12] = IMG_Load("textures/sky.png");
-	env->text[13] = IMG_Load("textures/shot.png");
+	ET[0] = IMG_Load("textures/brick.tga");
+	ET[1] = IMG_Load("textures/switch.bmp");
+	ET[2] = IMG_Load("textures/sky.png");
+	ET[7] = IMG_Load("textures/d1.png");
+	ET[6] = IMG_Load("textures/d2.png");
+	ET[5] = IMG_Load("textures/d3.png");
+	ET[4] = IMG_Load("textures/d4.png");
+	ET[3] = IMG_Load("textures/d5.png");
+	ET[8] = IMG_Load("textures/pistol1.png");
+	ET[11] = IMG_Load("textures/pistol2.png");
+	ET[10] = IMG_Load("textures/pistol3.png");
+	ET[9] = IMG_Load("textures/pistol4.png");
+	ET[12] = IMG_Load("textures/sky.png");
+	ET[13] = IMG_Load("textures/shot.png");
 	env->text_head[25] = IMG_Load("img/blood.png");
 	inittext_head(env);
 	inittext_game_over(env);

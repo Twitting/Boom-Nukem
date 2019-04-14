@@ -13,151 +13,151 @@
 #include "engine.h"
 #include "render.h"
 
-void	trintersect2(t_rend *rend, t_env *env, int j)
+void	trintersect2(t_rend *R, t_env *env, int j)
 {
-	if (rend->ttr1.y < rend->nfz.x)
+	if (R->ttr1.y < R->nfz.x)
 	{
-		if (rend->i1.y > 0)
-			rend->ttr1 = rend->i1;
+		if (R->i1.y > 0)
+			R->ttr1 = R->i1;
 		else
-			rend->ttr1 = rend->i2;
+			R->ttr1 = R->i2;
 	}
-	if (rend->ttr2.y < rend->nfz.x)
+	if (R->ttr2.y < R->nfz.x)
 	{
-		if (rend->i1.y > 0)
-			rend->ttr2 = rend->i1;
+		if (R->i1.y > 0)
+			R->ttr2 = R->i1;
 		else
-			rend->ttr2 = rend->i2;
+			R->ttr2 = R->i2;
 	}
-	if (fabs(rend->ttr2.x - rend->ttr1.x) > fabs(rend->ttr2.y - rend->ttr1.y))
+	if (fabs(R->ttr2.x - R->ttr1.x) > fabs(R->ttr2.y - R->ttr1.y))
 	{
-		rend->u0 = (rend->ttr1.x - RO1.x) * (ESJT0->w - 1) / (RO2.x - RO1.x);
-		rend->u1 = (rend->ttr2.x - RO1.x) * (ESJT0->w - 1) / (RO2.x - RO1.x);
+		R->u0 = (R->ttr1.x - RO1.x) * (ESJT0->w - 1) / (RO2.x - RO1.x);
+		R->u1 = (R->ttr2.x - RO1.x) * (ESJT0->w - 1) / (RO2.x - RO1.x);
 	}
 	else
 	{
-		rend->u0 = (rend->ttr1.y - RO1.y) * (ESJT0->w - 1) / (RO2.y - RO1.y);
-		rend->u1 = (rend->ttr2.y - RO1.y) * (ESJT0->w - 1) / (RO2.y - RO1.y);
+		R->u0 = (R->ttr1.y - RO1.y) * (ESJT0->w - 1) / (RO2.y - RO1.y);
+		R->u1 = (R->ttr2.y - RO1.y) * (ESJT0->w - 1) / (RO2.y - RO1.y);
 	}
 }
 
-void	trintersect(t_rend *rend, t_env *env, int j)
+void	trintersect(t_rend *R, t_env *env, int j)
 {
-	if (rend->ttr1.y <= 0 || rend->ttr2.y <= 0)
+	if (R->ttr1.y <= 0 || R->ttr2.y <= 0)
 	{
-		rend->nfz.x = 1e-4;
-		rend->nfz.y = 5;
-		rend->nfside.x = 1e-5;
-		rend->nfside.y = 20;
-		rend->wintsect1.x = -rend->nfside.x;
-		rend->wintsect1.y = rend->nfz.x;
-		rend->wintsect2.x = -rend->nfside.y;
-		rend->wintsect2.y = rend->nfz.y;
-		rend->i1 = intersect(rend->ttr1, rend->ttr2, rend->wintsect1, rend->wintsect2);
-		rend->wintsect1.x = rend->nfside.x;
-		rend->wintsect2.x = rend->nfside.y;
-		rend->i2 = intersect(rend->ttr1, rend->ttr2, rend->wintsect1, rend->wintsect2);
-		RO1 = (t_xy){rend->ttr1.x, rend->ttr1.y};
-		RO2 = (t_xy){rend->ttr2.x, rend->ttr2.y};
-		trintersect2(rend, env, j);
+		R->nfz.x = 1e-4;
+		R->nfz.y = 5;
+		R->nfside.x = 1e-5;
+		R->nfside.y = 20;
+		R->wintsect1.x = -R->nfside.x;
+		R->wintsect1.y = R->nfz.x;
+		R->wintsect2.x = -R->nfside.y;
+		R->wintsect2.y = R->nfz.y;
+		R->i1 = intersect(R->ttr1, R->ttr2, R->wintsect1, R->wintsect2);
+		R->wintsect1.x = R->nfside.x;
+		R->wintsect2.x = R->nfside.y;
+		R->i2 = intersect(R->ttr1, R->ttr2, R->wintsect1, R->wintsect2);
+		RO1 = (t_xy){R->ttr1.x, R->ttr1.y};
+		RO2 = (t_xy){R->ttr2.x, R->ttr2.y};
+		trintersect2(R, env, j);
 	}
 }
 
-void	trscale(t_rend *rend)
+void	trscale(t_rend *R)
 {
-	if (rend->ttr1.y <= 0.5)
+	if (R->ttr1.y <= 0.5)
 	{
-		rend->ttr1.x = (0.5 - rend->ttr1.y) * (rend->ttr2.x - rend->ttr1.x) / (rend->ttr2.y - rend->ttr1.y) + rend->ttr1.x;
-		rend->ttr1.y = 0.5;
+		R->ttr1.x = (0.5 - R->ttr1.y) * (R->ttr2.x - R->ttr1.x) / (R->ttr2.y - R->ttr1.y) + R->ttr1.x;
+		R->ttr1.y = 0.5;
 	}
-	rend->trxscale1 = WWIN * HFOV / rend->ttr1.y;
-	rend->tryscale1 = HWIN * VFOV / rend->ttr1.y;
-	rend->trx1 = WWIN / 2 - (int)((rend->ttr1.x) * rend->trxscale1);
-	rend->trxscale2 = WWIN * HFOV / rend->ttr2.y;
-	rend->tryscale2 = HWIN * VFOV / rend->ttr2.y;
-	rend->trx2 = WWIN / 2 - (int)((rend->ttr2.x) * rend->trxscale2);
+	R->trxscale1 = WWIN * HFOV / R->ttr1.y;
+	R->tryscale1 = HWIN * VFOV / R->ttr1.y;
+	R->trx1 = WWIN / 2 - (int)((R->ttr1.x) * R->trxscale1);
+	R->trxscale2 = WWIN * HFOV / R->ttr2.y;
+	R->tryscale2 = HWIN * VFOV / R->ttr2.y;
+	R->trx2 = WWIN / 2 - (int)((R->ttr2.x) * R->trxscale2);
 }
 
-t_scaler	scaler_init_support3(t_rend *rend)
+t_scaler	scaler_init_support3(t_rend *R)
 {
 	t_scaler temp;
 	temp = (t_scaler)
-	{rend->try1a + (rend->trbegx - 1 - rend->trx1) *
-		(rend->try2a - rend->try1a) / (rend->trx2 - rend->trx1),
-		((rend->try2a < rend->try1a) ^
-		(rend->trx2 < rend->trx1)) ? -1 : 1,
-		abs(rend->try2a - rend->try1a),
-		abs(rend->trx2 - rend->trx1),
-		(int)((rend->trbegx - 1 - rend->trx1) * abs(rend->try2a -
-		rend->try1a)) % abs(rend->trx2 - rend->trx1)};
+	{R->try1a + (R->trbegx - 1 - R->trx1) *
+		(R->try2a - R->try1a) / (R->trx2 - R->trx1),
+		((R->try2a < R->try1a) ^
+		(R->trx2 < R->trx1)) ? -1 : 1,
+		abs(R->try2a - R->try1a),
+		abs(R->trx2 - R->trx1),
+		(int)((R->trbegx - 1 - R->trx1) * abs(R->try2a -
+		R->try1a)) % abs(R->trx2 - R->trx1)};
 	return (temp);
 }
 
-t_scaler	scaler_init_support4(t_rend *rend)
+t_scaler	scaler_init_support4(t_rend *R)
 {
 	t_scaler temp;
 
 	temp = (t_scaler)
-	{rend->try1b + (rend->trbegx - 1 - rend->trx1) *
-		(rend->try2b - rend->try1b) / (rend->trx2 - rend->trx1),
-		((rend->try2b < rend->try1b) ^
-		(rend->trx2 < rend->trx1)) ? -1 : 1,
-		abs(rend->try2b - rend->try1b),
-		abs(rend->trx2 - rend->trx1),
-		(int)((rend->trbegx - 1 - rend->trx1) * abs(rend->try2b -
-		rend->try1b)) % abs(rend->trx2 - rend->trx1)};
+	{R->try1b + (R->trbegx - 1 - R->trx1) *
+		(R->try2b - R->try1b) / (R->trx2 - R->trx1),
+		((R->try2b < R->try1b) ^
+		(R->trx2 < R->trx1)) ? -1 : 1,
+		abs(R->try2b - R->try1b),
+		abs(R->trx2 - R->trx1),
+		(int)((R->trbegx - 1 - R->trx1) * abs(R->try2b -
+		R->try1b)) % abs(R->trx2 - R->trx1)};
 	return (temp);
 }
 
-void	trstart(t_rend *rend, t_env *env, int j, t_sprque *now)
+void	trstart(t_rend *R, t_env *env, int j, t_sprque *now)
 {
-	rend->trceil = env->sprite[j].height - EPW.z;
-	rend->trfloor = env->sprite[j].floor - EPW.z;
-	rend->try1a = HWIN / 2 - (int)(YAW(rend->trceil, rend->ttr1.y) * rend->tryscale1);
-	rend->try1b = HWIN / 2 - (int)(YAW(rend->trfloor, rend->ttr1.y) * rend->tryscale1);
-	rend->try2a = HWIN / 2 - (int)(YAW(rend->trceil, rend->ttr2.y) * rend->tryscale2);
-	rend->try2b = HWIN / 2 - (int)(YAW(rend->trfloor, rend->ttr2.y) * rend->tryscale2);
-	rend->trbegx = MAX(rend->trx1, now->sx1);
-	rend->trendx = MIN(rend->trx2, now->sx2);
-	rend->trx = rend->trbegx;
-	rend->trya_int = scaler_init_support3(rend);
-	rend->tryb_int = scaler_init_support4(rend);;
-	while (rend->trx < rend->trendx)
+	R->trceil = env->sprite[j].height - EPW.z;
+	R->trfloor = env->sprite[j].floor - EPW.z;
+	R->try1a = HWIN / 2 - (int)(YAW(R->trceil, R->ttr1.y) * R->tryscale1);
+	R->try1b = HWIN / 2 - (int)(YAW(R->trfloor, R->ttr1.y) * R->tryscale1);
+	R->try2a = HWIN / 2 - (int)(YAW(R->trceil, R->ttr2.y) * R->tryscale2);
+	R->try2b = HWIN / 2 - (int)(YAW(R->trfloor, R->ttr2.y) * R->tryscale2);
+	R->trbegx = MAX(R->trx1, now->sx1);
+	R->trendx = MIN(R->trx2, now->sx2);
+	R->trx = R->trbegx;
+	R->trya_int = scaler_init_support3(R);
+	R->tryb_int = scaler_init_support4(R);;
+	while (R->trx < R->trendx)
 	{
-		rend->trya = scaler_next(&rend->trya_int);
-		rend->ctrya = CLAMP(rend->trya, now->ytop[rend->trx], now->ybottom[rend->trx]);
-		rend->tryb = scaler_next(&rend->tryb_int);
-		rend->ctryb = CLAMP(rend->tryb, now->ytop[rend->trx], now->ybottom[rend->trx]);
-		rend->txtx = ((rend->u0 * ((rend->trx2 - rend->trx) * rend->ttr2.y) + rend->u1 * ((rend->trx - rend->trx1) * rend->ttr1.y))
-		/ ((rend->trx2 - rend->trx) * rend->ttr2.y + (rend->trx - rend->trx1) * rend->ttr1.y)) * (fabs(rend->vtr2.x - rend->vtr1.x) + fabs(rend->vtr2.y - rend->vtr1.y)) * 0.002;
-		drawtransp(env, rend, j);
-		rend->trx++;
+		R->trya = scaler_next(&R->trya_int);
+		R->ctrya = CLAMP(R->trya, now->ytop[R->trx], now->ybottom[R->trx]);
+		R->tryb = scaler_next(&R->tryb_int);
+		R->ctryb = CLAMP(R->tryb, now->ytop[R->trx], now->ybottom[R->trx]);
+		R->txtx = ((R->u0 * ((R->trx2 - R->trx) * R->ttr2.y) + R->u1 * ((R->trx - R->trx1) * R->ttr1.y))
+		/ ((R->trx2 - R->trx) * R->ttr2.y + (R->trx - R->trx1) * R->ttr1.y)) * (fabs(R->vtr2.x - R->vtr1.x) + fabs(R->vtr2.y - R->vtr1.y)) * 0.002;
+		drawtransp(env, R, j);
+		R->trx++;
 	}
 }
 
-void	trplane(t_env *env, t_rend *rend, int j)
+void	trplane(t_env *env, t_rend *R, int j)
 {
 	t_sprque		now;
 
-	now = rend->sprq[env->sprite[j].sector];
+	now = R->sprq[env->sprite[j].sector];
 	if (now.visible == 0 || env->sprite[j].visible == 0)
 		return ;
-	rend->nowsect = &(ESEC[now.sector]);
-	rend->vtr1.x = env->sprite[j].pos1.x - EPW.x;
-	rend->vtr1.y = env->sprite[j].pos1.y - EPW.y;
-	rend->vtr2.x = env->sprite[j].pos2.x - EPW.x;
-	rend->vtr2.y = env->sprite[j].pos2.y - EPW.y;
-	rend->ttr1.x = rend->vtr1.x * EPSIN - rend->vtr1.y * EPCOS;
-	rend->ttr1.y = rend->vtr1.x * EPCOS + rend->vtr1.y * EPSIN;
-	rend->ttr2.x = rend->vtr2.x * EPSIN - rend->vtr2.y * EPCOS;
-	rend->ttr2.y = rend->vtr2.x * EPCOS + rend->vtr2.y * EPSIN;
-	if (rend->ttr1.y <= 0 && rend->ttr2.y <= 0)
+	R->nowsect = &(ESEC[now.sector]);
+	R->vtr1.x = env->sprite[j].pos1.x - EPW.x;
+	R->vtr1.y = env->sprite[j].pos1.y - EPW.y;
+	R->vtr2.x = env->sprite[j].pos2.x - EPW.x;
+	R->vtr2.y = env->sprite[j].pos2.y - EPW.y;
+	R->ttr1.x = R->vtr1.x * EPSIN - R->vtr1.y * EPCOS;
+	R->ttr1.y = R->vtr1.x * EPCOS + R->vtr1.y * EPSIN;
+	R->ttr2.x = R->vtr2.x * EPSIN - R->vtr2.y * EPCOS;
+	R->ttr2.y = R->vtr2.x * EPCOS + R->vtr2.y * EPSIN;
+	if (R->ttr1.y <= 0 && R->ttr2.y <= 0)
 		return ;
-	rend->u0 = 0;
-	rend->u1 = ESJT0->w;
-	trintersect(rend, env, j);
-	trscale(rend);
-	if (rend->trx1 >= rend->trx2 || rend->trx1 > now.sx2 || rend->trx2 < now.sx1)
+	R->u0 = 0;
+	R->u1 = ESJT0->w;
+	trintersect(R, env, j);
+	trscale(R);
+	if (R->trx1 >= R->trx2 || R->trx1 > now.sx2 || R->trx2 < now.sx1)
 		return ;
-	trstart(rend, env, j, &now);
+	trstart(R, env, j, &now);
 }

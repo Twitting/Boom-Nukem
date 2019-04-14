@@ -33,14 +33,14 @@ char	*gettexkey(int tex)
 
 void	inittext_term(t_env *env)
 {
-	env->text[14] = IMG_Load("textures/t1.png");
-	env->text[15] = IMG_Load("textures/t2.png");
-	env->text[16] = IMG_Load("textures/t3.png");
-	env->text[17] = IMG_Load("textures/t4.png");
-	env->text[18] = IMG_Load("textures/t5.png");
-	env->text[19] = IMG_Load("textures/t6.png");
-	env->text[20] = IMG_Load("textures/t7.png");
-	env->text[21] = IMG_Load("textures/t8.png");
+	ET[14] = IMG_Load("textures/t1.png");
+	ET[15] = IMG_Load("textures/t2.png");
+	ET[16] = IMG_Load("textures/t3.png");
+	ET[17] = IMG_Load("textures/t4.png");
+	ET[18] = IMG_Load("textures/t5.png");
+	ET[19] = IMG_Load("textures/t6.png");
+	ET[20] = IMG_Load("textures/t7.png");
+	ET[21] = IMG_Load("textures/t8.png");
 }
 
 void	keylightapply(t_env *env, t_sprite *sprite, int tex)

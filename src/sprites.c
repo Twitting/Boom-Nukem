@@ -12,72 +12,72 @@
 
 #include "render.h"
 
-void	drawsprite(t_env *env, t_rend *rend, int j)
+void	drawsprite(t_env *env, t_rend *R, int j)
 {
 	int	y;
 	int	*pix;
 	int	txty;
 
 	pix = (int*)env->surface->pixels;
-	pix += rend->csprya * WWIN + rend->sprx;
-	y = rend->csprya - 1;
-	while (++y <= rend->cspryb)
+	pix += R->csprya * WWIN + R->sprx;
+	y = R->csprya - 1;
+	while (++y <= R->cspryb)
 	{
-		txty = (int)((double)(y - rend->sprya) / (double)(rend->spryb - rend->sprya) * ESJT0->h);
-		if (y == HWIN / 2 && rend->sprx == WWIN / 2 && env->sprite[j].type == 1 &&
-			((int *)(ESJT0->pixels))[txty % ESJT0->h * ESJT0->w + rend->txtx] != 0)
+		txty = (int)((double)(y - R->sprya) / (double)(R->spryb - R->sprya) * ESJT0->h);
+		if (y == HWIN / 2 && R->sprx == WWIN / 2 && env->sprite[j].type == 1 &&
+			((int *)(ESJT0->pixels))[txty % ESJT0->h * ESJT0->w + R->txtx] != 0)
 			env->player.target = j;
-		if (((int *)(ESJT0->pixels))[txty % ESJT0->h * ESJT0->w + rend->txtx] != 0)
-			*pix = ((int *)(ESJT0->pixels))[txty % ESJT0->h * ESJT0->w + rend->txtx];
+		if (((int *)(ESJT0->pixels))[txty % ESJT0->h * ESJT0->w + R->txtx] != 0)
+			*pix = ((int *)(ESJT0->pixels))[txty % ESJT0->h * ESJT0->w + R->txtx];
 		pix += WWIN;
 	}
 }
 
-void	spriteplane2(t_env *env, t_rend *rend, int j, t_sprque *now)
+void	spriteplane2(t_env *env, t_rend *R, int j, t_sprque *now)
 {
-	rend->sprya = HWIN / 2 - (int)(YAW(rend->sprceil, rend->tspr.y) * rend->spryscale);
-	rend->spryb = HWIN / 2 - (int)(YAW(rend->sprfloor, rend->tspr.y) * rend->spryscale);
-	rend->sprbegx = MAX(rend->sprx1, now->sx1);
-	rend->sprendx = MIN(rend->sprx2, now->sx2);
-	rend->sprx = rend->sprbegx;
-	while (rend->sprx < rend->sprendx)
+	R->sprya = HWIN / 2 - (int)(YAW(R->sprceil, R->tspr.y) * R->spryscale);
+	R->spryb = HWIN / 2 - (int)(YAW(R->sprfloor, R->tspr.y) * R->spryscale);
+	R->sprbegx = MAX(R->sprx1, now->sx1);
+	R->sprendx = MIN(R->sprx2, now->sx2);
+	R->sprx = R->sprbegx;
+	while (R->sprx < R->sprendx)
 	{
-		rend->csprya = CLAMP(rend->sprya, now->ytop[rend->sprx], now->ybottom[rend->sprx]);
-		rend->cspryb = CLAMP(rend->spryb, now->ytop[rend->sprx], now->ybottom[rend->sprx]);
-		rend->txtx = (int)((double)(rend->sprx - rend->sprx1) /
-					(double)(rend->sprx2 - rend->sprx1) * ESJT0->w);
-		drawsprite(env, rend, j);
-		rend->sprx++;
+		R->csprya = CLAMP(R->sprya, now->ytop[R->sprx], now->ybottom[R->sprx]);
+		R->cspryb = CLAMP(R->spryb, now->ytop[R->sprx], now->ybottom[R->sprx]);
+		R->txtx = (int)((double)(R->sprx - R->sprx1) /
+					(double)(R->sprx2 - R->sprx1) * ESJT0->w);
+		drawsprite(env, R, j);
+		R->sprx++;
 	}
 }
 
-void	spriteplane(t_env *env, t_rend *rend, int j)
+void	spriteplane(t_env *env, t_rend *R, int j)
 {
 	t_sprque		now;
 
-	now = rend->sprq[env->sprite[j].sector];
+	now = R->sprq[env->sprite[j].sector];
 	if (now.visible == 0)
 		return ;
-	rend->nowsect = &(ESEC[now.sector]);
-	rend->vspr.x = env->sprite[j].pos1.x - EPW.x;
-	rend->vspr.y = env->sprite[j].pos1.y - EPW.y;
-	rend->tspr.x = rend->vspr.x * EPSIN - rend->vspr.y * EPCOS;
-	rend->tspr1 = rend->tspr.x + (double)(env->sprite[j].width) / 2.0;
-	rend->tspr2 = rend->tspr.x - (double)(env->sprite[j].width) / 2.0;
-	rend->tspr.y = rend->vspr.x * EPCOS + rend->vspr.y * EPSIN;
-	if (rend->tspr.y <= 0)
+	R->nowsect = &(ESEC[now.sector]);
+	R->vspr.x = env->sprite[j].pos1.x - EPW.x;
+	R->vspr.y = env->sprite[j].pos1.y - EPW.y;
+	R->tspr.x = R->vspr.x * EPSIN - R->vspr.y * EPCOS;
+	R->tspr1 = R->tspr.x + (double)(env->sprite[j].width) / 2.0;
+	R->tspr2 = R->tspr.x - (double)(env->sprite[j].width) / 2.0;
+	R->tspr.y = R->vspr.x * EPCOS + R->vspr.y * EPSIN;
+	if (R->tspr.y <= 0)
 		return ;
-	rend->sprxscale = WWIN * HFOV / rend->tspr.y;
-	rend->spryscale = HWIN * VFOV / rend->tspr.y;
-	rend->sprx1 = WWIN / 2 - (int)((rend->tspr1) * rend->sprxscale);
-	rend->sprx2 = WWIN / 2 - (int)((rend->tspr2) * rend->sprxscale);
-	if (rend->sprx1 > now.sx2 || rend->sprx2 < now.sx1)
+	R->sprxscale = WWIN * HFOV / R->tspr.y;
+	R->spryscale = HWIN * VFOV / R->tspr.y;
+	R->sprx1 = WWIN / 2 - (int)((R->tspr1) * R->sprxscale);
+	R->sprx2 = WWIN / 2 - (int)((R->tspr2) * R->sprxscale);
+	if (R->sprx1 > now.sx2 || R->sprx2 < now.sx1)
 		return ;
-	if (rend->sprx1 + (rend->sprx2 - rend->sprx1) / 3 >= now.sx1 && rend->sprx2 - (rend->sprx2 - rend->sprx1) / 3 <= now.sx2)
+	if (R->sprx1 + (R->sprx2 - R->sprx1) / 3 >= now.sx1 && R->sprx2 - (R->sprx2 - R->sprx1) / 3 <= now.sx2)
 		env->sprite[j].visible = 1;
-	rend->sprceil = rend->nowsect->floor + env->sprite[j].height - EPW.z;
-	rend->sprfloor = rend->nowsect->floor - EPW.z;
-	spriteplane2(env, rend, j, &now);
+	R->sprceil = R->nowsect->floor + env->sprite[j].height - EPW.z;
+	R->sprfloor = R->nowsect->floor - EPW.z;
+	spriteplane2(env, R, j, &now);
 }
 
 void	putspritesobjects(t_env *env, int i)
@@ -110,7 +110,7 @@ void	putspritesobjects(t_env *env, int i)
 	}
 }
 
-void	rendersprite(t_env *env, t_rend *rend)
+void	rendersprite(t_env *env, t_rend *R)
 {
 	int	i;
 
@@ -123,8 +123,8 @@ void	rendersprite(t_env *env, t_rend *rend)
 	{
 		putspritesobjects(env, i);
 		if (ESPRI.type != 2)
-			spriteplane(env, rend, i);
+			spriteplane(env, R, i);
 		else
-			trplane(env, rend, i);
+			trplane(env, R, i);
 	}
 }

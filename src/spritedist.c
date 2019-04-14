@@ -38,26 +38,26 @@ void	spritedist(t_env *env)
 	}
 }
 
-void	drawtransp(t_env *env, t_rend *rend, int j)
+void	drawtransp(t_env *env, t_rend *R, int j)
 {
 	int	y;
 	int	*pix;
 	int	txty;
 
 	pix = (int*)env->surface->pixels;
-	pix += rend->ctrya * WWIN + rend->trx;
-	y = rend->ctrya - 1;
-	while (++y <= rend->ctryb)
+	pix += R->ctrya * WWIN + R->trx;
+	y = R->ctrya - 1;
+	while (++y <= R->ctryb)
 	{
-		txty = (int)((double)(y - rend->trya) /
-				(double)(rend->tryb - rend->trya) *
+		txty = (int)((double)(y - R->trya) /
+				(double)(R->tryb - R->trya) *
 				ESJT0->h);
 		if (((int *)(ESJT0->pixels))[txty %
 				ESJT0->h *
-				ESJT0->w + rend->txtx] != 0)
+				ESJT0->w + R->txtx] != 0)
 			*pix = ((int *)(ESJT0->pixels))[txty %
 				ESJT0->h *
-				ESJT0->w + rend->txtx];
+				ESJT0->w + R->txtx];
 		pix += WWIN;
 	}
 }

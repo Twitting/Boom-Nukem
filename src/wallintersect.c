@@ -12,69 +12,69 @@
 
 #include "render.h"
 
-void	wallintersect_1(t_rend *rend)
+void	wallintersect_1(t_rend *R)
 {
-	RO1 = (t_xy){rend->t1.x, rend->t1.y};
-	RO2 = (t_xy){rend->t2.x, rend->t2.y};
-	if (rend->t1.y < rend->nfz.x)
+	RO1 = (t_xy){R->t1.x, R->t1.y};
+	RO2 = (t_xy){R->t2.x, R->t2.y};
+	if (R->t1.y < R->nfz.x)
 	{
-		if (rend->i1.y > 0)
+		if (R->i1.y > 0)
 		{
-			rend->t1.x = rend->i1.x;
-			rend->t1.y = rend->i1.y;
+			R->t1.x = R->i1.x;
+			R->t1.y = R->i1.y;
 		}
 		else
 		{
-			rend->t1.x = rend->i2.x;
-			rend->t1.y = rend->i2.y;
+			R->t1.x = R->i2.x;
+			R->t1.y = R->i2.y;
 		}
 	}
 }
 
-void	wallintersect_2(t_rend *rend, t_env *env)
+void	wallintersect_2(t_rend *R, t_env *env)
 {
-	if (rend->t2.y < rend->nfz.x)
+	if (R->t2.y < R->nfz.x)
 	{
-		if (rend->i1.y > 0)
+		if (R->i1.y > 0)
 		{
-			rend->t2.x = rend->i1.x;
-			rend->t2.y = rend->i1.y;
+			R->t2.x = R->i1.x;
+			R->t2.y = R->i1.y;
 		}
 		else
 		{
-			rend->t2.x = rend->i2.x;
-			rend->t2.y = rend->i2.y;
+			R->t2.x = R->i2.x;
+			R->t2.y = R->i2.y;
 		}
 	}
-	if (fabs(rend->t2.x - rend->t1.x) > fabs(rend->t2.y - rend->t1.y))
+	if (fabs(R->t2.x - R->t1.x) > fabs(R->t2.y - R->t1.y))
 	{
-		rend->u0 = (rend->t1.x - RO1.x) * (env->text[0]->w - 1) / (RO2.x - RO1.x);
-		rend->u1 = (rend->t2.x - RO1.x) * (env->text[0]->w - 1) / (RO2.x - RO1.x);
+		R->u0 = (R->t1.x - RO1.x) * (ET[0]->w - 1) / (RO2.x - RO1.x);
+		R->u1 = (R->t2.x - RO1.x) * (ET[0]->w - 1) / (RO2.x - RO1.x);
 	}
 	else
 	{
-		rend->u0 = (rend->t1.y - RO1.y) * (env->text[0]->w - 1) / (RO2.y - RO1.y);
-		rend->u1 = (rend->t2.y - RO1.y) * (env->text[0]->w - 1) / (RO2.y - RO1.y);
+		R->u0 = (R->t1.y - RO1.y) * (ET[0]->w - 1) / (RO2.y - RO1.y);
+		R->u1 = (R->t2.y - RO1.y) * (ET[0]->w - 1) / (RO2.y - RO1.y);
 	}
 }
 
-void	wallintersect(t_rend *rend, t_env *env)
+void	wallintersect(t_rend *R, t_env *env)
 {
-	if (rend->t1.y <= 0 || rend->t2.y <= 0)
+	if (R->t1.y <= 0 || R->t2.y <= 0)
 	{
-		rend->nfz.x = 1e-4;
-		rend->nfz.y = 5;
-		rend->nfside.x = 1e-5;
-		rend->nfside.y = 20;
-		rend->wintsect1.x = -rend->nfside.x;
-		rend->wintsect1.y = rend->nfz.x;
-		rend->wintsect2.x = -rend->nfside.y;
-		rend->wintsect2.y = rend->nfz.y;
-		rend->i1 = intersect(rend->t1, rend->t2, rend->wintsect1, rend->wintsect2);
-		rend->wintsect1.x = rend->nfside.x;
-		rend->wintsect2.x = rend->nfside.y;
-		rend->i2 = intersect(rend->t1, rend->t2, rend->wintsect1, rend->wintsect2);
-		wallintersect_1(rend);
-		wallintersect_2(rend, env);
+		R->nfz.x = 1e-4;
+		R->nfz.y = 5;
+		R->nfside.x = 1e-5;
+		R->nfside.y = 20;
+		R->wintsect1.x = -R->nfside.x;
+		R->wintsect1.y = R->nfz.x;
+		R->wintsect2.x = -R->nfside.y;
+		R->wintsect2.y = R->nfz.y;
+		R->i1 = intersect(R->t1, R->t2, R->wintsect1, R->wintsect2);
+		R->wintsect1.x = R->nfside.x;
+		R->wintsect2.x = R->nfside.y;
+		R->i2 = intersect(R->t1, R->t2, R->wintsect1, R->wintsect2);
+		wallintersect_1(R);
+		wallintersect_2(R, env);
 	}
 }

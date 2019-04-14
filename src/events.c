@@ -94,13 +94,13 @@ void	keyboard_events(t_env *env, SDL_Event *e)
 
 void	handle_events2(t_env *env, int x, int y)
 {
-	env->player.angle += x * 3.14159 / 200;
+	PANG += x * 3.14159 / 200;
 	if (x > 0)
 		env->skyangle += env->skyangle == 3840 ? -3808 : 32;
 	else
 		env->skyangle -= env->skyangle == 0 ? -3808 : 32;
-	EPSIN = sin(env->player.angle);
-	EPCOS = cos(env->player.angle);
+	EPSIN = sin(PANG);
+	EPCOS = cos(PANG);
 	env->yaw = CLAMP(env->yaw + y * 0.01, -3, 3);
 	env->player.yaw = env->yaw;
 	movement_calcs(env);

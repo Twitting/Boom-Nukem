@@ -85,7 +85,7 @@ void	parseplayer(t_env *env, int fd)
 	EPW.y = ft_atoi(&line[i]);
 	while (line[i] != '\t')
 		i++;
-	env->player.angle = (ft_atoi(&line[i]) % 360) * M_PI / 180;
+	PANG = (ft_atoi(&line[i]) % 360) * M_PI / 180;
 	while (line[i] != ' ')
 		i++;
 	EPS = ft_atoi(&line[i]);

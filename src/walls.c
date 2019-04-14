@@ -12,159 +12,159 @@
 
 #include "render.h"
 
-t_scaler	scaler_init_support5(t_rend *rend)
+t_scaler	scaler_init_support5(t_rend *R)
 {
 	t_scaler temp;
 
 	temp = (t_scaler)
-	{rend->y1a + (rend->beginx - 1 - rend->x1) *
-		(rend->y2a - rend->y1a) / (rend->x2 - rend->x1),
-		((rend->y2a < rend->y1a) ^
-		(rend->x2 < rend->x1)) ? -1 : 1,
-		abs(rend->y2a - rend->y1a),
-		abs(rend->x2 - rend->x1),
-		(int)((rend->beginx - 1 - rend->x1) * abs(rend->y2a -
-		rend->y1a)) % abs(rend->x2 - rend->x1)};
+	{R->y1a + (R->beginx - 1 - R->x1) *
+		(R->y2a - R->y1a) / (R->x2 - R->x1),
+		((R->y2a < R->y1a) ^
+		(R->x2 < R->x1)) ? -1 : 1,
+		abs(R->y2a - R->y1a),
+		abs(R->x2 - R->x1),
+		(int)((R->beginx - 1 - R->x1) * abs(R->y2a -
+		R->y1a)) % abs(R->x2 - R->x1)};
 	return (temp);
 }
 
-t_scaler	scaler_init_support6(t_rend *rend)
+t_scaler	scaler_init_support6(t_rend *R)
 {
 	t_scaler temp;
 
 	temp = (t_scaler)
-	{rend->y1b + (rend->beginx - 1 - rend->x1) *
-		(rend->y2b - rend->y1b) / (rend->x2 - rend->x1),
-		((rend->y2b < rend->y1b) ^
-		(rend->x2 < rend->x1)) ? -1 : 1,
-		abs(rend->y2b - rend->y1b),
-		abs(rend->x2 - rend->x1),
-		(int)((rend->beginx - 1 - rend->x1) * abs(rend->y2b -
-		rend->y1b)) % abs(rend->x2 - rend->x1)};
+	{R->y1b + (R->beginx - 1 - R->x1) *
+		(R->y2b - R->y1b) / (R->x2 - R->x1),
+		((R->y2b < R->y1b) ^
+		(R->x2 < R->x1)) ? -1 : 1,
+		abs(R->y2b - R->y1b),
+		abs(R->x2 - R->x1),
+		(int)((R->beginx - 1 - R->x1) * abs(R->y2b -
+		R->y1b)) % abs(R->x2 - R->x1)};
 	return (temp);
 }
 
-void	wallstart(t_env *env, t_rend *rend, t_now *now)
+void	wallstart(t_env *env, t_rend *R, t_now *now)
 {
-	rend->y1a = HWIN / 2 - (int)(YAW(rend->yceil, rend->t1.y) * rend->yscale1);
-	rend->y1b = HWIN / 2 - (int)(YAW(rend->yfloor, rend->t1.y) * rend->yscale1);
-	rend->y2a = HWIN / 2 - (int)(YAW(rend->yceil, rend->t2.y) * rend->yscale2);
-	rend->y2b = HWIN / 2 - (int)(YAW(rend->yfloor, rend->t2.y) * rend->yscale2);
-	rend->ny1a = HWIN / 2 - (int)(YAW(rend->nyceil, rend->t1.y) * rend->yscale1);
-	rend->ny1b = HWIN / 2 - (int)(YAW(rend->nyfloor, rend->t1.y) * rend->yscale1);
-	rend->ny2a = HWIN / 2 - (int)(YAW(rend->nyceil, rend->t2.y) * rend->yscale2);
-	rend->ny2b = HWIN / 2 - (int)(YAW(rend->nyfloor, rend->t2.y) * rend->yscale2);
-	rend->beginx = MAX(rend->x1, now->sx1);
-	rend->endx = MIN(rend->x2, now->sx2);
-	rend->x = rend->beginx;
-	rend->ya_int = scaler_init_support5(rend);
-	rend->yb_int = scaler_init_support6(rend);
-	wallxloop(env, rend);
+	R->y1a = HWIN / 2 - (int)(YAW(R->yceil, R->t1.y) * R->yscale1);
+	R->y1b = HWIN / 2 - (int)(YAW(R->yfloor, R->t1.y) * R->yscale1);
+	R->y2a = HWIN / 2 - (int)(YAW(R->yceil, R->t2.y) * R->yscale2);
+	R->y2b = HWIN / 2 - (int)(YAW(R->yfloor, R->t2.y) * R->yscale2);
+	R->ny1a = HWIN / 2 - (int)(YAW(R->nyceil, R->t1.y) * R->yscale1);
+	R->ny1b = HWIN / 2 - (int)(YAW(R->nyfloor, R->t1.y) * R->yscale1);
+	R->ny2a = HWIN / 2 - (int)(YAW(R->nyceil, R->t2.y) * R->yscale2);
+	R->ny2b = HWIN / 2 - (int)(YAW(R->nyfloor, R->t2.y) * R->yscale2);
+	R->beginx = MAX(R->x1, now->sx1);
+	R->endx = MIN(R->x2, now->sx2);
+	R->x = R->beginx;
+	R->ya_int = scaler_init_support5(R);
+	R->yb_int = scaler_init_support6(R);
+	wallxloop(env, R);
 }
 
-void	calc_support(t_env *env, t_rend *rend)
+void	calc_support(t_env *env, t_rend *R)
 {
-	rend->vx1 = rend->nowsect->vertex[rend->s % rend->nowsect->npoints].x - EPW.x;
-	rend->vy1 = rend->nowsect->vertex[rend->s % rend->nowsect->npoints].y - EPW.y;
-	rend->vx2 = rend->nowsect->vertex[(rend->s + 1) % rend->nowsect->npoints].x - EPW.x;
-	rend->vy2 = rend->nowsect->vertex[(rend->s + 1) % rend->nowsect->npoints].y - EPW.y;
-	rend->t1.x = rend->vx1 * EPSIN - rend->vy1 * EPCOS;
-	rend->t1.y = rend->vx1 * EPCOS + rend->vy1 * EPSIN;
-	rend->t2.x = rend->vx2 * EPSIN - rend->vy2 * EPCOS;
-	rend->t2.y = rend->vx2 * EPCOS + rend->vy2 * EPSIN;
+	R->vx1 = R->nowsect->vertex[R->s % R->nowsect->npoints].x - EPW.x;
+	R->vy1 = R->nowsect->vertex[R->s % R->nowsect->npoints].y - EPW.y;
+	R->vx2 = R->nowsect->vertex[(R->s + 1) % R->nowsect->npoints].x - EPW.x;
+	R->vy2 = R->nowsect->vertex[(R->s + 1) % R->nowsect->npoints].y - EPW.y;
+	R->t1.x = R->vx1 * EPSIN - R->vy1 * EPCOS;
+	R->t1.y = R->vx1 * EPCOS + R->vy1 * EPSIN;
+	R->t2.x = R->vx2 * EPSIN - R->vy2 * EPCOS;
+	R->t2.y = R->vx2 * EPCOS + R->vy2 * EPSIN;
 }
 
-void	startcalc(t_env *env, t_rend *rend, t_now *now)
+void	startcalc(t_env *env, t_rend *R, t_now *now)
 {
-	calc_support(env, rend);
-	if (rend->t1.y <= 0 && rend->t2.y <= 0)
+	calc_support(env, R);
+	if (R->t1.y <= 0 && R->t2.y <= 0)
 		return ;
-	rend->u0 = 0;
-	rend->u1 = (env->text[0]->w - 1);
-	wallintersect(rend, env);
-	wallscale(env, rend);
-	if (rend->x1 >= rend->x2 || rend->x2 < now->sx1 || rend->x1 > now->sx2)
+	R->u0 = 0;
+	R->u1 = (ET[0]->w - 1);
+	wallintersect(R, env);
+	wallscale(env, R);
+	if (R->x1 >= R->x2 || R->x2 < now->sx1 || R->x1 > now->sx2)
 		return ;
-	wallstart(env, rend, now);
-	if (rend->nowsect->neighbors[rend->s] >= 0 && rend->endx >= rend->beginx && (rend->head + MAXQUEUE + 1 - rend->tail) % MAXQUEUE)
+	wallstart(env, R, now);
+	if (R->nowsect->neighbors[R->s] >= 0 && R->endx >= R->beginx && (R->head + MAXQUEUE + 1 - R->tail) % MAXQUEUE)
 	{
-		if (portaledge(env, rend) == 0)
-			*(rend->head) = (t_now){rend->nowsect->neighbors[rend->s], rend->beginx, rend->endx};
-		else if (portaledge(env, rend) == 1)
+		if (portaledge(env, R) == 0)
+			*(R->head) = (t_now){R->nowsect->neighbors[R->s], R->beginx, R->endx};
+		else if (portaledge(env, R) == 1)
 		{
-			if (rend->t2.y > 0)
-				*(rend->head) = (t_now){rend->nowsect->neighbors[rend->s], 0, rend->endx};
+			if (R->t2.y > 0)
+				*(R->head) = (t_now){R->nowsect->neighbors[R->s], 0, R->endx};
 			else
-				*(rend->head) = (t_now){rend->nowsect->neighbors[rend->s], rend->beginx, 0};
+				*(R->head) = (t_now){R->nowsect->neighbors[R->s], R->beginx, 0};
 		}
-		if (++rend->head == rend->queue + MAXQUEUE)
-			rend->head = rend->queue;
+		if (++R->head == R->queue + MAXQUEUE)
+			R->head = R->queue;
 	}
 }
 
-void	render_queue(t_env *env, t_rend *rend, t_now *now)
+void	render_queue(t_env *env, t_rend *R, t_now *now)
 {
-	rend->sprq[now->sectorno].sector = now->sectorno;
-	if (rend->sprq[now->sectorno].visible == 1)
+	R->sprq[now->sectorno].sector = now->sectorno;
+	if (R->sprq[now->sectorno].visible == 1)
 	{
-		if (rend->sprq[now->sectorno].sx1 > now->sx1)
-			rend->sprq[now->sectorno].sx1 = now->sx1;
-		if (rend->sprq[now->sectorno].sx2 < now->sx2)
-			rend->sprq[now->sectorno].sx2 = now->sx2;
+		if (R->sprq[now->sectorno].sx1 > now->sx1)
+			R->sprq[now->sectorno].sx1 = now->sx1;
+		if (R->sprq[now->sectorno].sx2 < now->sx2)
+			R->sprq[now->sectorno].sx2 = now->sx2;
 	}
 	else
 	{
-		rend->sprq[now->sectorno].sx1 = now->sx1;
-		rend->sprq[now->sectorno].sx2 = now->sx2;
+		R->sprq[now->sectorno].sx1 = now->sx1;
+		R->sprq[now->sectorno].sx2 = now->sx2;
 	}
-	rend->sprq[now->sectorno].visible = 1;
-	rend->s = -1;
-	while (++rend->s < WWIN)
-		rend->sprq[now->sectorno].ytop[rend->s] = rend->ytop[rend->s];
-	rend->s = -1;
-	while (++rend->s < WWIN)
-		rend->sprq[now->sectorno].ybottom[rend->s] = rend->ybottom[rend->s];
-	rend->s = -1;
-	rend->nowsect = &(ESEC[now->sectorno]);
-	while (++rend->s < (int)rend->nowsect->npoints)
-		startcalc(env, rend, now);
+	R->sprq[now->sectorno].visible = 1;
+	R->s = -1;
+	while (++R->s < WWIN)
+		R->sprq[now->sectorno].ytop[R->s] = R->ytop[R->s];
+	R->s = -1;
+	while (++R->s < WWIN)
+		R->sprq[now->sectorno].ybottom[R->s] = R->ybottom[R->s];
+	R->s = -1;
+	R->nowsect = &(ESEC[now->sectorno]);
+	while (++R->s < (int)R->nowsect->npoints)
+		startcalc(env, R, now);
 }
 
-void	init_wall(t_env *env, t_rend *rend)
+void	init_wall(t_env *env, t_rend *R)
 {
-	rend->head = rend->queue;
-	rend->tail = rend->queue;
-	rend->nyceil = 0;
-	rend->nyfloor = 0;
-	rend->s = -1;
-	while (++rend->s < WWIN)
+	R->head = R->queue;
+	R->tail = R->queue;
+	R->nyceil = 0;
+	R->nyfloor = 0;
+	R->s = -1;
+	while (++R->s < WWIN)
 	{
-		rend->ytop[rend->s] = 0;
-		rend->ybottom[rend->s] = HWIN - 1;
+		R->ytop[R->s] = 0;
+		R->ybottom[R->s] = HWIN - 1;
 	}
-	*(rend->head) = (t_now){EPS, 0, WWIN - 1};
+	*(R->head) = (t_now){EPS, 0, WWIN - 1};
 }
 
-void	render_wall(t_env *env, t_rend *rend)
+void	render_wall(t_env *env, t_rend *R)
 {
 	t_now		now;
 	int			renderedsect[env->nsectors];
 
-	init_wall(env, rend);
-	rend->s = -1;
-	while (++rend->s < (int)env->nsectors)
-		renderedsect[rend->s] = 0;
-	if (++rend->head == rend->queue + MAXQUEUE)
-		rend->head = rend->queue;
-	while (rend->head != rend->tail)
+	init_wall(env, R);
+	R->s = -1;
+	while (++R->s < (int)env->nsectors)
+		renderedsect[R->s] = 0;
+	if (++R->head == R->queue + MAXQUEUE)
+		R->head = R->queue;
+	while (R->head != R->tail)
 	{
-		now = *(rend->tail);
-		if (++rend->tail == rend->queue + MAXQUEUE)
-			rend->tail = rend->queue;
+		now = *(R->tail);
+		if (++R->tail == R->queue + MAXQUEUE)
+			R->tail = R->queue;
 		if (renderedsect[now.sectorno] & 0x21)
 			continue ;
 		++renderedsect[now.sectorno];
-		render_queue(env, rend, &now);
+		render_queue(env, R, &now);
 		++renderedsect[now.sectorno];
 	}
 }

@@ -12,7 +12,7 @@
 
 #include "render.h"
 
-void	vline2(t_env *env, t_rend *rend, int y1, int y2, t_scaler ty)
+void	vline2(t_env *env, t_rend *R, int y1, int y2, t_scaler ty)
 {
 	int *pix;
 	int y;
@@ -21,158 +21,158 @@ void	vline2(t_env *env, t_rend *rend, int y1, int y2, t_scaler ty)
 	pix = (int*)env->surface->pixels;
 	y1 = CLAMP(y1, 0, HWIN - 1) - 1;
 	y2 = CLAMP(y2, 0, HWIN - 1) + 1;
-	pix += y1 * WWIN + rend->x;
+	pix += y1 * WWIN + R->x;
 	y = y1;
 	while (++y <= y2)
 	{
-		txty = scaler_next(&ty) * (rend->nowsect->ceiling - rend->nowsect->floor) / 64;
-		*pix = ((int *)(rend->nowsect->text[1]->pixels))[txty % rend->nowsect->text[1]->h * rend->nowsect->text[1]->w + rend->txtx % rend->nowsect->text[1]->w];
+		txty = scaler_next(&ty) * (R->nowsect->ceiling - R->nowsect->floor) / 64;
+		*pix = ((int *)(R->NST[1]->pixels))[txty % R->NST[1]->h * R->NST[1]->w + R->txtx % R->NST[1]->w];
 		pix += WWIN;
 	}
 }
 
-void	wallscale(t_env *env, t_rend *rend)
+void	wallscale(t_env *env, t_rend *R)
 {
-	if (rend->t1.y <= 0.5)
+	if (R->t1.y <= 0.5)
 	{
-		rend->t1.x = (0.5 - rend->t1.y) * (rend->t2.x - rend->t1.x) / (rend->t2.y - rend->t1.y) + rend->t1.x;
-		rend->t1.y = 0.5;
+		R->t1.x = (0.5 - R->t1.y) * (R->t2.x - R->t1.x) / (R->t2.y - R->t1.y) + R->t1.x;
+		R->t1.y = 0.5;
 	}
-	rend->xscale1 = WWIN * HFOV / rend->t1.y;
-	rend->yscale1 = HWIN * VFOV / rend->t1.y;
-	rend->x1 = WWIN / 2 + (int)(-rend->t1.x * rend->xscale1);
-	rend->xscale2 = WWIN * HFOV / rend->t2.y;
-	rend->yscale2 = HWIN * VFOV / rend->t2.y;
-	rend->x2 = WWIN / 2 + (int)(-rend->t2.x * rend->xscale2);
-	rend->yceil = rend->nowsect->ceiling - EPW.z;
-	rend->yfloor = rend->nowsect->floor - EPW.z;
-	if (rend->nowsect->neighbors[rend->s] >= 0)
+	R->xscale1 = WWIN * HFOV / R->t1.y;
+	R->yscale1 = HWIN * VFOV / R->t1.y;
+	R->x1 = WWIN / 2 + (int)(-R->t1.x * R->xscale1);
+	R->xscale2 = WWIN * HFOV / R->t2.y;
+	R->yscale2 = HWIN * VFOV / R->t2.y;
+	R->x2 = WWIN / 2 + (int)(-R->t2.x * R->xscale2);
+	R->yceil = R->nowsect->ceiling - EPW.z;
+	R->yfloor = R->nowsect->floor - EPW.z;
+	if (R->nowsect->neighbors[R->s] >= 0)
 	{
-		rend->nyceil = ESEC[rend->nowsect->neighbors[rend->s]].ceiling - EPW.z;
-		rend->nyfloor = ESEC[rend->nowsect->neighbors[rend->s]].floor - EPW.z;
+		R->nyceil = ESEC[R->nowsect->neighbors[R->s]].ceiling - EPW.z;
+		R->nyfloor = ESEC[R->nowsect->neighbors[R->s]].floor - EPW.z;
 	}
 }
 
-void	tomapccord(t_rend *rend, t_env *env)
+void	tomapccord(t_rend *R, t_env *env)
 {
 	double rtx;
 	double rtz;
 
-	rend->mapz = (rend->hei) * HWIN * VFOV / ((HWIN / 2 - (rend->y)) - env->player.yaw * HWIN * VFOV);
-	rend->mapx = (rend->mapz) * (WWIN / 2 - (rend->x)) / (WWIN * HFOV);
-	rtx = (rend->mapz) * EPCOS + (rend->mapx) * EPSIN;
-	rtz = (rend->mapz) * EPSIN - (rend->mapx) * EPCOS;
-	rend->mapx = rtx + EPW.x;
-	rend->mapz = rtz + EPW.y;
+	R->mapz = (R->hei) * HWIN * VFOV / ((HWIN / 2 - (R->y)) - env->player.yaw * HWIN * VFOV);
+	R->mapx = (R->mapz) * (WWIN / 2 - (R->x)) / (WWIN * HFOV);
+	rtx = (R->mapz) * EPCOS + (R->mapx) * EPSIN;
+	rtz = (R->mapz) * EPSIN - (R->mapx) * EPCOS;
+	R->mapx = rtx + EPW.x;
+	R->mapz = rtz + EPW.y;
 }
 
-void	textceilfloor(t_env *env, t_rend *rend)
+void	textceilfloor(t_env *env, t_rend *R)
 {
-	if (rend->y >= rend->cyb)
+	if (R->y >= R->cyb)
 	{
-		rend->hei = rend->y < rend->cya ? rend->yceil : rend->yfloor;
-		tomapccord(rend, env);
-		rend->txtx = rend->mapx * rend->nowsect->text[0]->w / 12;
-		rend->txtz = rend->mapz * rend->nowsect->text[0]->w / 12;
-		rend->pel = ((int*)rend->nowsect->text[0]->pixels)[abs(rend->txtz) % rend->nowsect->text[0]->h * rend->nowsect->text[0]->w + abs(rend->txtx) % rend->nowsect->text[0]->w];
+		R->hei = R->y < R->cya ? R->yceil : R->yfloor;
+		tomapccord(R, env);
+		R->txtx = R->mapx * R->NST[0]->w / 12;
+		R->txtz = R->mapz * R->NST[0]->w / 12;
+		R->pel = ((int*)R->NST[0]->pixels)[abs(R->txtz) % R->NST[0]->h * R->NST[0]->w + abs(R->txtx) % R->NST[0]->w];
 	}
-	if (rend->y < rend->cya)
+	if (R->y < R->cya)
 	{
-		if (rend->nowsect->sky != 1)
+		if (R->nowsect->sky != 1)
 		{
-			rend->hei = rend->y < rend->cya ? rend->yceil : rend->yfloor;
-			tomapccord(rend, env);
-			rend->txtx = rend->mapx * rend->nowsect->text[2]->w / 12;
-			rend->txtz = rend->mapz * rend->nowsect->text[2]->w / 12;
-			rend->pel = ((int*)rend->nowsect->text[2]->pixels)[abs(rend->txtz) % rend->nowsect->text[2]->h * rend->nowsect->text[2]->w + abs(rend->txtx) % rend->nowsect->text[2]->w];
+			R->hei = R->y < R->cya ? R->yceil : R->yfloor;
+			tomapccord(R, env);
+			R->txtx = R->mapx * R->NST[2]->w / 12;
+			R->txtz = R->mapz * R->NST[2]->w / 12;
+			R->pel = ((int*)R->NST[2]->pixels)[abs(R->txtz) % R->NST[2]->h * R->NST[2]->w + abs(R->txtx) % R->NST[2]->w];
 		}
 		else
-			rend->pel = ((int *)(env->text[2]->pixels))[(int)(rend->y + 100 * (env->player.yaw + 3)) % env->text[2]->h * env->text[2]->w + (int)(env->player.angle / 6.2 * env->text[2]->w + rend->x) % env->text[2]->w];
+			R->pel = ((int *)(ET[2]->pixels))[(int)(R->y + 100 * (env->player.yaw + 3)) % ET[2]->h * ET[2]->w + (int)(PANG / 6.2 * ET[2]->w + R->x) % ET[2]->w];
 	}
-	((int*)env->surface->pixels)[rend->y * WWIN + rend->x] = rend->pel;
+	((int*)env->surface->pixels)[R->y * WWIN + R->x] = R->pel;
 }
 
-t_scaler	scaler_init_support7(t_rend *rend, t_env *env)
+t_scaler	scaler_init_support7(t_rend *R, t_env *env)
 {
 	t_scaler temp;
 
 	temp = (t_scaler)
-	{0 + (rend->cya - 1 - rend->ya) *
-		((env->text[0]->w - 1)) / (rend->yb - rend->ya),
-		(((env->text[0]->w - 1) < 0) ^
-		(rend->yb < rend->ya)) ? -1 : 1,
-		abs((env->text[0]->w - 1)),
-		abs(rend->yb - rend->ya),
-		(int)((rend->cya - 1 - rend->ya) * abs((env->text[0]->w - 1)))
-		% abs(rend->yb - rend->ya)};
+	{0 + (R->cya - 1 - R->ya) *
+		((ET[0]->w - 1)) / (R->yb - R->ya),
+		(((ET[0]->w - 1) < 0) ^
+		(R->yb < R->ya)) ? -1 : 1,
+		abs((ET[0]->w - 1)),
+		abs(R->yb - R->ya),
+		(int)((R->cya - 1 - R->ya) * abs((ET[0]->w - 1)))
+		% abs(R->yb - R->ya)};
 	return (temp);
 }
 
-t_scaler	scaler_init_support8(t_rend *rend, t_env *env)
+t_scaler	scaler_init_support8(t_rend *R, t_env *env)
 {
 	t_scaler temp;
 
 	temp = (t_scaler)
-	{0 + (rend->ncyb + 1 - 1 - rend->ya) *
-		((env->text[0]->w - 1)) / (rend->yb - rend->ya),
-		(((env->text[0]->w - 1) < 0) ^
-		(rend->yb < rend->ya)) ? -1 : 1,
-		abs((env->text[0]->w - 1) - 0),
-		abs(rend->yb - rend->ya),
-		(int)((rend->ncyb - rend->ya) * abs((env->text[0]->w - 1) -
-		0)) % abs(rend->yb - rend->ya)};
+	{0 + (R->ncyb + 1 - 1 - R->ya) *
+		((ET[0]->w - 1)) / (R->yb - R->ya),
+		(((ET[0]->w - 1) < 0) ^
+		(R->yb < R->ya)) ? -1 : 1,
+		abs((ET[0]->w - 1) - 0),
+		abs(R->yb - R->ya),
+		(int)((R->ncyb - R->ya) * abs((ET[0]->w - 1) -
+		0)) % abs(R->yb - R->ya)};
 	return (temp);
 }
 
-void	rendportals(t_env *env, t_rend *rend)
+void	rendportals(t_env *env, t_rend *R)
 {
-	rend->nya = (rend->x - rend->x1) * (rend->ny2a - rend->ny1a) / (rend->x2 - rend->x1) + rend->ny1a;
-	rend->ncya = CLAMP(rend->nya, rend->ytop[rend->x], rend->ybottom[rend->x]);
-	rend->nyb = (rend->x - rend->x1) * (rend->ny2b - rend->ny1b) / (rend->x2 - rend->x1) + rend->ny1b;
-	rend->ncyb = CLAMP(rend->nyb, rend->ytop[rend->x], rend->ybottom[rend->x]);
-	vline2(env, rend, rend->cya, rend->ncya - 1, scaler_init_support7(rend, env));
-	if (rend->nowsect->sky != 1)
+	R->nya = (R->x - R->x1) * (R->ny2a - R->ny1a) / (R->x2 - R->x1) + R->ny1a;
+	R->ncya = CLAMP(R->nya, R->ytop[R->x], R->ybottom[R->x]);
+	R->nyb = (R->x - R->x1) * (R->ny2b - R->ny1b) / (R->x2 - R->x1) + R->ny1b;
+	R->ncyb = CLAMP(R->nyb, R->ytop[R->x], R->ybottom[R->x]);
+	vline2(env, R, R->cya, R->ncya - 1, scaler_init_support7(R, env));
+	if (R->nowsect->sky != 1)
 	{
-		if (ESEC[rend->nowsect->neighbors[rend->s]].sky == 1)
-			rend->ytop[rend->x] = CLAMP(rend->cya + 1, rend->ytop[rend->x], HWIN - 1);
+		if (ESEC[R->nowsect->neighbors[R->s]].sky == 1)
+			R->ytop[R->x] = CLAMP(R->cya + 1, R->ytop[R->x], HWIN - 1);
 		else
-			rend->ytop[rend->x] = CLAMP(MAX(rend->cya, rend->ncya), rend->ytop[rend->x], HWIN - 1);
+			R->ytop[R->x] = CLAMP(MAX(R->cya, R->ncya), R->ytop[R->x], HWIN - 1);
 	}
 	else
 	{
-		if (ESEC[rend->nowsect->neighbors[rend->s]].sky == 1)
-			rend->ytop[rend->x] = CLAMP(MIN(rend->cya, rend->ncya), rend->ytop[rend->x], HWIN - 1);
+		if (ESEC[R->nowsect->neighbors[R->s]].sky == 1)
+			R->ytop[R->x] = CLAMP(MIN(R->cya, R->ncya), R->ytop[R->x], HWIN - 1);
 		else
-			rend->ytop[rend->x] = CLAMP(rend->ncya, rend->ytop[rend->x], HWIN - 1);
+			R->ytop[R->x] = CLAMP(R->ncya, R->ytop[R->x], HWIN - 1);
 	}
-	vline2(env, rend, rend->ncyb + 1, rend->cyb, scaler_init_support8(rend, env));
-	rend->ybottom[rend->x] = CLAMP(MIN(rend->cyb, rend->ncyb), 0, rend->ybottom[rend->x]);
+	vline2(env, R, R->ncyb + 1, R->cyb, scaler_init_support8(R, env));
+	R->ybottom[R->x] = CLAMP(MIN(R->cyb, R->ncyb), 0, R->ybottom[R->x]);
 }
 
-void	wallxloop(t_env *env, t_rend *rend)
+void	wallxloop(t_env *env, t_rend *R)
 {
-	while (rend->x <= rend->endx)
+	while (R->x <= R->endx)
 	{
-		rend->ya = scaler_next(&rend->ya_int);
-		rend->cya = CLAMP(rend->ya, rend->ytop[rend->x], rend->ybottom[rend->x]);
-		rend->yb = scaler_next(&rend->yb_int);
-		rend->cyb = CLAMP(rend->yb, rend->ytop[rend->x], rend->ybottom[rend->x]);
-		rend->y = rend->ytop[rend->x] - 2;
-		while (++rend->y <= rend->ybottom[rend->x])
+		R->ya = scaler_next(&R->ya_int);
+		R->cya = CLAMP(R->ya, R->ytop[R->x], R->ybottom[R->x]);
+		R->yb = scaler_next(&R->yb_int);
+		R->cyb = CLAMP(R->yb, R->ytop[R->x], R->ybottom[R->x]);
+		R->y = R->ytop[R->x] - 2;
+		while (++R->y <= R->ybottom[R->x])
 		{
-			if (rend->y >= rend->cya && rend->y <= rend->cyb)
+			if (R->y >= R->cya && R->y <= R->cyb)
 			{
-				rend->y = rend->cyb;
+				R->y = R->cyb;
 				continue;
 			}
-			textceilfloor(env, rend);
+			textceilfloor(env, R);
 		}
-		rend->txtx = ((rend->u0 * ((rend->x2 - rend->x) * rend->t2.y) + rend->u1 * ((rend->x - rend->x1) * rend->t1.y))\
-		/ ((rend->x2 - rend->x) * rend->t2.y + (rend->x - rend->x1) * rend->t1.y)) * (fabs(rend->vx2 - rend->vx1) + fabs(rend->vy2 - rend->vy1)) * 0.04;
-		if (rend->nowsect->neighbors[rend->s] >= 0)
-			rendportals(env, rend);
+		R->txtx = ((R->u0 * ((R->x2 - R->x) * R->t2.y) + R->u1 * ((R->x - R->x1) * R->t1.y))\
+		/ ((R->x2 - R->x) * R->t2.y + (R->x - R->x1) * R->t1.y)) * (fabs(R->vx2 - R->vx1) + fabs(R->vy2 - R->vy1)) * 0.04;
+		if (R->nowsect->neighbors[R->s] >= 0)
+			rendportals(env, R);
 		else
-			vline2(env, rend, rend->cya, rend->cyb, scaler_init_support7(rend, env));
-		rend->x++;
+			vline2(env, R, R->cya, R->cyb, scaler_init_support7(R, env));
+		R->x++;
 	}
 }
