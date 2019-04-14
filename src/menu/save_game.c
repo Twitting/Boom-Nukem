@@ -6,7 +6,7 @@
 /*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/14 18:09:01 by drestles          #+#    #+#             */
-/*   Updated: 2019/04/14 18:14:16 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/14 18:20:52 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void		save_game(t_env *env, SDL_Event *e)
 	while (env->state == 3)
 	{
 		if (env->b_one == 1 || env->b_two == 1
-            || env->b_three == 1 || env->b_four == 1)
+			|| env->b_three == 1 || env->b_four == 1)
 			click(env);
 		handle_events_save(env, e);
 	}

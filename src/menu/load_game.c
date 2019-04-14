@@ -6,7 +6,7 @@
 /*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 02:45:02 by drestles          #+#    #+#             */
-/*   Updated: 2019/04/14 18:16:13 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/14 18:20:44 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ void	load_game(t_env *env, SDL_Event *e)
 	SDL_UpdateWindowSurface(env->window);
 	while (env->state == 4)
 	{
-		if (env->b_one == 1 || env->b_two == 1 || env->b_three == 1 || env->b_four == 1)
+		if (env->b_one == 1 || env->b_two == 1 ||
+			env->b_three == 1 || env->b_four == 1)
 			click(env);
 		handle_events_load(env, e);
 	}
