@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movemob.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 17:06:32 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/11 20:41:01 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/14 16:18:28 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,18 @@ void	move_mob_support3(double *dxdysxsyee, t_xy *opvoppp)
 	dxdysxsyee[4] = dxdysxsyee[0] - dxdysxsyee[1];
 }
 
-void	move_mob_support2(t_env *env, double *dxdysxsyee, t_xy *opvoppp)
+void	move_mob_support2(t_env *env, double *dxdysxsyee, t_xy *opvoppp, int i)
 {
 	dxdysxsyee[5] = dxdysxsyee[4] * 2;
 	if (dxdysxsyee[5] > -dxdysxsyee[1])
 	{
 		dxdysxsyee[4] -= dxdysxsyee[1];
-		opvoppp[0].x += dxdysxsyee[2] * 60 / env->oldfps;
+		opvoppp[0].x += dxdysxsyee[2] * 60 * 30 / (env->sector[env->sprite[i].sector].light * env->oldfps);
 	}
 	if (dxdysxsyee[5] < dxdysxsyee[0])
 	{
 		dxdysxsyee[4] += dxdysxsyee[0];
-		opvoppp[0].y += dxdysxsyee[3] * 60 / env->oldfps;
+		opvoppp[0].y += dxdysxsyee[3] * 60 * 30 / (env->sector[env->sprite[i].sector].light * env->oldfps);
 	}
 }
 
@@ -60,7 +60,7 @@ void	move_mob_support(t_env *env, int *arr2, double *dxdysxsyee, t_xy *opvoppp)
 		move_mob_support3(dxdysxsyee, opvoppp);
 		while (fabs(opvoppp[0].x - opvoppp[2].x) > 2.0 || fabs(opvoppp[0].y - opvoppp[2].y) > 2.0)
 		{
-			move_mob_support2(env, dxdysxsyee, opvoppp);
+			move_mob_support2(env, dxdysxsyee, opvoppp, arr2[3]);
 			while (++arr2[0] < (int)sect.npoints)
 			{
 				if (sect.neighbors[arr2[0]] >= 0 && intersect_box(opvoppp[1], opvoppp[0], sect.vertex[arr2[0] % sect.npoints], sect.vertex[(arr2[0] + 1) % sect.npoints]) && point_side(opvoppp[0].x, opvoppp[0].y, sect.vertex[arr2[0] % sect.npoints], sect.vertex[(arr2[0] + 1) % sect.npoints]) < 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprites.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 12:24:34 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 16:32:57 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/14 16:43:02 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ void	rendersprite(t_env *env, t_rend *rend)
 
 	spritedist(env);
 	sortsprite(env);
+	barsanimate(env);
 	i = -1;
 	env->player.target = -1;
 	while (++i < env->sprcount)

@@ -6,14 +6,14 @@
 /*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/22 21:36:46 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/14 16:06:28 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/14 16:38:22 by drestles         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "edit.h"
 #include "kiss_sdl.h"
 
-static void free_all(t_map_ui *ui)
+static void	free_all(t_map_ui *ui)
 {
 	kiss_clean(&(ui->objects));
 	free(ui->message);
@@ -23,7 +23,7 @@ static void free_all(t_map_ui *ui)
 	free(ui->title);
 }
 
-int		num_to_program(t_edit *edit)
+int			num_to_program(t_edit *edit)
 {
 	t_map_ui ui;
 
@@ -51,7 +51,7 @@ int		num_to_program(t_edit *edit)
 	return (0);
 }
 
-void	boldlinesector(t_edit *edit)
+void		boldlinesector(t_edit *edit)
 {
 	int	i;
 	int j;
@@ -78,7 +78,7 @@ void	boldlinesector(t_edit *edit)
 	}
 }
 
-int		addvertex(t_edit *edit, int x, int y)
+int			addvertex(t_edit *edit, int x, int y)
 {
 	if (SECT.npoints > 2 && edit->verts[SECT.vertex[0]].x == x &&
 		edit->verts[SECT.vertex[0]].y == y)
@@ -103,7 +103,7 @@ int		addvertex(t_edit *edit, int x, int y)
 	return (1);
 }
 
-void	putsectors(t_edit *edit)
+void		putsectors(t_edit *edit)
 {
 	int x;
 	int y;

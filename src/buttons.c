@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 17:47:12 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/12 10:18:53 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/14 15:50:04 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void		butplane_support(t_rend *rend, int j, t_env *env)
 
 void		butplane(t_env *env, t_rend *rend, int j)
 {
-	if (rend->sprq[j].visible == 0)
+	if (rend->sprq[j].visible == 0 || env->button[j].visible == 0)
 		return ;
 	rend->nowsect = &(env->sector[rend->sprq[j].sector]);
 	rend->vbut1.x = env->button[j].x1 - env->player.where.x;
