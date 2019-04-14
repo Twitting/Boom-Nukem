@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rotatinglight.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 15:39:17 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/13 19:36:22 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/14 10:40:02 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,7 @@ char	*gettexenemy(int tex, t_sprite *sprite)
 		return ("textures/5.png");
 	else if (tex == 5)
 		return ("textures/6.png");
-	else if (tex == 6)
-		return ("textures/7.png");
-	return ("textures/dead.png");
+	return ("textures/7.png");
 }
 
 void	enemylightapply(t_env *env, t_sprite *sprite, int tex)
@@ -72,7 +70,7 @@ void	initspritelight(t_env *env)
 		if (env->sprite[i].type == 0 || env->sprite[i].type == 3)
 			spritelightapply(env, &env->sprite[i]);
 		if (env->sprite[i].type == 1)
-			while (++j < 8)
+			while (++j < 7)
 				enemylightapply(env, &env->sprite[i], j);
 		else if (env->sprite[i].type == 5)
 			while (++j < 8)
