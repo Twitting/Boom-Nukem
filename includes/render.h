@@ -6,7 +6,7 @@
 /*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:42:12 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 19:09:44 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/15 15:59:12 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,5 +190,14 @@ void			start(t_env *env, SDL_Event *e, t_rend *rend);
 void			wallscale(t_env *env, t_rend *rend);
 void			drawtransp(t_env *env, t_rend *rend, int j);
 int				portaledge(t_env *env, t_rend *rend);
+void			drawbutton(t_env *env, t_rend *rend);
+t_scaler		scaler_init_support1(t_rend *rend);
+t_scaler		scaler_init_support2(t_rend *rend);
+void			butplane_support3(t_rend *rend, t_env *env);
+void			butplane_support(t_rend *rend, int j, t_env *env);
+void			drawsprite(t_env *env, t_rend *rend, int j);
+void			trintersect2(t_rend *rend, t_env *env, int j);
+void			trintersect(t_rend *rend, t_env *env, int j);
+
 
 #endif

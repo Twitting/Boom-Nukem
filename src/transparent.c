@@ -6,62 +6,12 @@
 /*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/07 16:26:23 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/15 13:00:39 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/15 15:58:19 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
 #include "render.h"
-
-void		trintersect2(t_rend *rend, t_env *env, int j)
-{
-	if (R->ttr1.y < R->nfz.x)
-	{
-		if (R->i1.y > 0)
-			R->ttr1 = R->i1;
-		else
-			R->ttr1 = R->i2;
-	}
-	if (R->ttr2.y < R->nfz.x)
-	{
-		if (R->i1.y > 0)
-			R->ttr2 = R->i1;
-		else
-			R->ttr2 = R->i2;
-	}
-	if (fabs(R->ttr2.x - R->ttr1.x) > fabs(R->ttr2.y - R->ttr1.y))
-	{
-		R->u0 = (R->ttr1.x - RO1.x) * (ESJT0->w - 1) / (RO2.x - RO1.x);
-		R->u1 = (R->ttr2.x - RO1.x) * (ESJT0->w - 1) / (RO2.x - RO1.x);
-	}
-	else
-	{
-		R->u0 = (R->ttr1.y - RO1.y) * (ESJT0->w - 1) / (RO2.y - RO1.y);
-		R->u1 = (R->ttr2.y - RO1.y) * (ESJT0->w - 1) / (RO2.y - RO1.y);
-	}
-}
-
-void		trintersect(t_rend *rend, t_env *env, int j)
-{
-	if (R->ttr1.y <= 0 || R->ttr2.y <= 0)
-	{
-		R->nfz.x = 1e-4;
-		R->nfz.y = 5;
-		R->nfside.x = 1e-5;
-		R->nfside.y = 20;
-		R->wintsect1.x = -R->nfside.x;
-		R->wintsect1.y = R->nfz.x;
-		R->wintsect2.x = -R->nfside.y;
-		R->wintsect2.y = R->nfz.y;
-		R->i1 = intersect(R->ttr1, R->ttr2, R->wintsect1, R->wintsect2);
-		R->wintsect1.x = R->nfside.x;
-		R->wintsect2.x = R->nfside.y;
-		R->i2 = intersect(R->ttr1, R->ttr2, R->wintsect1, R->wintsect2);
-		RO1 = (t_xy){R->ttr1.x, R->ttr1.y};
-		RO2 = (t_xy){R->ttr2.x, R->ttr2.y};
-		trintersect2(R, env, j);
-	}
-}
 
 void		trscale(t_rend *rend)
 {

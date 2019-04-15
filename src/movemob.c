@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   movemob.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 17:06:32 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 18:39:21 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/15 15:34:44 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ void	move_mob_support2(t_env *env, double *dxdysxsyee, t_xy *opvoppp, int i)
 	}
 }
 
-void	move_mob_support(t_env *env, int *arr2, double *dxdysxsyee, t_xy *opvoppp)
+void	move_mob_support(t_env *env,
+					int *arr2, double *dxdysxsyee, t_xy *opvoppp)
 {
 	t_sector sect;
 
@@ -65,9 +66,10 @@ void	move_mob_support(t_env *env, int *arr2, double *dxdysxsyee, t_xy *opvoppp)
 			fabs(opvoppp[0].y - opvoppp[2].y) > 2.0)
 		{
 			move_mob_support2(env, dxdysxsyee, opvoppp, arr2[3]);
-			while (++arr2[0] < (int)sect.npoints)
+			while (++arr2[0] < (int)sect.NP)
 			{
-				if (WTF5) < 0)
+				if (WTF1 >= 0 && i_b(OP[1], OP[0], SV[A1 % SNP], SV[(A1 + 1) %
+				SNP]) && PS(OP[0].x, OP[0].y, SV[A1 % SNP], SV[(A2) % SNP]) < 0)
 					move_mob_support4(env, arr2, sect);
 			}
 			env->sprite[arr2[3]].pos1 = opvoppp[0];

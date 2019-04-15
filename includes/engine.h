@@ -6,7 +6,7 @@
 /*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/15 14:57:08 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/15 16:08:10 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,6 +221,34 @@ void				spritedist(t_env *env);
 void				findbutton(t_env *env);
 void				barsanimate(t_env *env);
 int					openbars(t_env *env);
+void				keyboard_events3(t_env *env, SDL_Event *e);
+void				mixtex_support(t_env *env, t_sprite *sprite, SDL_Surface *temp);
+void				mixtex(t_env *env, t_sprite *sprite);
+void				mixkeytex(t_sprite *sprite);
+void				applytermtex(t_env *env, t_sprite *sprite);
+void				neighborstosect(t_sector *sect, char *line, int i);
+void				verttosect(t_env *env, t_sector *sect, char *line, int i);
+void				playerinit(t_env *env);
+void				parseplayer(t_env *env, int fd);
+void				parsesectors_support(t_env *env, int count, char *line, int *i);
+void				parsesectors(t_env *env, int fd);
+void				parsevertexes(t_env *env, int fd);
+void				getvertsectnums_support(t_env *env, char *line);
+void				getvertsectnums(t_env *env);
+void				parsesprites_support(t_env *env, int count, char *line, int *i);
+int					parsesprites(t_env *env, int fd);
+void				spritemaker(t_env *env);
+void				v_collision_support(t_env *env);
+void				v_collision(t_env *env);
+void				h_collision_support(t_env *env, t_xy *d, int s);
+int					h_collision_pt1(t_env *env, t_xy *p, t_xy *d, t_xy *dd);
+void				h_collision_pt2(t_env *env, t_xy *p, t_xy *d, t_xy *dd);
+int					h_collision(t_env *env, t_xy *p, t_xy *d, t_xy *dd);
+void				movement_support(t_env *env, float dx, float dy);
+t_sector			movement_support2(t_xy *arr, int *arr2, t_env *env);
+void				movement_support3(t_env *env, t_sector sect, int *arr2, t_xy *points);
+
+
 /*
 ** menu/main.c
 */
@@ -309,17 +337,16 @@ void				put_hp(t_env *env);
 # define ESECT3 (unsigned char)((double)pix[(j * sprite->texture[0]->w + k) * 4
 # define EPS env->player.sector
 # define SV sect.vertex
+# define PS point_side
 
 
 # define WTF1 sect.neighbors[arr2[0]]
 # define SNP sect.npoints
 # define NP npoints
-# define WTF2 sect.neighbors[arr2[0]] >= 0 && i_b(arr[0], arr[1], SV[arr2[0] % sect.npoints], SV[(arr2[0] + 1) % sect.npoints]) && point_side(arr[1].x, arr[1].y, SV[arr2[0] % sect.npoints], SV[(arr2[0] + 1) % sect.npoints]
-# define WTF3 i_b(*p, b_pd[1], ESEC[EPS].vertex[s % ESEC[EPS].npoints], ESEC[EPS].vertex[(s + 1) % ESEC[EPS].npoints]) && point_side(b_pd[1].x, b_pd[1].y, ESEC[EPS].vertex[s % ESEC[EPS].npoints], ESEC[EPS].vertex[(s + 1) % ESEC[EPS].npoints]
-# define WTF4 i_b(*p, b_pd[1], env->sprite[s].pos1, env->sprite[s].pos2) && point_side(b_pd[1].x, b_pd[1].y, env->sprite[s].pos1, env->sprite[s].pos2
-# define WTF5 sect.neighbors[arr2[0]] >= 0 && i_b(opvoppp[1], opvoppp[0], SV[arr2[0] % sect.npoints], SV[(arr2[0] + 1) % sect.npoints]) && point_side(opvoppp[0].x, opvoppp[0].y, SV[arr2[0] % sect.npoints], SV[(arr2[0] + 1) % sect.npoints]
-
-
+# define VT vertex
+# define A1 arr2[0]
+# define A2 arr2[0] + 1
+# define OP opvoppp
 # define ESJT0 env->sprite[j].texture[0]
 # define EPW env->player.where
 # define EPSIN env->player.sinang

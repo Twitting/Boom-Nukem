@@ -6,38 +6,11 @@
 /*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 21:52:25 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/15 12:34:56 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/15 15:38:46 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
-
-void	keyboard_events3(t_env *env, SDL_Event *e)
-{
-	if (e->type == SDL_KEYUP && e->key.keysym.sym ==
-		1073741901 && env->volume > 0)
-	{
-		env->volume -= 15;
-		if (env->volume < 0)
-			env->volume = 0;
-		Mix_VolumeMusic(env->volume);
-	}
-	if (e->type == SDL_KEYUP && e->key.keysym.sym ==
-		1073741898 && env->volume < 128)
-	{
-		env->volume += 15;
-		if (env->volume > 128)
-			env->volume = 128;
-		Mix_VolumeMusic(env->volume);
-	}
-	if (e->type == SDL_KEYUP && e->key.keysym.sym == 127)
-	{
-		if (env->help)
-			env->help = 0;
-		else
-			env->help = 1;
-	}
-}
 
 void	keyboard_events2(t_env *env, SDL_Event *e, int on)
 {

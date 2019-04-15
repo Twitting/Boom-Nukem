@@ -6,68 +6,11 @@
 /*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/15 12:26:42 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/15 15:43:28 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "render.h"
-
-void	mixtex_support(t_env *env, t_sprite *sprite, SDL_Surface *temp)
-{
-	if (sprite->type == 1 && sprite->visible == 1)
-	{
-		temp = SPRTE[0];
-		SPRTE[0] = SPRTE[sprite->texnum % 7];
-		SPRTE[sprite->texnum % 7] = temp;
-	}
-	else if (sprite->type == 4 && sprite->hp > 666)
-	{
-		if (sprite->hp == 716)
-			SDL_FreeSurface(SPRTE[0]);
-		if ((sprite->hp - 676) % 10 == 0)
-			SPRTE[0] = ET[(sprite->hp - 676) / 10 + 3];
-		sprite->hp--;
-	}
-	else if (sprite->type == 4 && sprite->hp == 666)
-	{
-		temp = SPRTE[0];
-		SPRTE[0] = SPRTE[7];
-		SPRTE[7] = temp;
-		sprite->hp--;
-		enemylightapply(env, sprite, 0);
-	}
-}
-
-void	mixtex(t_env *env, t_sprite *sprite)
-{
-	SDL_Surface *temp;
-
-	temp = NULL;
-	if (sprite->type == 4 && sprite->hp <= 0)
-		sprite->hp = 716;
-	mixtex_support(env, sprite, temp);
-	temp = NULL;
-}
-
-void	mixkeytex(t_sprite *sprite)
-{
-	SDL_Surface	*temp;
-
-	temp = SPRTE[0];
-	SPRTE[0] = SPRTE[sprite->texnum % 8];
-	SPRTE[sprite->texnum % 8] = temp;
-}
-
-void	applytermtex(t_env *env, t_sprite *sprite)
-{
-	SPRTE[0] = ET[14 + sprite->texnum];
-	if (sprite->texnum == 0 || sprite->texnum == 4)
-		sprite->width = 3;
-	else if (sprite->texnum == 6 || sprite->texnum == 2)
-		sprite->width = 1;
-	else
-		sprite->width = 2;
-}
 
 void	termtex(t_env *env, t_sprite *sprite)
 {

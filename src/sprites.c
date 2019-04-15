@@ -6,34 +6,11 @@
 /*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 12:24:34 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/15 12:57:28 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/15 15:50:09 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "render.h"
-
-void	drawsprite(t_env *env, t_rend *rend, int j)
-{
-	int	y;
-	int	*pix;
-	int	txty;
-
-	pix = (int*)env->surface->pixels;
-	pix += R->csprya * WWIN + R->sprx;
-	y = R->csprya - 1;
-	while (++y <= R->cspryb)
-	{
-		txty = (int)((double)(y - R->sprya) /
-			(double)(R->spryb - R->sprya) * ESJT0->h);
-		if (y == HWIN / 2 && R->sprx == WWIN / 2 && env->sprite[j].type == 1 &&
-			((int *)(ESJT0->pixels))[txty % ESJT0->h * ESJT0->w + R->txtx] != 0)
-			env->player.target = j;
-		if (((int *)(ESJT0->pixels))[txty % ESJT0->h * ESJT0->w + R->txtx] != 0)
-			*pix = ((int *)(ESJT0->pixels))[txty %
-				ESJT0->h * ESJT0->w + R->txtx];
-		pix += WWIN;
-	}
-}
 
 void	spriteplane2(t_env *env, t_rend *rend, int j, t_sprque *now)
 {

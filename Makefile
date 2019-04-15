@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: drestles <drestles@student.42.fr>          +#+  +:+       +#+         #
+#    By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/04/14 18:14:51 by drestles         ###   ########.fr        #
+#    Updated: 2019/04/15 16:07:15 by daharwoo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,14 @@ SRC = ./src/main.c \
 		./src/game_bar/key.c \
 		./src/game_bar/head.c \
 		./src/game_bar/bar.c \
-		./src/game_bar/hp.c
+		./src/game_bar/hp.c \
+		./src/support1.c \
+		./src/support2.c \
+		./src/support3.c \
+		./src/support4.c \
+		./src/support5.c \
+		./src/support6.c \
+		./src/support7.c
 
 LIBFT = ./libft/libft.a
 OBJECTS = $(SRC:.c=.o)
