@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   findbutton.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 14:33:24 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 16:27:16 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/15 12:29:24 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	findbutton_di(t_env *env, int i, int s, t_xy *xy)
 	ESIV[s % ESIN].y) / (ESIV[(s + 1) %
 	ESIN].x - ESIV[s % ESIN].x) +
 	ESIV[s % ESIN].y;
-	while (((xy->x - EBUTT.x1) * (xy->x - EBUTT.x1) + (xy->y - EBUTT.y1) * (xy->y - EBUTT.y1)) < BUTTONWIDTH)
+	while (((xy->x - EBUTT.x1) * (xy->x - EBUTT.x1) +
+			(xy->y - EBUTT.y1) * (xy->y - EBUTT.y1)) < BUTTONWIDTH)
 	{
 		xy->y = (xy->x - ESIV[s % ESIN].x) *
 		(ESIV[(s + 1) % ESIN].y -

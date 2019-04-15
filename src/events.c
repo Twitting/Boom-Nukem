@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/07 21:52:25 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/14 20:04:05 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/15 12:34:56 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,8 @@ void	keyboard_events2(t_env *env, SDL_Event *e, int on)
 	keyboard_events3(env, e);
 }
 
-void	keyboard_events(t_env *env, SDL_Event *e)
+void	keyboard_events_support(t_env *env, SDL_Event *e, int on)
 {
-	int		on;
-
-	on = e->type == SDL_KEYDOWN ? 1 : 0;
-	if (e->key.keysym.sym == SDLK_j)
-		env->jetpack = 1;
 	if (e->key.keysym.sym == SDLK_k)
 		env->jetpack = 0;
 	if (e->key.keysym.sym == SDLK_w)
@@ -77,6 +72,16 @@ void	keyboard_events(t_env *env, SDL_Event *e)
 		env->wsad[2] = on;
 	if (e->key.keysym.sym == SDLK_d)
 		env->wsad[3] = on;
+}
+
+void	keyboard_events(t_env *env, SDL_Event *e)
+{
+	int		on;
+
+	on = e->type == SDL_KEYDOWN ? 1 : 0;
+	if (e->key.keysym.sym == SDLK_j)
+		env->jetpack = 1;
+	keyboard_events_support(env, e, on);
 	if (e->key.keysym.sym == SDLK_e && !on && checkswitch(env) &&
 	env->button[EPS].visible == 1)
 	{

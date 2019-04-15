@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/15 11:22:45 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/15 12:26:42 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,17 @@ void	termtex(t_env *env, t_sprite *sprite)
 		sprite->texnum = 7;
 }
 
+void	animation_support(t_env *env, int i)
+{
+	ESPRI.movecount++;
+	if (ESPRI.movecount == 5)
+	{
+		ESPRI.movecount = 0;
+		ESPRI.texnum = ESPRI.texnum == 7 ? 0 : ESPRI.texnum + 1;
+		mixkeytex(&ESPRI);
+	}
+}
+
 void	animation(t_env *env)
 {
 	int	i;
@@ -110,15 +121,7 @@ void	animation(t_env *env)
 		if (ESPRI.type == 4 && ESPRI.hp != 665)
 			mixtex(env, &ESPRI);
 		if (ESPRI.type == 5)
-		{
-			ESPRI.movecount++;
-			if (ESPRI.movecount == 5)
-			{
-				ESPRI.movecount = 0;
-				ESPRI.texnum = ESPRI.texnum == 7 ? 0 : ESPRI.texnum + 1;
-				mixkeytex(&ESPRI);
-			}
-		}
+			animation_support(env, i);
 		if (ESPRI.type == 6)
 		{
 			termtex(env, &ESPRI);
@@ -145,9 +148,9 @@ void	pistolrender(t_env *env)
 			if (((int *)(ET[8 + ESHOOT / 3]->pixels))
 			[xyab[2] % ET[8 + ESHOOT / 3]->h * (ET[8 + ESHOOT / 3]->w) +
 			xyab[3] % ET[8 + ESHOOT / 3]->w] != -1)
-				pix[xyab[1] * WWIN + xyab[0]] = ((int *)(ET[8 + ESHOOT / 3]->pixels))
-			[xyab[2] % ET[8 + ESHOOT / 3]->h * (ET[8 + ESHOOT / 3]->w) +
-			xyab[3] % ET[8 + ESHOOT / 3]->w];
+				pix[xyab[1] * WWIN + xyab[0]] = ((int *)(ET[8 + ESHOOT
+				/ 3]->pixels))[xyab[2] % ET[8 + ESHOOT / 3]->h *
+			(ET[8 + ESHOOT / 3]->w) + xyab[3] % ET[8 + ESHOOT / 3]->w];
 			xyab[3]++;
 		}
 		xyab[2]++;
@@ -156,7 +159,7 @@ void	pistolrender(t_env *env)
 		ESHOOT--;
 }
 
-int		start_engine(t_env *env, SDL_Event *e, t_rend *R)
+int		start_engine(t_env *env, SDL_Event *e, t_rend *rend)
 {
 	int	i;
 

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   portal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/13 11:08:32 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 16:40:33 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/15 12:12:13 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "render.h"
 
-int	portaledge_sup1(t_env *env, t_rend *R, t_xy *p, t_xy *d)
+int	portaledge_sup1(t_env *env, t_rend *rend, t_xy *p, t_xy *d)
 {
 	d->x = p->x + 1;
 	d->y = p->y + 1;
@@ -41,7 +41,7 @@ int	portaledge_sup1(t_env *env, t_rend *R, t_xy *p, t_xy *d)
 	return (0);
 }
 
-int	portaledge_sup2(t_env *env, t_rend *R, t_xy *p, t_xy *d)
+int	portaledge_sup2(t_env *env, t_rend *rend, t_xy *p, t_xy *d)
 {
 	d->x = p->x;
 	d->y = p->y - 2;
@@ -70,7 +70,7 @@ int	portaledge_sup2(t_env *env, t_rend *R, t_xy *p, t_xy *d)
 	return (0);
 }
 
-int	portaledge(t_env *env, t_rend *R)
+int	portaledge(t_env *env, t_rend *rend)
 {
 	t_xy	p;
 	t_xy	d;

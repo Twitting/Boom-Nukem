@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/14 12:23:00 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/14 20:15:12 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/15 12:43:59 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,6 +273,20 @@ void	spritemaker(t_env *env)
 	}
 }
 
+void	makewallsp_support(t_env *env, int i)
+{
+	env->sprite[i + 1].height = MIN(ESEC[env->wallsp.sect1].ceiling,
+			ESEC[env->wallsp.sect2].ceiling);
+	env->sprite[i + 1].floor = MAX(ESEC[env->wallsp.sect1].floor,
+			ESEC[env->wallsp.sect2].floor);
+	env->sprite[i + 1].type = 2;
+	env->sprite[i + 1].texture[0] = IMG_Load("textures/bars.png");
+	ESPRI.openbar = 0;
+	env->sprite[i + 1].openbar = 0;
+	ESPRI.visible = 1;
+	env->sprite[i + 1].visible = 1;
+}
+
 void	makewallsp(t_env *env, int i)
 {
 	ESPRI.pos1.x = env->vertex[env->wallsp.vert1].x;
@@ -285,18 +299,13 @@ void	makewallsp(t_env *env, int i)
 	env->sprite[i + 1].pos2.y = env->vertex[env->wallsp.vert1].y;
 	ESPRI.sector = env->wallsp.sect2;
 	env->sprite[i + 1].sector = env->wallsp.sect1;
-	ESPRI.height = MIN(ESEC[env->wallsp.sect1].ceiling, ESEC[env->wallsp.sect2].ceiling);
-	ESPRI.floor = MAX(ESEC[env->wallsp.sect1].floor, ESEC[env->wallsp.sect2].floor);
+	ESPRI.height = MIN(ESEC[env->wallsp.sect1].ceiling,
+			ESEC[env->wallsp.sect2].ceiling);
+	ESPRI.floor = MAX(ESEC[env->wallsp.sect1].floor,
+			ESEC[env->wallsp.sect2].floor);
 	ESPRI.type = 2;
 	ESPRI.texture[0] = IMG_Load("textures/bars.png");
-	env->sprite[i + 1].height = MIN(ESEC[env->wallsp.sect1].ceiling, ESEC[env->wallsp.sect2].ceiling);
-	env->sprite[i + 1].floor = MAX(ESEC[env->wallsp.sect1].floor, ESEC[env->wallsp.sect2].floor);
-	env->sprite[i + 1].type = 2;
-	env->sprite[i + 1].texture[0] = IMG_Load("textures/bars.png");
-	ESPRI.openbar = 0;
-	env->sprite[i + 1].openbar = 0;
-	ESPRI.visible = 1;
-	env->sprite[i + 1].visible = 1;
+	makewallsp_support(env, i);
 }
 
 void	parsewallsps_support(t_env *env, char *line, int *i)

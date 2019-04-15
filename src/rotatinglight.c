@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rotatinglight.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 15:39:17 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/14 16:06:15 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/15 12:52:11 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,21 @@ char	*gettexenemy(int tex, t_sprite *sprite)
 	return ("textures/7.png");
 }
 
+void	enemylightapply_support(t_sprite *sprite)
+{
+	sprite->hp = 100;
+	sprite->movecount = 0;
+	sprite->texnum = 0;
+	sprite->mobtimer = 0;
+}
+
 void	enemylightapply(t_env *env, t_sprite *sprite, int tex)
 {
 	int				j;
 	int				k;
 	unsigned char	*pix;
 
-	sprite->hp = 100;
-	sprite->movecount = 0;
-	sprite->texnum = 0;
-	sprite->mobtimer = 0;
+	enemylightapply_support(sprite);
 	if (SPRTE[tex] != NULL)
 		SDL_FreeSurface(SPRTE[tex]);
 	SPRTE[tex] = IMG_Load(gettexenemy(tex, sprite));
@@ -51,9 +56,14 @@ void	enemylightapply(t_env *env, t_sprite *sprite, int tex)
 		k = -1;
 		while (++k < SPRTE[tex]->w - 1)
 		{
-			pix[(j * SPRTE[tex]->w + k) * 4] = (unsigned char)((double)pix[(j * SPRTE[tex]->w + k) * 4] / 100 * ESEC[sprite->sector].light);
-			pix[(j * SPRTE[tex]->w + k) * 4 + 1] = (unsigned char)((double)pix[(j * SPRTE[tex]->w + k) * 4 + 1] / 100 * ESEC[sprite->sector].light);
-			pix[(j * SPRTE[tex]->w + k) * 4 + 2] = (unsigned char)((double)pix[(j * SPRTE[tex]->w + k) * 4 + 2] / 100 * ESEC[sprite->sector].light);
+			pix[(j * SPRTE[tex]->w + k) * 4] = (unsigned char)((double)pix[(
+				j * SPRTE[tex]->w + k) * 4] / 100 * ESEC[sprite->sector].light);
+			pix[(j * SPRTE[tex]->w + k) * 4 + 1] = (unsigned char)((double)pix[(
+				j * SPRTE[tex]->w + k) * 4 + 1] /
+				100 * ESEC[sprite->sector].light);
+			pix[(j * SPRTE[tex]->w + k) * 4 + 2] = (unsigned char)((double)pix[(
+				j * SPRTE[tex]->w + k) * 4 + 2] /
+				100 * ESEC[sprite->sector].light);
 		}
 	}
 }

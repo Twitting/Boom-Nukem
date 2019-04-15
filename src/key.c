@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 21:30:49 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/14 16:05:25 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/15 12:36:31 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	keylightapply(t_env *env, t_sprite *sprite, int tex)
 
 	sprite->movecount = 0;
 	sprite->texnum = 0;
-	sprite->mobtimer = 0;
 	if (SPRTE[tex] != NULL)
 		SDL_FreeSurface(SPRTE[tex]);
 	SPRTE[tex] = IMG_Load(gettexkey(tex));
@@ -62,9 +61,12 @@ void	keylightapply(t_env *env, t_sprite *sprite, int tex)
 		k = -1;
 		while (++k < SPRTE[tex]->w - 1)
 		{
-			pix[(j * SPRTE[tex]->w + k) * 4] = (unsigned char)((double)pix[(j * SPRTE[tex]->w + k) * 4] / 100 * ESEC[sprite->sector].light);
-			pix[(j * SPRTE[tex]->w + k) * 4 + 1] = (unsigned char)((double)pix[(j * SPRTE[tex]->w + k) * 4 + 1] / 100 * ESEC[sprite->sector].light);
-			pix[(j * SPRTE[tex]->w + k) * 4 + 2] = (unsigned char)((double)pix[(j * SPRTE[tex]->w + k) * 4 + 2] / 100 * ESEC[sprite->sector].light);
+			pix[(j * SPRTE[tex]->w + k) * 4] = (unsigned char)((double)pix[(j *
+				SPRTE[tex]->w + k) * 4] / 100 * ESEC[sprite->sector].light);
+			pix[(j * SPRTE[tex]->w + k) * 4 + 1] = (unsigned char)((double)pix[(
+			j * SPRTE[tex]->w + k) * 4 + 1] / 100 * ESEC[sprite->sector].light);
+			pix[(j * SPRTE[tex]->w + k) * 4 + 2] = (unsigned char)((double)pix[(
+			j * SPRTE[tex]->w + k) * 4 + 2] / 100 * ESEC[sprite->sector].light);
 		}
 	}
 }

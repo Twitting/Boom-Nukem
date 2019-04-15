@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   walls2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 12:11:56 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 20:39:01 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/15 13:13:51 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "render.h"
 
-void	vline2(t_env *env, t_rend *R, int y1, int y2, t_scaler ty)
+void		vline2(t_env *env, t_rend *rend, int y1, int y2, t_scaler ty)
 {
 	int *pix;
 	int y;
@@ -25,17 +25,20 @@ void	vline2(t_env *env, t_rend *R, int y1, int y2, t_scaler ty)
 	y = y1;
 	while (++y <= y2)
 	{
-		txty = scaler_next(&ty) * (R->nowsect->ceiling - R->nowsect->floor) / 64;
-		*pix = ((int *)(R->NST[1]->pixels))[txty % R->NST[1]->h * R->NST[1]->w + R->txtx % R->NST[1]->w];
+		txty = scaler_next(&ty) * (R->nowsect->ceiling -
+			R->nowsect->floor) / 64;
+		*pix = ((int *)(R->NST[1]->pixels))[txty
+			% R->NST[1]->h * R->NST[1]->w + R->txtx % R->NST[1]->w];
 		pix += WWIN;
 	}
 }
 
-void	wallscale(t_env *env, t_rend *R)
+void		wallscale(t_env *env, t_rend *rend)
 {
 	if (R->t1.y <= 0.5)
 	{
-		R->t1.x = (0.5 - R->t1.y) * (R->t2.x - R->t1.x) / (R->t2.y - R->t1.y) + R->t1.x;
+		R->t1.x = (0.5 - R->t1.y) * (R->t2.x - R->t1.x)
+			/ (R->t2.y - R->t1.y) + R->t1.x;
 		R->t1.y = 0.5;
 	}
 	R->xscale1 = WWIN * HFOV / R->t1.y;
@@ -53,12 +56,13 @@ void	wallscale(t_env *env, t_rend *R)
 	}
 }
 
-void	tomapccord(t_rend *R, t_env *env)
+void		tomapccord(t_rend *rend, t_env *env)
 {
 	double rtx;
 	double rtz;
 
-	R->mapz = (R->hei) * HWIN * VFOV / ((HWIN / 2 - (R->y)) - env->player.yaw * HWIN * VFOV);
+	R->mapz = (R->hei) * HWIN * VFOV / ((HWIN / 2
+		- (R->y)) - env->player.yaw * HWIN * VFOV);
 	R->mapx = (R->mapz) * (WWIN / 2 - (R->x)) / (WWIN * HFOV);
 	rtx = (R->mapz) * EPCOS + (R->mapx) * EPSIN;
 	rtz = (R->mapz) * EPSIN - (R->mapx) * EPCOS;
@@ -66,15 +70,21 @@ void	tomapccord(t_rend *R, t_env *env)
 	R->mapz = rtz + EPW.y;
 }
 
-void	textceilfloor(t_env *env, t_rend *R)
+void		textceilfloor_support(t_env *env, t_rend *rend)
+{
+	R->hei = R->y < R->cya ? R->yceil : R->yfloor;
+	tomapccord(R, env);
+	R->txtx = R->mapx * R->NST[0]->w / 12;
+	R->txtz = R->mapz * R->NST[0]->w / 12;
+	R->pel = ((int*)R->NST[0]->pixels)[abs(R->txtz) %
+	R->NST[0]->h * R->NST[0]->w + abs(R->txtx) % R->NST[0]->w];
+}
+
+void		textceilfloor(t_env *env, t_rend *rend)
 {
 	if (R->y >= R->cyb)
 	{
-		R->hei = R->y < R->cya ? R->yceil : R->yfloor;
-		tomapccord(R, env);
-		R->txtx = R->mapx * R->NST[0]->w / 12;
-		R->txtz = R->mapz * R->NST[0]->w / 12;
-		R->pel = ((int*)R->NST[0]->pixels)[abs(R->txtz) % R->NST[0]->h * R->NST[0]->w + abs(R->txtx) % R->NST[0]->w];
+		textceilfloor_support(env, rend);
 	}
 	if (R->y < R->cya)
 	{
@@ -84,15 +94,18 @@ void	textceilfloor(t_env *env, t_rend *R)
 			tomapccord(R, env);
 			R->txtx = R->mapx * R->NST[2]->w / 12;
 			R->txtz = R->mapz * R->NST[2]->w / 12;
-			R->pel = ((int*)R->NST[2]->pixels)[abs(R->txtz) % R->NST[2]->h * R->NST[2]->w + abs(R->txtx) % R->NST[2]->w];
+			R->pel = ((int*)R->NST[2]->pixels)[abs(R->txtz) %
+			R->NST[2]->h * R->NST[2]->w + abs(R->txtx) % R->NST[2]->w];
 		}
 		else
-			R->pel = ((int *)(ET[2]->pixels))[(int)(R->y + 100 * (env->player.yaw + 3)) % ET[2]->h * ET[2]->w + (int)(PANG / 6.2 * ET[2]->w + R->x) % ET[2]->w];
+			R->pel = ((int *)(ET[2]->pixels))[(int)(R->y + 100 *
+			(env->player.yaw + 3)) % ET[2]->h * ET[2]->w +
+			(int)(PANG / 6.2 * ET[2]->w + R->x) % ET[2]->w];
 	}
 	((int*)env->surface->pixels)[R->y * WWIN + R->x] = R->pel;
 }
 
-t_scaler	scaler_init_support7(t_rend *R, t_env *env)
+t_scaler	scaler_init_support7(t_rend *rend, t_env *env)
 {
 	t_scaler temp;
 
@@ -108,7 +121,7 @@ t_scaler	scaler_init_support7(t_rend *R, t_env *env)
 	return (temp);
 }
 
-t_scaler	scaler_init_support8(t_rend *R, t_env *env)
+t_scaler	scaler_init_support8(t_rend *rend, t_env *env)
 {
 	t_scaler temp;
 
@@ -124,7 +137,7 @@ t_scaler	scaler_init_support8(t_rend *R, t_env *env)
 	return (temp);
 }
 
-void	rendportals(t_env *env, t_rend *R)
+void		rendportals(t_env *env, t_rend *rend)
 {
 	R->nya = (R->x - R->x1) * (R->ny2a - R->ny1a) / (R->x2 - R->x1) + R->ny1a;
 	R->ncya = CLAMP(R->nya, R->ytop[R->x], R->ybottom[R->x]);
@@ -136,12 +149,14 @@ void	rendportals(t_env *env, t_rend *R)
 		if (ESEC[R->nowsect->neighbors[R->s]].sky == 1)
 			R->ytop[R->x] = CLAMP(R->cya + 1, R->ytop[R->x], HWIN - 1);
 		else
-			R->ytop[R->x] = CLAMP(MAX(R->cya, R->ncya), R->ytop[R->x], HWIN - 1);
+			R->ytop[R->x] = CLAMP(MAX(R->cya, R->ncya),
+				R->ytop[R->x], HWIN - 1);
 	}
 	else
 	{
 		if (ESEC[R->nowsect->neighbors[R->s]].sky == 1)
-			R->ytop[R->x] = CLAMP(MIN(R->cya, R->ncya), R->ytop[R->x], HWIN - 1);
+			R->ytop[R->x] = CLAMP(MIN(R->cya, R->ncya),
+				R->ytop[R->x], HWIN - 1);
 		else
 			R->ytop[R->x] = CLAMP(R->ncya, R->ytop[R->x], HWIN - 1);
 	}
@@ -149,9 +164,9 @@ void	rendportals(t_env *env, t_rend *R)
 	R->ybottom[R->x] = CLAMP(MIN(R->cyb, R->ncyb), 0, R->ybottom[R->x]);
 }
 
-void	wallxloop(t_env *env, t_rend *R)
+void		wallxloop(t_env *env, t_rend *rend)
 {
-	while (R->x <= R->endx)
+	while (R->x++ <= R->endx)
 	{
 		R->ya = scaler_next(&R->ya_int);
 		R->cya = CLAMP(R->ya, R->ytop[R->x], R->ybottom[R->x]);
@@ -167,12 +182,13 @@ void	wallxloop(t_env *env, t_rend *R)
 			}
 			textceilfloor(env, R);
 		}
-		R->txtx = ((R->u0 * ((R->x2 - R->x) * R->t2.y) + R->u1 * ((R->x - R->x1) * R->t1.y))\
-		/ ((R->x2 - R->x) * R->t2.y + (R->x - R->x1) * R->t1.y)) * (fabs(R->vx2 - R->vx1) + fabs(R->vy2 - R->vy1)) * 0.04;
+		R->txtx = ((R->u0 * ((R->x2 - R->x) * R->t2.y)
+			+ R->u1 * ((R->x - R->x1) * R->t1.y))\
+		/ ((R->x2 - R->x) * R->t2.y + (R->x - R->x1) * R->t1.y))
+		* (fabs(R->vx2 - R->vx1) + fabs(R->vy2 - R->vy1)) * 0.04;
 		if (R->nowsect->neighbors[R->s] >= 0)
 			rendportals(env, R);
 		else
 			vline2(env, R, R->cya, R->cyb, scaler_init_support7(R, env));
-		R->x++;
 	}
 }

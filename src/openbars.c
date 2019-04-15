@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   openbars.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/14 14:30:58 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 16:01:06 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/15 12:44:31 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "render.h"
 
-int	openbars(t_env *env)
+int		openbars(t_env *env)
 {
 	int	i;
 
@@ -39,29 +39,32 @@ void	barsanimate2(t_env *env, int i)
 	xy.x = ESPRI.pos2.x - 0.3;
 	if (xy.x < ESPRI.pos1.x)
 		xy.x = ESPRI.pos1.x;
-	xy.y = (xy.x - ESPRI.pos1.x) *	(ESPRI.pos2.y - ESPRI.pos1.y) /
+	xy.y = (xy.x - ESPRI.pos1.x) * (ESPRI.pos2.y - ESPRI.pos1.y) /
 	(ESPRI.pos2.x - ESPRI.pos1.x) + ESPRI.pos1.y;
 	ESPRI.pos2.x = xy.x;
 	ESPRI.pos2.y = xy.y;
 }
 
+void	barsanimate3(t_env *env, int i)
+{
+	if (ESPRI.pos1.y < ESPRI.pos2.y)
+	{
+		ESPRI.pos2.y = ESPRI.pos2.y - 0.4;
+		if (ESPRI.pos1.y > ESPRI.pos2.y)
+			ESPRI.pos2.y = ESPRI.pos1.y;
+	}
+	else
+	{
+		ESPRI.pos2.y = ESPRI.pos2.y + 0.4;
+		if (ESPRI.pos1.y < ESPRI.pos2.y)
+			ESPRI.pos2.y = ESPRI.pos1.y;
+	}
+}
+
 void	barsanimate1(t_env *env, int i)
 {
 	if (ESPRI.pos1.x == ESPRI.pos2.x)
-	{
-		if (ESPRI.pos1.y < ESPRI.pos2.y)
-		{
-			ESPRI.pos2.y = ESPRI.pos2.y - 0.4;
-			if (ESPRI.pos1.y > ESPRI.pos2.y)
-				ESPRI.pos2.y = ESPRI.pos1.y;
-		}
-		else
-		{
-			ESPRI.pos2.y = ESPRI.pos2.y + 0.4;
-			if (ESPRI.pos1.y < ESPRI.pos2.y)
-				ESPRI.pos2.y = ESPRI.pos1.y;
-		}
-	}
+		barsanimate3(env, i);
 	else if (ESPRI.pos1.y == ESPRI.pos2.y)
 	{
 		if (ESPRI.pos1.x < ESPRI.pos2.x)

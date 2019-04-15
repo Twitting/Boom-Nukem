@@ -6,14 +6,14 @@
 /*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/06 17:47:12 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 19:20:22 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/15 12:18:44 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
 #include "render.h"
 
-void		drawbutton(t_env *env, t_rend *R)
+void		drawbutton(t_env *env, t_rend *rend)
 {
 	int y;
 	int *pix;
@@ -34,7 +34,7 @@ void		drawbutton(t_env *env, t_rend *R)
 	}
 }
 
-static void	butintersect_support(t_rend *R, t_env *env)
+static void	butintersect_support(t_rend *rend, t_env *env)
 {
 	if (R->tbut1.y < R->nfz.x)
 	{
@@ -62,7 +62,7 @@ static void	butintersect_support(t_rend *R, t_env *env)
 	}
 }
 
-static void	butintersect(t_rend *R, t_env *env)
+static void	butintersect(t_rend *rend, t_env *env)
 {
 	if (R->tbut1.y <= 0 || R->tbut2.y <= 0)
 	{
@@ -86,7 +86,7 @@ static void	butintersect(t_rend *R, t_env *env)
 	}
 }
 
-t_scaler	scaler_init_support1(t_rend *R)
+t_scaler	scaler_init_support1(t_rend *rend)
 {
 	t_scaler temp;
 
@@ -102,7 +102,7 @@ t_scaler	scaler_init_support1(t_rend *R)
 	return (temp);
 }
 
-t_scaler	scaler_init_support2(t_rend *R)
+t_scaler	scaler_init_support2(t_rend *rend)
 {
 	t_scaler temp;
 
@@ -118,17 +118,23 @@ t_scaler	scaler_init_support2(t_rend *R)
 	return (temp);
 }
 
-void		butplane_support(t_rend *R, int j, t_env *env)
+void		butplane_support3(t_rend *rend, t_env *env)
 {
-	R->butx2 = WWIN / 2 - (int)((R->tbut2.x) * R->butxscale2);
-	if (R->butx1 == R->butx2 || R->butx1 > R->sprq[j].sx2 || R->butx2 < R->sprq[j].sx1)
-		return ;
-	R->butceil = R->nowsect->floor + 5 + BUTTONHEIGHT - EPW.z;
-	R->butfloor = R->nowsect->floor + 5 - EPW.z;
 	R->buty1a = HWIN / 2 - (int)(YAW(R->butceil, R->tbut1.y) * R->butyscale1);
 	R->buty1b = HWIN / 2 - (int)(YAW(R->butfloor, R->tbut1.y) * R->butyscale1);
 	R->buty2a = HWIN / 2 - (int)(YAW(R->butceil, R->tbut2.y) * R->butyscale2);
 	R->buty2b = HWIN / 2 - (int)(YAW(R->butfloor, R->tbut2.y) * R->butyscale2);
+}
+
+void		butplane_support(t_rend *rend, int j, t_env *env)
+{
+	R->butx2 = WWIN / 2 - (int)((R->tbut2.x) * R->butxscale2);
+	if (R->butx1 == R->butx2 || R->butx1 > R->sprq[j].sx2 ||
+				R->butx2 < R->sprq[j].sx1)
+		return ;
+	R->butceil = R->nowsect->floor + 5 + BUTTONHEIGHT - EPW.z;
+	R->butfloor = R->nowsect->floor + 5 - EPW.z;
+	butplane_support3(rend, env);
 	R->butbegx = MAX(R->butx1, R->sprq[j].sx1);
 	R->butendx = MIN(R->butx2, R->sprq[j].sx2);
 	R->butx = R->butbegx;
@@ -137,15 +143,26 @@ void		butplane_support(t_rend *R, int j, t_env *env)
 	while (R->butx++ < R->butendx)
 	{
 		R->butya = scaler_next(&R->butya_int);
-		R->cbutya = CLAMP(R->butya, R->sprq[j].ytop[R->butx], R->sprq[j].ybottom[R->butx]);
+		R->cbutya = CLAMP(R->butya, R->sprq[j].ytop[R->butx],
+					R->sprq[j].ybottom[R->butx]);
 		R->butyb = scaler_next(&R->butyb_int);
-		R->cbutyb = CLAMP(R->butyb, R->sprq[j].ytop[R->butx], R->sprq[j].ybottom[R->butx]);
-		R->txtx = (int)((double)(R->butx - R->butx1) / (double)(R->butx2 - R->butx1) * ET[1]->w);
+		R->cbutyb = CLAMP(R->butyb, R->sprq[j].ytop[R->butx],
+					R->sprq[j].ybottom[R->butx]);
+		R->txtx = (int)((double)(R->butx - R->butx1) /
+				(double)(R->butx2 - R->butx1) * ET[1]->w);
 		drawbutton(env, R);
 	}
 }
 
-void		butplane(t_env *env, t_rend *R, int j)
+void		butplane_support2(t_env *env, t_rend *rend)
+{
+	R->tbut1.x = R->vbut1.x * EPSIN - R->vbut1.y * EPCOS;
+	R->tbut1.y = R->vbut1.x * EPCOS + R->vbut1.y * EPSIN;
+	R->tbut2.x = R->vbut2.x * EPSIN - R->vbut2.y * EPCOS;
+	R->tbut2.y = R->vbut2.x * EPCOS + R->vbut2.y * EPSIN;
+}
+
+void		butplane(t_env *env, t_rend *rend, int j)
 {
 	if (R->sprq[j].visible == 0 || env->button[j].visible == 0)
 		return ;
@@ -154,16 +171,14 @@ void		butplane(t_env *env, t_rend *R, int j)
 	R->vbut1.y = env->button[j].y1 - EPW.y;
 	R->vbut2.x = env->button[j].x2 - EPW.x;
 	R->vbut2.y = env->button[j].y2 - EPW.y;
-	R->tbut1.x = R->vbut1.x * EPSIN - R->vbut1.y * EPCOS;
-	R->tbut1.y = R->vbut1.x * EPCOS + R->vbut1.y * EPSIN;
-	R->tbut2.x = R->vbut2.x * EPSIN - R->vbut2.y * EPCOS;
-	R->tbut2.y = R->vbut2.x * EPCOS + R->vbut2.y * EPSIN;
+	butplane_support2(env, rend);
 	if (R->tbut1.y <= 0 && R->tbut2.y <= 0)
 		return ;
 	butintersect(R, env);
 	if (R->tbut1.y <= 0.5)
 	{
-		R->tbut1.x = (0.5 - R->tbut1.y) * (R->tbut2.x - R->tbut1.x) / (R->tbut2.y - R->tbut1.y) + R->tbut1.x;
+		R->tbut1.x = (0.5 - R->tbut1.y) * (R->tbut2.x - R->tbut1.x) /
+				(R->tbut2.y - R->tbut1.y) + R->tbut1.x;
 		R->tbut1.y = 0.5;
 	}
 	R->butxscale1 = WWIN * HFOV / R->tbut1.y;
@@ -174,7 +189,7 @@ void		butplane(t_env *env, t_rend *R, int j)
 	butplane_support(R, j, env);
 }
 
-void		renderbutton(t_env *env, t_rend *R)
+void		renderbutton(t_env *env, t_rend *rend)
 {
 	int i;
 

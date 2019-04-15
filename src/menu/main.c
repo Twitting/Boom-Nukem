@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/08 06:00:22 by drestles          #+#    #+#             */
-/*   Updated: 2019/04/14 17:41:34 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/15 12:12:13 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	menu(t_env *env, SDL_Event *e)
 ** STATE 6 GAME OVER
 */
 
-void	start(t_env *env, SDL_Event *e, t_rend *R)
+void	start(t_env *env, SDL_Event *e, t_rend *rend)
 {
 	if (env->state == 0)
 		menu(env, e);

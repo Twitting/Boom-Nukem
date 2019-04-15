@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   spritedist.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 12:26:48 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 15:31:34 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/15 12:12:13 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	spritedist(t_env *env)
 	}
 }
 
-void	drawtransp(t_env *env, t_rend *R, int j)
+void	drawtransp(t_env *env, t_rend *rend, int j)
 {
 	int	y;
 	int	*pix;

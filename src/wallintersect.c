@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   wallintersect.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 12:12:44 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/12 12:13:01 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/15 12:12:13 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "render.h"
 
-void	wallintersect_1(t_rend *R)
+void	wallintersect_1(t_rend *rend)
 {
 	RO1 = (t_xy){R->t1.x, R->t1.y};
 	RO2 = (t_xy){R->t2.x, R->t2.y};
@@ -31,7 +31,7 @@ void	wallintersect_1(t_rend *R)
 	}
 }
 
-void	wallintersect_2(t_rend *R, t_env *env)
+void	wallintersect_2(t_rend *rend, t_env *env)
 {
 	if (R->t2.y < R->nfz.x)
 	{
@@ -58,7 +58,7 @@ void	wallintersect_2(t_rend *R, t_env *env)
 	}
 }
 
-void	wallintersect(t_rend *R, t_env *env)
+void	wallintersect(t_rend *rend, t_env *env)
 {
 	if (R->t1.y <= 0 || R->t2.y <= 0)
 	{

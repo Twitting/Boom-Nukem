@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:20:03 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/14 20:33:09 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/15 13:12:35 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	remove_src(void)
 int		main(int argc, char **argv)
 {
 	t_env		*env;
-	t_rend		*R;
+	t_rend		*rend;
 	SDL_Event	e;
 
 	if (!(env = (t_env *)malloc(sizeof(t_env))))

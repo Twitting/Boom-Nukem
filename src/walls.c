@@ -6,13 +6,13 @@
 /*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 10:37:22 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 19:19:46 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/15 13:04:01 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "render.h"
 
-t_scaler	scaler_init_support5(t_rend *R)
+t_scaler	scaler_init_support5(t_rend *rend)
 {
 	t_scaler temp;
 
@@ -28,7 +28,7 @@ t_scaler	scaler_init_support5(t_rend *R)
 	return (temp);
 }
 
-t_scaler	scaler_init_support6(t_rend *R)
+t_scaler	scaler_init_support6(t_rend *rend)
 {
 	t_scaler temp;
 
@@ -44,7 +44,7 @@ t_scaler	scaler_init_support6(t_rend *R)
 	return (temp);
 }
 
-void	wallstart(t_env *env, t_rend *R, t_now *now)
+void		wallstart(t_env *env, t_rend *rend, t_now *now)
 {
 	R->y1a = HWIN / 2 - (int)(YAW(R->yceil, R->t1.y) * R->yscale1);
 	R->y1b = HWIN / 2 - (int)(YAW(R->yfloor, R->t1.y) * R->yscale1);
@@ -62,7 +62,7 @@ void	wallstart(t_env *env, t_rend *R, t_now *now)
 	wallxloop(env, R);
 }
 
-void	calc_support(t_env *env, t_rend *R)
+void		calc_support(t_env *env, t_rend *rend)
 {
 	R->vx1 = R->nowsect->vertex[R->s % R->nowsect->npoints].x - EPW.x;
 	R->vy1 = R->nowsect->vertex[R->s % R->nowsect->npoints].y - EPW.y;
@@ -74,7 +74,7 @@ void	calc_support(t_env *env, t_rend *R)
 	R->t2.y = R->vx2 * EPCOS + R->vy2 * EPSIN;
 }
 
-void	startcalc(t_env *env, t_rend *R, t_now *now)
+void		startcalc(t_env *env, t_rend *rend, t_now *now)
 {
 	calc_support(env, R);
 	if (R->t1.y <= 0 && R->t2.y <= 0)
@@ -86,23 +86,22 @@ void	startcalc(t_env *env, t_rend *R, t_now *now)
 	if (R->x1 >= R->x2 || R->x2 < now->sx1 || R->x1 > now->sx2)
 		return ;
 	wallstart(env, R, now);
-	if (R->nowsect->neighbors[R->s] >= 0 && R->endx >= R->beginx && (R->head + MAXQUEUE + 1 - R->tail) % MAXQUEUE)
+	if (R->nowsect->neighbors[R->s] >= 0 && R->endx >=
+		R->beginx && (R->head + MAXQUEUE + 1 - R->tail) % MAXQUEUE)
 	{
 		if (portaledge(env, R) == 0)
-			*(R->head) = (t_now){R->nowsect->neighbors[R->s], R->beginx, R->endx};
+			*(R->head) = (t_now){R->nowsect->neighbors[
+				R->s], R->beginx, R->endx};
 		else if (portaledge(env, R) == 1)
-		{
-			if (R->t2.y > 0)
-				*(R->head) = (t_now){R->nowsect->neighbors[R->s], 0, R->endx};
-			else
-				*(R->head) = (t_now){R->nowsect->neighbors[R->s], R->beginx, 0};
-		}
+			*(R->head) = R->t2.y > 0 ? (t_now){R->nowsect->neighbors[
+				R->s], 0, R->endx} : (t_now){
+					R->nowsect->neighbors[R->s], R->beginx, 0};
 		if (++R->head == R->queue + MAXQUEUE)
 			R->head = R->queue;
 	}
 }
 
-void	render_queue(t_env *env, t_rend *R, t_now *now)
+void		render_queue(t_env *env, t_rend *rend, t_now *now)
 {
 	R->sprq[now->sectorno].sector = now->sectorno;
 	if (R->sprq[now->sectorno].visible == 1)
@@ -130,7 +129,7 @@ void	render_queue(t_env *env, t_rend *R, t_now *now)
 		startcalc(env, R, now);
 }
 
-void	init_wall(t_env *env, t_rend *R)
+void		init_wall(t_env *env, t_rend *rend)
 {
 	R->head = R->queue;
 	R->tail = R->queue;
@@ -145,7 +144,7 @@ void	init_wall(t_env *env, t_rend *R)
 	*(R->head) = (t_now){EPS, 0, WWIN - 1};
 }
 
-void	render_wall(t_env *env, t_rend *R)
+void		render_wall(t_env *env, t_rend *rend)
 {
 	t_now		now;
 	int			renderedsect[env->nsectors];
