@@ -6,7 +6,7 @@
 /*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:42:12 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/15 15:59:12 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/15 16:23:48 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,5 @@ void			butplane_support(t_rend *rend, int j, t_env *env);
 void			drawsprite(t_env *env, t_rend *rend, int j);
 void			trintersect2(t_rend *rend, t_env *env, int j);
 void			trintersect(t_rend *rend, t_env *env, int j);
-
 
 #endif
