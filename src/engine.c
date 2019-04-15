@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 18:43:41 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/15 11:22:45 by twitting         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,7 @@ void	mixtex_support(t_env *env, t_sprite *sprite, SDL_Surface *temp)
 		if (sprite->hp == 716)
 			SDL_FreeSurface(SPRTE[0]);
 		if ((sprite->hp - 676) % 10 == 0)
-		{
 			SPRTE[0] = ET[(sprite->hp - 676) / 10 + 3];
-			sprite->height--;
-		}
 		sprite->hp--;
 	}
 	else if (sprite->type == 4 && sprite->hp == 666)
@@ -36,7 +33,6 @@ void	mixtex_support(t_env *env, t_sprite *sprite, SDL_Surface *temp)
 		temp = SPRTE[0];
 		SPRTE[0] = SPRTE[7];
 		SPRTE[7] = temp;
-		sprite->height = 5;
 		sprite->hp--;
 		enemylightapply(env, sprite, 0);
 	}
