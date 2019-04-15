@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 18:28:49 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/15 16:31:54 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/15 16:44:34 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	mob_attack(t_env *env)
 			{
 				ESPRI.mobtimer += (clock() - env->frame) /
 											CLOCKS_PER_SEC;
-				if (ESPRI.mobtimer >= 0.3)
+				if (ESPRI.mobtimer >= 0.2)
 					mobcrushesface(env, i);
 			}
 			else
