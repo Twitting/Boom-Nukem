@@ -6,7 +6,7 @@
 /*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/15 12:30:54 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/15 14:05:00 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -305,8 +305,8 @@ void				put_hp(t_env *env);
 # define SPRTE sprite->texture
 # define ESEC env->sector
 # define ESECT ESEC[ijkt[0]].text[ijkt[3]]
-# define ESECT2 (unsigned char)((double)pix[(ijkt[1] * ESECT->w + ijkt[2]) * 4
-# define ESECT3 (unsigned char)((double)pix[(j * SPRTE[0]->w + k) * 4
+# define ESECT2 (unsigned char)((double)pix[(ijkt[1] * env->sector->w + ijkt[2]) * 4
+# define ESECT3 (unsigned char)((double)pix[(j * sprite->texture[0]->w + k) * 4
 # define EPS env->player.sector
 # define SV sect.vertex
 # define WTF1 i_b(arr[0], arr[1], ESEC[EPS].vertex[arr2[0] % ESEC[EPS].npoints], ESEC[EPS].vertex[(arr2[0] + 1) % ESEC[EPS].npoints]) && point_side(arr[1].x,arr[1].y, ESEC[EPS].vertex[arr2[0] % ESEC[EPS].npoints], ESEC[EPS].vertex[(arr2[0] + 1) % ESEC[EPS].npoints]
@@ -324,5 +324,5 @@ void				put_hp(t_env *env);
 # define NST nowsect->text
 # define PANG env->player.angle
 # define ET env->text
-
+# define PIXUD j * sprite->texture[0]->w + k) * 4
 #endif

@@ -6,7 +6,7 @@
 /*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:10:46 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/15 12:38:16 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/15 14:29:53 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,11 @@ void	h_collision_support(t_env *env, double *arr, t_xy *b_pd, t_xy *d, int s)
 			- (env->ducking ? DUCKHEIGHT : EYEHEIGHT) + KNEEHEIGHT)
 	{
 		b_pd[0].x = ESEC[EPS].vertex[(s + 1) %
-				ESEC[EPS].npoints].x - ESEC[EPS].vertex[s % ESEC[EPS].npoints].x;
+				ESEC[EPS].npoints].x - ESEC[EPS].vertex[s
+				% ESEC[EPS].npoints].x;
 		b_pd[0].y = ESEC[EPS].vertex[(s + 1) %
-				ESEC[EPS].npoints].y - ESEC[EPS].vertex[s % ESEC[EPS].npoints].y;
+				ESEC[EPS].npoints].y - ESEC[EPS].vertex[s
+				% ESEC[EPS].npoints].y;
 		arr[0] = d->x;
 		d->x = b_pd[0].x * (d->x * b_pd[0].x + b_pd[0].y * d->y) /
 				(b_pd[0].x * b_pd[0].x + b_pd[0].y * b_pd[0].y);
@@ -69,6 +71,8 @@ void	h_collision_support(t_env *env, double *arr, t_xy *b_pd, t_xy *d, int s)
 		env->moving = -1;
 	}
 }
+
+
 
 int		h_collision(t_env *env, t_xy *p, t_xy *d, t_xy *dd)
 {
@@ -81,7 +85,7 @@ int		h_collision(t_env *env, t_xy *p, t_xy *d, t_xy *dd)
 	s = -1;
 	while (++s < env->sprcount)
 		if (env->sprite[s].type == 2)
-			if (WTF4) < 0)
+			if (i_b(*p, b_pd[1], env->sprite[s].pos1, env->sprite[s].pos2) && point_side(b_pd[1].x, b_pd[1].y, env->sprite[s].pos1, env->sprite[s].pos2) < 0)
 			{
 				b_pd[0].x = env->sprite[s].pos2.x - env->sprite[s].pos1.x;
 				b_pd[0].y = env->sprite[s].pos2.y - env->sprite[s].pos1.y;
@@ -94,7 +98,7 @@ int		h_collision(t_env *env, t_xy *p, t_xy *d, t_xy *dd)
 	s = -1;
 	while (++s < (int)ESEC[EPS].npoints)
 	{
-		if (WTF3) < 0)
+		if (i_b(*p, b_pd[1], ESEC[EPS].vertex[s % ESEC[EPS].npoints], ESEC[EPS].vertex[(s + 1) % ESEC[EPS].npoints]) && point_side(b_pd[1].x, b_pd[1].y, ESEC[EPS].vertex[s % ESEC[EPS].npoints], ESEC[EPS].vertex[(s + 1) % ESEC[EPS].npoints]) < 0)
 		{
 			arr[1] = ESEC[EPS].neighbors[s] < 0 ? 9e9 : MAX(ESEC[EPS].floor, ESEC[ESEC[EPS].neighbors[s]].floor);
 			arr[2] = ESEC[EPS].neighbors[s] < 0 ? 9e9 : MIN(ESEC[EPS].ceiling, ESEC[ESEC[EPS].neighbors[s]].ceiling);
@@ -166,11 +170,11 @@ void	movement(t_env *env, float dx, float dy)
 	arr2[1] = -1;
 	while (++arr2[0] < (int)ESEC[EPS].npoints)
 		if (sect.neighbors[arr2[0]] < 0)
-			if (WTF1) < 0)
+			if (i_b(arr[0], arr[1], ESEC[EPS].vertex[arr2[0] % ESEC[EPS].npoints], ESEC[EPS].vertex[(arr2[0] + 1) % ESEC[EPS].npoints]) && point_side(arr[1].x,arr[1].y, ESEC[EPS].vertex[arr2[0] % ESEC[EPS].npoints], ESEC[EPS].vertex[(arr2[0] + 1) % ESEC[EPS].npoints]) < 0)
 				return ;
 	arr2[0] = -1;
 	while (++arr2[0] < (int)sect.npoints)
-		if (WTF2) < 0)
+		if (sect.neighbors[arr2[0]] >= 0 && i_b(arr[0], arr[1], SV[arr2[0] % sect.npoints], SV[(arr2[0] + 1) % sect.npoints]) && point_side(arr[1].x, arr[1].y, SV[arr2[0] % sect.npoints], SV[(arr2[0] + 1) % sect.npoints]) < 0)
 		{
 			EPS = sect.neighbors[arr2[0]];
 			break ;
