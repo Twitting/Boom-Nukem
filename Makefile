@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/20 14:23:06 by twitting          #+#    #+#              #
-#    Updated: 2019/04/15 16:07:15 by daharwoo         ###   ########.fr        #
+#    Updated: 2019/04/15 16:28:16 by ebednar          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,8 @@ SRC = ./src/main.c \
 		./src/findbutton.c \
 		./src/portal.c \
 		./src/openbars.c \
+		./src/vlines.c \
+		./src/walls3.c \
 		./src/menu/main.c \
 		./src/menu/handle_pause.c \
 		./src/menu/handle_menu.c \

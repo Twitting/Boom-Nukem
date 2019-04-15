@@ -3,64 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   walls.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 10:37:22 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/15 13:04:01 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/15 16:30:14 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "render.h"
-
-t_scaler	scaler_init_support5(t_rend *rend)
-{
-	t_scaler temp;
-
-	temp = (t_scaler)
-	{R->y1a + (R->beginx - 1 - R->x1) *
-		(R->y2a - R->y1a) / (R->x2 - R->x1),
-		((R->y2a < R->y1a) ^
-		(R->x2 < R->x1)) ? -1 : 1,
-		abs(R->y2a - R->y1a),
-		abs(R->x2 - R->x1),
-		(int)((R->beginx - 1 - R->x1) * abs(R->y2a -
-		R->y1a)) % abs(R->x2 - R->x1)};
-	return (temp);
-}
-
-t_scaler	scaler_init_support6(t_rend *rend)
-{
-	t_scaler temp;
-
-	temp = (t_scaler)
-	{R->y1b + (R->beginx - 1 - R->x1) *
-		(R->y2b - R->y1b) / (R->x2 - R->x1),
-		((R->y2b < R->y1b) ^
-		(R->x2 < R->x1)) ? -1 : 1,
-		abs(R->y2b - R->y1b),
-		abs(R->x2 - R->x1),
-		(int)((R->beginx - 1 - R->x1) * abs(R->y2b -
-		R->y1b)) % abs(R->x2 - R->x1)};
-	return (temp);
-}
-
-void		wallstart(t_env *env, t_rend *rend, t_now *now)
-{
-	R->y1a = HWIN / 2 - (int)(YAW(R->yceil, R->t1.y) * R->yscale1);
-	R->y1b = HWIN / 2 - (int)(YAW(R->yfloor, R->t1.y) * R->yscale1);
-	R->y2a = HWIN / 2 - (int)(YAW(R->yceil, R->t2.y) * R->yscale2);
-	R->y2b = HWIN / 2 - (int)(YAW(R->yfloor, R->t2.y) * R->yscale2);
-	R->ny1a = HWIN / 2 - (int)(YAW(R->nyceil, R->t1.y) * R->yscale1);
-	R->ny1b = HWIN / 2 - (int)(YAW(R->nyfloor, R->t1.y) * R->yscale1);
-	R->ny2a = HWIN / 2 - (int)(YAW(R->nyceil, R->t2.y) * R->yscale2);
-	R->ny2b = HWIN / 2 - (int)(YAW(R->nyfloor, R->t2.y) * R->yscale2);
-	R->beginx = MAX(R->x1, now->sx1);
-	R->endx = MIN(R->x2, now->sx2);
-	R->x = R->beginx;
-	R->ya_int = scaler_init_support5(R);
-	R->yb_int = scaler_init_support6(R);
-	wallxloop(env, R);
-}
 
 void		calc_support(t_env *env, t_rend *rend)
 {
@@ -76,6 +26,7 @@ void		calc_support(t_env *env, t_rend *rend)
 
 void		startcalc(t_env *env, t_rend *rend, t_now *now)
 {
+	R->bugf = 0;
 	calc_support(env, R);
 	if (R->t1.y <= 0 && R->t2.y <= 0)
 		return ;
@@ -83,22 +34,21 @@ void		startcalc(t_env *env, t_rend *rend, t_now *now)
 	R->u1 = (ET[0]->w - 1);
 	wallintersect(R, env);
 	wallscale(env, R);
-	if (R->x1 >= R->x2 || R->x2 < now->sx1 || R->x1 > now->sx2)
+	if (now->sectorno == (int)env->player.sector && portaledge(env, R) == 1
+	&& (R->x1 > now->sx2 || R->x2 < now->sx1))
+		R->bugf = 1;
+	if (R->x1 >= R->x2 || ((R->x2 < now->sx1 || R->x1 > now->sx2) &&
+	R->bugf == 0))
 		return ;
 	wallstart(env, R, now);
-	if (R->nowsect->neighbors[R->s] >= 0 && R->endx >=
-		R->beginx && (R->head + MAXQUEUE + 1 - R->tail) % MAXQUEUE)
-	{
-		if (portaledge(env, R) == 0)
-			*(R->head) = (t_now){R->nowsect->neighbors[
-				R->s], R->beginx, R->endx};
-		else if (portaledge(env, R) == 1)
-			*(R->head) = R->t2.y > 0 ? (t_now){R->nowsect->neighbors[
-				R->s], 0, R->endx} : (t_now){
-					R->nowsect->neighbors[R->s], R->beginx, 0};
-		if (++R->head == R->queue + MAXQUEUE)
-			R->head = R->queue;
-	}
+	if ((R->endx >= R->beginx && R->bugf == 0) || R->bugf == 1)
+		if (R->nowsect->neighbors[R->s] >= 0 && (R->head + MAXQUEUE + 1 -
+		R->tail) % MAXQUEUE)
+		{
+			checknextrend(env, R);
+			if (++R->head == R->queue + MAXQUEUE)
+				R->head = R->queue;
+		}
 }
 
 void		render_queue(t_env *env, t_rend *rend, t_now *now)

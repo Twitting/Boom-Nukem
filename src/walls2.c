@@ -3,35 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   walls2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 12:11:56 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/15 13:13:51 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/15 16:22:31 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "render.h"
-
-void		vline2(t_env *env, t_rend *rend, int y1, int y2, t_scaler ty)
-{
-	int *pix;
-	int y;
-	int txty;
-
-	pix = (int*)env->surface->pixels;
-	y1 = CLAMP(y1, 0, HWIN - 1) - 1;
-	y2 = CLAMP(y2, 0, HWIN - 1) + 1;
-	pix += y1 * WWIN + R->x;
-	y = y1;
-	while (++y <= y2)
-	{
-		txty = scaler_next(&ty) * (R->nowsect->ceiling -
-			R->nowsect->floor) / 64;
-		*pix = ((int *)(R->NST[1]->pixels))[txty
-			% R->NST[1]->h * R->NST[1]->w + R->txtx % R->NST[1]->w];
-		pix += WWIN;
-	}
-}
 
 void		wallscale(t_env *env, t_rend *rend)
 {
@@ -40,6 +19,12 @@ void		wallscale(t_env *env, t_rend *rend)
 		R->t1.x = (0.5 - R->t1.y) * (R->t2.x - R->t1.x)
 			/ (R->t2.y - R->t1.y) + R->t1.x;
 		R->t1.y = 0.5;
+	}
+	if (R->t2.y <= 0.5)
+	{
+		R->t2.x = (0.5 - R->t2.y) * (R->t1.x - R->t2.x)
+		/ (R->t1.y - R->t2.y) + R->t2.x;
+		R->t2.y = 0.5;
 	}
 	R->xscale1 = WWIN * HFOV / R->t1.y;
 	R->yscale1 = HWIN * VFOV / R->t1.y;
@@ -105,65 +90,6 @@ void		textceilfloor(t_env *env, t_rend *rend)
 	((int*)env->surface->pixels)[R->y * WWIN + R->x] = R->pel;
 }
 
-t_scaler	scaler_init_support7(t_rend *rend, t_env *env)
-{
-	t_scaler temp;
-
-	temp = (t_scaler)
-	{0 + (R->cya - 1 - R->ya) *
-		((ET[0]->w - 1)) / (R->yb - R->ya),
-		(((ET[0]->w - 1) < 0) ^
-		(R->yb < R->ya)) ? -1 : 1,
-		abs((ET[0]->w - 1)),
-		abs(R->yb - R->ya),
-		(int)((R->cya - 1 - R->ya) * abs((ET[0]->w - 1)))
-		% abs(R->yb - R->ya)};
-	return (temp);
-}
-
-t_scaler	scaler_init_support8(t_rend *rend, t_env *env)
-{
-	t_scaler temp;
-
-	temp = (t_scaler)
-	{0 + (R->ncyb + 1 - 1 - R->ya) *
-		((ET[0]->w - 1)) / (R->yb - R->ya),
-		(((ET[0]->w - 1) < 0) ^
-		(R->yb < R->ya)) ? -1 : 1,
-		abs((ET[0]->w - 1) - 0),
-		abs(R->yb - R->ya),
-		(int)((R->ncyb - R->ya) * abs((ET[0]->w - 1) -
-		0)) % abs(R->yb - R->ya)};
-	return (temp);
-}
-
-void		rendportals(t_env *env, t_rend *rend)
-{
-	R->nya = (R->x - R->x1) * (R->ny2a - R->ny1a) / (R->x2 - R->x1) + R->ny1a;
-	R->ncya = CLAMP(R->nya, R->ytop[R->x], R->ybottom[R->x]);
-	R->nyb = (R->x - R->x1) * (R->ny2b - R->ny1b) / (R->x2 - R->x1) + R->ny1b;
-	R->ncyb = CLAMP(R->nyb, R->ytop[R->x], R->ybottom[R->x]);
-	vline2(env, R, R->cya, R->ncya - 1, scaler_init_support7(R, env));
-	if (R->nowsect->sky != 1)
-	{
-		if (ESEC[R->nowsect->neighbors[R->s]].sky == 1)
-			R->ytop[R->x] = CLAMP(R->cya + 1, R->ytop[R->x], HWIN - 1);
-		else
-			R->ytop[R->x] = CLAMP(MAX(R->cya, R->ncya),
-				R->ytop[R->x], HWIN - 1);
-	}
-	else
-	{
-		if (ESEC[R->nowsect->neighbors[R->s]].sky == 1)
-			R->ytop[R->x] = CLAMP(MIN(R->cya, R->ncya),
-				R->ytop[R->x], HWIN - 1);
-		else
-			R->ytop[R->x] = CLAMP(R->ncya, R->ytop[R->x], HWIN - 1);
-	}
-	vline2(env, R, R->ncyb + 1, R->cyb, scaler_init_support8(R, env));
-	R->ybottom[R->x] = CLAMP(MIN(R->cyb, R->ncyb), 0, R->ybottom[R->x]);
-}
-
 void		wallxloop(t_env *env, t_rend *rend)
 {
 	while (R->x++ <= R->endx)
@@ -189,6 +115,6 @@ void		wallxloop(t_env *env, t_rend *rend)
 		if (R->nowsect->neighbors[R->s] >= 0)
 			rendportals(env, R);
 		else
-			vline2(env, R, R->cya, R->cyb, scaler_init_support7(R, env));
+			vlinewall(env, R);
 	}
 }
