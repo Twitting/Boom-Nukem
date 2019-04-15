@@ -6,7 +6,7 @@
 /*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 19:52:06 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/15 14:05:00 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/15 14:57:08 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -309,11 +309,17 @@ void				put_hp(t_env *env);
 # define ESECT3 (unsigned char)((double)pix[(j * sprite->texture[0]->w + k) * 4
 # define EPS env->player.sector
 # define SV sect.vertex
-# define WTF1 i_b(arr[0], arr[1], ESEC[EPS].vertex[arr2[0] % ESEC[EPS].npoints], ESEC[EPS].vertex[(arr2[0] + 1) % ESEC[EPS].npoints]) && point_side(arr[1].x,arr[1].y, ESEC[EPS].vertex[arr2[0] % ESEC[EPS].npoints], ESEC[EPS].vertex[(arr2[0] + 1) % ESEC[EPS].npoints]
+
+
+# define WTF1 sect.neighbors[arr2[0]]
+# define SNP sect.npoints
+# define NP npoints
 # define WTF2 sect.neighbors[arr2[0]] >= 0 && i_b(arr[0], arr[1], SV[arr2[0] % sect.npoints], SV[(arr2[0] + 1) % sect.npoints]) && point_side(arr[1].x, arr[1].y, SV[arr2[0] % sect.npoints], SV[(arr2[0] + 1) % sect.npoints]
 # define WTF3 i_b(*p, b_pd[1], ESEC[EPS].vertex[s % ESEC[EPS].npoints], ESEC[EPS].vertex[(s + 1) % ESEC[EPS].npoints]) && point_side(b_pd[1].x, b_pd[1].y, ESEC[EPS].vertex[s % ESEC[EPS].npoints], ESEC[EPS].vertex[(s + 1) % ESEC[EPS].npoints]
 # define WTF4 i_b(*p, b_pd[1], env->sprite[s].pos1, env->sprite[s].pos2) && point_side(b_pd[1].x, b_pd[1].y, env->sprite[s].pos1, env->sprite[s].pos2
 # define WTF5 sect.neighbors[arr2[0]] >= 0 && i_b(opvoppp[1], opvoppp[0], SV[arr2[0] % sect.npoints], SV[(arr2[0] + 1) % sect.npoints]) && point_side(opvoppp[0].x, opvoppp[0].y, SV[arr2[0] % sect.npoints], SV[(arr2[0] + 1) % sect.npoints]
+
+
 # define ESJT0 env->sprite[j].texture[0]
 # define EPW env->player.where
 # define EPSIN env->player.sinang
