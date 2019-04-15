@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mobattack.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: drestles <drestles@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/10 18:28:49 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/14 20:12:32 by drestles         ###   ########.fr       */
+/*   Updated: 2019/04/15 16:31:54 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	mobcrushesface(t_env *env, int i)
 	else
 		Mix_PlayChannel(-1, env->sound[4], 0);
 	env->blood = 150;
-	env->player.hp -= 10;
+	env->player.hp -= 10 * env->mode;
 	if (env->player.hp <= 0)
 	{
 		Mix_HaltMusic();
@@ -42,7 +42,7 @@ void	mob_attack(t_env *env)
 			{
 				ESPRI.mobtimer += (clock() - env->frame) /
 											CLOCKS_PER_SEC;
-				if (ESPRI.mobtimer >= 0.2)
+				if (ESPRI.mobtimer >= 0.3)
 					mobcrushesface(env, i);
 			}
 			else

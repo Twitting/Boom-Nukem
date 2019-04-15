@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wallintersect.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 12:12:44 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/15 12:12:13 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/15 16:31:20 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,31 @@ void	wallintersect(t_rend *rend, t_env *env)
 		wallintersect_1(R);
 		wallintersect_2(R, env);
 	}
+}
+
+void	rendportals(t_env *env, t_rend *rend)
+{
+	R->nya = (R->x - R->x1) * (R->ny2a - R->ny1a) / (R->x2 - R->x1) + R->ny1a;
+	R->ncya = CLAMP(R->nya, R->ytop[R->x], R->ybottom[R->x]);
+	R->nyb = (R->x - R->x1) * (R->ny2b - R->ny1b) / (R->x2 - R->x1) + R->ny1b;
+	R->ncyb = CLAMP(R->nyb, R->ytop[R->x], R->ybottom[R->x]);
+	vlinetop(env, R);
+	if (R->nowsect->sky != 1)
+	{
+		if (ESEC[R->nowsect->neighbors[R->s]].sky == 1)
+			R->ytop[R->x] = CLAMP(R->cya + 1, R->ytop[R->x], HWIN - 1);
+		else
+			R->ytop[R->x] = CLAMP(MAX(R->cya, R->ncya),
+				R->ytop[R->x], HWIN - 1);
+	}
+	else
+	{
+		if (ESEC[R->nowsect->neighbors[R->s]].sky == 1)
+			R->ytop[R->x] = CLAMP(MIN(R->cya, R->ncya),
+				R->ytop[R->x], HWIN - 1);
+		else
+			R->ytop[R->x] = CLAMP(R->ncya, R->ytop[R->x], HWIN - 1);
+	}
+	vlinebot(env, R);
+	R->ybottom[R->x] = CLAMP(MIN(R->cyb, R->ncyb), 0, R->ybottom[R->x]);
 }

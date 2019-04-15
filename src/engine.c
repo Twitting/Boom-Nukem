@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/05 15:37:47 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/15 15:43:28 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/15 16:31:54 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,21 +110,13 @@ int		start_engine(t_env *env, SDL_Event *e, t_rend *rend)
 	while (++i < (int)env->nsectors)
 		R->sprq[i].visible = 0;
 	SDL_LockSurface(env->surface);
-	ft_putchar('A');
 	render_wall(env, R);
-	ft_putchar('b');
 	renderbutton(env, R);
-	ft_putchar('C');
 	rendersprite(env, R);
-	ft_putchar('d');
 	cross(env);
-	ft_putchar('E');
 	animation(env);
-	ft_putchar('f');
 	pistolrender(env);
-	ft_putchar('G');
 	pushswitch(env);
-	ft_putchar('h');
 	SDL_UnlockSurface(env->surface);
 	if (env->blood-- > 0)
 		SDL_BlitScaled(env->text_head[25], NULL, env->surface, NULL);

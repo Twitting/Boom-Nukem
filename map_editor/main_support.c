@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_support.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: twitting <twitting@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/11 21:20:14 by twitting          #+#    #+#             */
-/*   Updated: 2019/04/14 16:31:10 by twitting         ###   ########.fr       */
+/*   Updated: 2019/04/15 16:32:46 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	putplayer(t_edit *edit)
 	edit->playerangle = 0;
 	edit->playersect = 0;
 	edit->playersetflag = 1;
-	printf("player set on x - %d	y - %d\n", x, y);
 	putdot(edit, 0x00ff00, x * 5 / 2, y * 5 / 2);
 }
 
