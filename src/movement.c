@@ -6,7 +6,7 @@
 /*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:10:46 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/15 15:04:52 by daharwoo         ###   ########.fr       */
+/*   Updated: 2019/04/15 15:06:51 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,36 +48,39 @@ void	v_collision(t_env *env)
 		v_collision_support(env);
 }
 
-void	h_collision_support(t_env *env, double *arr, t_xy *b_pd, t_xy *d, int s)
+void	h_collision_support(t_env *env, t_xy *d, int s)
 {
-	arr[1] = ESEC[EPS].neighbors[s] < 0 ? 9e9 :
+	t_xy	b_pd;
+	double	temp[3];
+
+	b_pd.x = env->sprite[s].pos2.x - env->sprite[s].pos1.x;
+	b_pd.y = env->sprite[s].pos2.y - env->sprite[s].pos1.y;
+	temp[1] = ESEC[EPS].neighbors[s] < 0 ? 9e9 :
 			MAX(ESEC[EPS].floor, ESEC[ESEC[EPS].neighbors[s]].floor);
-	arr[2] = ESEC[EPS].neighbors[s] < 0 ? 9e9 :
+	temp[2] = ESEC[EPS].neighbors[s] < 0 ? 9e9 :
 			MIN(ESEC[EPS].ceiling, ESEC[ESEC[EPS].neighbors[s]].ceiling);
-	if (arr[2] < EPW.z + HEADMARGIN || arr[1] > EPW.z
+	if (temp[2] < EPW.z + HEADMARGIN || temp[1] > EPW.z
 			- (env->ducking ? DUCKHEIGHT : EYEHEIGHT) + KNEEHEIGHT)
 	{
-		b_pd[0].x = ESEC[EPS].vertex[(s + 1) %
-				ESEC[EPS].NP].x - ESEC[EPS].vertex[s
-				% ESEC[EPS].NP].x;
-		b_pd[0].y = ESEC[EPS].vertex[(s + 1) %
-				ESEC[EPS].NP].y - ESEC[EPS].vertex[s
-				% ESEC[EPS].NP].y;
-		arr[0] = d->x;
-		d->x = b_pd[0].x * (d->x * b_pd[0].x + b_pd[0].y * d->y) /
-				(b_pd[0].x * b_pd[0].x + b_pd[0].y * b_pd[0].y);
-		d->y = b_pd[0].y * (arr[0] * b_pd[0].x + b_pd[0].y * d->y) /
-				(b_pd[0].x * b_pd[0].x + b_pd[0].y * b_pd[0].y);
+		b_pd.x = ESEC[EPS].vertex[(s + 1) %
+				ESEC[EPS].npoints].x - ESEC[EPS].vertex[s
+				% ESEC[EPS].npoints].x;
+		b_pd.y = ESEC[EPS].vertex[(s + 1) %
+				ESEC[EPS].npoints].y - ESEC[EPS].vertex[s
+				% ESEC[EPS].npoints].y;
+		temp[0] = d->x;
+		d->x = b_pd.x * (d->x * b_pd.x + b_pd.y * d->y) /
+				(b_pd.x * b_pd.x + b_pd.y * b_pd.y);
+		d->y = b_pd.y * (temp[0] * b_pd.x + b_pd.y * d->y) /
+				(b_pd.x * b_pd.x + b_pd.y * b_pd.y);
 		env->moving = -1;
 	}
 }
 
-
-
-int		h_collision(t_env *env, t_xy *p, t_xy *d, t_xy *dd)
+int		h_collision_pt1(t_env *env, t_xy *p, t_xy *d, t_xy *dd)
 {
 	int		s;
-	double	arr[3];
+	double	arr;
 	t_xy	b_pd[2];
 
 	b_pd[1].x = p->x + dd->x;
@@ -85,53 +88,57 @@ int		h_collision(t_env *env, t_xy *p, t_xy *d, t_xy *dd)
 	s = -1;
 	while (++s < env->sprcount)
 		if (env->sprite[s].type == 2)
-			if (i_b(*p, b_pd[1], env->sprite[s].pos1, env->sprite[s].pos2) && point_side(b_pd[1].x, b_pd[1].y, env->sprite[s].pos1, env->sprite[s].pos2) < 0)
+			if (i_b(*p, b_pd[1], env->sprite[s].pos1, env->sprite[s].pos2)
+			&& point_side(b_pd[1].x, b_pd[1].y, env->sprite[s].pos1,
+			env->sprite[s].pos2) < 0)
 			{
 				b_pd[0].x = env->sprite[s].pos2.x - env->sprite[s].pos1.x;
 				b_pd[0].y = env->sprite[s].pos2.y - env->sprite[s].pos1.y;
-				arr[0] = d->x;
-				d->x = b_pd[0].x * (d->x * b_pd[0].x + b_pd[0].y * d->y) / (b_pd[0].x * b_pd[0].x + b_pd[0].y * b_pd[0].y);
-				d->y = b_pd[0].y * (arr[0] * b_pd[0].x + b_pd[0].y * d->y) / (b_pd[0].x * b_pd[0].x + b_pd[0].y * b_pd[0].y);
+				arr = d->x;
+				d->x = b_pd[0].x * (d->x * b_pd[0].x + b_pd[0].y * d->y) /
+					(b_pd[0].x * b_pd[0].x + b_pd[0].y * b_pd[0].y);
+				d->y = b_pd[0].y * (arr * b_pd[0].x + b_pd[0].y * d->y) /
+					(b_pd[0].x * b_pd[0].x + b_pd[0].y * b_pd[0].y);
 				env->moving = -1;
-				return(0);
+				return (0);
 			}
+	return (1);
+}
+
+void	h_collision_pt2(t_env *env, t_xy *p, t_xy *d, t_xy *dd)
+{
+	int		s;
+	double	arr[2];
+	t_xy	b_pd;
+
+	b_pd.x = p->x + dd->x;
+	b_pd.y = p->y + dd->y;
 	s = -1;
 	while (++s < (int)ESEC[EPS].NP)
 	{
-		if (i_b(*p, b_pd[1], ESEC[EPS].vertex[s % ESEC[EPS].NP], ESEC[EPS].vertex[(s + 1) % ESEC[EPS].NP]) && point_side(b_pd[1].x, b_pd[1].y, ESEC[EPS].vertex[s % ESEC[EPS].NP], ESEC[EPS].vertex[(s + 1) % ESEC[EPS].NP]) < 0)
+		if (i_b(*p, b_pd, ESEC[EPS].vertex[s % ESEC[EPS].npoints],
+		ESEC[EPS].vertex[(s + 1) % ESEC[EPS].npoints]) && point_side(b_pd.x,
+		b_pd.y, ESEC[EPS].vertex[s % ESEC[EPS].npoints],
+		ESEC[EPS].vertex[(s + 1) % ESEC[EPS].npoints]) < 0)
 		{
-			arr[1] = ESEC[EPS].neighbors[s] < 0 ? 9e9 : MAX(ESEC[EPS].floor, ESEC[ESEC[EPS].neighbors[s]].floor);
-			arr[2] = ESEC[EPS].neighbors[s] < 0 ? 9e9 : MIN(ESEC[EPS].ceiling, ESEC[ESEC[EPS].neighbors[s]].ceiling);
-			if (arr[2] < EPW.z + HEADMARGIN || arr[1] > EPW.z - (env->ducking ? DUCKHEIGHT : EYEHEIGHT) + KNEEHEIGHT)
-				h_collision_support(env, arr, b_pd, d, s);
+			arr[0] = ESEC[EPS].neighbors[s] < 0 ? 9e9 :
+				MAX(ESEC[EPS].floor, ESEC[ESEC[EPS].neighbors[s]].floor);
+			arr[1] = ESEC[EPS].neighbors[s] < 0 ? 9e9 :
+				MIN(ESEC[EPS].ceiling, ESEC[ESEC[EPS].neighbors[s]].ceiling);
+			if (arr[1] < EPW.z + HEADMARGIN || arr[0] > EPW.z -
+				(env->ducking ? DUCKHEIGHT : EYEHEIGHT) + KNEEHEIGHT)
+				h_collision_support(env, d, s);
 		}
 	}
-	env->falling = 1;
-	return (0);
 }
 
-int		can_i_go(t_env *env, t_xy *p, double x, double y)
+int		h_collision(t_env *env, t_xy *p, t_xy *d, t_xy *dd)
 {
-	double			hh[ESEC[EPS].NP];
-	unsigned int	i;
-	unsigned int	ii1;
-	double			arr[6];
-
-	i = 0;
-	ii1 = (i + 1) % ESEC[EPS].NP;
-	arr[0] = x;
-	arr[1] = y;
-	while (i < ESEC[EPS].NP)
-	{
-		arr[2] = sqrt(pow(p[i].x - arr[0], 2) + pow(p[i].y - arr[1], 2));
-		arr[3] = sqrt(pow(p[ii1].x - arr[0], 2) + pow(p[ii1].y - arr[1], 2));
-		arr[4] = sqrt(pow(p[i].x - p[ii1].x, 2) + pow(p[i].y - p[ii1].y, 2));
-		arr[5] = 0.25 * sqrt(pow(pow(arr[2], 2) + pow(arr[3], 2) + pow(arr[4],
-			2), 2) - 2 * (pow(arr[2], 4) + pow(arr[3], 4) + pow(arr[4], 4)));
-		hh[i] = (2 * arr[5]) / arr[4];
-		i++;
-	}
-	return (1);
+	if (!h_collision_pt1(env, p, d, dd))
+		return (0);
+	h_collision_pt2(env, p, d, dd);
+	env->falling = 1;
+	return (0);
 }
 
 void	movement_support(t_env *env, float dx, float dy)
