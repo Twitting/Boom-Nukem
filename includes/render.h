@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: daharwoo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 14:42:12 by ebednar           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2019/04/15 16:23:48 by daharwoo         ###   ########.fr       */
-=======
-/*   Updated: 2019/04/15 16:30:14 by ebednar          ###   ########.fr       */
->>>>>>> c77d711d97f44b2c993da19c5d49acb6e8ef92bf
+/*   Updated: 2019/04/15 16:39:58 by daharwoo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,8 +199,6 @@ void			butplane_support(t_rend *rend, int j, t_env *env);
 void			drawsprite(t_env *env, t_rend *rend, int j);
 void			trintersect2(t_rend *rend, t_env *env, int j);
 void			trintersect(t_rend *rend, t_env *env, int j);
-<<<<<<< HEAD
-=======
 void			vlinebot(t_env *env, t_rend *rend);
 void			vlinetop(t_env *env, t_rend *rend);
 void			vlinewall(t_env *env, t_rend *rend);
@@ -213,6 +207,5 @@ t_scaler		scaler_init_support6(t_rend *rend);
 t_scaler		scaler_init_support5(t_rend *rend);
 void			checknextrend(t_env *env, t_rend *rend);
 void			wallstart(t_env *env, t_rend *rend, t_now *now);
->>>>>>> c77d711d97f44b2c993da19c5d49acb6e8ef92bf
 
 #endif
