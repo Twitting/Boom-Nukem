@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/15 16:24:41 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/15 16:31:07 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/15 17:03:04 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void		wallstart(t_env *env, t_rend *rend, t_now *now)
 	R->ny2b = HWIN / 2 - (int)(YAW(R->nyfloor, R->t2.y) * R->yscale2);
 	R->beginx = MAX(R->x1, now->sx1);
 	R->endx = MIN(R->x2, now->sx2);
-	R->x = R->beginx;
+	R->x = R->beginx - 1;
 	R->ya_int = scaler_init_support5(R);
 	R->yb_int = scaler_init_support6(R);
 	wallxloop(env, R);

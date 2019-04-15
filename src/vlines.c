@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/15 15:53:52 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/15 16:21:33 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/15 16:59:03 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ void		vlinebot(t_env *env, t_rend *rend)
 
 	txy = (t_scaler)scaler_init_support8(R, env);
 	pix = (int*)env->surface->pixels;
-	R->ncyb = CLAMP((R->ncyb + 1), 0, HWIN - 1);
-	R->ncya = CLAMP(R->cyb, 0, HWIN - 1) + 2;
+	R->ncyb = CLAMP((R->ncyb + 1), 0, HWIN - 1) - 1;
+	R->cyb = CLAMP(R->cyb, 0, HWIN - 1);
 	pix += (R->ncyb + 1) * WWIN + R->x;
 	y = R->ncyb + 1;
 	while (++y <= R->cyb)
@@ -76,8 +76,8 @@ void		vlinetop(t_env *env, t_rend *rend)
 
 	txy = (t_scaler)scaler_init_support7(R, env);
 	pix = (int*)env->surface->pixels;
-	R->cya = CLAMP(R->cya, 0, HWIN - 1) - 1;
-	R->ncya = CLAMP(R->ncya - 1, 0, HWIN - 1) + 2;
+	R->cya = CLAMP(R->cya, 0, HWIN - 1);
+	R->ncya = CLAMP(R->ncya - 1, 0, HWIN - 1) + 1;
 	pix += R->cya * WWIN + R->x;
 	y = R->cya;
 	while (++y <= R->ncya - 1)
@@ -99,8 +99,8 @@ void		vlinewall(t_env *env, t_rend *rend)
 
 	txy = (t_scaler)scaler_init_support7(R, env);
 	pix = (int*)env->surface->pixels;
-	R->cya = CLAMP(R->cya, 0, HWIN - 1) - 1;
-	R->cyb = CLAMP(R->cyb, 0, HWIN - 1) + 2;
+	R->cya = CLAMP(R->cya, 0, HWIN - 1);
+	R->cyb = CLAMP(R->cyb, 0, HWIN - 1);
 	pix += R->cya * WWIN + R->x;
 	y = R->cya;
 	while (++y <= R->cyb)

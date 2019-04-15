@@ -6,7 +6,7 @@
 /*   By: ebednar <ebednar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/12 12:11:56 by ebednar           #+#    #+#             */
-/*   Updated: 2019/04/15 16:22:31 by ebednar          ###   ########.fr       */
+/*   Updated: 2019/04/15 17:09:38 by ebednar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void		textceilfloor(t_env *env, t_rend *rend)
 
 void		wallxloop(t_env *env, t_rend *rend)
 {
-	while (R->x++ <= R->endx)
+	while (++R->x <= R->endx)
 	{
 		R->ya = scaler_next(&R->ya_int);
 		R->cya = CLAMP(R->ya, R->ytop[R->x], R->ybottom[R->x]);
