@@ -53,4 +53,4 @@ With it, respecting the rules, you can define all kinds of levels, portal-orient
 ##### ME
 ##### [Ксения](https://github.com/odnaks)
 ##### [Карим](https://github.com/ebednar)
-##### [Лев](https://github.com/foxers1)
+##### [Лев](https://github.com/PolyakovLev)
